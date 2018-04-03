@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/textures">
+        <file alias="tapis.jpg">Images/Textures/tapis.jpg</file>
+    </qresource>
+    <qresource prefix="/cartes">
+        <file alias="back.png">Images/cartes/back.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>PopupCardDetailsBasic.qml</file>
+    </qresource>
+</RCC>

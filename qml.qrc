@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>SelectPlayers.qml</file>
+        <file>BoardQML.qml</file>
+    </qresource>
+</RCC>
