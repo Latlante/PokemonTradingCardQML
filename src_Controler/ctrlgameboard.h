@@ -32,6 +32,9 @@ public:
     Q_INVOKABLE PacketDeck* deck_P1();
     Q_INVOKABLE Player* playerAt(int index);
 
+    Q_INVOKABLE void onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers);
+    Q_INVOKABLE void onClicked_ButtonOk_SelectCards();
+
 signals:
 
 private:

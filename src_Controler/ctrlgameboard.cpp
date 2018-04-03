@@ -25,11 +25,17 @@ CtrlGameBoard::~CtrlGameBoard()
     delete m_factoryMainPageLoader;
 }
 
+/************************************************************
+*****				FONCTIONS STATIQUES					*****
+************************************************************/
 void CtrlGameBoard::declareQML()
 {
     qmlRegisterUncreatableType<CtrlGameBoard>("model", 1, 0, "CtrlGameBoard", "CtrlGameBoard error");
 }
 
+/************************************************************
+*****				FONCTIONS PUBLIQUES					*****
+************************************************************/
 bool CtrlGameBoard::install(QQmlApplicationEngine *pEngine)
 {
     qDebug() << "installing controleur...";
@@ -75,7 +81,6 @@ void CtrlGameBoard::initGame(QStringList listOfPlayers)
     Player* playerAlice = m_gameManager->addNewPlayer(nom, listCards);
 
     m_gameManager->initGame();
-    m_factoryMainPageLoader->displayBoard();
 }
 
 Player* CtrlGameBoard::createPlayer(const QString &name)
@@ -114,4 +119,16 @@ PacketDeck* CtrlGameBoard::deck_P1()
 Player* CtrlGameBoard::playerAt(int index)
 {
     return m_gameManager->playerAt(index);
+}
+
+void CtrlGameBoard::onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers)
+{
+    initGame(listOfPlayers);
+
+    m_factoryMainPageLoader->displaySelectCards();
+}
+
+void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
+{
+    m_factoryMainPageLoader->displayBoard();
 }

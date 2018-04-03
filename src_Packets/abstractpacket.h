@@ -33,7 +33,7 @@ public:
     AbstractCard* card(int index);
     bool removeFromPacket(AbstractCard* card);
 	
-    //virtual QVariant data(const QModelIndex &index, int role) const override;
+    //virtual QVariant data(const QModelIndex &index, int role) const = 0;
     virtual int rowCount(const QModelIndex& = QModelIndex()) const override;
 
 signals:

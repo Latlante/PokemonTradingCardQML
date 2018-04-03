@@ -16,6 +16,9 @@ void ListPlayers::declareQML()
     qmlRegisterUncreatableType<ListPlayers>("model", 1, 0, "ListPlayers", "BenchArea error");
 }
 
+/************************************************************
+*****				FONCTIONS PUBLIQUES					*****
+************************************************************/
 QStringList ListPlayers::listOfPlayers()
 {
     return m_listOfPlayers;

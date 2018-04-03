@@ -95,7 +95,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
 
-            onClicked: ctrlGameBoard.initGame(listView.model.listOfPlayers)
+            onClicked: ctrlGameBoard.onClicked_ButtonOk_SelectPlayers(listView.model.listOfPlayers)
         }
 
     }
