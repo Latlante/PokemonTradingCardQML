@@ -16,6 +16,7 @@ public:
     QString link();
 
     void displaySelectPlayers();
+    void displaySelectCards();
     void displayBoard();
 
 signals:

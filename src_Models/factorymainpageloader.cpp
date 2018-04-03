@@ -13,7 +13,7 @@ FactoryMainPageLoader::FactoryMainPageLoader(QObject *parent) :
 ************************************************************/
 void FactoryMainPageLoader::declareQML()
 {
-    qmlRegisterUncreatableType<FactoryMainPageLoader>("model", 1, 0, "FactoryMainPageLoader", "BenchArea error");
+    qmlRegisterUncreatableType<FactoryMainPageLoader>("model", 1, 0, "FactoryMainPageLoader", "FactoryMainPageLoader error");
 }
 
 /************************************************************
@@ -27,6 +27,11 @@ QString FactoryMainPageLoader::link()
 void FactoryMainPageLoader::displaySelectPlayers()
 {
     setLink("qrc:/SelectPlayers.qml");
+}
+
+void FactoryMainPageLoader::displaySelectCards()
+{
+    setLink("qrc:/SelectingCardsQML.qml");
 }
 
 void FactoryMainPageLoader::displayBoard()

@@ -3,15 +3,31 @@
 
 #include <QObject>
 
+class QQmlEngine;
+class QQmlApplicationEngine;
+class ModelSelectingCards;
+
 class CtrlSelectingCards : public QObject
 {
     Q_OBJECT
 public:
     explicit CtrlSelectingCards(QObject *parent = nullptr);
+    ~CtrlSelectingCards();
+
+    static void declareQML();
+    bool install(QQmlApplicationEngine *pEngine);
+
+    Q_INVOKABLE ModelSelectingCards* model();
+
+    Q_INVOKABLE void addANewCard(int id);
+    Q_INVOKABLE void removeACard(int id);
+    Q_INVOKABLE void changeQuantityCard(int id, int quantity);
+    Q_INVOKABLE void fillARandomList();
 
 signals:
 
-public slots:
+private:
+    ModelSelectingCards* m_modelSelectingCards;
 };
 
 #endif // CTRLSELECTINGCARDS_H
