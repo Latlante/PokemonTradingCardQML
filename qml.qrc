@@ -4,5 +4,6 @@
         <file>qtquickcontrols2.conf</file>
         <file>SelectPlayers.qml</file>
         <file>BoardQML.qml</file>
+        <file>SelectingCardsQML.qml</file>
     </qresource>
 </RCC>

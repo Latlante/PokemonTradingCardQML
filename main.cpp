@@ -2,7 +2,9 @@
 #include <QQmlApplicationEngine>
 #include "src_Models/factorymainpageloader.h"
 #include "src_Controler/ctrlgameboard.h"
+#include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/listplayers.h"
+#include "src_Models/modelselectingcards.h"
 #include "player.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
@@ -21,7 +23,9 @@ int main(int argc, char *argv[])
 
     FactoryMainPageLoader::declareQML();
     CtrlGameBoard::declareQML();
+    CtrlSelectingCards::declareQML();
     ListPlayers::declareQML();
+    ModelSelectingCards::declareQML();
     Player::declareQML();
     BenchArea::declareQML();
     PacketDeck::declareQML();
@@ -30,8 +34,10 @@ int main(int argc, char *argv[])
     PacketTrash::declareQML();
 
     QQmlApplicationEngine engine;
-    CtrlGameBoard controler;
-    controler.install(&engine);
+    CtrlGameBoard ctrlGB;
+    CtrlSelectingCards ctrlSC;
+    ctrlGB.install(&engine);
+    ctrlSC.install(&engine);
 
     const QUrl mainQml(QStringLiteral("qrc:/main.qml"));
 

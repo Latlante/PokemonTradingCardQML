@@ -45,7 +45,9 @@ SOURCES += \
     player.cpp \
     utils.cpp \
     src_Models/listplayers.cpp \
-    src_Models/factorymainpageloader.cpp
+    src_Models/factorymainpageloader.cpp \
+    src_Controler/ctrlselectingcards.cpp \
+    src_Models/modelselectingcards.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -88,7 +90,9 @@ HEADERS += \
     player.h \
     utils.h \
     src_Models/listplayers.h \
-    src_Models/factorymainpageloader.h
+    src_Models/factorymainpageloader.h \
+    src_Controler/ctrlselectingcards.h \
+    src_Models/modelselectingcards.h
 
 FORMS += \
     dlgselectcards.ui
