@@ -14,7 +14,7 @@ public:
     static unsigned short selectRandomCardsPokemon();
     static unsigned short selectRandomCardsEnergy();
 
-private:
+//private:
     static int randomValue(int min, int max);
 };
 
