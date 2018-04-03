@@ -27,6 +27,7 @@ public:
     enum Enum_InformationPokemonDatabase
     {
         InfoDbPok_Id = 0,
+        InfoDbPok_Useable,
         InfoDbPok_Name,
         InfoDbPok_Life,
         InfoDbPok_Element,
@@ -37,23 +38,40 @@ public:
         InfoDbPok_IdSubevolution,
         InfoDbPok_Att1,
         InfoDbPok_Att2 = InfoDbPok_Att1 + InfoAtt_COUNT,
-        InfoDbPok_Att3 = InfoDbPok_Att2 + InfoAtt_COUNT
+        InfoDbPok_Att3 = InfoDbPok_Att2 + InfoAtt_COUNT,
+        InfoDbPok_Capacity = InfoDbPok_Att3 + InfoAtt_COUNT
     };
 
     enum Enum_InformationEnergiesDatabase
     {
         InfoDbNrj_Id = 0,
         InfoDbNrj_Name,
+        InfoDbNrj_Element,
         InfoDbNrj_Quantity,
+    };
+
+    enum Enum_InformationDresseurDatabase
+    {
+        InfoDbTrainer_Id = 0,
+        InfoDbTrainer_Useable,
+        InfoDbTrainer_Name,
+        InfoDbTrainer_Description,
+        InfoDbTrainer_Type,
+        InfoDbTrainer_Argument
     };
 
     explicit Database(QObject *parent = nullptr);
 
+    QList<int> listIdAllCardsPokemon();
+    QList<int> listIdAllCardsEnergies();
     AbstractCard* cardById(int id);
 
 signals:
 
 private:
+    static const QString m_PATH_DB_ENERGIES;
+    static const QString m_PATH_DB_POKEMON;
+
     CardPokemon* newCardPokemon(const QString &infoCsv);
     CardEnergy* newCardEnergy(const QString& infoCsv);
 };

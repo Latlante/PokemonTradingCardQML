@@ -4,9 +4,53 @@
 #include <QVariant>
 #include "src_Actions/actioncreationfactory.h"
 
+const QString Database::m_PATH_DB_ENERGIES = "rcc/energies.db";
+const QString Database::m_PATH_DB_POKEMON = "rcc/pokemon.db";
+
 Database::Database(QObject *parent) : QObject(parent)
 {
 
+}
+
+/************************************************************
+*****				FONCTIONS PUBLIQUES					*****
+************************************************************/
+QList<int> Database::listIdAllCardsPokemon()
+{
+    QList<int> listId;
+
+    QFile fichier(m_PATH_DB_POKEMON);
+    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QByteArray textFromFile = fichier.readAll();
+    QString contenuGeneral = QString::fromLatin1(textFromFile);
+    QStringList textSplitted = contenuGeneral.split("\n");
+
+    foreach(QString line, textSplitted)
+    {
+        listId.append(line.section(";", InfoDbPok_Id, InfoDbPok_Id).toInt());
+    }
+
+    return listId;
+}
+
+QList<int> Database::listIdAllCardsEnergies()
+{
+    QList<int> listId;
+
+    QFile fichier(m_PATH_DB_ENERGIES);
+    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QByteArray textFromFile = fichier.readAll();
+    QString contenuGeneral = QString::fromLatin1(textFromFile);
+    QStringList textSplitted = contenuGeneral.split("\n");
+
+    foreach(QString line, textSplitted)
+    {
+        listId.append(line.section(";", InfoDbNrj_Id, InfoDbNrj_Id).toInt());
+    }
+
+    return listId;
 }
 
 AbstractCard* Database::cardById(int id)
@@ -45,6 +89,9 @@ AbstractCard* Database::cardById(int id)
     return cardToReturn;
 }
 
+/************************************************************
+*****				FONCTIONS PRIVEES					*****
+************************************************************/
 CardPokemon* Database::newCardPokemon(const QString& infoCsv)
 {
     QStringList arguments = infoCsv.split(";");
