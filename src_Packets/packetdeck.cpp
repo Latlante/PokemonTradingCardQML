@@ -31,7 +31,18 @@ int PacketDeck::maxCards()
 
 void PacketDeck::mixCards()
 {
-	
+    int nbIter = 100 * m_listCards.size();
+
+    for(int i = 0; i < nbIter; i++)
+    {
+        int begin = qrand() % m_listCards.count();
+        int end = qrand() % m_listCards.count();
+        while(begin == end)
+        {
+            end = qrand() % m_listCards.count();
+        }
+        m_listCards.swap(begin, end);
+    }
 }
 
 AbstractCard *PacketDeck::drawCard()
