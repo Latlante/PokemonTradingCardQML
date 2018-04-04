@@ -13,7 +13,7 @@ public:
     FightArea(QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~FightArea();
 	
-    static int maxCards() override;
+    int maxCards() override;
 
     CardPokemon* pokemonFighting(int index);
 

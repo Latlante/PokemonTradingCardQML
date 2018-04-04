@@ -9,6 +9,7 @@ class MyModel;
 class FactoryMainPageLoader;
 class GameManager;
 class Player;
+class CtrlSelectingCards;
 class ListPlayers;
 class BenchArea;
 class PacketDeck;
@@ -17,7 +18,7 @@ class CtrlGameBoard : public QObject
 {
     Q_OBJECT
 public:
-    explicit CtrlGameBoard(QObject *parent = nullptr);
+    explicit CtrlGameBoard(CtrlSelectingCards& ctrlSelectCards, QObject *parent = nullptr);
     ~CtrlGameBoard();
 
     static void declareQML();
@@ -40,6 +41,7 @@ signals:
 private:
     GameManager* m_gameManager;
     FactoryMainPageLoader* m_factoryMainPageLoader;
+    CtrlSelectingCards& m_ctrlSelectingCards;
 
 };
 

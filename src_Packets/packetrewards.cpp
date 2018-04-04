@@ -24,7 +24,7 @@ void PacketRewards::declareQML()
 ************************************************************/
 int PacketRewards::maxCards()
 {
-	return 6;
+    return MAXCARDS_REWARD;
 }
 
 QVariant PacketRewards::data(const QModelIndex &index, int role) const

@@ -17,6 +17,8 @@ public:
     static void declareQML();
     bool install(QQmlApplicationEngine *pEngine);
 
+    void setName(const QString& name);
+
     Q_INVOKABLE ModelSelectingCards* model();
 
     Q_INVOKABLE void addANewCard(int id);

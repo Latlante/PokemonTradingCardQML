@@ -7,6 +7,7 @@
 #include "src_Cards/cardenergy.h"
 #include "src_Cards/cardpokemon.h"
 #include "src_Packets/packetdeck.h"
+#include "utils.h"
 
 ModelSelectingCards::ModelSelectingCards(QObject *parent) :
     QAbstractListModel(parent),
@@ -36,6 +37,20 @@ QList<InfoCard> ModelSelectingCards::listCardsSelected()
     return m_listCardsSelected;
 }
 
+QString ModelSelectingCards::name()
+{
+    return m_name;
+}
+
+void ModelSelectingCards::setName(const QString &name)
+{
+    if(m_name != name)
+    {
+        m_name = name;
+        emit nameChanged();
+    }
+}
+
 void ModelSelectingCards::changeQuantityCard(int id, int quantity)
 {
     if((id >= 0) && (id < m_listCardsSelected.count()))
@@ -57,7 +72,7 @@ void ModelSelectingCards::changeQuantityCard(int id, int quantity)
 
 QVariant ModelSelectingCards::data(const QModelIndex &index, int role) const
 {
-    qDebug() << __PRETTY_FUNCTION__ << index << role;
+    //qDebug() << __PRETTY_FUNCTION__ << index << role;
     int iRow = index.row();
     if ((iRow < 0) || (iRow >= rowCount()))
     {
@@ -111,16 +126,22 @@ void ModelSelectingCards::initListCards()
     QList<int> listId = db.listIdAllCardsPokemon();
     listId += db.listIdAllCardsEnergies();
 
+    qDebug() << __PRETTY_FUNCTION__ << "listCards:" << listId;
+
     foreach(int id, listId)
     {
         AbstractCard* card = db.cardById(id);
-        InfoCard info;
-        info.card = card;
-        info.quantity = 0;
 
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_listCardsSelected.append(info);
-        endInsertRows();
+        if(card != NULL)
+        {
+            InfoCard info;
+            info.card = card;
+            info.quantity = 0;
+
+            beginInsertRows(QModelIndex(), rowCount(), rowCount());
+            m_listCardsSelected.append(info);
+            endInsertRows();
+        }
     }
 }
 
@@ -147,5 +168,5 @@ int ModelSelectingCards::countTotalQuantity()
 
 bool ModelSelectingCards::canAcceptXNewCards(int quantity)
 {
-    return (countTotalQuantity() + quantity) <= PacketDeck::maxCards();
+    return (countTotalQuantity() + quantity) <= MAXCARDS_DECK;
 }

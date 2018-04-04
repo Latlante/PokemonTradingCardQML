@@ -19,7 +19,7 @@ public:
 
     static void declareQML();
 	
-    static int maxCards();
+    int maxCards();
 
     virtual QVariant data(const QModelIndex &index, int role) const override;
 

@@ -3,6 +3,14 @@
 
 #include <QObject>
 
+#define MAXCARDS_BENCH      5
+#define MAXCARDS_FIGHT      1
+#define MAXCARDS_DECK       60
+#define MAXCARDS_HAND       -1
+#define MAXCARDS_REWARD     6
+#define MAXCARDS_TRASH      60
+
+
 class Utils : public QObject
 {
     Q_OBJECT

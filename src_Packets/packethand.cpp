@@ -26,7 +26,7 @@ void PacketHand::declareQML()
 ************************************************************/
 int PacketHand::maxCards()
 {
-    return -1;
+    return MAXCARDS_HAND;
 }
 
 QVariant PacketHand::data(const QModelIndex &index, int role) const

@@ -22,7 +22,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: 35
-            text: "Player 1"
+            text: viewCards.model.name
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
         }
@@ -43,7 +43,9 @@ Item {
             model: ctrlSelectingCards.model()
             delegate: Item {
                 id: itemCard
-                anchors.fill: parent
+                //anchors.fill: parent
+                width: 100
+                height: 200
 
                 Image {
                     id: imageCard

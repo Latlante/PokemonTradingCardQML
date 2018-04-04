@@ -4,8 +4,8 @@
 #include <QVariant>
 #include "src_Actions/actioncreationfactory.h"
 
-const QString Database::m_PATH_DB_ENERGIES = "rcc/energies.db";
-const QString Database::m_PATH_DB_POKEMON = "rcc/pokemon.db";
+const QString Database::m_PATH_DB_ENERGIES = ":/db/db_energies.csv";
+const QString Database::m_PATH_DB_POKEMON = ":/db/db_pokemon.csv";
 
 Database::Database(QObject *parent) : QObject(parent)
 {
@@ -59,33 +59,57 @@ QList<int> Database::listIdAllCardsEnergies()
 AbstractCard* Database::cardById(int id)
 {
     AbstractCard* cardToReturn = NULL;
-    QFile fichier("database/db.csv");
-    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
-
-    QByteArray textFromFile = fichier.readAll();
-    QString contenuGeneral = QString::fromLatin1(textFromFile);
-    QStringList contenuParLigne = contenuGeneral.split("\n");
-
-    int indexLine = -1;
-    for(int i=0;i<contenuParLigne.count();++i)
-    //foreach(QString ligne, contenuParLigne)
-    {
-        int idCard = contenuParLigne[i].section(";", 0, 0).toInt();
-
-        if (idCard == id)
-        {
-            indexLine = i;
-            break;
-        }
-    }
-
 
     if ((id >= INDEX_START_POKEMON) && (id < INDEX_START_ENERGIES))
     {
-        cardToReturn = newCardPokemon(contenuParLigne[indexLine]);
+        QFile fichier(m_PATH_DB_POKEMON);
+        fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+
+        QByteArray textFromFile = fichier.readAll();
+        QString contenuGeneral = QString::fromLatin1(textFromFile);
+        QStringList contenuParLigne = contenuGeneral.split("\n");
+
+        int indexLine = -1;
+        for(int i=0;i<contenuParLigne.count();++i)
+        //foreach(QString ligne, contenuParLigne)
+        {
+            int idCard = contenuParLigne[i].section(";", 0, 0).toInt();
+
+            if (idCard == id)
+            {
+                indexLine = i;
+                break;
+            }
+        }
+
+        if(indexLine != -1)
+        {
+            cardToReturn = newCardPokemon(contenuParLigne[indexLine]);
+        }
+
     }
     else if ((id >= INDEX_START_ENERGIES) && (id < INDEX_START_ACTION))
     {
+        QFile fichier(m_PATH_DB_ENERGIES);
+        fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+
+        QByteArray textFromFile = fichier.readAll();
+        QString contenuGeneral = QString::fromLatin1(textFromFile);
+        QStringList contenuParLigne = contenuGeneral.split("\n");
+
+        int indexLine = -1;
+        for(int i=0;i<contenuParLigne.count();++i)
+        //foreach(QString ligne, contenuParLigne)
+        {
+            int idCard = contenuParLigne[i].section(";", 0, 0).toInt();
+
+            if (idCard == id)
+            {
+                indexLine = i;
+                break;
+            }
+        }
+
         cardToReturn = newCardEnergy(contenuParLigne[indexLine]);
     }
 

@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QDebug>
 
+#include <QUrl>
+
 class AbstractCard : public QObject
 {
     Q_OBJECT

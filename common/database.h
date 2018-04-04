@@ -5,7 +5,7 @@
 #include "src_Cards/cardenergy.h"
 #include "src_Cards/cardpokemon.h"
 
-#define INDEX_START_POKEMON     0
+#define INDEX_START_POKEMON     1
 #define INDEX_START_ENERGIES    1000
 #define INDEX_START_ACTION      1100
 

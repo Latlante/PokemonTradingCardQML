@@ -28,7 +28,7 @@ void BenchArea::declareQML()
 ************************************************************/
 int BenchArea::maxCards()
 {
-	return 5;
+    return MAXCARDS_BENCH;
 }
 
 QVariant BenchArea::data(const QModelIndex& index, int role) const

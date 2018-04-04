@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QtQml/qqml.h>
+#include "utils.h"
 
 class AbstractCard;
 
@@ -25,7 +26,7 @@ public:
 	
     static void declareQML();
 	
-    virtual static int maxCards() = 0;
+    virtual int maxCards() = 0;
     int countCard() const;
     bool isFull();
     bool addNewCard(AbstractCard* newCard);

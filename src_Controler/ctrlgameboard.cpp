@@ -8,14 +8,16 @@
 #include "src_Models/factorymainpageloader.h"
 #include "gamemanager.h"
 #include "player.h"
+#include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/listplayers.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/packetdeck.h"
 
-CtrlGameBoard::CtrlGameBoard(QObject *parent) :
+CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, QObject *parent) :
     QObject(parent),
     m_gameManager(GameManager::createInstance()),
-    m_factoryMainPageLoader(new FactoryMainPageLoader())
+    m_factoryMainPageLoader(new FactoryMainPageLoader()),
+    m_ctrlSelectingCards(ctrlSelectCards)
 {
     //initGame();
 }
@@ -72,13 +74,15 @@ FactoryMainPageLoader* CtrlGameBoard::factory()
 
 void CtrlGameBoard::initGame(QStringList listOfPlayers)
 {
-    QString nom = "Corentin";
+    /*QString nom = "Corentin";
     QList<AbstractCard*> listCards = m_gameManager->chooseCards(listOfPlayers[0]);
     Player* playerCorentin = m_gameManager->addNewPlayer(nom, listCards);
 
     nom = "Alice";
     listCards = m_gameManager->chooseCards(listOfPlayers[1]);
-    Player* playerAlice = m_gameManager->addNewPlayer(nom, listCards);
+    Player* playerAlice = m_gameManager->addNewPlayer(nom, listCards);*/
+
+
 
     m_gameManager->initGame();
 }
@@ -123,12 +127,14 @@ Player* CtrlGameBoard::playerAt(int index)
 
 void CtrlGameBoard::onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers)
 {
-    initGame(listOfPlayers);
+    m_ctrlSelectingCards.setName(listOfPlayers[0]);
 
     m_factoryMainPageLoader->displaySelectCards();
 }
 
 void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
 {
+    //initGame();
+
     m_factoryMainPageLoader->displayBoard();
 }

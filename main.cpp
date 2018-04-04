@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
     PacketTrash::declareQML();
 
     QQmlApplicationEngine engine;
-    CtrlGameBoard ctrlGB;
     CtrlSelectingCards ctrlSC;
+    CtrlGameBoard ctrlGB(ctrlSC);
     ctrlGB.install(&engine);
     ctrlSC.install(&engine);
 

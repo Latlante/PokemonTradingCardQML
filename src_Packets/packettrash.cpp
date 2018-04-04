@@ -24,7 +24,7 @@ void PacketTrash::declareQML()
 ************************************************************/
 int PacketTrash::maxCards()
 {
-	return 60;
+    return MAXCARDS_TRASH;
 }
 
 QVariant PacketTrash::data(const QModelIndex &index, int role) const

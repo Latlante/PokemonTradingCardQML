@@ -36,6 +36,11 @@ void CtrlSelectingCards::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
+void CtrlSelectingCards::setName(const QString &name)
+{
+    m_modelSelectingCards->setName(name);
+}
+
 bool CtrlSelectingCards::install(QQmlApplicationEngine *pEngine)
 {
     qDebug() << "installing controleur...";

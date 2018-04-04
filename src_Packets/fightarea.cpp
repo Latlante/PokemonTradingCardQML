@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include "src_Cards/cardpokemon.h"
+#include "utils.h"
 
 FightArea::FightArea(QList<AbstractCard*> listCards) :
 	AbstractPacket(listCards)
@@ -19,7 +20,7 @@ FightArea::~FightArea()
 ************************************************************/
 int FightArea::maxCards()
 {
-    return 1;
+    return MAXCARDS_FIGHT;
 }
 
 CardPokemon* FightArea::pokemonFighting(int index)
