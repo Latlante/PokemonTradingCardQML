@@ -26,7 +26,7 @@ void PacketDeck::declareQML()
 ************************************************************/
 int PacketDeck::maxCards()
 {
-    return 10;
+    return 60;
 }
 
 void PacketDeck::mixCards()

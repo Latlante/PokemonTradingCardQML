@@ -15,7 +15,7 @@ public:
 
     static void declareQML();
 	
-	int maxCards();
+    static int maxCards();
 	void mixCards();
     AbstractCard *drawCard();
     QList<AbstractCard *> drawCards(int count);

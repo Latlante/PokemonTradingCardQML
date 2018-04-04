@@ -25,7 +25,7 @@ public:
 	
     static void declareQML();
 	
-    virtual int maxCards() = 0;
+    virtual static int maxCards() = 0;
     int countCard() const;
     bool isFull();
     bool addNewCard(AbstractCard* newCard);
