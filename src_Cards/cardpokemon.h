@@ -39,6 +39,8 @@ public:
 				short evolutionFrom = -1);
     ~CardPokemon();
 
+    static void declareQML();
+
     AbstractCard::Enum_typeOfCard type() override;
     QUrl image() override;
     AbstractCard::Enum_element element();

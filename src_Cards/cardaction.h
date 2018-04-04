@@ -8,6 +8,8 @@ class CardAction : public AbstractCard
 public:
     CardAction(unsigned short id, const QString& name, const QString& description/*, AbstractAction* action*/);
     ~CardAction();
+
+    static void declareQML();
 	
     AbstractCard::Enum_typeOfCard type() override;
     QUrl image() override;

@@ -1,6 +1,7 @@
 #include "cardpokemon.h"
 
 #include <QDebug>
+#include <QtQml/qqml.h>
 #include <QUrl>
 #include "src_Actions/abstractaction.h"
 #include "cardenergy.h"
@@ -26,6 +27,14 @@ CardPokemon::CardPokemon(unsigned short id,
 CardPokemon::~CardPokemon()
 {
 	
+}
+
+/************************************************************
+*****				FONCTIONS STATIQUES					*****
+************************************************************/
+void CardPokemon::declareQML()
+{
+    qmlRegisterUncreatableType<CardPokemon>("model", 1, 0, "CardPokemon", "CardPokemon error");
 }
 
 /************************************************************

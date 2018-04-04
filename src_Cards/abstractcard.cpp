@@ -1,5 +1,6 @@
 #include "abstractcard.h"
 #include <QPixmap>
+#include <QtQml/qqml.h>
 
 AbstractCard::AbstractCard(unsigned short id, const QString& name) :
     QObject(),
@@ -12,6 +13,14 @@ AbstractCard::AbstractCard(unsigned short id, const QString& name) :
 AbstractCard::~AbstractCard()
 {
 	
+}
+
+/************************************************************
+*****				FONCTIONS STATIQUES					*****
+************************************************************/
+void AbstractCard::declareQML()
+{
+    qmlRegisterUncreatableType<AbstractCard>("model", 1, 0, "AbstractCard", "AbstractCard error");
 }
 
 /************************************************************

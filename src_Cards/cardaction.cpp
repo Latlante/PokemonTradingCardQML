@@ -1,5 +1,6 @@
 #include "cardaction.h"
 #include <QUrl>
+#include <QtQml/qqml.h>
 
 CardAction::CardAction(unsigned short id, const QString& name, const QString& description/*, AbstractAction* action*/) :
     AbstractCard(id, name),
@@ -12,6 +13,14 @@ CardAction::CardAction(unsigned short id, const QString& name, const QString& de
 CardAction::~CardAction()
 {
     //delete m_action;
+}
+
+/************************************************************
+*****				FONCTIONS STATIQUES					*****
+************************************************************/
+void CardAction::declareQML()
+{
+    qmlRegisterUncreatableType<CardAction>("model", 1, 0, "CardAction", "CardAction error");
 }
 
 /************************************************************

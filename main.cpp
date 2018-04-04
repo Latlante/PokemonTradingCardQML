@@ -1,11 +1,16 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QResource>
 #include "src_Models/factorymainpageloader.h"
 #include "src_Controler/ctrlgameboard.h"
 #include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/listplayers.h"
 #include "src_Models/modelselectingcards.h"
 #include "player.h"
+#include "src_Cards/abstractcard.h"
+#include "src_Cards/cardaction.h"
+#include "src_Cards/cardenergy.h"
+#include "src_Cards/cardpokemon.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
 #include "src_Packets/packetdeck.h"
@@ -21,12 +26,19 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    QResource::registerResource("Ressources/pokemon.rcc");
+    QResource::registerResource("Ressources/energies.rcc");
+
     FactoryMainPageLoader::declareQML();
     CtrlGameBoard::declareQML();
     CtrlSelectingCards::declareQML();
     ListPlayers::declareQML();
     ModelSelectingCards::declareQML();
     Player::declareQML();
+    AbstractCard::declareQML();
+    CardAction::declareQML();
+    CardEnergy::declareQML();
+    CardPokemon::declareQML();
     BenchArea::declareQML();
     PacketDeck::declareQML();
     PacketHand::declareQML();

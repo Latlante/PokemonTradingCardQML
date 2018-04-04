@@ -1,5 +1,6 @@
 #include "cardenergy.h"
 #include <QUrl>
+#include <QtQml/qqml.h>
 
 CardEnergy::CardEnergy(unsigned short id, const QString& name, AbstractCard::Enum_element element, unsigned short quantity) :
     AbstractCard(id, name),
@@ -12,6 +13,14 @@ CardEnergy::CardEnergy(unsigned short id, const QString& name, AbstractCard::Enu
 CardEnergy::~CardEnergy()
 {
 	
+}
+
+/************************************************************
+*****				FONCTIONS STATIQUES					*****
+************************************************************/
+void CardEnergy::declareQML()
+{
+    qmlRegisterUncreatableType<CardEnergy>("model", 1, 0, "CardEnergy", "CardEnergy error");
 }
 
 /************************************************************

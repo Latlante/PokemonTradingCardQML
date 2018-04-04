@@ -8,6 +8,8 @@ class CardEnergy : public AbstractCard
 public:
     CardEnergy(unsigned short id, const QString& name, AbstractCard::Enum_element element, unsigned short quantity = 1);
     ~CardEnergy();
+
+    static void declareQML();
 	
     AbstractCard::Enum_typeOfCard type() override;
     QUrl image() override;

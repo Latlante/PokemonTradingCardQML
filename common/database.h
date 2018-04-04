@@ -74,6 +74,7 @@ private:
 
     CardPokemon* newCardPokemon(const QString &infoCsv);
     CardEnergy* newCardEnergy(const QString& infoCsv);
+    //CardTrainer* newCardTrainer(const QString& infoCsv);
 };
 
 #endif // DATABASE_H

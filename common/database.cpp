@@ -28,7 +28,10 @@ QList<int> Database::listIdAllCardsPokemon()
 
     foreach(QString line, textSplitted)
     {
-        listId.append(line.section(";", InfoDbPok_Id, InfoDbPok_Id).toInt());
+        if(line.section(";", InfoDbPok_Useable, InfoDbPok_Useable) == "1")
+        {
+            listId.append(line.section(";", InfoDbPok_Id, InfoDbPok_Id).toInt());
+        }
     }
 
     return listId;
@@ -94,46 +97,52 @@ AbstractCard* Database::cardById(int id)
 ************************************************************/
 CardPokemon* Database::newCardPokemon(const QString& infoCsv)
 {
+    CardPokemon* cardPokemonToReturn = NULL;
     QStringList arguments = infoCsv.split(";");
 
-    QList<AttackData> listAttacks;
-    int offset = InfoDbPok_Att1;
-    for(int i=0;i<3;++i)
+    if(arguments[InfoDbPok_Useable] == "1")
     {
-        if(arguments[offset+InfoAtt_Name] != "")
+        QList<AttackData> listAttacks;
+        int offset = InfoDbPok_Att1;
+        for(int i=0;i<3;++i)
         {
-            AttackData attack;
-            attack.name = arguments[offset+InfoAtt_Name];
-            attack.description = arguments[offset+InfoAtt_Description];
-            attack.damage = arguments[offset+InfoAtt_Damage].toInt();
-
-            QMap<AbstractCard::Enum_element, unsigned short> listEnergies;
-            for(int indexEnergies=0;indexEnergies<AbstractCard::Element_COUNT;++indexEnergies)
+            if(arguments[offset+InfoAtt_Name] != "")
             {
-                int indexEnergy = static_cast<int>(InfoAtt_FirstEnergies)+indexEnergies;
-                QString contenuCell = arguments[offset+indexEnergy];
+                AttackData attack;
+                attack.name = arguments[offset+InfoAtt_Name];
+                attack.description = arguments[offset+InfoAtt_Description];
+                attack.damage = arguments[offset+InfoAtt_Damage].toInt();
 
-                if (contenuCell != "")
+                QMap<AbstractCard::Enum_element, unsigned short> listEnergies;
+                for(int indexEnergies=0;indexEnergies<AbstractCard::Element_COUNT;++indexEnergies)
                 {
-                    listEnergies.insert(static_cast<AbstractCard::Enum_element>(indexEnergies), contenuCell.toUShort());
-                }
-            }
+                    int indexEnergy = static_cast<int>(InfoAtt_FirstEnergies)+indexEnergies;
+                    QString cellContains = arguments[offset+indexEnergy];
 
-            attack.costEnergies = listEnergies;
-            bool ok;
-            int idAction = arguments[offset+InfoAtt_ActionType].toInt(&ok);
-            attack.action = ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction), QVariant::fromValue(arguments[offset+InfoAtt_ActionArgument]));
-            listAttacks.append(attack);
+                    if (cellContains != "")
+                    {
+                        listEnergies.insert(static_cast<AbstractCard::Enum_element>(indexEnergies), cellContains.toUShort());
+                    }
+                }
+
+                attack.costEnergies = listEnergies;
+                bool ok;
+                int idAction = arguments[offset+InfoAtt_ActionType].toInt(&ok);
+                attack.action = ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction), QVariant::fromValue(arguments[offset+InfoAtt_ActionArgument]));
+                listAttacks.append(attack);
+            }
+            offset += InfoAtt_COUNT;
         }
-        offset += InfoAtt_COUNT;
+
+        cardPokemonToReturn = new CardPokemon(arguments[InfoDbPok_Id].toInt(),
+                                            arguments[InfoDbPok_Name],
+                                            static_cast<AbstractCard::Enum_element>(arguments[InfoDbPok_Element].toInt()),
+                                            arguments[InfoDbPok_Life].toUShort(),
+                                            listAttacks,
+                                            arguments[InfoDbPok_IdSubevolution] == "" ? -1 : arguments[InfoDbPok_IdSubevolution].toShort());
     }
 
-    return new CardPokemon( arguments[InfoDbPok_Id].toInt(),
-                            arguments[InfoDbPok_Name],
-                            static_cast<AbstractCard::Enum_element>(arguments[InfoDbPok_Element].toInt()),
-                            arguments[InfoDbPok_Life].toUShort(),
-                            listAttacks,
-                            arguments[InfoDbPok_IdSubevolution] == "" ? -1 : arguments[InfoDbPok_IdSubevolution].toShort());
+    return cardPokemonToReturn;
 }
 
 CardEnergy* Database::newCardEnergy(const QString &infoCsv)
@@ -145,3 +154,21 @@ CardEnergy* Database::newCardEnergy(const QString &infoCsv)
                           static_cast<AbstractCard::Enum_element>(arguments[InfoDbNrj_Id].toInt()-INDEX_START_ENERGIES),
                           arguments[InfoDbNrj_Quantity].toUShort());
 }
+
+/*CardTrainer* Database::newCardTrainer(const QString &infoCsv)
+{
+    CardTrainer* cardTrainerToReturn = NULL;
+    QStringList arguments = infoCsv.split(";");
+
+    if(arguments[InfoDbTrainer_Useable] == "1")
+    {
+        int idAction = arguments[InfoDbTrainer_Type].toInt(&ok);
+
+        cardTrainerToReturn = new CardTrainer(arguments[InfoDbTrainer_Id].toInt(),
+                                              arguments[InfoDbTrainer_Name],
+                                              arguments[InfoDbTrainer_Description],
+                                              ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction), QVariant::fromValue(arguments[InfoDbTrainer_Argument]));
+    }
+
+    return cardTrainerToReturn;
+}*/

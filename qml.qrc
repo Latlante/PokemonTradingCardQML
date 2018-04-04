@@ -5,5 +5,6 @@
         <file>SelectPlayers.qml</file>
         <file>BoardQML.qml</file>
         <file>SelectingCardsQML.qml</file>
+        <file>PopupCardDetailsBasic.qml</file>
     </qresource>
 </RCC>

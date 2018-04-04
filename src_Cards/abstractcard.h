@@ -37,6 +37,8 @@ public:
 
     AbstractCard(unsigned short id, const QString& name);
     virtual ~AbstractCard();
+
+    static void declareQML();
 	
 	virtual Enum_typeOfCard type() = 0;
     virtual QUrl image() = 0;
