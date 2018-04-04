@@ -11,12 +11,12 @@ public:
 
     static void declareQML();
 	
-    AbstractCard::Enum_typeOfCard type() override;
-    QUrl image() override;
+    Q_INVOKABLE AbstractCard::Enum_typeOfCard type() override;
+    Q_INVOKABLE QUrl image() override;
 
-	AbstractCard::Enum_element element();
+    Q_INVOKABLE AbstractCard::Enum_element element();
 	void setElement(AbstractCard::Enum_element element);
-	unsigned short quantity();
+    Q_INVOKABLE unsigned short quantity();
 	void setQuantity(unsigned short quantity);
 
 private:

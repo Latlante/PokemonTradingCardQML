@@ -14,6 +14,7 @@ public:
 		TypeOfCard_Energy,
 		TypeOfCard_Action
 	};
+    Q_ENUMS(Enum_typeOfCard)
 	
 	enum Enum_element
 	{
@@ -40,11 +41,11 @@ public:
 
     static void declareQML();
 	
-	virtual Enum_typeOfCard type() = 0;
-    virtual QUrl image() = 0;
+    Q_INVOKABLE virtual Enum_typeOfCard type() = 0;
+    Q_INVOKABLE virtual QUrl image() = 0;
 	
-    int id();
-	const QString name();
+    Q_INVOKABLE int id();
+    Q_INVOKABLE const QString name();
 	void setName(const QString& name);
 
 signals:

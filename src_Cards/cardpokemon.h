@@ -41,14 +41,14 @@ public:
 
     static void declareQML();
 
-    AbstractCard::Enum_typeOfCard type() override;
-    QUrl image() override;
-    AbstractCard::Enum_element element();
-	unsigned short lifeTotal();
-	unsigned short lifeLeft();
-	Enum_statusOfPokemon status();
+    Q_INVOKABLE AbstractCard::Enum_typeOfCard type() override;
+    Q_INVOKABLE QUrl image() override;
+    Q_INVOKABLE AbstractCard::Enum_element element();
+    Q_INVOKABLE unsigned short lifeTotal();
+    Q_INVOKABLE unsigned short lifeLeft();
+    Q_INVOKABLE Enum_statusOfPokemon status();
     void setStatus(Enum_statusOfPokemon status);
-	QList<AttackData> listAttacks();
+    Q_INVOKABLE QList<AttackData> listAttacks();
 	
     void addEnergy(CardEnergy* energy);
 	unsigned short countEnergies();
