@@ -50,6 +50,49 @@ Item {
                     anchors.fill: parent
                     source: model.imageCard
                 }
+
+                Rectangle {
+                    id: barSelectQuantityCards
+                    height: 40
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+
+                    Button {
+                        id: buttonMinus
+                        width: parent.width / 4
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.bottom: parent.bottom
+
+                        onClicked: ctrlSelectingCards.removeACard(index)
+                    }
+
+                    Rectangle {
+                        id: backgroundTextQuantity
+                        anchors.top: parent.top
+                        anchors.left: buttonMinus.right
+                        anchors.right: buttonPlus.left
+                        anchors.bottom: parent.bottom
+                        color: "white"
+
+                        Text {
+                            id: textInputQuantity
+                            anchors.fill: parent
+                            text: model.quantity
+                        }
+                    }
+
+                    Button {
+                        id: buttonPlus
+                        width: parent.width / 4
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+
+                        onClicked: ctrlSelectingCards.addANewCard(index)
+                    }
+                }
             }
 
         }

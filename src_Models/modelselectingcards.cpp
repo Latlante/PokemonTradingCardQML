@@ -6,6 +6,7 @@
 #include "src_Cards/cardaction.h"
 #include "src_Cards/cardenergy.h"
 #include "src_Cards/cardpokemon.h"
+#include "src_Packets/packetdeck.h"
 
 ModelSelectingCards::ModelSelectingCards(QObject *parent) :
     QAbstractListModel(parent),
@@ -37,14 +38,20 @@ QList<InfoCard> ModelSelectingCards::listCardsSelected()
 
 void ModelSelectingCards::changeQuantityCard(int id, int quantity)
 {
-    InfoCard info = m_listCardsSelected[id];
-
-    if(info.quantity != quantity)
+    if((id >= 0) && (id < m_listCardsSelected.count()))
     {
-        info.quantity = quantity;
-        m_listCardsSelected.replace(id, info);
+        InfoCard info = m_listCardsSelected[id];
+        int delta = info.quantity - quantity;
 
-        emit dataChanged(index(id, 0), index(id, 0));
+        if((info.quantity != quantity) &&
+            (quantity >= 0) &&
+            (canAcceptXNewCards(delta) == true))
+        {
+            info.quantity = quantity;
+            m_listCardsSelected.replace(id, info);
+
+            emit dataChanged(index(id, 0), index(id, 0));
+        }
     }
 }
 
@@ -126,4 +133,19 @@ void ModelSelectingCards::cleanListCards()
         delete info.card;
         endRemoveRows();
     }
+}
+
+int ModelSelectingCards::countTotalQuantity()
+{
+    int count = 0;
+
+    foreach(InfoCard info, m_listCardsSelected)
+        count += info.quantity;
+
+    return count;
+}
+
+bool ModelSelectingCards::canAcceptXNewCards(int quantity)
+{
+    return (countTotalQuantity() + quantity) <= PacketDeck::maxCards();
 }

@@ -53,6 +53,8 @@ private:
 
     void initListCards();
     void cleanListCards();
+    int countTotalQuantity();
+    bool canAcceptXNewCards(int quantity);
 };
 
 #endif // MODELSELECTINGCARDS_H
