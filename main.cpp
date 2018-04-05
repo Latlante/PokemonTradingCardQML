@@ -26,8 +26,9 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QResource::registerResource("Ressources/pokemon.rcc");
-    QResource::registerResource("Ressources/energies.rcc");
+    //QResource::registerResource("Ressources/pokemon.rcc");
+    //QResource::registerResource("Ressources/energies.rcc");
+    QResource::registerResource("Ressources/cards.rcc");
 
     FactoryMainPageLoader::declareQML();
     CtrlGameBoard::declareQML();

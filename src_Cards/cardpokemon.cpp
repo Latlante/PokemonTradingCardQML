@@ -52,8 +52,8 @@ AbstractCard::Enum_typeOfCard CardPokemon::type()
 
 QUrl CardPokemon::image()
 {
-    const QString path = ":/pokemon/cards/" + QString::number(id()) + ".png";
-    qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
+    const QString path = "pokemon/cards/" + QString::number(id()) + ".png";
+    //qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
 
     //return QPixmap(path);
     //return QUrl::fromLocalFile(path);

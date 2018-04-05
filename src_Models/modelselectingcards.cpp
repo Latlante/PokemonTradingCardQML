@@ -122,7 +122,12 @@ int ModelSelectingCards::rowCountById(int id) const
 
 void ModelSelectingCards::clear()
 {
-    cleanListCards();
+    for(int i=0;i<m_listCardsSelected.count();++i)
+    {
+        InfoCard info = m_listCardsSelected[i];
+        info.quantity = 0;
+        m_listCardsSelected[i] = info;
+    }
 }
 
 /************************************************************

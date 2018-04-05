@@ -38,19 +38,26 @@ Item {
             anchors.rightMargin: 10
             anchors.bottom: buttonRandom.top
             anchors.bottomMargin: 10
-            cellWidth: (viewCards.width-selectCards1.space)/selectCards1.colCount
-            cellHeight: cellWidth*2
+            //cellWidth: (viewCards.width-selectCards1.space)/selectCards1.colCount
+            //cellHeight: cellWidth*2
+            cellWidth: 160
+            cellHeight: 280
+
 
             model: ctrlSelectingCards.model()
             delegate: Item {
                 id: itemCard
                 //anchors.fill: parent
-                width: 100
-                height: 200
+                width: 150
+                height: 270
 
                 Image {
                     id: imageCard
-                    anchors.fill: parent
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: barSelectQuantityCards.top
+                    fillMode: Image.PreserveAspectFit
                     source: model.imageCard
                 }
 
@@ -67,6 +74,7 @@ Item {
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.bottom: parent.bottom
+                        text: "-"
 
                         onClicked: ctrlSelectingCards.removeACard(index)
                     }
@@ -82,6 +90,8 @@ Item {
                         Text {
                             id: textInputQuantity
                             anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
                             text: model.quantity
                         }
                     }
@@ -92,6 +102,7 @@ Item {
                         anchors.top: parent.top
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
+                        text: "+"
 
                         onClicked: ctrlSelectingCards.addANewCard(index)
                     }
