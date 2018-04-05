@@ -59,7 +59,7 @@ void ModelSelectingCards::setName(const QString &name)
 
 bool ModelSelectingCards::isLastPlayer()
 {
-    return m_listCardsSelected;
+    return m_lastPlayer;
 }
 
 void ModelSelectingCards::setLastPlayer(bool lastPlayer)
@@ -176,7 +176,8 @@ void ModelSelectingCards::cleanListCards()
     {
         beginRemoveRows(QModelIndex(), rowCount()-1, rowCount());
         InfoCard info = m_listCardsSelected.takeFirst();
-        //delete info.card;
+        delete info.card;
+        info.card = nullptr;
         endRemoveRows();
     }
 }

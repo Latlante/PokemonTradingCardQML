@@ -6,6 +6,7 @@
 #include <QQmlContext>
 #include <QtQml/qqml.h>
 
+#include "src_Cards/abstractcard.h"
 #include "utils.h"
 
 CtrlSelectingCards::CtrlSelectingCards(QObject *parent) :
@@ -81,7 +82,7 @@ QMap<QString, QList<AbstractCard *> > CtrlSelectingCards::listCardsByPlayer()
         {
             for(int indexQuantity=0;indexQuantity<info.quantity;++indexQuantity)
             {
-                listOfCards.append(new AbstractCard(info.card));
+                listOfCards.append(info.card->clone());
             }
         }
 
