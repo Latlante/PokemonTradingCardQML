@@ -45,6 +45,7 @@ public:
     enum Enum_InformationEnergiesDatabase
     {
         InfoDbNrj_Id = 0,
+        InfoDbNrj_Useable,
         InfoDbNrj_Name,
         InfoDbNrj_Element,
         InfoDbNrj_Quantity,
@@ -71,6 +72,7 @@ signals:
 private:
     static const QString m_PATH_DB_ENERGIES;
     static const QString m_PATH_DB_POKEMON;
+    static const QString m_PATH_DB;
 
     CardPokemon* newCardPokemon(const QString &infoCsv);
     CardEnergy* newCardEnergy(const QString& infoCsv);

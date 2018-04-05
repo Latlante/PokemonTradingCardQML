@@ -52,11 +52,12 @@ AbstractCard::Enum_typeOfCard CardPokemon::type()
 
 QUrl CardPokemon::image()
 {
-    const QString path = "Images/cartes/pokemon/" + QString::number(id()) + ".png";
+    const QString path = ":/pokemon/cards/" + QString::number(id()) + ".png";
     qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
 
     //return QPixmap(path);
-    return QUrl::fromLocalFile(path);
+    //return QUrl::fromLocalFile(path);
+    return path;
 }
 
 AbstractCard* CardPokemon::clone()

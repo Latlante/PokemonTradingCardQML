@@ -4,8 +4,9 @@
 #include <QVariant>
 #include "src_Actions/actioncreationfactory.h"
 
-const QString Database::m_PATH_DB_ENERGIES = ":/db/db_energies.csv";
-const QString Database::m_PATH_DB_POKEMON = ":/db/db_pokemon.csv";
+const QString Database::m_PATH_DB_ENERGIES = ":/energies/db/db_energies.csv";
+const QString Database::m_PATH_DB_POKEMON = ":/pokemon/db/db_pokemon.csv";
+const QString Database::m_PATH_DB = ":/database.csv";
 
 Database::Database(QObject *parent) : QObject(parent)
 {
@@ -19,7 +20,7 @@ QList<int> Database::listIdAllCardsPokemon()
 {
     QList<int> listId;
 
-    QFile fichier(m_PATH_DB_POKEMON);
+    QFile fichier(m_PATH_DB);
     fichier.open(QIODevice::ReadOnly | QIODevice::Text);
 
     QByteArray textFromFile = fichier.readAll();
@@ -28,9 +29,12 @@ QList<int> Database::listIdAllCardsPokemon()
 
     foreach(QString line, textSplitted)
     {
-        if(line.section(";", InfoDbPok_Useable, InfoDbPok_Useable) == "1")
+        unsigned int idPokemon = line.section(";", InfoDbPok_Id, InfoDbPok_Id).toInt();
+        if((idPokemon >= INDEX_START_POKEMON) &&
+                (idPokemon < INDEX_START_ENERGIES) &&
+                (line.section(";", InfoDbPok_Useable, InfoDbPok_Useable) == "1"))
         {
-            listId.append(line.section(";", InfoDbPok_Id, InfoDbPok_Id).toInt());
+            listId.append(idPokemon);
         }
     }
 
@@ -41,7 +45,7 @@ QList<int> Database::listIdAllCardsEnergies()
 {
     QList<int> listId;
 
-    QFile fichier(m_PATH_DB_ENERGIES);
+    QFile fichier(m_PATH_DB);
     fichier.open(QIODevice::ReadOnly | QIODevice::Text);
 
     QByteArray textFromFile = fichier.readAll();
@@ -50,7 +54,14 @@ QList<int> Database::listIdAllCardsEnergies()
 
     foreach(QString line, textSplitted)
     {
-        listId.append(line.section(";", InfoDbNrj_Id, InfoDbNrj_Id).toInt());
+        int idEnergy = line.section(";", InfoDbNrj_Id, InfoDbNrj_Id).toInt();
+        if((idEnergy >= INDEX_START_ENERGIES) &&
+                (idEnergy < INDEX_START_ACTION) &&
+                (line.section(";", InfoDbNrj_Useable, InfoDbNrj_Useable) == "1"))
+        {
+            listId.append(idEnergy);
+        }
+
     }
 
     return listId;
@@ -171,12 +182,18 @@ CardPokemon* Database::newCardPokemon(const QString& infoCsv)
 
 CardEnergy* Database::newCardEnergy(const QString &infoCsv)
 {
+    CardEnergy* cardEnergyToReturn = NULL;
     QStringList arguments = infoCsv.split(";");
 
-    return new CardEnergy(arguments[InfoDbNrj_Id].toInt(),
-                          arguments[InfoDbNrj_Name],
-                          static_cast<AbstractCard::Enum_element>(arguments[InfoDbNrj_Id].toInt()-INDEX_START_ENERGIES),
-                          arguments[InfoDbNrj_Quantity].toUShort());
+    if(arguments[InfoDbNrj_Useable] == "1")
+    {
+        cardEnergyToReturn = new CardEnergy(arguments[InfoDbNrj_Id].toInt(),
+                                            arguments[InfoDbNrj_Name],
+                                            static_cast<AbstractCard::Enum_element>(arguments[InfoDbNrj_Id].toInt()-INDEX_START_ENERGIES),
+                                            arguments[InfoDbNrj_Quantity].toUShort());
+    }
+
+    return cardEnergyToReturn;
 }
 
 /*CardTrainer* Database::newCardTrainer(const QString &infoCsv)

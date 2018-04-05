@@ -42,7 +42,8 @@ QUrl CardEnergy::image()
     qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
 
     //return QPixmap(path);
-    return QUrl::fromLocalFile(path);
+    //return QUrl::fromLocalFile(path);
+    return path;
 }
 
 AbstractCard* CardEnergy::clone()

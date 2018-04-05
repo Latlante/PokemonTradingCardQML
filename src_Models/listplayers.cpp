@@ -6,6 +6,9 @@ ListPlayers::ListPlayers(QObject *parent) : QAbstractListModel(parent)
 {
     addNewPlayer();
     addNewPlayer();
+
+    setData(index(0, 0), "Corentin", Qt::DisplayRole);
+    setData(index(1, 0), "Alice", Qt::DisplayRole);
 }
 
 /************************************************************
