@@ -39,12 +39,14 @@ public:
 	};
 
     AbstractCard(unsigned short id, const QString& name);
+
     virtual ~AbstractCard();
 
     static void declareQML();
 	
     Q_INVOKABLE virtual Enum_typeOfCard type() = 0;
     Q_INVOKABLE virtual QUrl image() = 0;
+    virtual AbstractCard* clone() = 0;
 	
     Q_INVOKABLE int id();
     Q_INVOKABLE const QString name();
@@ -56,6 +58,8 @@ signals:
 protected:
 	unsigned short m_id;
 	QString m_name;
+
+    AbstractCard();
 };
 
 #endif // ABSTRACTCARD_H

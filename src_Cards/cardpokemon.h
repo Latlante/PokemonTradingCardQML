@@ -37,12 +37,14 @@ public:
 				unsigned short lifeTotal,
 				QList<AttackData> listAttacks,
 				short evolutionFrom = -1);
+    CardPokemon(const CardPokemon& card);
     ~CardPokemon();
 
     static void declareQML();
 
     Q_INVOKABLE AbstractCard::Enum_typeOfCard type() override;
     Q_INVOKABLE QUrl image() override;
+    AbstractCard* clone() override;
     Q_INVOKABLE AbstractCard::Enum_element element();
     Q_INVOKABLE unsigned short lifeTotal();
     Q_INVOKABLE unsigned short lifeLeft();
@@ -62,6 +64,8 @@ public:
 	bool isBase();
 	bool isSubEvolutionOf(CardPokemon* evolution);
 	bool isEvolutionOf(CardPokemon* evolution);
+
+    CardPokemon& operator =(const CardPokemon& source);
 
 signals:
     void lifeLeftChanged();

@@ -10,6 +10,11 @@ CardAction::CardAction(unsigned short id, const QString& name, const QString& de
 	
 }
 
+CardAction::CardAction(const CardAction &card)
+{
+    *this = card;
+}
+
 CardAction::~CardAction()
 {
     //delete m_action;
@@ -40,6 +45,11 @@ QUrl CardAction::image()
     return QUrl::fromLocalFile(path);
 }
 
+AbstractCard* CardAction::clone()
+{
+    return new CardAction(*this);
+}
+
 const QString CardAction::description()
 {
 	return m_description;
@@ -53,4 +63,13 @@ const QString CardAction::description()
 void CardAction::executeAction()
 {
     //m_action->execute();
+}
+
+CardAction& CardAction::operator =(const CardAction& source)
+{
+    m_id = source.m_id;
+    m_name = source.m_name;
+    m_description = source.m_description;
+
+    return *this;
 }

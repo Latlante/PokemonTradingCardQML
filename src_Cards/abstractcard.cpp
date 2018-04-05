@@ -11,6 +11,10 @@ AbstractCard::AbstractCard(unsigned short id, const QString& name) :
 	
 }
 
+AbstractCard::AbstractCard()
+{
+}
+
 AbstractCard::~AbstractCard()
 {
 	

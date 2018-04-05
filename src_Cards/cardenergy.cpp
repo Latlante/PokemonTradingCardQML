@@ -10,6 +10,11 @@ CardEnergy::CardEnergy(unsigned short id, const QString& name, AbstractCard::Enu
 	
 }
 
+CardEnergy::CardEnergy(const CardEnergy &card)
+{
+    *this = card;
+}
+
 CardEnergy::~CardEnergy()
 {
 	
@@ -40,6 +45,11 @@ QUrl CardEnergy::image()
     return QUrl::fromLocalFile(path);
 }
 
+AbstractCard* CardEnergy::clone()
+{
+    return new CardEnergy(*this);
+}
+
 AbstractCard::Enum_element CardEnergy::element()
 {
 	return m_element;
@@ -58,4 +68,14 @@ unsigned short CardEnergy::quantity()
 void CardEnergy::setQuantity(unsigned short quantity)
 {
 	m_quantity = quantity;
+}
+
+CardEnergy& CardEnergy::operator =(const CardEnergy& source)
+{
+    m_id = source.m_id;
+    m_name = source.m_name;
+    m_element = source.m_element;
+    m_quantity = source.m_quantity;
+
+    return *this;
 }

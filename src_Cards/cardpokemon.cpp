@@ -23,6 +23,11 @@ CardPokemon::CardPokemon(unsigned short id,
 {
 	
 }
+
+CardPokemon::CardPokemon(const CardPokemon &card)
+{
+    *this = card;
+}
 				
 CardPokemon::~CardPokemon()
 {
@@ -52,6 +57,11 @@ QUrl CardPokemon::image()
 
     //return QPixmap(path);
     return QUrl::fromLocalFile(path);
+}
+
+AbstractCard* CardPokemon::clone()
+{
+    return new CardPokemon(*this);
 }
 
 AbstractCard::Enum_element CardPokemon::element()
@@ -214,8 +224,23 @@ bool CardPokemon::isEvolutionOf(CardPokemon* evolution)
     return m_evolutionFrom == evolution->m_id;
 }
 
+CardPokemon& CardPokemon::operator =(const CardPokemon& source)
+{
+    m_id = source.m_id;
+    m_name = source.m_name;
+    m_element = source.m_element;
+    m_lifeTotal = source.m_lifeTotal;
+    m_lifeLeft = source.m_lifeLeft;
+    m_status = source.m_status;
+    m_listAttacks = source.m_listAttacks;
+    m_listEnergies = source.m_listEnergies;
+    m_evolutionFrom = source.m_evolutionFrom;
+
+    return *this;
+}
+
 /************************************************************
-*****				FONCTIONS PUBLIQUES					*****
+*****				FONCTIONS PRIVEES					*****
 ************************************************************/
 void CardPokemon::setLifeLeft(unsigned short life)
 {
