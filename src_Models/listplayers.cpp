@@ -58,6 +58,24 @@ QVariant ListPlayers::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+bool ListPlayers::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!hasIndex(index.row(), index.column(), index.parent()))
+    {
+        qCritical() << __PRETTY_FUNCTION__ << "bad row num : " << index.row();
+        return false;
+    }
+
+    if (Qt::DisplayRole == role)
+    {
+        m_listOfPlayers[index.row()] = value.toString();
+
+        emit dataChanged(index, index);
+    }
+
+    return true;
+}
+
 int ListPlayers::rowCount(const QModelIndex &) const
 {
     return m_listOfPlayers.count();
