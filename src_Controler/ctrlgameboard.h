@@ -34,9 +34,14 @@ public:
     Q_INVOKABLE Player* playerAt(int index);
 
     Q_INVOKABLE void onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers);
+    Q_INVOKABLE void displaySelectingCardsForNextPlayers();
     Q_INVOKABLE void onClicked_ButtonOk_SelectCards();
 
 signals:
+    void nextPlayer();
+
+private slots:
+    void onListsComplete_CtrlSelectingCards();
 
 private:
     GameManager* m_gameManager;

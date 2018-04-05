@@ -11,7 +11,8 @@
 
 ModelSelectingCards::ModelSelectingCards(QObject *parent) :
     QAbstractListModel(parent),
-    m_listCardsSelected(QList<InfoCard>())
+    m_listCardsSelected(QList<InfoCard>()),
+    m_lastPlayer(false)
 {
     initListCards();
 }
@@ -32,6 +33,11 @@ void ModelSelectingCards::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
+int ModelSelectingCards::maxCards()
+{
+    return MAXCARDS_DECK;
+}
+
 QList<InfoCard> ModelSelectingCards::listCardsSelected()
 {
     return m_listCardsSelected;
@@ -48,6 +54,20 @@ void ModelSelectingCards::setName(const QString &name)
     {
         m_name = name;
         emit nameChanged();
+    }
+}
+
+bool ModelSelectingCards::isLastPlayer()
+{
+    return m_listCardsSelected;
+}
+
+void ModelSelectingCards::setLastPlayer(bool lastPlayer)
+{
+    if(m_lastPlayer != lastPlayer)
+    {
+        m_lastPlayer = lastPlayer;
+        emit lastPlayerChanged();
     }
 }
 
@@ -98,6 +118,11 @@ int ModelSelectingCards::rowCount(const QModelIndex &) const
 int ModelSelectingCards::rowCountById(int id) const
 {
     return m_listCardsSelected[id].quantity;
+}
+
+void ModelSelectingCards::clear()
+{
+    cleanListCards();
 }
 
 /************************************************************
@@ -151,7 +176,7 @@ void ModelSelectingCards::cleanListCards()
     {
         beginRemoveRows(QModelIndex(), rowCount()-1, rowCount());
         InfoCard info = m_listCardsSelected.takeFirst();
-        delete info.card;
+        //delete info.card;
         endRemoveRows();
     }
 }
@@ -168,5 +193,5 @@ int ModelSelectingCards::countTotalQuantity()
 
 bool ModelSelectingCards::canAcceptXNewCards(int quantity)
 {
-    return (countTotalQuantity() + quantity) <= MAXCARDS_DECK;
+    return (countTotalQuantity() + quantity) <= maxCards();
 }

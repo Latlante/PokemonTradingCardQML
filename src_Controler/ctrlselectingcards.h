@@ -3,9 +3,10 @@
 
 #include <QObject>
 
+#include "src_Models/modelselectingcards.h"
+
 class QQmlEngine;
 class QQmlApplicationEngine;
-class ModelSelectingCards;
 
 class CtrlSelectingCards : public QObject
 {
@@ -17,19 +18,25 @@ public:
     static void declareQML();
     bool install(QQmlApplicationEngine *pEngine);
 
-    void setName(const QString& name);
+    void newSelection(const QString& name, bool lastPlayer = false);
 
+    QMap<QString,QList<AbstractCard*> > listCardsByPlayer();
     Q_INVOKABLE ModelSelectingCards* model();
 
     Q_INVOKABLE void addANewCard(int id);
     Q_INVOKABLE void removeACard(int id);
     Q_INVOKABLE void changeQuantityCard(int id, int quantity);
     Q_INVOKABLE void fillARandomList();
+    Q_INVOKABLE void onClickedListFinished();
+
+    void selectCards(const QStringList& listOfPlayers);
 
 signals:
+    void listsComplete();
 
 private:
     ModelSelectingCards* m_modelSelectingCards;
+    QMap<QString,QList<InfoCard> > m_listCardsByPlayer;
 };
 
 #endif // CTRLSELECTINGCARDS_H

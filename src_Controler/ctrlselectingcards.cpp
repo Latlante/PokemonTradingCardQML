@@ -6,7 +6,6 @@
 #include <QQmlContext>
 #include <QtQml/qqml.h>
 
-#include "src_Models/modelselectingcards.h"
 #include "utils.h"
 
 CtrlSelectingCards::CtrlSelectingCards(QObject *parent) :
@@ -36,9 +35,11 @@ void CtrlSelectingCards::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-void CtrlSelectingCards::setName(const QString &name)
+void CtrlSelectingCards::newSelection(const QString &name, bool lastPlayer)
 {
+    m_modelSelectingCards->clear();
     m_modelSelectingCards->setName(name);
+    m_modelSelectingCards->setLastPlayer(lastPlayer);
 }
 
 bool CtrlSelectingCards::install(QQmlApplicationEngine *pEngine)
@@ -65,6 +66,31 @@ bool CtrlSelectingCards::install(QQmlApplicationEngine *pEngine)
     return bInstalled;
 }
 
+QMap<QString, QList<AbstractCard *> > CtrlSelectingCards::listCardsByPlayer()
+{
+    QMap<QString, QList<AbstractCard *> > newListOfCardsByPlayer;
+
+    for(int indexPlayer=0;indexPlayer<m_listCardsByPlayer.keys().count();++indexPlayer)
+    {
+        QList<AbstractCard *> listOfCards;
+        QString namePlayer = m_listCardsByPlayer.keys()[indexPlayer];
+
+        QList<InfoCard> listOfInfoCard = m_listCardsByPlayer[namePlayer];
+
+        foreach(InfoCard info, listOfInfoCard)
+        {
+            for(int indexQuantity=0;indexQuantity<info.quantity;++indexQuantity)
+            {
+                listOfCards.append(new AbstractCard(info.card));
+            }
+        }
+
+        newListOfCardsByPlayer.insert(namePlayer, listOfCards);
+    }
+
+    return newListOfCardsByPlayer;
+}
+
 ModelSelectingCards* CtrlSelectingCards::model()
 {
     return m_modelSelectingCards;
@@ -89,9 +115,55 @@ void CtrlSelectingCards::fillARandomList()
 {
     int rowCount = m_modelSelectingCards->rowCount();
 
-    for(int i=0;i<40;++i)
+    for(int i=0;i<m_modelSelectingCards->maxCards();++i)
     {
         int randomId = Utils::randomValue(0, rowCount);
         addANewCard(randomId);
+    }
+}
+
+void CtrlSelectingCards::onClickedListFinished()
+{
+    QString namePlayerToSelect = "";
+    int index = 0;
+
+    //On enregistre la liste
+    m_listCardsByPlayer[m_modelSelectingCards->name()] = m_modelSelectingCards->listCardsSelected();
+
+    //On vérifie s'il reste des personnes qui n'ont pas fait leur sélection
+    while((namePlayerToSelect == "") && (index < m_listCardsByPlayer.keys().count()))
+    {
+        QString currentName = m_listCardsByPlayer.keys()[index];
+        if(m_listCardsByPlayer[currentName].isEmpty())
+        {
+            namePlayerToSelect = currentName;
+        }
+
+        index++;
+    }
+
+    //On y retourne pour le prochain joueur
+    if(namePlayerToSelect != "")
+    {
+        newSelection(namePlayerToSelect, false);
+    }
+    //Tout est bon, on passe à la suite
+    else
+    {
+        emit listsComplete();
+    }
+}
+
+void CtrlSelectingCards::selectCards(const QStringList &listOfPlayers)
+{
+    if(listOfPlayers.count() > 0)
+    {
+        //Initialisation de la liste
+        foreach(QString name, listOfPlayers)
+        {
+            m_listCardsByPlayer.insert(name, QList<InfoCard>());
+        }
+
+        newSelection(m_listCardsByPlayer.keys().first(), false);
     }
 }

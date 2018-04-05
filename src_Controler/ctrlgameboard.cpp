@@ -1,4 +1,5 @@
 #include "ctrlgameboard.h"
+#include <QEventLoop>
 #include <QQmlEngine>
 #include <QQmlApplicationEngine>
 #include <QDebug>
@@ -20,6 +21,7 @@ CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, QObject *paren
     m_ctrlSelectingCards(ctrlSelectCards)
 {
     //initGame();
+    connect(&m_ctrlSelectingCards, &CtrlSelectingCards::listsComplete, this, &CtrlGameBoard::onListsComplete_CtrlSelectingCards);
 }
 
 CtrlGameBoard::~CtrlGameBoard()
@@ -127,9 +129,22 @@ Player* CtrlGameBoard::playerAt(int index)
 
 void CtrlGameBoard::onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers)
 {
-    m_ctrlSelectingCards.setName(listOfPlayers[0]);
-
     m_factoryMainPageLoader->displaySelectCards();
+    m_ctrlSelectingCards.selectCards(listOfPlayers);
+
+    /*for(int i=0;i<listOfPlayers.count();++i)
+    {
+        m_ctrlSelectingCards.newSelection(listOfPlayers[i], i == (listOfPlayers.count()-1));
+
+        QEventLoop loop;
+        connect(this, &CtrlGameBoard::nextPlayer, &loop, &QEventLoop::quit);
+        loop.exec();
+    }*/
+}
+
+void CtrlGameBoard::displaySelectingCardsForNextPlayers()
+{
+    //emit nextPlayer();
 }
 
 void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
@@ -137,4 +152,20 @@ void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
     //initGame();
 
     m_factoryMainPageLoader->displayBoard();
+}
+
+/************************************************************
+*****             FONCTIONS SLOTS PRIVEES				*****
+************************************************************/
+void CtrlGameBoard::onListsComplete_CtrlSelectingCards()
+{
+    QMap<QString,QList<AbstractCard*> > listCardsByPlayer = m_ctrlSelectingCards.listCardsByPlayer();
+
+    for(int i=0;i<listCardsByPlayer.keys().count();++i)
+    {
+        QString name = listCardsByPlayer.keys()[i];
+        m_gameManager->addNewPlayer(name, listCardsByPlayer[name]);
+    }
+
+    m_gameManager->initGame();
 }

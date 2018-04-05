@@ -9,6 +9,7 @@ Item {
 
     property int colCount: 4
     property int space: 4   //PAS DE NOMBRE IMPAIRE
+    property bool lastPlayer: viewCards.model.lastPlayer
 
     Rectangle {
         id: background
@@ -106,10 +107,24 @@ Item {
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
-            anchors.bottom: buttonOk.top
+            anchors.bottom: lastPlayer === true ? buttonOk.top : buttonNext.top
             anchors.bottomMargin: 10
 
             onClicked: ctrlSelectingCards.fillARandomList()
+        }
+
+        Button {
+            id: buttonNext
+            height: 40
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            visible: lastPlayer === false
+
+            onClicked: ctrlGameBoard.displaySelectingCardsForNextPlayers()
         }
 
         Button {
@@ -121,6 +136,7 @@ Item {
             anchors.rightMargin: 10
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
+            visible: lastPlayer === true
 
             onClicked: ctrlGameBoard.onClicked_ButtonOk_SelectCards()
         }
