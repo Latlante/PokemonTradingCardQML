@@ -21,6 +21,7 @@ class ModelSelectingCards : public QAbstractListModel
     Q_PROPERTY(QList<InfoCard> listCardsSelected READ listCardsSelected NOTIFY listCardsSelectedChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(bool lastPlayer READ isLastPlayer NOTIFY lastPlayerChanged)
+    Q_PROPERTY(int countTotalQuantity READ countTotalQuantity NOTIFY countTotalQuantityChanged)
 
 public:
     enum SelectingCardsRole
@@ -34,7 +35,7 @@ public:
     ~ModelSelectingCards();
 
     static void declareQML();
-    int maxCards();
+    Q_INVOKABLE int maxCards();
 
     QList<InfoCard> listCardsSelected();
     QString name();
@@ -54,6 +55,7 @@ signals:
     void listCardsSelectedChanged();
     void nameChanged();
     void lastPlayerChanged();
+    void countTotalQuantityChanged();
 
 protected:
     QHash<int, QByteArray> roleNames() const override;

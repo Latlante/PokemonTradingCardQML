@@ -39,7 +39,7 @@ AbstractCard::Enum_typeOfCard CardEnergy::type()
 QUrl CardEnergy::image()
 {
     const QString path = "energies/cards/" + QString::number(static_cast<int>(element())) + ".png";
-    qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
+    //qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
 
     //return QPixmap(path);
     //return QUrl::fromLocalFile(path);

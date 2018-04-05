@@ -23,7 +23,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: 35
-            text: viewCards.model.name
+            text: viewCards.model.name + " (" + viewCards.model.countTotalQuantity + " / " + viewCards.model.maxCards() + ")"
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
         }
@@ -41,7 +41,7 @@ Item {
             //cellWidth: (viewCards.width-selectCards1.space)/selectCards1.colCount
             //cellHeight: cellWidth*2
             cellWidth: 160
-            cellHeight: 280
+            cellHeight: 270
 
 
             model: ctrlSelectingCards.model()
@@ -49,7 +49,7 @@ Item {
                 id: itemCard
                 //anchors.fill: parent
                 width: 150
-                height: 270
+                height: 260
 
                 Image {
                     id: imageCard
@@ -120,6 +120,7 @@ Item {
             anchors.rightMargin: 10
             anchors.bottom: lastPlayer === true ? buttonOk.top : buttonNext.top
             anchors.bottomMargin: 10
+            text: "Générer deck aléatoire"
 
             onClicked: ctrlSelectingCards.fillARandomList()
         }
@@ -134,8 +135,9 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             visible: lastPlayer === false
+            text: "Joueur suivant"
 
-            onClicked: ctrlGameBoard.displaySelectingCardsForNextPlayers()
+            onClicked: ctrlSelectingCards.onClickedListFinished()
         }
 
         Button {
@@ -148,6 +150,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             visible: lastPlayer === true
+            text: "OK"
 
             onClicked: ctrlGameBoard.onClicked_ButtonOk_SelectCards()
         }

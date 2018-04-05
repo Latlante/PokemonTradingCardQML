@@ -168,4 +168,5 @@ void CtrlGameBoard::onListsComplete_CtrlSelectingCards()
     }
 
     m_gameManager->initGame();
+    m_factoryMainPageLoader->displayBoard();
 }

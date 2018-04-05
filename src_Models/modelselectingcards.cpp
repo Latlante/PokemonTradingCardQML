@@ -85,6 +85,7 @@ void ModelSelectingCards::changeQuantityCard(int id, int quantity)
             info.quantity = quantity;
             m_listCardsSelected.replace(id, info);
 
+            emit countTotalQuantityChanged();
             emit dataChanged(index(id, 0), index(id, 0));
         }
     }
@@ -128,6 +129,9 @@ void ModelSelectingCards::clear()
         info.quantity = 0;
         m_listCardsSelected[i] = info;
     }
+
+    QVector<int> listRole = QVector<int>() << SelCards_Quantity;
+    emit dataChanged(index(0, 0), index(rowCount()-1, 0), listRole);
 }
 
 /************************************************************
