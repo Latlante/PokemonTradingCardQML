@@ -282,8 +282,6 @@ Item {
 
         ListView {
             id: listViewPacketBench_P1
-            width: 787
-            height: 160
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
@@ -295,23 +293,32 @@ Item {
             orientation: ListView.Horizontal
             model: play1.bench()
             delegate: Item {
+                id: itemDelegatePacketBench
                 x: 5
                 width: 80
-                height: 40
-                Column {
-                    Text {
-                        //anchors.top: parent.top
-                        //anchors.left: parent.left
-                        //anchors.right: parent.right
-                        height: 20
-                        text: model.name
-                    }
-                    Image {
-                        height: 80
-                        source: model.imageCard
-                        fillMode: Image.PreserveAspectFit
-                    }
+                height: 100
+
+                Image {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: listViewEnergiesByCard.top
+                    source: model.imageCard
+                    fillMode: Image.PreserveAspectFit
                 }
+
+                ListView {
+                    id: listViewEnergiesByCard
+                    height: 20
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    orientation: ListView.Horizontal
+                    interactive: false
+
+                    //model: itemDelegatePacketBench.ListView.view.model.childModel(index)
+                }
+
             }
         }
 

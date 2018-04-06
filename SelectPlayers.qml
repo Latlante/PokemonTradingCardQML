@@ -80,7 +80,7 @@ Item {
             width: 200
             color: "transparent"
             anchors.horizontalCenter: parent.horizontalCenter
-            border.width: 3
+            //border.width: 3
             anchors.top: rectangleNumberOfPlayers.bottom
             anchors.topMargin: 10
             anchors.bottom: buttonValidate.top

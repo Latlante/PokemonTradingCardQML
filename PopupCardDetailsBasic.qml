@@ -22,7 +22,13 @@ Item {
                 description += "----- " + card.name() + " -----\n\n";
                 description += "ID: " + card.id() + "\n";
                 description += "Element: " + card.elementFormatString() + "\n";
-                description += "Vie totale: " + card.lifeTotal() + "\n";
+                description += "Vie totale: " + card.lifeTotal() + "\n\n";
+
+                for(var i=0;i<card.attacksCount();++i)
+                {
+                    description += card.attackName() + " - " + card.attackDescription() + " (" + card.attackDamage() + ")\n\n";
+                }
+
                 //description += "ID: " + card.id() + "\n";
 
             }

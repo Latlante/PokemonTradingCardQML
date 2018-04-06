@@ -50,9 +50,6 @@ protected:
 protected slots:
     void updateAllData();
 
-
-	
-
 };
 
 #endif // ABSTRACTPACKET_H
