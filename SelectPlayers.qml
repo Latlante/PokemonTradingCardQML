@@ -13,9 +13,15 @@ Item {
             id: imageLogo
             height: parent.height / 3
             anchors.top: parent.top
+            //anchors.topMargin: 10
             anchors.left: parent.left
+            //anchors.leftMargin: 10
             anchors.right: parent.right
+            //anchors.rightMargin: 10
+            anchors.margins: 20
+            fillMode: Image.PreserveAspectFit
 
+            source: "Images/logo.png"
         }
 
         Rectangle {
@@ -30,29 +36,36 @@ Item {
 
             Row {
                 anchors.fill: parent
+                spacing: 20
 
                 Text {
                     id: textNumberOfPlayers
                     color: "#000000"
+                    width: 200
+                    height: 40
                     text: qsTr("Nombre de joueurs:")
-                    anchors.top: imageLogo.bottom
+                    /*anchors.top: imageLogo.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: 0*/
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 20
                 }
 
                 Button {
                     id: buttonTwoPlayers
+                    width: 100
+                    height: 40
                     text: "2 joueurs"
                     onClicked: listView.model.setNumberOfPlayers(2)
                 }
 
                 Button {
                     id: buttonFourPlayers
+                    width: 100
+                    height: 40
                     text: "4 joueurs (soon)"
                     enabled: false
                     onClicked: listView.model.setNumberOfPlayers(4)
@@ -65,7 +78,7 @@ Item {
         Rectangle {
             id: rectangleContainerListView
             width: 200
-            color: "#ffffff"
+            color: "transparent"
             anchors.horizontalCenter: parent.horizontalCenter
             border.width: 3
             anchors.top: rectangleNumberOfPlayers.bottom

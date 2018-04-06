@@ -103,7 +103,7 @@ QVariant ModelSelectingCards::data(const QModelIndex &index, int role) const
 
     switch(role)
     {
-    case SelCards_Card:         return m_listCardsSelected[iRow].card;
+    case SelCards_Card:         return QVariant::fromValue<AbstractCard*>(m_listCardsSelected[iRow].card);
     case SelCards_Name:         return m_listCardsSelected[iRow].card->name();
     case SelCards_ImageCard:    return m_listCardsSelected[iRow].card->image();
     case SelCards_Quantity:     return m_listCardsSelected[iRow].quantity;

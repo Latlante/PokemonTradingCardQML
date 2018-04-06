@@ -16,20 +16,24 @@ Item {
 
             if(card.type() === AbstractCard.TypeOfCard_Pokemon)
             {
-                description = card.id() + " - " + card.name();
-                description += " (" + card.lifeTotal() + ")";
+                //description = card.id() + " - " + card.name();
+                //description += " (" + card.lifeTotal() + ")";
 
-                description += "----- " + card.name() + " -----";
-                description += "ID: " + card.id();
-                description += "Element: " + card.element();
-                description += "Vie totale: " + card.lifeTotal();
-                description += "ID: " + card.id();
+                description += "----- " + card.name() + " -----\n\n";
+                description += "ID: " + card.id() + "\n";
+                description += "Element: " + card.elementFormatString() + "\n";
+                description += "Vie totale: " + card.lifeTotal() + "\n";
+                //description += "ID: " + card.id() + "\n";
 
             }
             else if(card.type() === AbstractCard.TypeOfCard_Energy)
             {
-                description = card.id() + " - " + card.name();
-                description += " (" + card.quantity() + ")";
+                //description = card.id() + " - " + card.name();
+                //description += " (" + card.quantity() + ")";
+
+                description += "----- Energie " + card.name() + " -----\n\n";
+                description += "Element: " + card.elementFormatString() + "\n";
+                description += "Quantité: " + card.quantity();
             }
 
             textDescription.text = description;
@@ -40,7 +44,7 @@ Item {
         id: background
         anchors.fill: parent
 
-        color: "#000000AA"
+        color: "#AAAAAAAA"
 
         Image {
             id: imageCard
@@ -52,7 +56,7 @@ Item {
             fillMode: Image.Pad
             horizontalAlignment: Image.AlignHCenter
             verticalAlignment: Image.AlignVCenter
-            source: card.imageCard
+            //source: card.imageCard
         }
 
         Text {
@@ -63,8 +67,9 @@ Item {
             anchors.leftMargin: 20
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            font.pixelSize: 20
+            font.pixelSize: 30
             wrapMode: Text.WordWrap
+            verticalAlignment: Text.AlignVCenter
         }
 
         MouseArea {

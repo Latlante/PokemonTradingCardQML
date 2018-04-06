@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QPixmap>
+#include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
 
 BenchArea::BenchArea(QList<AbstractCard*> listCards) :
@@ -39,7 +40,7 @@ bool BenchArea::addNewCard(AbstractCard* newCard)
     {
         m_listCards.append(newCard);
 
-        connect(newCard, &AbstractCard::dataChanged, this, &AbstractPacket::updateAllData);
+        connect(newCard, &AbstractCard::dataChanged, this, &BenchArea::updateAllData);
 
         emit dataChanged(index(AbstractPacket::rowCount()-1, 0), index(AbstractPacket::rowCount()-1, 0));
         emit countChanged();
@@ -49,13 +50,13 @@ bool BenchArea::addNewCard(AbstractCard* newCard)
     return statusBack;
 }
 
-AbstractCard* BenchArea::takeACard(int index)
+AbstractCard* BenchArea::takeACard(int indexCard)
 {
     AbstractCard* card = NULL;
 
-    if ((index >= 0) && (index < countCard()))
+    if ((indexCard >= 0) && (indexCard < countCard()))
     {
-        card = m_listCards.takeAt(index);
+        card = m_listCards.takeAt(indexCard);
 
         emit dataChanged(index(AbstractPacket::rowCount()-1, 0), index(AbstractPacket::rowCount(), 0));
         emit countChanged();
@@ -80,7 +81,7 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
     {
         switch(role)
         {
-        case BenchRole_Card:        return m_listCards[iRow];
+        case BenchRole_Card:        return QVariant::fromValue<AbstractCard*>(m_listCards[iRow]);
         case BenchRole_Name:        return m_listCards[iRow]->name();
         case BenchRole_ImageCard:   return m_listCards[iRow]->image();
         }
@@ -90,7 +91,7 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
     {
         switch(role)
         {
-        case BenchRole_Card:        return nullptr;
+        case BenchRole_Card:        return QVariant();
         case BenchRole_Name:        return "";
         case BenchRole_ImageCard:   return AbstractCard::imageByDefault();
         }
@@ -101,7 +102,7 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
 
 int BenchArea::rowCount(const QModelIndex &) const
 {
-    return maxCards();
+    return MAXCARDS_BENCH;
 }
 
 /************************************************************

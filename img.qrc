@@ -5,4 +5,7 @@
     <qresource prefix="/cards">
         <file alias="back.png">Images/cartes/back.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>Images/logo.png</file>
+    </qresource>
 </RCC>

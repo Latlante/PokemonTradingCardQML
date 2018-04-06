@@ -20,7 +20,7 @@ public:
 	
     int maxCards();
     virtual bool addNewCard(AbstractCard* newCard) override;
-    virtual AbstractCard* takeACard(int index) override;
+    virtual AbstractCard* takeACard(int indexCard) override;
 
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     virtual int rowCount(const QModelIndex & = QModelIndex()) const override;

@@ -14,7 +14,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: "white"
+        color: "#2b95ff"
 
         Text {
             id: namePlayer
@@ -42,7 +42,7 @@ Item {
             //cellHeight: cellWidth*2
             cellWidth: 160
             cellHeight: 270
-
+            clip: true
 
             model: ctrlSelectingCards.model()
             delegate: Item {
