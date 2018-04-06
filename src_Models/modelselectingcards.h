@@ -26,7 +26,8 @@ class ModelSelectingCards : public QAbstractListModel
 public:
     enum SelectingCardsRole
     {
-        SelCards_Name = Qt::UserRole,
+        SelCards_Card = Qt::UserRole,
+        SelCards_Name,
         SelCards_ImageCard,
         SelCards_Quantity
     };

@@ -103,6 +103,7 @@ QVariant ModelSelectingCards::data(const QModelIndex &index, int role) const
 
     switch(role)
     {
+    case SelCards_Card:         return m_listCardsSelected[iRow].card;
     case SelCards_Name:         return m_listCardsSelected[iRow].card->name();
     case SelCards_ImageCard:    return m_listCardsSelected[iRow].card->image();
     case SelCards_Quantity:     return m_listCardsSelected[iRow].quantity;
@@ -140,6 +141,7 @@ void ModelSelectingCards::clear()
 QHash<int, QByteArray> ModelSelectingCards::roleNames() const
 {
     QHash<int, QByteArray> roles;
+    roles[SelCards_Card] = "card";
     roles[SelCards_Name] = "name";
     roles[SelCards_ImageCard] = "imageCard";
     roles[SelCards_Quantity] = "quantity";
