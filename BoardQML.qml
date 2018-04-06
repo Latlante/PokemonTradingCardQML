@@ -30,6 +30,203 @@ Item {
         anchors.fill: parent
         source: "qrc:/textures/tapis.jpg"
 
+        //ZONE DE JOUEUR 2
+        ListView {
+            id: listViewPacketHand_P2
+            x: 5
+            width: 110
+            height: 160
+            rotation: 180
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.left: parent.left
+            anchors.right: parent.right
+            contentWidth: 320
+            anchors.leftMargin: 0
+            model: ListModel {
+                ListElement {
+                    name: "Grey"
+                    colorCode: "grey"
+                }
+
+                ListElement {
+                    name: "Red"
+                    colorCode: "red"
+                }
+
+                ListElement {
+                    name: "Blue"
+                    colorCode: "blue"
+                }
+
+                ListElement {
+                    name: "Green"
+                    colorCode: "green"
+                }
+            }
+            anchors.rightMargin: 0
+            orientation: ListView.Horizontal
+            delegate: Item {
+                x: 5
+                width: 80
+                height: 40
+                Row {
+                    id: row4
+                    spacing: 10
+                    Rectangle {
+                        width: 40
+                        height: 40
+                        color: colorCode
+                    }
+
+                    Text {
+                        text: name
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.bold: true
+                    }
+                }
+            }
+        }
+
+        ListView {
+            id: listViewPacketBench_P2
+            x: -7
+            y: 395
+            width: 787
+            height: 160
+            rotation: 180
+            anchors.left: parent.left
+            anchors.bottom: rectangleInfosPackets_P2.top
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.topMargin: 0
+            //model: ctrlGameBoard.benchArea_P1()
+            anchors.rightMargin: 0
+            orientation: ListView.Horizontal
+            anchors.bottomMargin: 0
+            anchors.top: listViewPacketHand_P2.bottom
+            delegate: Image {
+                width: 100
+                height: parent.height
+                source: image;
+            }
+        }
+
+        Rectangle {
+            id: rectangleInfosPackets_P2
+            x: 4
+            y: -4
+            height: 50
+            color: "#00000000"
+            anchors.bottom: rectangleFightingArea.top
+            anchors.bottomMargin: 0
+            rotation: 180
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            border.width: 4
+            Text {
+                id: textDeckCst_P2
+                width: 80
+                height: 45
+                text: qsTr("Deck:")
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 10
+                font.pixelSize: 30
+                anchors.topMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                fontSizeMode: Text.HorizontalFit
+                renderType: Text.NativeRendering
+            }
+
+            Text {
+                id: textDeck_P2
+                width: 50
+                //text: deckP2.countCard
+                anchors.left: textDeckCst_P2.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 0
+                font.pixelSize: 30
+                anchors.topMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                fontSizeMode: Text.HorizontalFit
+                renderType: Text.NativeRendering
+            }
+
+            Text {
+                id: textTrashCst_P2
+                width: 92
+                height: 45
+                text: qsTr("Trash:")
+                anchors.left: textDeck_P2.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 30
+                font.pixelSize: 30
+                anchors.topMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                fontSizeMode: Text.HorizontalFit
+                renderType: Text.NativeRendering
+            }
+
+            Text {
+                id: textTrash_P2
+                width: 50
+                text: qsTr("0")
+                anchors.left: textTrashCst_P2.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 0
+                font.pixelSize: 30
+                anchors.topMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                fontSizeMode: Text.HorizontalFit
+                renderType: Text.NativeRendering
+            }
+
+            Text {
+                id: textRewardsCst_P2
+                width: 144
+                height: 45
+                text: qsTr("Rewards:")
+                anchors.left: textTrash_P2.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 30
+                font.pixelSize: 30
+                anchors.topMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                fontSizeMode: Text.HorizontalFit
+                renderType: Text.NativeRendering
+            }
+
+            Text {
+                id: textRewards_P2
+                width: 50
+                text: qsTr("0")
+                anchors.left: textRewardsCst_P2.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 0
+                font.pixelSize: 30
+                anchors.topMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                fontSizeMode: Text.HorizontalFit
+                renderType: Text.NativeRendering
+            }
+        }
+
+        //ZONE DE COMBAT CENTRALE
         Rectangle {
             id: rectangleFightingArea
             y: 685
@@ -168,6 +365,7 @@ Item {
             }
         }
 
+        //ZONE DE JOUEUR 1
         Rectangle {
             id: rectangleInfosPackets_P1
             height: 50
@@ -305,20 +503,41 @@ Item {
                     anchors.bottom: listViewEnergiesByCard.top
                     source: model.imageCard
                     fillMode: Image.PreserveAspectFit
+
+                    MouseArea {
+                        id: mouseAreaCardBench
+                        anchors.fill: parent
+                        onClicked: {
+                            if(model.card != undefned)
+                            {
+                                popupCardDetailsComplete1.card = model.card;
+                                popupCardDetailsComplete1.visible = true;
+                            }
+                        }
+                    }
                 }
 
                 ListView {
                     id: listViewEnergiesByCard
-                    height: 20
+                    height: 25
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     orientation: ListView.Horizontal
                     interactive: false
 
-                    //model: itemDelegatePacketBench.ListView.view.model.childModel(index)
-                }
+                    //model: itemDelegatePacketBench.ListView.view.model.modelEnergies(index)
+                    delegate: Item {
+                        width: 25
+                        height: 25
 
+                        Image {
+                            id: imageIconEnergy
+                            anchors.fill: parent
+                            source: model.icon
+                        }
+                    }
+                }
             }
         }
 
@@ -337,223 +556,38 @@ Item {
             anchors.bottomMargin: 0
             model: play1.hand()
             delegate: Item {
-                x: 5
-                width: 120
-                height: 100
-                Column {
-                    Text {
-                        //anchors.top: parent.top
-                        //anchors.left: parent.left
-                        //anchors.right: parent.right
-                        height: 20
-                        text: model.name
-                    }
-                    Image {
-                        height: 80
-                        source: model.imageCard
-                        fillMode: Image.PreserveAspectFit
-                    }
-                }
-
-
-            }
-        }
-
-        Rectangle {
-            id: rectangleInfosPackets_P2
-            x: 4
-            y: -4
-            height: 50
-            color: "#00000000"
-            anchors.bottom: rectangleFightingArea.top
-            anchors.bottomMargin: 0
-            rotation: 180
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
-            border.width: 4
-            Text {
-                id: textDeckCst_P2
                 width: 80
-                height: 45
-                text: qsTr("Deck:")
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
-                font.pixelSize: 30
-                anchors.topMargin: 0
-                verticalAlignment: Text.AlignVCenter
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                fontSizeMode: Text.HorizontalFit
-                renderType: Text.NativeRendering
-            }
+                height: 120
 
-            Text {
-                id: textDeck_P2
-                width: 50
-                //text: deckP2.countCard
-                anchors.left: textDeckCst_P2.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 0
-                font.pixelSize: 30
-                anchors.topMargin: 0
-                verticalAlignment: Text.AlignVCenter
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                fontSizeMode: Text.HorizontalFit
-                renderType: Text.NativeRendering
-            }
+                Image {
+                    height: 120
+                    source: model.imageCard
+                    fillMode: Image.PreserveAspectFit
 
-            Text {
-                id: textTrashCst_P2
-                width: 92
-                height: 45
-                text: qsTr("Trash:")
-                anchors.left: textDeck_P2.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 30
-                font.pixelSize: 30
-                anchors.topMargin: 0
-                verticalAlignment: Text.AlignVCenter
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                fontSizeMode: Text.HorizontalFit
-                renderType: Text.NativeRendering
-            }
-
-            Text {
-                id: textTrash_P2
-                width: 50
-                text: qsTr("0")
-                anchors.left: textTrashCst_P2.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 0
-                font.pixelSize: 30
-                anchors.topMargin: 0
-                verticalAlignment: Text.AlignVCenter
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                fontSizeMode: Text.HorizontalFit
-                renderType: Text.NativeRendering
-            }
-
-            Text {
-                id: textRewardsCst_P2
-                width: 144
-                height: 45
-                text: qsTr("Rewards:")
-                anchors.left: textTrash_P2.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 30
-                font.pixelSize: 30
-                anchors.topMargin: 0
-                verticalAlignment: Text.AlignVCenter
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                fontSizeMode: Text.HorizontalFit
-                renderType: Text.NativeRendering
-            }
-
-            Text {
-                id: textRewards_P2
-                width: 50
-                text: qsTr("0")
-                anchors.left: textRewardsCst_P2.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 0
-                font.pixelSize: 30
-                anchors.topMargin: 0
-                verticalAlignment: Text.AlignVCenter
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                fontSizeMode: Text.HorizontalFit
-                renderType: Text.NativeRendering
-            }
-        }
-
-        ListView {
-            id: listViewPacketBench_P2
-            x: -7
-            y: 395
-            width: 787
-            height: 160
-            rotation: 180
-            anchors.left: parent.left
-            anchors.bottom: rectangleInfosPackets_P2.top
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.topMargin: 0
-            //model: ctrlGameBoard.benchArea_P1()
-            anchors.rightMargin: 0
-            orientation: ListView.Horizontal
-            anchors.bottomMargin: 0
-            anchors.top: listViewPacketHand_P2.bottom
-            delegate: Image {
-                width: 100
-                height: parent.height
-                source: image;
-            }
-        }
-
-        ListView {
-            id: listViewPacketHand_P2
-            x: 5
-            width: 110
-            height: 160
-            rotation: 180
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.left: parent.left
-            anchors.right: parent.right
-            contentWidth: 320
-            anchors.leftMargin: 0
-            model: ListModel {
-                ListElement {
-                    name: "Grey"
-                    colorCode: "grey"
-                }
-
-                ListElement {
-                    name: "Red"
-                    colorCode: "red"
-                }
-
-                ListElement {
-                    name: "Blue"
-                    colorCode: "blue"
-                }
-
-                ListElement {
-                    name: "Green"
-                    colorCode: "green"
-                }
-            }
-            anchors.rightMargin: 0
-            orientation: ListView.Horizontal
-            delegate: Item {
-                x: 5
-                width: 80
-                height: 40
-                Row {
-                    id: row4
-                    spacing: 10
-                    Rectangle {
-                        width: 40
-                        height: 40
-                        color: colorCode
-                    }
-
-                    Text {
-                        text: name
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.bold: true
+                    MouseArea {
+                        id: mouseAreaCardHand
+                        anchors.fill: parent
+                        onPressAndHold: {
+                            popupCardDetailsBasic1.card = model.card;
+                            popupCardDetailsBasic1.visible = true;
+                        }
                     }
                 }
             }
+        }
+
+        //POP-UPS
+        PopupCardDetailsBasic {
+            id: popupCardDetailsBasic1
+            anchors.fill: parent
+            visible: false
+        }
+
+        PopupCardDetailsComplete {
+            id: popupCardDetailsComplete1
+            anchors.fill: parent
+            visible: false
         }
     }
-
 }
 
