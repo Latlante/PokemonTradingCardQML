@@ -29,8 +29,8 @@ public:
     virtual int maxCards() = 0;
     int countCard() const;
     bool isFull();
-    bool addNewCard(AbstractCard* newCard);
-    AbstractCard* takeACard(int index);
+    virtual bool addNewCard(AbstractCard* newCard);
+    virtual AbstractCard* takeACard(int index);
     AbstractCard* card(int index);
     bool removeFromPacket(AbstractCard* card);
 	

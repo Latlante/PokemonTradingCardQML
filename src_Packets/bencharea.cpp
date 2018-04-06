@@ -31,6 +31,39 @@ int BenchArea::maxCards()
     return MAXCARDS_BENCH;
 }
 
+bool BenchArea::addNewCard(AbstractCard* newCard)
+{
+    bool statusBack = false;
+
+    if ((NULL != newCard) && (!isFull()))
+    {
+        m_listCards.append(newCard);
+
+        connect(newCard, &AbstractCard::dataChanged, this, &AbstractPacket::updateAllData);
+
+        emit dataChanged(index(AbstractPacket::rowCount()-1, 0), index(AbstractPacket::rowCount()-1, 0));
+        emit countChanged();
+        statusBack = true;
+    }
+
+    return statusBack;
+}
+
+AbstractCard* BenchArea::takeACard(int index)
+{
+    AbstractCard* card = NULL;
+
+    if ((index >= 0) && (index < countCard()))
+    {
+        card = m_listCards.takeAt(index);
+
+        emit dataChanged(index(AbstractPacket::rowCount()-1, 0), index(AbstractPacket::rowCount(), 0));
+        emit countChanged();
+    }
+
+    return card;
+}
+
 QVariant BenchArea::data(const QModelIndex& index, int role) const
 {
     //qDebug() << __PRETTY_FUNCTION__ << index << role;
@@ -42,53 +75,33 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    if (Qt::DisplayRole == role)
+    //Dans la liste
+    if(iRow < AbstractPacket::rowCount())
     {
-        AbstractCard* abCard = m_listCards[iRow];
-
-        if (abCard != NULL)
+        switch(role)
         {
-            if (abCard->type() == AbstractCard::TypeOfCard_Pokemon)
-            {
-                CardPokemon *cardPok = static_cast<CardPokemon*>(abCard);
-
-                switch(iRow)
-                {
-                case 0: //Nom du pokemon
-                    return cardPok->name();
-                case 1: //Vie restante et total
-                    return QString::number(cardPok->lifeLeft()) + "/" + QString::number(cardPok->lifeTotal());
-                case 2: //Energies
-                    return "Energies=" + QString::number(cardPok->countEnergies());
-                default:
-                    break;
-                }
-
-                /*QString messageToDisplay = cardPok->name();
-                messageToDisplay += " (" + QString::number(cardPok->lifeLeft()) + "/" + QString::number(cardPok->lifeTotal()) + ")";
-                messageToDisplay += " : Energies=" + QString::number(cardPok->countEnergies());
-
-                return messageToDisplay;*/
-            }
-            else
-            {
-                return "Erreur de carte: La carte n'est pas du bon type:" + abCard->type();
-            }
-        }
-        else
-        {
-            return "Erreur de carte: Card is NULL";
+        case BenchRole_Card:        return m_listCards[iRow];
+        case BenchRole_Name:        return m_listCards[iRow]->name();
+        case BenchRole_ImageCard:   return m_listCards[iRow]->image();
         }
     }
-    else if (BenchR_Image == role)
+    //Au delà
+    else
     {
-        AbstractCard* abCard = m_listCards[iRow];
-        QString pathImage = "Images/cartes/" + QString::number(abCard->id()) + ".png";
-        qDebug() << "PATH de l'image Bench:" << pathImage;
-        return QPixmap(pathImage);
+        switch(role)
+        {
+        case BenchRole_Card:        return nullptr;
+        case BenchRole_Name:        return "";
+        case BenchRole_ImageCard:   return AbstractCard::imageByDefault();
+        }
     }
 
     return QVariant::Invalid;
+}
+
+int BenchArea::rowCount(const QModelIndex &) const
+{
+    return maxCards();
 }
 
 /************************************************************
@@ -97,8 +110,9 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
 QHash<int, QByteArray> BenchArea::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[Qt::DisplayRole] = "name";
-    roles[BenchR_Image] = "image";
+    roles[BenchRole_Card] = "card";
+    roles[BenchRole_Name] = "name";
+    roles[BenchRole_ImageCard] = "imageCard";
 
     return roles;
 }

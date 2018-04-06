@@ -9,7 +9,9 @@ class BenchArea : public AbstractPacket
 
 public:
     enum BenchRole {
-        BenchR_Image = Qt::UserRole + 1
+        BenchRole_Card = Qt::UserRole,
+        BenchRole_Name,
+        BenchRole_ImageCard
     };
     BenchArea(QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~BenchArea();
@@ -17,8 +19,11 @@ public:
     static void declareQML();
 	
     int maxCards();
+    virtual bool addNewCard(AbstractCard* newCard) override;
+    virtual AbstractCard* takeACard(int index) override;
 
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    virtual int rowCount(const QModelIndex & = QModelIndex()) const override;
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
