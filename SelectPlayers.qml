@@ -6,49 +6,89 @@ Item {
 
     Rectangle {
         id: rectangle
-        color: "#bbbbbb"
+        color: "#2b95ff"
         anchors.fill: parent
 
-        Text {
-            id: title
-            color: "#000000"
-            text: qsTr("List of players")
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
+        Image {
+            id: imageLogo
+            height: parent.height / 3
             anchors.top: parent.top
-            anchors.topMargin: 0
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 20
+            anchors.left: parent.left
+            anchors.right: parent.right
+
         }
 
         Rectangle {
-            id: rectangleContainerListView
-            color: "#ffffff"
-            border.width: 3
-            anchors.rightMargin: 20
-            anchors.leftMargin: 20
-            anchors.bottomMargin: 10
-            anchors.top: title.bottom
-            anchors.right: parent.right
-            anchors.bottom: buttonAddNewPlyer.top
+            id: rectangleNumberOfPlayers
+            height: 40
+            anchors.top: imageLogo.bottom
+            anchors.topMargin: 0
             anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            Row {
+                anchors.fill: parent
+
+                Text {
+                    id: textNumberOfPlayers
+                    color: "#000000"
+                    text: qsTr("Nombre de joueurs:")
+                    anchors.top: imageLogo.bottom
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 20
+                }
+
+                Button {
+                    id: buttonTwoPlayers
+                    text: "2 joueurs"
+                    onClicked: listView.model.setNumberOfPlayers(2)
+                }
+
+                Button {
+                    id: buttonFourPlayers
+                    text: "4 joueurs (soon)"
+                    enabled: false
+                    onClicked: listView.model.setNumberOfPlayers(4)
+                }
+            }
+        }
+
+
+
+        Rectangle {
+            id: rectangleContainerListView
+            width: 200
+            color: "#ffffff"
+            anchors.horizontalCenter: parent.horizontalCenter
+            border.width: 3
+            anchors.top: rectangleNumberOfPlayers.bottom
             anchors.topMargin: 10
+            anchors.bottom: buttonValidate.top
+            anchors.bottomMargin: 10
 
             ListView {
                 id: listView
                 anchors.fill: parent
+                spacing: 50
+                interactive: false
                 model: ctrlGameBoard.newListPlayers()
                 delegate: Rectangle {
                     /*anchors.left: parent.left
                     anchors.right: parent.right*/
-                    width: 200
+                    width: parent.width
                     height: 40
-                    color: "#CCCCCC"
+                    color: "#ffffff"
+                    border.color: "#000000"
+                    border.width: 2
 
-                    Text {
+                    TextInput {
                         anchors.fill: parent
                         font.pixelSize: 35
                         text: model.name
@@ -57,7 +97,7 @@ Item {
             }
         }
 
-        Button {
+        /*Button {
             id: buttonAddNewPlyer
             width: (parent.width / 2) - 20
             text: qsTr("Ajouter un nouveau joueur")
@@ -81,7 +121,7 @@ Item {
             anchors.bottomMargin: 10
 
             onClicked: listView.model.removeOnePlayer()
-        }
+        }*/
 
         Button {
             id: buttonValidate

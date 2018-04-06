@@ -19,6 +19,7 @@ public:
 
     Q_INVOKABLE void addNewPlayer();
     Q_INVOKABLE void removeOnePlayer();
+    Q_INVOKABLE void setNumberOfPlayers(unsigned int number);
 
     virtual QVariant data(const QModelIndex &index, int role) const override;
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;

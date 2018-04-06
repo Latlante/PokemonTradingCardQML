@@ -4,8 +4,9 @@
 
 ListPlayers::ListPlayers(QObject *parent) : QAbstractListModel(parent)
 {
-    addNewPlayer();
-    addNewPlayer();
+    //addNewPlayer();
+    //addNewPlayer();
+    setNumberOfPlayers(2);
 
     setData(index(0, 0), "Corentin", Qt::DisplayRole);
     setData(index(1, 0), "Alice", Qt::DisplayRole);
@@ -41,6 +42,32 @@ void ListPlayers::removeOnePlayer()
     beginRemoveRows(QModelIndex(), rowCount()-1, rowCount());
     m_listOfPlayers.removeLast();
     endRemoveRows();
+}
+
+void ListPlayers::setNumberOfPlayers(unsigned int number)
+{
+    const int currentCount = rowCount();
+    //Ajout de joueurs
+    if(number > currentCount)
+    {
+        int delta = number - currentCount;
+
+        for(int i=0;i<delta;++i)
+        {
+            //m_listOfPlayers.append("Player " + QString::number(currentCount+delta));
+            addNewPlayer();
+        }
+    }
+    else if(number < currentCount)
+    {
+        int delta = currentCount - number;
+
+        for(int i=0;i<delta;++i)
+        {
+            //m_listOfPlayers.append("Player " + QString::number(currentCount+delta));
+            removeOnePlayer();
+        }
+    }
 }
 
 QVariant ListPlayers::data(const QModelIndex &index, int role) const
