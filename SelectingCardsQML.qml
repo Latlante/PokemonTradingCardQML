@@ -59,6 +59,15 @@ Item {
                     anchors.bottom: barSelectQuantityCards.top
                     fillMode: Image.PreserveAspectFit
                     source: model.imageCard
+
+                    MouseArea {
+                        id: mouseAreaCard
+                        anchors.fill: parent
+                        onClicked: {
+                            popupCardDetailsBasic1.card = model.card;
+                            popupCardDetailsBasic1.visible = true;
+                        }
+                    }
                 }
 
                 Rectangle {
@@ -154,5 +163,11 @@ Item {
 
             onClicked: ctrlGameBoard.onClicked_ButtonOk_SelectCards()
         }
+    }
+
+    PopupCardDetailsBasic {
+        id: popupCardDetailsBasic1
+        anchors.fill: parent
+        visible: false
     }
 }
