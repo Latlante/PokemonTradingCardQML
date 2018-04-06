@@ -28,6 +28,11 @@ void AbstractCard::declareQML()
     qmlRegisterUncreatableType<AbstractCard>("model", 1, 0, "AbstractCard", "AbstractCard error");
 }
 
+QString AbstractCard::imageByDefault()
+{
+    return "back.png";
+}
+
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/

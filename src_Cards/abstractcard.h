@@ -43,6 +43,7 @@ public:
     virtual ~AbstractCard();
 
     static void declareQML();
+    static QString imageByDefault();
 	
     Q_INVOKABLE virtual Enum_typeOfCard type() = 0;
     Q_INVOKABLE virtual QUrl image() = 0;
