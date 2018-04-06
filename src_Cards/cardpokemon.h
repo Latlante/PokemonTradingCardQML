@@ -7,6 +7,7 @@
 
 class AbstractAction;
 class CardEnergy;
+class ModelListEnergies;
 
 struct AttackData
 {
@@ -50,12 +51,21 @@ public:
     Q_INVOKABLE unsigned short lifeTotal();
     Q_INVOKABLE unsigned short lifeLeft();
     Q_INVOKABLE Enum_statusOfPokemon status();
+    Q_INVOKABLE QString statusFormatString();
     void setStatus(Enum_statusOfPokemon status);
+
     Q_INVOKABLE QList<AttackData> listAttacks();
+    Q_INVOKABLE int attacksCount();
+    Q_INVOKABLE QString attackName(int index);
+    Q_INVOKABLE QString attackDescription(int index);
+    Q_INVOKABLE unsigned short attackDamage(int index);
 	
     void addEnergy(CardEnergy* energy);
+    CardEnergy* takeEnergy(int index);
+    void removeEnergy(int index);
 	unsigned short countEnergies();
 	unsigned short countEnergies(Enum_element element);
+    ModelListEnergies* modelListOfEnergies();
 	
     bool tryToAttack(int indexAttack, CardPokemon *enemy);
 	void takeDamage(unsigned short damage);
@@ -79,11 +89,12 @@ private:
 	unsigned short m_lifeLeft;
 	Enum_statusOfPokemon m_status;
 	QList<AttackData> m_listAttacks;
-	QList<CardEnergy*> m_listEnergies;
+    //QList<CardEnergy*> m_listEnergies;
+    ModelListEnergies* m_modelListEnergies;
 	short m_evolutionFrom;
 	
     void setLifeLeft(unsigned short life);
-
+    QString statusToString(Enum_statusOfPokemon status);
 };
 
 #endif // CARDPOKEMON_H

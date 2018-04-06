@@ -5,6 +5,7 @@
 #include <QUrl>
 #include "src_Actions/abstractaction.h"
 #include "cardenergy.h"
+#include "src_Models/modellistenergies.h"
 
 CardPokemon::CardPokemon(unsigned short id, 
 			const QString& name, 
@@ -18,7 +19,8 @@ CardPokemon::CardPokemon(unsigned short id,
 	m_lifeLeft(lifeTotal),
 	m_status(Status_Normal),
 	m_listAttacks(listAttacks),
-	m_listEnergies(QList<CardEnergy*>()),
+    //m_listEnergies(QList<CardEnergy*>()),
+    m_modelListEnergies(new ModelListEnergies()),
 	m_evolutionFrom(evolutionFrom)
 {
 	
@@ -31,7 +33,7 @@ CardPokemon::CardPokemon(const CardPokemon &card)
 				
 CardPokemon::~CardPokemon()
 {
-	
+    delete m_modelListEnergies;
 }
 
 /************************************************************
@@ -90,6 +92,11 @@ CardPokemon::Enum_statusOfPokemon CardPokemon::status()
 	return m_status;
 }
 
+QString CardPokemon::statusFormatString()
+{
+    return statusToString(status());
+}
+
 void CardPokemon::setStatus(Enum_statusOfPokemon status)
 {
     if(m_status != status)
@@ -105,18 +112,61 @@ QList<AttackData> CardPokemon::listAttacks()
 	return m_listAttacks;
 }
 
+int CardPokemon::attacksCount()
+{
+    return m_listAttacks.count();
+}
+
+QString CardPokemon::attackName(int index)
+{
+    QString nameToReturn = "";
+
+    if((index >= 0) && (index < attacksCount()))
+        nameToReturn = m_listAttacks[index].name;
+
+    return nameToReturn;
+}
+
+QString CardPokemon::attackDescription(int index)
+{
+    QString descriptionToReturn = "";
+
+    if((index >= 0) && (index < attacksCount()))
+        descriptionToReturn = m_listAttacks[index].description;
+
+    return descriptionToReturn;
+}
+
+unsigned short CardPokemon::attackDamage(int index)
+{
+    unsigned short damageToReturn = 0;
+
+    if((index >= 0) && (index < attacksCount()))
+        damageToReturn = m_listAttacks[index].damage;
+
+    return damageToReturn;
+}
+
 void CardPokemon::addEnergy(CardEnergy *energy)
 {
-    m_listEnergies.append(energy);
-    emit listEnergiesChanged();
-    emit dataChanged();
+    m_modelListEnergies->addEnergy(energy);
+}
+
+CardEnergy* CardPokemon::takeEnergy(int index)
+{
+    return m_modelListEnergies->takeEnergy(index);
+}
+
+void CardPokemon::removeEnergy(int index)
+{
+    m_modelListEnergies->removeEnergy(index);
 }
 
 unsigned short CardPokemon::countEnergies()
 {
     int count = 0;
 
-    foreach (CardEnergy* energy, m_listEnergies)
+    foreach (CardEnergy* energy, m_modelListEnergies->listOfEnergies())
     {
         count += energy->quantity();
     }
@@ -128,13 +178,18 @@ unsigned short CardPokemon::countEnergies(Enum_element element)
 {
 	int count = 0;
 	
-	foreach (CardEnergy* energy, m_listEnergies)
+    foreach (CardEnergy* energy, m_modelListEnergies->listOfEnergies())
 	{
         if (energy->element() == element)
             count += energy->quantity();
 	}
 	
 	return count;
+}
+
+ModelListEnergies* CardPokemon::modelListOfEnergies()
+{
+    return m_modelListEnergies;
 }
 
 bool CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
@@ -239,7 +294,7 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     m_lifeLeft = source.m_lifeLeft;
     m_status = source.m_status;
     m_listAttacks = source.m_listAttacks;
-    m_listEnergies = source.m_listEnergies;
+    m_modelListEnergies = source.m_modelListEnergies;
     m_evolutionFrom = source.m_evolutionFrom;
 
     return *this;
@@ -256,4 +311,18 @@ void CardPokemon::setLifeLeft(unsigned short life)
         emit lifeLeftChanged();
         emit dataChanged();
     }
+}
+
+QString CardPokemon::statusToString(Enum_statusOfPokemon status)
+{
+    switch(status)
+    {
+    case Status_Confused:   return "Confus";
+    case Status_Normal:     return "";
+    case Status_Paralyzed:  return "Paralysé";
+    case Status_Poisoned:   return "Empoisonné";
+    case Status_Slept:      return "Endormi";
+    }
+
+    return "Erreur de conversion de status";
 }
