@@ -66,6 +66,12 @@ Item {
             font.pixelSize: 20
             wrapMode: Text.WordWrap
         }
+
+        MouseArea {
+            id: mouseAreaClosing
+            anchors.fill: parent
+            onClicked: popupCardDetailBasic1.visible = false
+        }
     }
 
 }
