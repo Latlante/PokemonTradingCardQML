@@ -11,7 +11,8 @@ public:
     enum BenchRole {
         BenchRole_Card = Qt::UserRole,
         BenchRole_Name,
-        BenchRole_ImageCard
+        BenchRole_ImageCard,
+        BenchRole_ModelEnergies,
     };
     BenchArea(QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~BenchArea();

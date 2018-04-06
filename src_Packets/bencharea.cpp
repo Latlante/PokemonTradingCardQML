@@ -76,14 +76,17 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
+    CardPokemon* cardPok = dynamic_cast<CardPokemon*>(m_listCards[iRow]);
+
     //Dans la liste
-    if(iRow < AbstractPacket::rowCount())
+    if((iRow < AbstractPacket::rowCount()) && (cardPok != nullptr))
     {
         switch(role)
         {
-        case BenchRole_Card:        return QVariant::fromValue<AbstractCard*>(m_listCards[iRow]);
-        case BenchRole_Name:        return m_listCards[iRow]->name();
-        case BenchRole_ImageCard:   return m_listCards[iRow]->image();
+        case BenchRole_Card:            return QVariant::fromValue<AbstractCard*>(m_listCards[iRow]);
+        case BenchRole_Name:            return m_listCards[iRow]->name();
+        case BenchRole_ImageCard:       return m_listCards[iRow]->image();
+        case BenchRole_ModelEnergies:   return cardPok->modelListOfEnergies();
         }
     }
     //Au delà
@@ -91,9 +94,10 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
     {
         switch(role)
         {
-        case BenchRole_Card:        return QVariant();
-        case BenchRole_Name:        return "";
-        case BenchRole_ImageCard:   return AbstractCard::imageByDefault();
+        case BenchRole_Card:            return QVariant();
+        case BenchRole_Name:            return "";
+        case BenchRole_ImageCard:       return AbstractCard::imageByDefault();
+        case BenchRole_ModelEnergies:   return QVariant();
         }
     }
 
@@ -114,6 +118,7 @@ QHash<int, QByteArray> BenchArea::roleNames() const
     roles[BenchRole_Card] = "card";
     roles[BenchRole_Name] = "name";
     roles[BenchRole_ImageCard] = "imageCard";
+    roles[BenchRole_ModelEnergies] = "modelEnergies";
 
     return roles;
 }
