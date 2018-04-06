@@ -56,6 +56,11 @@ AbstractCard::Enum_element CardEnergy::element()
 	return m_element;
 }
 
+QString CardEnergy::elementFormatString()
+{
+    return elementToString(element());
+}
+
 void CardEnergy::setElement(AbstractCard::Enum_element element)
 {
 	m_element = element;

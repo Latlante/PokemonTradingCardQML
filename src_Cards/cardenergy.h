@@ -17,6 +17,7 @@ public:
     AbstractCard* clone() override;
 
     Q_INVOKABLE AbstractCard::Enum_element element();
+    Q_INVOKABLE QString elementFormatString();
 	void setElement(AbstractCard::Enum_element element);
     Q_INVOKABLE unsigned short quantity();
 	void setQuantity(unsigned short quantity);

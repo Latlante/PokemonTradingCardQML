@@ -59,3 +59,27 @@ void AbstractCard::setName(const QString& name)
     //return QPixmap(path);
     return path;
 }*/
+
+QString AbstractCard::elementToString(Enum_element element)
+{
+    switch(element)
+    {
+    case Element_Bug:       return "Insecte";
+    case Element_Dark:      return "Ombre";
+    case Element_Dragon:    return "Dragon";
+    case Element_Electric:  return "Electrique";
+    case Element_Fighting:  return "Combat";
+    case Element_Fire:      return "Feu";
+    case Element_Flying:    return "Volant";
+    case Element_Ghost:     return "Fantôme";
+    case Element_Grass:     return "Plante";
+    case Element_Ice:       return "Glace";
+    case Element_Normal:    return "Normal";
+    case Element_Poison:    return "Poison";
+    case Element_Psychic:   return "Psy";
+    case Element_Rock:      return "Pierre";
+    case Element_Water:     return "Eau";
+    }
+
+    return "Erreur de type";
+}

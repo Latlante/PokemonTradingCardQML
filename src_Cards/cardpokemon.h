@@ -46,6 +46,7 @@ public:
     Q_INVOKABLE QUrl image() override;
     AbstractCard* clone() override;
     Q_INVOKABLE AbstractCard::Enum_element element();
+    Q_INVOKABLE QString elementFormatString();
     Q_INVOKABLE unsigned short lifeTotal();
     Q_INVOKABLE unsigned short lifeLeft();
     Q_INVOKABLE Enum_statusOfPokemon status();

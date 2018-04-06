@@ -53,6 +53,8 @@ public:
     Q_INVOKABLE const QString name();
 	void setName(const QString& name);
 
+    Q_INVOKABLE QString elementToString(Enum_element element);
+
 signals:
     void dataChanged();
 

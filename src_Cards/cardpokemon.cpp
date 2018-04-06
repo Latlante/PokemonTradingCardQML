@@ -70,6 +70,11 @@ AbstractCard::Enum_element CardPokemon::element()
     return m_element;
 }
 
+QString CardPokemon::elementFormatString()
+{
+    return elementToString(element());
+}
+
 unsigned short CardPokemon::lifeTotal()
 {
 	return m_lifeTotal;
