@@ -6,5 +6,6 @@
         <file>BoardQML.qml</file>
         <file>SelectingCardsQML.qml</file>
         <file>PopupCardDetailsBasic.qml</file>
+        <file>PopupCardDetailsComplete.qml</file>
     </qresource>
 </RCC>
