@@ -250,7 +250,7 @@ Item {
                 anchors.bottomMargin: 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: -width/2 - 5
-                source: "qrc:/cartes/back.png"
+                source: "back.png"
             }
 
             Image {
@@ -264,7 +264,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: width/2 + 5
                 rotation: 180
-                source: "qrc:/cartes/back.png"
+                source: "back.png"
             }
 
             Text {
@@ -508,7 +508,7 @@ Item {
                         id: mouseAreaCardBench
                         anchors.fill: parent
                         onClicked: {
-                            if(model.card != undefned)
+                            if(model.card != undefined)
                             {
                                 popupCardDetailsComplete1.card = model.card;
                                 popupCardDetailsComplete1.visible = true;
@@ -526,26 +526,41 @@ Item {
                     orientation: ListView.Horizontal
                     interactive: false
 
-                    //model: itemDelegatePacketBench.ListView.view.model.modelEnergies(index)
-                    delegate: Item {
-                        width: 25
-                        height: 25
+                    model: listViewPacketBench_P1.model.modelFromCardPokemon(index)
+                    delegate:
+                        Item {
+                            width: 25
+                            height: 25
 
-                        Image {
-                            id: imageIconEnergy
-                            anchors.fill: parent
-                            source: model.icon
+                            Image {
+                                id: imageIconEnergy
+                                anchors.fill: parent
+                                source: model.icon
+                            }
                         }
-                    }
+                }
+
+            }
+            DropArea {
+                id: dropAreaBench
+                anchors.fill: parent
+                onDropped: {
+                    console.log("onDropped");
+                    //listView2.model.append(listView.model.get(listView.dragItemIndex))
+                    //listView.model.remove(listView.dragItemIndex)
+                    play1.moveCardFromHandToBench(listViewPacketHand_P1.dragItemIndex, 0);
+                    listViewPacketHand_P1.dragItemIndex = -1;
                 }
             }
         }
 
         ListView {
+            property int dragItemIndex: -1
+
             id: listViewPacketHand_P1
             y: 1728
             width: 110
-            height: 160
+            height: 80
             contentWidth: 320
             orientation: ListView.Horizontal
             anchors.right: parent.right
@@ -557,21 +572,52 @@ Item {
             model: play1.hand()
             delegate: Item {
                 width: 80
-                height: 120
+                height: 160
 
                 Image {
-                    height: 120
+                    id: imageCardInHand
+                    width: 120
+                    height: 160
                     source: model.imageCard
                     fillMode: Image.PreserveAspectFit
 
                     MouseArea {
                         id: mouseAreaCardHand
                         anchors.fill: parent
-                        onPressAndHold: {
+                        drag.target: imageCardInHand
+
+                        drag.onActiveChanged: {
+                            if (mouseAreaCardHand.drag.active) {
+                                listViewPacketHand_P1.dragItemIndex = index;
+                            }
+                            imageCardInHand.Drag.drop();
+                        }
+
+                        /*onPressAndHold: {
                             popupCardDetailsBasic1.card = model.card;
                             popupCardDetailsBasic1.visible = true;
-                        }
+                        }*/
                     }
+
+                    states: [
+                        State {
+                            when: imageCardInHand.Drag.active
+                            ParentChange {
+                                target: imageCardInHand
+                                parent: board1
+                            }
+
+                            AnchorChanges {
+                                target: imageCardInHand
+                                anchors.horizontalCenter: undefined
+                                anchors.verticalCenter: undefined
+                            }
+                        }
+                    ]
+
+                    Drag.active: mouseAreaCardHand.drag.active
+                    Drag.hotSpot.x: imageCardInHand.width / 2
+                    Drag.hotSpot.y: imageCardInHand.height / 2
                 }
             }
         }

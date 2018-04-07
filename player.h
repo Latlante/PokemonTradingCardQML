@@ -44,7 +44,7 @@ public:
 	bool isWinner();
 
     bool moveCardFromDeckToReward();
-    bool moveCardFromHandToBench(const QModelIndex& indexHand, const QModelIndex& indexBench);
+    Q_INVOKABLE bool moveCardFromHandToBench(int indexHand, int indexBench);
     bool moveCardFromBenchToFight(const QModelIndex& index);
     bool moveCardFromFightToTrash(const QModelIndex& index);
 

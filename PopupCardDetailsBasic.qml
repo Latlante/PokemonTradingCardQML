@@ -26,7 +26,7 @@ Item {
 
                 for(var i=0;i<card.attacksCount();++i)
                 {
-                    description += card.attackName() + " - " + card.attackDescription() + " (" + card.attackDamage() + ")\n\n";
+                    description += card.attackName(i) + " - " + card.attackDescription(i) + " (" + card.attackDamage(i) + ")\n\n";
                 }
 
                 //description += "ID: " + card.id() + "\n";

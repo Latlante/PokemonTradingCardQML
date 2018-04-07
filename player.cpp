@@ -140,11 +140,11 @@ bool Player::moveCardFromDeckToReward()
     return moveCardFromPacketToAnother(deck(), rewards(), 0);
 }
 
-bool Player::moveCardFromHandToBench(const QModelIndex &indexHand, const QModelIndex &indexBench)
+bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
 {
     bool moveSuccess = false;
 
-    AbstractCard* cardToMove = hand()->card(indexHand.column());
+    AbstractCard* cardToMove = hand()->card(indexHand);
 
     if (cardToMove != NULL)
     {
@@ -156,7 +156,7 @@ bool Player::moveCardFromHandToBench(const QModelIndex &indexHand, const QModelI
             //On refuse les évolutions
             if ((cardPok != NULL) && (cardPok->isBase() == true))
             {
-                moveSuccess = moveCardFromPacketToAnother(hand(), bench(), indexHand.column());
+                moveSuccess = moveCardFromPacketToAnother(hand(), bench(), indexHand);
             }
             else
             {
@@ -170,7 +170,7 @@ bool Player::moveCardFromHandToBench(const QModelIndex &indexHand, const QModelI
             if (cardEn != NULL)
             {
                 //On récupére la carte Pokémon a laquelle l'associer
-                AbstractCard* cardToAssociate = bench()->card(indexBench.column());
+                AbstractCard* cardToAssociate = bench()->card(indexBench);
 
                 if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
                 {
