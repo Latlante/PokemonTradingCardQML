@@ -15,7 +15,8 @@ public:
         ListEnergiesRole_Icon = Qt::UserRole
     };
 
-    explicit ModelListEnergies(QObject *parent = nullptr);
+    ModelListEnergies(QObject *parent = nullptr);
+    ~ModelListEnergies();
 
     void addEnergy(CardEnergy *energy);
     CardEnergy* takeEnergy(int index);
@@ -27,8 +28,6 @@ public:
 
     virtual QVariant data(const QModelIndex &index, int role) const override;
     virtual int rowCount(const QModelIndex & = QModelIndex()) const override;
-
-    ModelListEnergies& operator =(const ModelListEnergies& source);
 
 signals:
 

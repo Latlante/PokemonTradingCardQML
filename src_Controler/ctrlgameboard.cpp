@@ -96,32 +96,6 @@ Player* CtrlGameBoard::createPlayer(const QString &name)
     return m_gameManager->addNewPlayer(name, listCards);
 }
 
-BenchArea* CtrlGameBoard::benchArea_P1()
-{
-    Player* play = m_gameManager->playerAt(0);
-    BenchArea* bench = NULL;
-
-    if(play != NULL)
-    {
-        bench = play->bench();
-    }
-
-    return bench;
-}
-
-PacketDeck* CtrlGameBoard::deck_P1()
-{
-    Player* play = m_gameManager->playerAt(0);
-    PacketDeck* deck = NULL;
-
-    if(play != NULL)
-    {
-        deck = play->deck();
-    }
-
-    return deck;
-}
-
 Player* CtrlGameBoard::playerAt(int index)
 {
     return m_gameManager->playerAt(index);

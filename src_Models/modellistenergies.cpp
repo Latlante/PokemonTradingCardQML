@@ -9,6 +9,11 @@ ModelListEnergies::ModelListEnergies(QObject *parent) :
 
 }
 
+ModelListEnergies::~ModelListEnergies()
+{
+
+}
+
 /************************************************************
 *****				FONCTIONS STATIQUES					*****
 ************************************************************/
@@ -78,13 +83,6 @@ QVariant ModelListEnergies::data(const QModelIndex &index, int role) const
 int ModelListEnergies::rowCount(const QModelIndex &) const
 {
     return m_listEnergies.count();
-}
-
-ModelListEnergies& ModelListEnergies::operator =(const ModelListEnergies& source)
-{
-    m_listEnergies = source.m_listEnergies;
-
-    return *this;
 }
 
 /************************************************************

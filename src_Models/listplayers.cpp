@@ -30,7 +30,6 @@ QStringList ListPlayers::listOfPlayers()
 
 void ListPlayers::addNewPlayer()
 {
-    qDebug() << "nouveau joueur";
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     m_listOfPlayers.append("Player " + QString::number(m_listOfPlayers.count()+1));
     endInsertRows();
@@ -38,7 +37,6 @@ void ListPlayers::addNewPlayer()
 
 void ListPlayers::removeOnePlayer()
 {
-    qDebug() << "supprimer joueur";
     beginRemoveRows(QModelIndex(), rowCount()-1, rowCount());
     m_listOfPlayers.removeLast();
     endRemoveRows();
@@ -72,7 +70,7 @@ void ListPlayers::setNumberOfPlayers(unsigned int number)
 
 QVariant ListPlayers::data(const QModelIndex &index, int role) const
 {
-    qDebug() << __PRETTY_FUNCTION__ << index << role;
+    //qDebug() << __PRETTY_FUNCTION__ << index << role;
     int iRow = index.row();
     if ((iRow < 0) || (iRow >= rowCount()))
     {

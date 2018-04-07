@@ -29,8 +29,6 @@ public:
     Q_INVOKABLE FactoryMainPageLoader* factory();
     Q_INVOKABLE void initGame(QStringList listOfPlayers);
     Q_INVOKABLE Player* createPlayer(const QString& name);
-    Q_INVOKABLE BenchArea* benchArea_P1();
-    Q_INVOKABLE PacketDeck* deck_P1();
     Q_INVOKABLE Player* playerAt(int index);
 
     Q_INVOKABLE void onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers);

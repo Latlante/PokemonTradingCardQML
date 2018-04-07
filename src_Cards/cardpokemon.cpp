@@ -33,7 +33,7 @@ CardPokemon::CardPokemon(const CardPokemon &card)
 				
 CardPokemon::~CardPokemon()
 {
-    delete m_modelListEnergies;
+    //delete m_modelListEnergies;
 }
 
 /************************************************************
