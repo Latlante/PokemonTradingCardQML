@@ -3,7 +3,7 @@
 #include "src_Cards/abstractcard.h"
 
 PacketDeck::PacketDeck(QList<AbstractCard*> listCards) :
-	AbstractPacket(listCards)
+    AbstractPacketDynamic(listCards)
 {
     mixCards();
 }
@@ -24,7 +24,7 @@ void PacketDeck::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-int PacketDeck::maxCards()
+int PacketDeck::maxCards() const
 {
     return MAXCARDS_DECK;
 }

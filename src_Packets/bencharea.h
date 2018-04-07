@@ -1,9 +1,11 @@
 #ifndef BENCHAREA_H
 #define BENCHAREA_H
 
-#include "abstractpacket.h"
+#include "abstractpacketstatic.h"
 
-class BenchArea : public AbstractPacket
+class ModelListEnergies;
+
+class BenchArea : public AbstractPacketStatic
 {
     Q_OBJECT
 
@@ -19,12 +21,10 @@ public:
 
     static void declareQML();
 	
-    int maxCards();
-    virtual bool addNewCard(AbstractCard* newCard) override;
-    virtual AbstractCard* takeACard(int indexCard) override;
+    int maxCards() const override;
 
+    Q_INVOKABLE ModelListEnergies* modelFromCardPokemon(int index);
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    virtual int rowCount(const QModelIndex & = QModelIndex()) const override;
 
 protected:
     QHash<int, QByteArray> roleNames() const override;

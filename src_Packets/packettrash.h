@@ -1,9 +1,9 @@
 #ifndef PACKETTRASH_H
 #define PACKETTRASH_H
 
-#include "abstractpacket.h"
+#include "abstractpacketdynamic.h"
 
-class PacketTrash : public AbstractPacket
+class PacketTrash : public AbstractPacketDynamic
 {
     Q_OBJECT
 
@@ -13,7 +13,7 @@ public:
 
     static void declareQML();
 	
-    int maxCards();
+    int maxCards() const override;
 
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 

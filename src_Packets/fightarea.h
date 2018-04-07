@@ -1,11 +1,11 @@
 #ifndef FIGHTAREA_H
 #define FIGHTAREA_H
 
-#include "abstractpacket.h"
+#include "abstractpacketstatic.h"
 
 class CardPokemon;
 
-class FightArea : public AbstractPacket
+class FightArea : public AbstractPacketStatic
 {
     Q_OBJECT
 
@@ -13,7 +13,7 @@ public:
     FightArea(QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~FightArea();
 	
-    int maxCards() override;
+    int maxCards() const override;
 
     CardPokemon* pokemonFighting(int index);
 

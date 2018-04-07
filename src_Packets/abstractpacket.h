@@ -26,16 +26,17 @@ public:
 	
     static void declareQML();
 	
-    virtual int maxCards() = 0;
-    int countCard() const;
+    virtual int maxCards() const = 0;
+    virtual int countCard() const = 0;
+    virtual bool addNewCard(AbstractCard* newCard) = 0;
+    virtual AbstractCard* takeACard(int indexCard) = 0;
+    virtual bool removeFromPacket(AbstractCard* card) = 0;
+
     bool isFull();
-    virtual bool addNewCard(AbstractCard* newCard);
-    virtual AbstractCard* takeACard(int index);
     AbstractCard* card(int index);
-    bool removeFromPacket(AbstractCard* card);
 	
-    //virtual QVariant data(const QModelIndex &index, int role) const = 0;
-    virtual int rowCount(const QModelIndex& = QModelIndex()) const override;
+    virtual QVariant data(const QModelIndex &index, int role) const = 0;
+    virtual int rowCount(const QModelIndex& = QModelIndex()) const = 0;
 
 signals:
     void countChanged();
@@ -43,9 +44,6 @@ signals:
 	
 protected:
 	QList<AbstractCard*> m_listCards;
-
-
-    //QHash<int, QByteArray> roleNames() const override;
 
 protected slots:
     void updateAllData();

@@ -2,11 +2,13 @@
 
 #include <QDebug>
 #include <QPixmap>
+#include <QVariant>
 #include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
+#include "src_Models/modellistenergies.h"
 
 BenchArea::BenchArea(QList<AbstractCard*> listCards) :
-	AbstractPacket(listCards)
+    AbstractPacketStatic(listCards)
 {
 	
 }
@@ -27,47 +29,39 @@ void BenchArea::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-int BenchArea::maxCards()
+int BenchArea::maxCards() const
 {
     return MAXCARDS_BENCH;
 }
 
-bool BenchArea::addNewCard(AbstractCard* newCard)
+ModelListEnergies* BenchArea::modelFromCardPokemon(int index)
 {
-    bool statusBack = false;
+    qDebug() << __PRETTY_FUNCTION__ << index;
 
-    if ((NULL != newCard) && (!isFull()))
+    /*int iRow = index;
+    int rowCountPacket = AbstractPacket::rowCount();
+    if ((iRow < 0) || (iRow >= rowCountPacket))
     {
-        m_listCards.append(newCard);
+        qCritical() << __PRETTY_FUNCTION__ << "bad row num : " << iRow;
+        return nullptr;
+    }*/
 
-        connect(newCard, &AbstractCard::dataChanged, this, &BenchArea::updateAllData);
+    ModelListEnergies* modelToReturn = nullptr;
 
-        emit dataChanged(index(AbstractPacket::rowCount()-1, 0), index(AbstractPacket::rowCount()-1, 0));
-        emit countChanged();
-        statusBack = true;
+    if((index >= 0) && (index < countCard()))
+    {
+        CardPokemon* cardPok = dynamic_cast<CardPokemon*>(m_listCards[index]);
+
+        if(cardPok != nullptr)
+            modelToReturn = cardPok->modelListOfEnergies();
     }
 
-    return statusBack;
-}
-
-AbstractCard* BenchArea::takeACard(int indexCard)
-{
-    AbstractCard* card = NULL;
-
-    if ((indexCard >= 0) && (indexCard < countCard()))
-    {
-        card = m_listCards.takeAt(indexCard);
-
-        emit dataChanged(index(AbstractPacket::rowCount()-1, 0), index(AbstractPacket::rowCount(), 0));
-        emit countChanged();
-    }
-
-    return card;
+    return modelToReturn;
 }
 
 QVariant BenchArea::data(const QModelIndex& index, int role) const
 {
-    //qDebug() << __PRETTY_FUNCTION__ << index << role;
+    qDebug() << __PRETTY_FUNCTION__ << index << role;
 
     int iRow = index.row();
     if ((iRow < 0) || (iRow >= rowCount()))
@@ -76,18 +70,26 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    CardPokemon* cardPok = dynamic_cast<CardPokemon*>(m_listCards[iRow]);
-
     //Dans la liste
-    if((iRow < AbstractPacket::rowCount()) && (cardPok != nullptr))
+    if(iRow < countCard())
     {
-        switch(role)
+        CardPokemon* cardPok = dynamic_cast<CardPokemon*>(m_listCards[iRow]);
+
+        if(cardPok != nullptr)
         {
-        case BenchRole_Card:            return QVariant::fromValue<AbstractCard*>(m_listCards[iRow]);
-        case BenchRole_Name:            return m_listCards[iRow]->name();
-        case BenchRole_ImageCard:       return m_listCards[iRow]->image();
-        case BenchRole_ModelEnergies:   return cardPok->modelListOfEnergies();
+            switch(role)
+            {
+            case BenchRole_Card:            return QVariant::fromValue<AbstractCard*>(m_listCards[iRow]);
+            case BenchRole_Name:            return m_listCards[iRow]->name();
+            case BenchRole_ImageCard:       return m_listCards[iRow]->image();
+            //case BenchRole_ModelEnergies:   return QVariant::fromValue<ModelListEnergies*>(cardPok->modelListOfEnergies());
+            }
         }
+        else
+        {
+            return QVariant::Invalid;
+        }
+
     }
     //Au delà
     else
@@ -97,16 +99,11 @@ QVariant BenchArea::data(const QModelIndex& index, int role) const
         case BenchRole_Card:            return QVariant();
         case BenchRole_Name:            return "";
         case BenchRole_ImageCard:       return AbstractCard::imageByDefault();
-        case BenchRole_ModelEnergies:   return QVariant();
+        //case BenchRole_ModelEnergies:   return QVariant();
         }
     }
 
     return QVariant::Invalid;
-}
-
-int BenchArea::rowCount(const QModelIndex &) const
-{
-    return MAXCARDS_BENCH;
 }
 
 /************************************************************

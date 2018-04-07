@@ -48,7 +48,9 @@ SOURCES += \
     src_Models/factorymainpageloader.cpp \
     src_Controler/ctrlselectingcards.cpp \
     src_Models/modelselectingcards.cpp \
-    src_Models/modellistenergies.cpp
+    src_Models/modellistenergies.cpp \
+    src_Packets/abstractpacketstatic.cpp \
+    src_Packets/abstractpacketdynamic.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -94,7 +96,9 @@ HEADERS += \
     src_Models/factorymainpageloader.h \
     src_Controler/ctrlselectingcards.h \
     src_Models/modelselectingcards.h \
-    src_Models/modellistenergies.h
+    src_Models/modellistenergies.h \
+    src_Packets/abstractpacketstatic.h \
+    src_Packets/abstractpacketdynamic.h
 
 FORMS += \
     dlgselectcards.ui

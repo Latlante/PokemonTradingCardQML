@@ -1,7 +1,7 @@
 #include "packettrash.h"
 
 PacketTrash::PacketTrash(QList<AbstractCard*> listCards) :
-	AbstractPacket(listCards)
+    AbstractPacketDynamic(listCards)
 {
 	
 }
@@ -22,7 +22,7 @@ void PacketTrash::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-int PacketTrash::maxCards()
+int PacketTrash::maxCards() const
 {
     return MAXCARDS_TRASH;
 }

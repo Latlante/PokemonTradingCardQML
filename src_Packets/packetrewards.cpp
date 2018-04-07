@@ -1,7 +1,7 @@
 #include "packetrewards.h"
 
 PacketRewards::PacketRewards(QList<AbstractCard*> listCards) :
-	AbstractPacket(listCards)
+    AbstractPacketDynamic(listCards)
 {
 	
 }
@@ -22,7 +22,7 @@ void PacketRewards::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-int PacketRewards::maxCards()
+int PacketRewards::maxCards() const
 {
     return MAXCARDS_REWARD;
 }

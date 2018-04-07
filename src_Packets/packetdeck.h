@@ -1,11 +1,11 @@
 #ifndef PACKETDECK_H
 #define PACKETDECK_H
 
-#include "abstractpacket.h"
+#include "abstractpacketdynamic.h"
 
 class AbsractCard;
 
-class PacketDeck : public AbstractPacket
+class PacketDeck : public AbstractPacketDynamic
 {
     Q_OBJECT
 
@@ -15,7 +15,7 @@ public:
 
     static void declareQML();
 	
-    int maxCards();
+    int maxCards() const override;
 	void mixCards();
     AbstractCard *drawCard();
     QList<AbstractCard *> drawCards(int count);

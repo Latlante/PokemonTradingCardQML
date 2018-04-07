@@ -5,7 +5,7 @@
 #include "utils.h"
 
 FightArea::FightArea(QList<AbstractCard*> listCards) :
-	AbstractPacket(listCards)
+    AbstractPacketStatic(listCards)
 {
 	
 }
@@ -18,7 +18,7 @@ FightArea::~FightArea()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-int FightArea::maxCards()
+int FightArea::maxCards() const
 {
     return MAXCARDS_FIGHT;
 }
