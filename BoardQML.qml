@@ -490,45 +490,58 @@ Item {
             anchors.topMargin: 0
             orientation: ListView.Horizontal
             model: play1.bench()
-            delegate: Item {
-                id: itemDelegatePacketBench
-                x: 5
-                width: 80
-                height: 100
+            delegate: model.isCard === true ? componentDelegateCardBench : componentDelegateCardEmptyBench
+                /*{
+                if(model.isCard === true)
+                    return componentDelegateCardBench;
+                else
+                    return componentDelegateCardEmptyBench;
+            }*/
 
-                Image {
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: listViewEnergiesByCard.top
-                    source: model.imageCard
-                    fillMode: Image.PreserveAspectFit
 
-                    MouseArea {
-                        id: mouseAreaCardBench
-                        anchors.fill: parent
-                        onClicked: {
-                            if(model.card != undefined)
-                            {
-                                popupCardDetailsComplete1.card = model.card;
-                                popupCardDetailsComplete1.visible = true;
+            Component{
+                id: componentDelegateCardBench
+                Item {
+                    id: itemDelegatePacketBench
+                    x: 5
+                    width: 80
+                    height: 120
+
+                    Image {
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: listViewEnergiesByCard.top
+                        source: model.imageCard
+                        fillMode: Image.PreserveAspectFit
+
+                        MouseArea {
+                            id: mouseAreaCardBench
+                            anchors.fill: parent
+                            onClicked: {
+                                if(model.card !== undefined)
+                                {
+                                    popupCardDetailsComplete1.card = model.card;
+                                    popupCardDetailsComplete1.visible = true;
+                                }
                             }
                         }
                     }
-                }
 
-                ListView {
-                    id: listViewEnergiesByCard
-                    height: 25
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    orientation: ListView.Horizontal
-                    interactive: false
 
-                    model: listViewPacketBench_P1.model.modelFromCardPokemon(index)
-                    delegate:
-                        Item {
+                    ListView {
+                        id: listViewEnergiesByCard
+                        height: 25
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        orientation: ListView.Horizontal
+                        interactive: false
+
+                        model: listViewPacketBench_P1.model.modelFromCardPokemon(index)
+                        //model: ctrlGameBoard.newListEnergies()
+                        delegate:
+                            Item {
                             width: 25
                             height: 25
 
@@ -538,9 +551,40 @@ Item {
                                 source: model.icon
                             }
                         }
-                }
 
+                        Component.onCompleted: console.log("listViewEnergiesByCard is created");
+                    }
+                }
             }
+
+            Component {
+                id: componentDelegateCardEmptyBench
+                Item {
+                    id: itemDelegatePacketBench
+                    x: 5
+                    width: 80
+                    height: 120
+
+                    Image {
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: rectangleEmptyBarCardEmptyBench.top
+                        source: model.imageCard
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Rectangle {
+                        id: rectangleEmptyBarCardEmptyBench
+                        height: 25
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        color: "green"
+                    }
+                }
+            }
+
             DropArea {
                 id: dropAreaBench
                 anchors.fill: parent
