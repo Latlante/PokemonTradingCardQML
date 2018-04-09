@@ -201,11 +201,11 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
     return moveSuccess;
 }
 
-bool Player::moveCardFromBenchToFight(const QModelIndex &index)
+bool Player::moveCardFromBenchToFight(int indexBench)
 {
     bool moveSuccess = false;
 
-    AbstractCard* cardToMove = bench()->card(index.column());
+    AbstractCard* cardToMove = bench()->card(indexBench);
 
     if (cardToMove != NULL)
     {
@@ -217,7 +217,7 @@ bool Player::moveCardFromBenchToFight(const QModelIndex &index)
             //On refuse les évolutions
             if (cardPok->isBase() == true)
             {
-                moveSuccess = moveCardFromPacketToAnother(bench(), fight(), index.column());
+                moveSuccess = moveCardFromPacketToAnother(bench(), fight(), indexBench);
             }
             else
             {

@@ -45,7 +45,7 @@ public:
 
     bool moveCardFromDeckToReward();
     Q_INVOKABLE bool moveCardFromHandToBench(int indexHand, int indexBench);
-    bool moveCardFromBenchToFight(const QModelIndex& index);
+    Q_INVOKABLE bool moveCardFromBenchToFight(int indexBench);
     bool moveCardFromFightToTrash(const QModelIndex& index);
 
 
