@@ -18,7 +18,7 @@ struct InfoCard
 class ModelSelectingCards : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(QList<InfoCard> listCardsSelected READ listCardsSelected NOTIFY listCardsSelectedChanged)
+    //Q_PROPERTY(QList<InfoCard*> listCardsSelected READ listCardsSelected NOTIFY listCardsSelectedChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(bool lastPlayer READ isLastPlayer NOTIFY lastPlayerChanged)
     Q_PROPERTY(int countTotalQuantity READ countTotalQuantity NOTIFY countTotalQuantityChanged)
@@ -32,13 +32,29 @@ public:
         SelCards_Quantity
     };
 
+    enum SelectingCardsFilter
+    {
+        SelCardsFilter_AllCards = 0,
+        SelCardsFilter_CardsPokemonOnly,
+        SelCardsFilter_CardsElementElectricOnly,
+        SelCardsFilter_CardsElementFightingOnly,
+        SelCardsFilter_CardsElementFireOnly,
+        SelCardsFilter_CardsElementGrassOnly,
+        SelCardsFilter_CardsElementNormalOnly,
+        SelCardsFilter_CardsElementPsyOnly,
+        SelCardsFilter_CardsElementWaterOnly,
+        SelCardsFilter_CardsEnergiesOnly,
+        SelCardsFilter_CardsTrainersOnly
+    };
+
     explicit ModelSelectingCards(QObject *parent = nullptr);
     ~ModelSelectingCards();
 
     static void declareQML();
     Q_INVOKABLE int maxCards();
+    Q_INVOKABLE void applyAFilter(int filter);
 
-    QList<InfoCard> listCardsSelected();
+    QList<InfoCard *> listCardsSelected();
     QString name();
     void setName(const QString& name);
     bool isLastPlayer();
@@ -63,7 +79,8 @@ protected:
 
 private:
     QString m_name;
-    QList<InfoCard> m_listCardsSelected;
+    QList<InfoCard*> m_listCardsSelected;
+    QList<InfoCard*> m_listCardsFiltered;
     bool m_lastPlayer;
     //QHash<AbstractCard*, unsigned short> m_listCardsSelected;
 

@@ -128,8 +128,13 @@ void CtrlSelectingCards::onClickedListFinished()
     QString namePlayerToSelect = "";
     int index = 0;
 
-    //On enregistre la liste
-    m_listCardsByPlayer[m_modelSelectingCards->name()] = m_modelSelectingCards->listCardsSelected();
+    //On enregistre la liste en se débarrassant des pointeurs
+    QList<InfoCard*> listCardsSelected = m_modelSelectingCards->listCardsSelected();
+    QList<InfoCard> newListCardsSelected;
+    foreach(InfoCard* info, listCardsSelected)
+        newListCardsSelected.append(*info);
+
+    m_listCardsByPlayer[m_modelSelectingCards->name()] = newListCardsSelected;
 
     //On vérifie s'il reste des personnes qui n'ont pas fait leur sélection
     while((namePlayerToSelect == "") && (index < m_listCardsByPlayer.keys().count()))
