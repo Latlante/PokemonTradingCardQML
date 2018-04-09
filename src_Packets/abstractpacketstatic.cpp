@@ -1,6 +1,8 @@
 #include "abstractpacketstatic.h"
 #include "src_Cards/abstractcard.h"
 
+#include "src_Cards/cardpokemon.h"
+
 AbstractPacketStatic::AbstractPacketStatic(QList<AbstractCard *> listCards) :
     AbstractPacket(listCards)
 {
@@ -66,7 +68,69 @@ bool AbstractPacketStatic::removeFromPacket(AbstractCard *card)
     return removeSuccess;
 }
 
+QVariant AbstractPacketStatic::data(const QModelIndex& index, int role) const
+{
+    //qDebug() << __PRETTY_FUNCTION__ << index << role;
+
+    int iRow = index.row();
+    if ((iRow < 0) || (iRow >= rowCount()))
+    {
+        qCritical() << __PRETTY_FUNCTION__ << "bad row num : " << iRow;
+        return QVariant();
+    }
+
+    //Dans la liste
+    if(iRow < countCard())
+    {
+        CardPokemon* cardPok = dynamic_cast<CardPokemon*>(m_listCards[iRow]);
+
+        if(cardPok != nullptr)
+        {
+            switch(role)
+            {
+            case PacStaticRole_Card:            return QVariant::fromValue<AbstractCard*>(m_listCards[iRow]);
+            case PacStaticRole_IsCard:          return true;
+            case PacStaticRole_Name:            return m_listCards[iRow]->name();
+            case PacStaticRole_ImageCard:       return m_listCards[iRow]->image();
+            }
+        }
+        else
+        {
+            return QVariant::Invalid;
+        }
+
+    }
+    //Au delà
+    else
+    {
+        switch(role)
+        {
+        case PacStaticRole_Card:            return QVariant();
+        case PacStaticRole_IsCard:          return false;
+        case PacStaticRole_Name:            return "";
+        case PacStaticRole_ImageCard:       return AbstractCard::imageByDefault();
+        }
+    }
+
+    return QVariant::Invalid;
+}
+
+
 int AbstractPacketStatic::rowCount(const QModelIndex&) const
 {
     return maxCards();
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QHash<int, QByteArray> AbstractPacketStatic::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[PacStaticRole_Card] = "card";
+    roles[PacStaticRole_IsCard] = "isCard";
+    roles[PacStaticRole_Name] = "name";
+    roles[PacStaticRole_ImageCard] = "imageCard";
+
+    return roles;
 }
