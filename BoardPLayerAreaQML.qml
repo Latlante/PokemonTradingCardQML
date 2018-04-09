@@ -146,7 +146,27 @@ Item {
         anchors.topMargin: 0
         orientation: ListView.Horizontal
         model: player.bench()
-        delegate: model.isCard === true ? componentDelegateCardBench : componentDelegateCardEmptyBench
+        delegate: Loader {
+            id: loaderListViewPacketBench
+
+            property int modelIndex: index
+            property bool modelIsCard: model.isCard
+            property AbstractCard modelCard: model.card
+            property string modelImageCard: model.imageCard
+
+            sourceComponent: {
+                if(modelIsCard === true)
+                {
+                    console.log("Loader: componentDelegateCardBench");
+                    return componentDelegateCardBench;
+                }
+                else
+                {
+                    console.log("Loader: componentDelegateCardEmptyBench");
+                    return componentDelegateCardEmptyBench;
+                }
+            }
+        }
             /*{
             if(model.isCard === true)
                 return componentDelegateCardBench;
@@ -168,18 +188,22 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: listViewEnergiesByCard.top
-                    source: model.imageCard
+                    source: modelImageCard
                     fillMode: Image.PreserveAspectFit
 
                     MouseArea {
                         id: mouseAreaCardBench
                         anchors.fill: parent
                         onClicked: {
-                            if(model.card !== undefined)
+                            if(modelCard !== undefined)
                             {
-                                popupCardDetailsComplete1.card = model.card;
+                                popupCardDetailsComplete1.card = modelCard;
                                 popupCardDetailsComplete1.visible = true;
                             }
+                        }
+
+                        onPressAndHold: {
+                            player.moveCardFromBenchToFight(modelIndex)
                         }
                     }
                 }
@@ -194,7 +218,7 @@ Item {
                     orientation: ListView.Horizontal
                     interactive: false
 
-                    model: listViewPacketBench.model.modelFromCardPokemon(index)
+                    model: listViewPacketBench.model.modelFromCardPokemon(modelIndex)
                     //model: ctrlGameBoard.newListEnergies()
                     delegate:
                         Item {
@@ -226,7 +250,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: rectangleEmptyBarCardEmptyBench.top
-                    source: model.imageCard
+                    source: modelImageCard
                     fillMode: Image.PreserveAspectFit
                 }
 
