@@ -19,12 +19,12 @@ Item {
         id: rectangleInfosPackets
         height: 50
         color: "#00000000"
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
+        anchors.leftMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.rightMargin: 0
         border.width: 4
 
         Text {
@@ -157,12 +157,12 @@ Item {
             sourceComponent: {
                 if(modelIsCard === true)
                 {
-                    console.log("Loader: componentDelegateCardBench");
+                    //console.log("Loader: componentDelegateCardBench");
                     return componentDelegateCardBench;
                 }
                 else
                 {
-                    console.log("Loader: componentDelegateCardEmptyBench");
+                    //console.log("Loader: componentDelegateCardEmptyBench");
                     return componentDelegateCardEmptyBench;
                 }
             }
@@ -219,7 +219,7 @@ Item {
                     interactive: false
 
                     model: listViewPacketBench.model.modelFromCardPokemon(modelIndex)
-                    //model: ctrlGameBoard.newListEnergies()
+                    //model: listViewPacketBench.model.data(modelIndex).modelListOfEnergies()
                     delegate:
                         Item {
                         width: 25
