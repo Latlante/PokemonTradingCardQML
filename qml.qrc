@@ -10,5 +10,6 @@
         <file>BoardPLayerAreaQML.qml</file>
         <file>BoardFightingInformation.qml</file>
         <file>BoardFightingArea.qml</file>
+        <file>PopupPokemonSelectingAttack.qml</file>
     </qresource>
 </RCC>
