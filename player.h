@@ -51,7 +51,7 @@ public:
 
 signals:
     void endOfTurn();
-    void canPlayChanged(bool);
+    void canPlayChanged();
 
 private:
 	QString m_name;

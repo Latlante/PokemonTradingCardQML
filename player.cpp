@@ -250,7 +250,7 @@ void Player::setCanPlay(bool status)
     if(status != m_canPlay)
     {
         m_canPlay = status;
-        emit canPlayChanged(m_canPlay);
+        emit canPlayChanged();
     }
 }
 

@@ -15,6 +15,8 @@ GameManager::GameManager(QObject *parent) :
 	QObject(parent),
 	m_listPlayers(QList<Player*>()),
 	m_indexCurrentPlayer(0),
+    m_playerAttacking(nullptr),
+    m_playerAttacked(nullptr),
 	m_gameIsReady(false)
 {
 	
@@ -122,7 +124,7 @@ Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
 
 Player* GameManager::currentPlayer()
 {
-    Player* playerPlaying = NULL;
+    /*Player* playerPlaying = NULL;
 
     foreach(Player *play, m_listPlayers)
     {
@@ -133,12 +135,13 @@ Player* GameManager::currentPlayer()
         }
     }
 
-    return playerPlaying;
+    return playerPlaying;*/
+    return m_playerAttacking;
 }
 
 Player* GameManager::playerAttacked()
 {
-    Player* playerPlaying = NULL;
+    /*Player* playerPlaying = NULL;
 
     foreach(Player *play, m_listPlayers)
     {
@@ -149,7 +152,8 @@ Player* GameManager::playerAttacked()
         }
     }
 
-    return playerPlaying;
+    return playerPlaying;*/
+    return m_playerAttacked;
 }
 
 Player* GameManager::playerAt(int index)
@@ -185,19 +189,21 @@ void GameManager::drawFirstCards()
     }
 }
 
-int GameManager::selectFirstPlayer()
+void GameManager::selectFirstPlayer()
 {
-    m_indexCurrentPlayer = Utils::selectFirstPlayer(m_listPlayers.count());
-    return m_indexCurrentPlayer;
+    int indexCurrentPlayer = Utils::selectFirstPlayer(m_listPlayers.count());
+    setIndexCurrentPlayer(indexCurrentPlayer);
 }
 
 void GameManager::nextPlayer()
 {	
-	m_indexCurrentPlayer++;
+    /*m_indexCurrentPlayer++;
 	if (m_listPlayers.count() <= m_indexCurrentPlayer)
 		m_indexCurrentPlayer = 0;
 		
-	m_listPlayers[m_indexCurrentPlayer]->newTurn();
+    m_listPlayers[m_indexCurrentPlayer]->newTurn();*/
+    setIndexCurrentPlayer(m_indexCurrentPlayer+1);
+    currentPlayer()->newTurn();
 }
 
 void GameManager::attack(Player *playAttacking, unsigned short index, Player *playAttacked)
@@ -260,4 +266,32 @@ void GameManager::onEndOfTurn_Player()
         }
 
     }
+}
+
+/************************************************************
+*****				FONCTIONS PRIVEES					*****
+************************************************************/
+void GameManager::setIndexCurrentPlayer(int index)
+{
+    //Sécurité pour ne pas dépasser l'index
+    index = index % m_listPlayers.count();
+
+    if(m_indexCurrentPlayer != index)
+    {
+        m_indexCurrentPlayer = index;
+        emit indexCurrentPlayerChanged();
+
+        //A REVOIR
+        if(index == 0)
+        {
+            m_playerAttacking = m_listPlayers[0];
+            m_playerAttacked = m_listPlayers[1];
+        }
+        else
+        {
+            m_playerAttacking = m_listPlayers[1];
+            m_playerAttacked = m_listPlayers[0];
+        }
+    }
+
 }

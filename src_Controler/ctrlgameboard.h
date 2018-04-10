@@ -17,6 +17,7 @@ class PacketDeck;
 class CtrlGameBoard : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(Player* currentPlayer READ currentPlayer NOTIFY currentPlayerChanged)
 public:
     explicit CtrlGameBoard(CtrlSelectingCards& ctrlSelectCards, QObject *parent = nullptr);
     ~CtrlGameBoard();
@@ -24,6 +25,8 @@ public:
     static void declareQML();
 
     bool install(QQmlApplicationEngine *pEngine);
+
+    Player* currentPlayer();
 
     Q_INVOKABLE ListPlayers* newListPlayers();
     Q_INVOKABLE FactoryMainPageLoader* factory();
@@ -34,9 +37,11 @@ public:
     Q_INVOKABLE void onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers);
     Q_INVOKABLE void displaySelectingCardsForNextPlayers();
     Q_INVOKABLE void onClicked_ButtonOk_SelectCards();
+    Q_INVOKABLE void onClicked_ButtonAttack();
 
 signals:
     void nextPlayer();
+    void currentPlayerChanged();
 
 private slots:
     void onListsComplete_CtrlSelectingCards();

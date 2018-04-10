@@ -26,12 +26,14 @@ public:
     Player* playerAt(int index);
     void startGame();
     void drawFirstCards();
-	int selectFirstPlayer();
+    void selectFirstPlayer();
 	void nextPlayer();
     void attack(Player* playAttacking, unsigned short index, Player* playAttacked);
 	void endOfTurn();
 	bool gameIsFinished();
 
+signals:
+    void indexCurrentPlayerChanged();
 
 private slots:
     void onEndOfTurn_Player();
@@ -42,10 +44,12 @@ private:
     static GameManager *m_instance;
 	QList<Player*> m_listPlayers;
 	unsigned short m_indexCurrentPlayer;
+    Player* m_playerAttacking;
+    Player* m_playerAttacked;
 	
 	bool m_gameIsReady;
 
-
+    void setIndexCurrentPlayer(int index);
 };
 
 #endif // GAMEMANAGER_H

@@ -22,6 +22,7 @@ CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, QObject *paren
 {
     //initGame();
     connect(&m_ctrlSelectingCards, &CtrlSelectingCards::listsComplete, this, &CtrlGameBoard::onListsComplete_CtrlSelectingCards);
+    connect(m_gameManager, &GameManager::indexCurrentPlayerChanged, this, &CtrlGameBoard::currentPlayerChanged);
 }
 
 CtrlGameBoard::~CtrlGameBoard()
@@ -62,6 +63,11 @@ bool CtrlGameBoard::install(QQmlApplicationEngine *pEngine)
     }
 
     return bInstalled;
+}
+
+Player* CtrlGameBoard::currentPlayer()
+{
+    return m_gameManager->currentPlayer();
 }
 
 ListPlayers* CtrlGameBoard::newListPlayers()
@@ -126,6 +132,14 @@ void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
     //initGame();
 
     m_factoryMainPageLoader->displayBoard();
+}
+
+void CtrlGameBoard::onClicked_ButtonAttack()
+{
+    Player* playerAttacking = m_gameManager->currentPlayer();
+    Player* playerAttacked = m_gameManager->playerAttacked();
+
+    m_gameManager->attack(playerAttacking, 0, playerAttacked);
 }
 
 /************************************************************
