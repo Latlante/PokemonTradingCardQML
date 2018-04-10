@@ -8,6 +8,7 @@ Item {
     height: 600
 
     property Player player
+    property Player currentPlayer
     property CardPokemon cardPok: player.fight().pokemonFighter
 
     onPlayerChanged: {
@@ -38,6 +39,7 @@ Item {
 
             pokemonFighting.source = cardPok.image();
             textNamePokemon.text = cardPok.name();
+            textStatusPokemon.text = cardPok.status;
             textLifePokemon.text = cardPok.lifeLeft + "/" + cardPok.lifeTotal() + " PV"
             gridViewEnergies.model = cardPok.modelListOfEnergies();
         }
@@ -95,7 +97,8 @@ Item {
         Rectangle {
             id: rectangleContainerInformation
 
-            property int heightLines: 70
+            property int heightLines: 50
+            property int pixelSize: heightLines - 10
 
             anchors.top: parent.top
             anchors.left: parent.left
@@ -116,13 +119,11 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 font.family: "Times New Roman"
-                font.pixelSize: 50
+                font.pixelSize: rectangleContainerInformation.pixelSize
             }
 
             Text {
                 id: textLifePokemon
-                x: 6
-                y: 215
                 height: rectangleContainerInformation.heightLines
                 //text: cardPok.lifeLeft + "/" + cardPok.lifeTotal() + " PV"
                 anchors.top: textNamePokemon.bottom
@@ -131,14 +132,27 @@ Item {
                 anchors.leftMargin: 8
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                font.pixelSize: 50
+                font.pixelSize: rectangleContainerInformation.pixelSize
+                font.family: "Times New Roman"
+            }
+
+            Text {
+                id: textStatusPokemon
+                height: rectangleContainerInformation.heightLines
+                anchors.top: textLifePokemon.bottom
+                anchors.topMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 8
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                font.pixelSize: rectangleContainerInformation.pixelSize
                 font.family: "Times New Roman"
             }
 
             GridView {
                 id: gridViewEnergies
                 interactive: false
-                anchors.top: textLifePokemon.bottom
+                anchors.top: textStatusPokemon.bottom
                 anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -167,6 +181,7 @@ Item {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 //enabled:
+                visible: player === currentPlayer
 
                 text: "Attaquer"
 
