@@ -20,9 +20,6 @@ public:
     AbstractCard *drawCard();
     QList<AbstractCard *> drawCards(int count);
 
-    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-private:
 };
 
 #endif // PACKETDECK_H

@@ -77,3 +77,38 @@ int AbstractPacketDynamic::rowCount(const QModelIndex&) const
 {
     return m_listCards.count();
 }
+
+QVariant AbstractPacketDynamic::data(const QModelIndex &index, int role) const
+{
+    //qDebug() << __PRETTY_FUNCTION__ << index << role;
+
+    int iRow = index.row();
+    if ((iRow < 0) || (iRow >= rowCount()))
+    {
+        qCritical() << __PRETTY_FUNCTION__ << "bad row num : " << iRow;
+        return QVariant();
+    }
+
+    switch(role)
+    {
+    case PacDynamicRole_Card:         return QVariant::fromValue<AbstractCard*>(m_listCards[iRow]);
+    case PacDynamicRole_Name:         return m_listCards[iRow]->name();
+    case PacDynamicRole_ImageCard:    return m_listCards[iRow]->image();
+    }
+
+    return QVariant();
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QHash<int, QByteArray> AbstractPacketDynamic::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[PacDynamicRole_Card] = "card";
+    roles[PacDynamicRole_Name] = "name";
+    roles[PacDynamicRole_ImageCard] = "imageCard";
+
+    return roles;
+}
+

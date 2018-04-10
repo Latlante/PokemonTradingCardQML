@@ -24,11 +24,11 @@ public:
     virtual AbstractCard* takeACard(int indexCard) override;
     virtual bool removeFromPacket(AbstractCard* card) override;
 
-    virtual QVariant data(const QModelIndex &index, int role) const override;
-    virtual int rowCount(const QModelIndex & = QModelIndex()) const override;
+    virtual QVariant data(const QModelIndex &index, int role) const final;
+    virtual int rowCount(const QModelIndex & = QModelIndex()) const final;
 
 protected:
-    QHash<int, QByteArray> roleNames() const override;
+    QHash<int, QByteArray> roleNames() const final;
 };
 
 #endif // ABSTRACTPACKETSTATIC_H

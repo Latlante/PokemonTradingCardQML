@@ -26,8 +26,3 @@ int PacketRewards::maxCards() const
 {
     return MAXCARDS_REWARD;
 }
-
-QVariant PacketRewards::data(const QModelIndex &index, int role) const
-{
-    return QVariant();
-}

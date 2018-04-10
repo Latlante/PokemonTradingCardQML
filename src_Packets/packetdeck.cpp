@@ -61,8 +61,3 @@ QList<AbstractCard*> PacketDeck::drawCards(int count)
 	
 	return listCards;
 }
-
-QVariant PacketDeck::data(const QModelIndex &index, int role) const
-{
-    return QVariant();
-}

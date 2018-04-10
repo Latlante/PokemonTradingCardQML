@@ -26,8 +26,3 @@ int PacketTrash::maxCards() const
 {
     return MAXCARDS_TRASH;
 }
-
-QVariant PacketTrash::data(const QModelIndex &index, int role) const
-{
-    return QVariant();
-}

@@ -111,14 +111,14 @@ ModelListEnergies* BenchArea::modelFromCardPokemon(int index)
 /************************************************************
 *****				FONCTIONS PROTEGEES					*****
 ************************************************************/
-QHash<int, QByteArray> BenchArea::roleNames() const
-{
-    QHash<int, QByteArray> roles;
-    roles[BenchRole_Card] = "card";
-    roles[BenchRole_IsCard] = "isCard";
-    roles[BenchRole_Name] = "name";
-    roles[BenchRole_ImageCard] = "imageCard";
-    roles[BenchRole_ModelEnergies] = "modelEnergies";
+//QHash<int, QByteArray> BenchArea::roleNames() const
+//{
+//    QHash<int, QByteArray> roles;
+//    roles[BenchRole_Card] = "card";
+//    roles[BenchRole_IsCard] = "isCard";
+//    roles[BenchRole_Name] = "name";
+//    roles[BenchRole_ImageCard] = "imageCard";
+//    roles[BenchRole_ModelEnergies] = "modelEnergies";
 
-    return roles;
-}
+//    return roles;
+//}
