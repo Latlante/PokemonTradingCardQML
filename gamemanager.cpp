@@ -225,6 +225,10 @@ void GameManager::endOfTurn()
 
 bool GameManager::gameIsFinished()
 {
+    //Conditions de victoire:
+    //  -> Plus de récompense à piocher
+    //  -> Plus de carte dans le deck
+    //  -> Plus de pokémon sur la banc
 	bool hasAWinner = false;
 	
 	foreach(Player* play, m_listPlayers)

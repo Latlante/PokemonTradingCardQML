@@ -136,10 +136,21 @@ void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
 
 void CtrlGameBoard::onClicked_ButtonAttack()
 {
+    //Procédure de fin de tour
+
+    //Le pokémon attaquant attaque
     Player* playerAttacking = m_gameManager->currentPlayer();
     Player* playerAttacked = m_gameManager->playerAttacked();
 
     m_gameManager->attack(playerAttacking, 0, playerAttacked);
+
+    //Si le pokémon attaqué est mort, le joueur pioche sa récompense
+
+        //On vérifie les conditions de victoires
+
+        //S'il n'y a pas de victoire, le joueur attaqué remplace le pokémon
+
+    //On passe au prochain tour
 }
 
 /************************************************************
