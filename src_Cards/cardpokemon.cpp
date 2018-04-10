@@ -18,6 +18,7 @@ CardPokemon::CardPokemon(unsigned short id,
 	m_lifeTotal(lifeTotal),
 	m_lifeLeft(lifeTotal),
 	m_status(Status_Normal),
+    m_invincibleOnNextTurn(false),
 	m_listAttacks(listAttacks),
     //m_listEnergies(QList<CardEnergy*>()),
     m_modelListEnergies(new ModelListEnergies()),
@@ -82,6 +83,11 @@ unsigned short CardPokemon::lifeTotal()
 	return m_lifeTotal;
 }
 
+bool CardPokemon::isDied()
+{
+    return lifeLeft() <= 0;
+}
+
 unsigned short CardPokemon::lifeLeft()
 {
 	return m_lifeLeft;
@@ -105,6 +111,16 @@ void CardPokemon::setStatus(Enum_statusOfPokemon status)
         emit statusChanged();
         emit dataChanged();
     }
+}
+
+bool CardPokemon::isInvincibleForTheNextTurn()
+{
+    return m_invincibleOnNextTurn;
+}
+
+void CardPokemon::setInvincibleForTheNextTurn(bool status)
+{
+    m_invincibleOnNextTurn = status;
 }
 
 QList<AttackData> CardPokemon::listAttacks()
@@ -226,14 +242,26 @@ bool CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
 
 void CardPokemon::takeDamage(unsigned short damage)
 {
-	if (damage > m_lifeLeft)
-	{
-        setLifeLeft(0);
-	}
-	else
-	{
-        setLifeLeft(lifeLeft() - damage);
-	}
+    if(isInvincibleForTheNextTurn())
+    {
+        setInvincibleForTheNextTurn(false);
+    }
+    else
+    {
+        if (damage > lifeLeft())
+        {
+            setLifeLeft(0);
+        }
+        else
+        {
+            setLifeLeft(lifeLeft() - damage);
+        }
+    }
+}
+
+void CardPokemon::restoreLife(unsigned short life)
+{
+    setLifeLeft(lifeLeft() + life);
 }
 
 bool CardPokemon::canAttackFromStatus()
@@ -305,6 +333,9 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
 ************************************************************/
 void CardPokemon::setLifeLeft(unsigned short life)
 {
+    if(life > lifeTotal())
+        life = lifeTotal();
+
     if(m_lifeLeft != life)
     {
         m_lifeLeft = life;
