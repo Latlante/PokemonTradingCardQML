@@ -9,6 +9,7 @@ Item {
 
     property Player player1: ctrlGameBoard.playerAt(0)
     property Player player2: ctrlGameBoard.playerAt(1)
+    property Player currentPlayer: ctrlGameBoard.currentPlayer
 
     Image {
         id: imageBackground
@@ -38,6 +39,7 @@ Item {
 
             play1: board1.player1
             play2: board1.player2
+            currentPlayer: board1.currentPlayer
         }
 
         //ZONE DE JOUEUR 1
