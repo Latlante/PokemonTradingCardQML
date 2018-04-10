@@ -21,6 +21,8 @@ struct AttackData
 class CardPokemon : public AbstractCard
 {
 	Q_OBJECT
+    Q_PROPERTY(unsigned short lifeLeft READ lifeLeft NOTIFY lifeLeftChanged)
+    Q_PROPERTY(QString status READ status NOTIFY statusChanged)
 	
 public:
 	enum Enum_statusOfPokemon
@@ -49,8 +51,8 @@ public:
     Q_INVOKABLE AbstractCard::Enum_element element();
     Q_INVOKABLE QString elementFormatString();
     Q_INVOKABLE unsigned short lifeTotal();
-    Q_INVOKABLE unsigned short lifeLeft();
-    Q_INVOKABLE Enum_statusOfPokemon status();
+    unsigned short lifeLeft();
+    Enum_statusOfPokemon status();
     Q_INVOKABLE QString statusFormatString();
     void setStatus(Enum_statusOfPokemon status);
 
@@ -65,7 +67,7 @@ public:
     void removeEnergy(int index);
 	unsigned short countEnergies();
 	unsigned short countEnergies(Enum_element element);
-    ModelListEnergies* modelListOfEnergies();
+    Q_INVOKABLE ModelListEnergies* modelListOfEnergies();
 	
     bool tryToAttack(int indexAttack, CardPokemon *enemy);
 	void takeDamage(unsigned short damage);
