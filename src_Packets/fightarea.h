@@ -8,17 +8,24 @@ class CardPokemon;
 class FightArea : public AbstractPacketStatic
 {
     Q_OBJECT
+    Q_PROPERTY(CardPokemon* pokemonFighter READ pokemonFighter NOTIFY pokemonFighterChanged)
 
 public:
     FightArea(QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~FightArea();
+
+    static void declareQML();
 	
     int maxCards() const override;
 
-    CardPokemon* pokemonFighting(int index);
+    CardPokemon* pokemonFighter();
+    Q_INVOKABLE CardPokemon* pokemonFighting(int index);
 
+signals:
+    void pokemonFighterChanged();
 
-
+private slots:
+    void onCountChanged();
 };
 
 #endif // FIGHTAREA_H

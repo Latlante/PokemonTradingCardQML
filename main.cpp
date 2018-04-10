@@ -15,6 +15,7 @@
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
 #include "src_Packets/packetdeck.h"
+#include "src_Packets/fightarea.h"
 #include "src_Packets/packethand.h"
 #include "src_Packets/packetrewards.h"
 #include "src_Packets/packettrash.h"
@@ -44,6 +45,7 @@ int main(int argc, char *argv[])
     CardPokemon::declareQML();
     BenchArea::declareQML();
     PacketDeck::declareQML();
+    FightArea::declareQML();
     PacketHand::declareQML();
     PacketRewards::declareQML();
     PacketTrash::declareQML();
