@@ -6,6 +6,7 @@
 #include "src_Cards/cardaction.h"
 #include "src_Cards/cardenergy.h"
 #include "src_Cards/cardpokemon.h"
+#include "src_Models/modellistenergies.h"
 
 #include "common/database.h"
 #include "utils.h"
@@ -20,6 +21,8 @@ TestsUnitaires::TestsUnitaires(QObject *parent) : QObject(parent)
     checkStructCardPokemonByCreatingASpecificOne();
     checkStructCardEnergyByCreatingACustomOne();
     checkStructCardEnergyByCreatingASpecificOne();
+    checkModelListEnergiesCountEnergies();
+    checkModelListEnergiesHasEnoughEnergies();
 }
 
 /*template<typename T>
@@ -78,6 +81,13 @@ void TestsUnitaires::checkStructCardPokemonByCreatingACustomOne()
     Q_ASSERT(listAttacksFromCard[0].costEnergies == costEnergies);
 
     qDebug() << __PRETTY_FUNCTION__ << "OK";
+
+    //Nettoyage
+    if(customPokemon != NULL)
+    {
+        delete customPokemon;
+        customPokemon = NULL;
+    }
 }
 
 void TestsUnitaires::checkStructCardPokemonByCreatingASpecificOne()
@@ -124,6 +134,13 @@ void TestsUnitaires::checkStructCardPokemonByCreatingASpecificOne()
             Q_ASSERT(listAttacksFromCard[0].costEnergies == costEnergies);
 
             qDebug() << __PRETTY_FUNCTION__ << "OK";
+
+            //Nettoyage
+            if(customPokemon != NULL)
+            {
+                delete customPokemon;
+                customPokemon = NULL;
+            }
         }
         else
             Q_ASSERT(false);
@@ -154,6 +171,13 @@ void TestsUnitaires::checkStructCardEnergyByCreatingACustomOne()
     COMPARE(customEnergy->quantity(), energyQuantity);
 
     qDebug() << __PRETTY_FUNCTION__ << "OK";
+
+    //Nettoyage
+    if(customEnergy != NULL)
+    {
+        delete customEnergy;
+        customEnergy = NULL;
+    }
 }
 
 void TestsUnitaires::checkStructCardEnergyByCreatingASpecificOne()
@@ -182,12 +206,95 @@ void TestsUnitaires::checkStructCardEnergyByCreatingASpecificOne()
             COMPARE(customEnergy->quantity(), energyQuantity);
 
             qDebug() << __PRETTY_FUNCTION__ << "OK";
+
+            //Nettoyage
+            if(customEnergy != NULL)
+            {
+                delete customEnergy;
+                customEnergy = NULL;
+            }
         }
         else
             Q_ASSERT(false);
     }
     else
         Q_ASSERT(false);
+
+
+}
+
+void TestsUnitaires::checkModelListEnergiesCountEnergies()
+{
+    //Informations
+    QVector<int> listEnergiesId { 1003, 1005, 1010, 1014, 1014 };
+
+    //Création
+    ModelListEnergies* model = new ModelListEnergies();
+    Database db;
+
+    foreach(int energyId, listEnergiesId)
+    {
+        AbstractCard* customCard = db.cardById(energyId);
+        CardEnergy* customEnergy = NULL;
+        if (customCard != NULL)
+        {
+            customEnergy = static_cast<CardEnergy*>(customCard);
+
+            if(customEnergy != NULL)
+            {
+                model->addEnergy(customEnergy);
+            }
+        }
+    }
+
+    //Tests
+    COMPARE(model->countEnergies(), 6);
+    COMPARE(model->countEnergies(AbstractCard::Element_Fire), 1);
+    COMPARE(model->countEnergies(AbstractCard::Element_Electric), 1);
+    COMPARE(model->countEnergies(AbstractCard::Element_Normal), 2);
+    COMPARE(model->countEnergies(AbstractCard::Element_Water), 2);
+
+    //Nettoyage
+    delete model;
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+}
+
+void TestsUnitaires::checkModelListEnergiesHasEnoughEnergies()
+{
+    //Informations
+    QVector<int> listEnergiesId { 1005, 1005, 1010, 1012, 1014, 1014 };
+    QMap<AbstractCard::Enum_element, unsigned short> mapCostEnergies;
+    mapCostEnergies[AbstractCard::Element_Fire] = 1;
+    mapCostEnergies[AbstractCard::Element_Normal] = 4;
+    mapCostEnergies[AbstractCard::Element_Water] = 2;
+
+    //Création
+    ModelListEnergies* model = new ModelListEnergies();
+    Database db;
+
+    foreach(int energyId, listEnergiesId)
+    {
+        AbstractCard* customCard = db.cardById(energyId);
+        CardEnergy* customEnergy = NULL;
+        if (customCard != NULL)
+        {
+            customEnergy = static_cast<CardEnergy*>(customCard);
+
+            if(customEnergy != NULL)
+            {
+                model->addEnergy(customEnergy);
+            }
+        }
+    }
+
+    //Tests
+    COMPARE(model->hasEnoughEnergies(mapCostEnergies), true);
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+
+    //Nettoyage
+    delete model;
 }
 
 const char *TestsUnitaires::messageToDisplayInConsole(const char *nameVar, QVariant arg1, QVariant arg2)
@@ -212,7 +319,7 @@ const char *TestsUnitaires::messageToDisplayInConsole(const char *nameVar, QVari
         qCritical() << "Type arg1 inconnue:" << arg1.type();
     }
 
-    message += "\" - \"";
+    message += "\" <!=> \"";
 
     switch(arg2.type())
     {

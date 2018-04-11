@@ -21,6 +21,8 @@ private:
     void checkStructCardPokemonByCreatingASpecificOne();
     void checkStructCardEnergyByCreatingACustomOne();
     void checkStructCardEnergyByCreatingASpecificOne();
+    void checkModelListEnergiesCountEnergies();
+    void checkModelListEnergiesHasEnoughEnergies();
 
     const char *messageToDisplayInConsole(const char* nameVar, QVariant arg1, QVariant arg2);
 };

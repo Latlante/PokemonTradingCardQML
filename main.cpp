@@ -20,6 +20,8 @@
 #include "src_Packets/packetrewards.h"
 #include "src_Packets/packettrash.h"
 
+#include "src_Tests/testsunitaires.h"
+
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -31,6 +33,12 @@ int main(int argc, char *argv[])
     //QResource::registerResource("Ressources/pokemon.rcc");
     //QResource::registerResource("Ressources/energies.rcc");
     QResource::registerResource("Ressources/cards.rcc");
+
+    if(0)
+    {
+        TestsUnitaires test;
+        return 0;
+    }
 
     FactoryMainPageLoader::declareQML();
     CtrlGameBoard::declareQML();

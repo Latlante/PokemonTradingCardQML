@@ -50,7 +50,8 @@ SOURCES += \
     src_Models/modelselectingcards.cpp \
     src_Models/modellistenergies.cpp \
     src_Packets/abstractpacketstatic.cpp \
-    src_Packets/abstractpacketdynamic.cpp
+    src_Packets/abstractpacketdynamic.cpp \
+    src_Tests/testsunitaires.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -98,7 +99,8 @@ HEADERS += \
     src_Models/modelselectingcards.h \
     src_Models/modellistenergies.h \
     src_Packets/abstractpacketstatic.h \
-    src_Packets/abstractpacketdynamic.h
+    src_Packets/abstractpacketdynamic.h \
+    src_Tests/testsunitaires.h
 
 FORMS += \
     dlgselectcards.ui
