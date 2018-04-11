@@ -1,14 +1,14 @@
-1;1;Bulbizarre;40;8;11;5;;1;;Vampigraine;À moins que tous les dégâts infligés par cette attaque ne soient prévenus, vous pouvez retirer 1 marqueur de dégâts de Bulbizarre.;20;;;;;;;;;2;;;;;;;4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-2;1;Herbizarre;60;8;11;5;;1;1;Fouet Lianes;;30;;;;;;;;;1;;2;;;;;;;Poudre Toxik;Le Pokémon Défenseur est maintenant Empoisonné.;20;;;;;;;;;3;;;;;;;1;3;;;;;;;;;;;;;;;;;;;;;;;
+1;1;Bulbizarre;40;8;11;5;;1;;Vampigraine;À moins que tous les dégâts infligés par cette attaque ne soient prévenus, vous pouvez retirer 1 marqueur de dégâts de Bulbizarre.;20;;;;;;;;;2;;;;;;;4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2;1;Herbizarre;60;8;11;5;;1;1;Fouet Lianes;;30;;;;;;;;;1;;2;;;;;;;Poudre Toxik;Le Pokémon Défenseur est maintenant Empoisonné.;20;;;;;;;;;3;;;;;;;1;3;;;;;;;;;;;;;;;;;;;;;;;
 3;1;Florizarre;100;8;11;5;;2;2;Lance-Soleil;;60;;;;;;;;;4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Transfert d’énergie;Aussi souvent que le souhaitez pendant votre tour (avant votre attaque), vous pouvez prendre 1 carte Énergie plante attachée à 1 de vos Pokémon et l'attacher à un autre. Ce pouvoir ne peut être utilisé si Florizarre est Endormi, Confus ou Paralysé.;;
-4;1;Salamèche;50;5;;14;;1;;Griffe;;10;;;;;;;;;;;1;;;;;;;Flammèche;Défaussez 1 carte Énergie feu attachée à Salamèche pour pouvoir utiliser cette attaque;30;;;;;;1;;;;;1;;;;;3;1;;;;;;;;;;;;;;;;;;;;;;;
-5;1;Reptincel;80;5;;14;;1;4;Tranche;;30;;;;;;;;;;;3;;;;;;;Lance-flamme;Défaussez 1 carte Énergie feu attachée à Reptincel pour pouvoir utiliser cette attaque;50;;;;;;2;;;;;1;;;;;3;1;;;;;;;;;;;;;;;;;;;;;;;
-6;1;Dracaufeu;120;5;;14;4;3;5;Danseflamme;Défaussez 2 cartes Énergie attachées à Dracaufeu pour pouvoir utiliser cette attaque.;100;;;;;;4;;;;;;;;;;3;2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Combustion d’énergie;Aussi souvent que vous le souhaitez pendant votre tour (avant votre attaque), vous pouvez transformer toutes les Énergies attachées à Dracaufeu en Énergie feu jusqu'à la fin du tour. Ce pouvoir ne peut être utilisé si Dracaufeu est Endormi, Confus ou Paralysé.;;
-7;1;Carapuce;40;14;;3;;1;;Ecume;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;10;;;;;;;;;;;;;;;1;2;2;Repli;Lances une pièce. Si c'est face, prévenez tous les dégâts infligés à Carapuce pendant le prochain tour de votre adversaire. (Tout autre effet ou attaque est toujours valide.);0;;;;;;;;;;;1;;;;1;5;;;;;;;;;;;;;;;;;;;;;;;;
+4;1;Salamèche;50;5;;14;;1;;Griffe;;10;;;;;;;;;;;1;;;;;;;Flammèche;Défaussez 1 carte Énergie feu attachée à Salamèche pour pouvoir utiliser cette attaque;30;;;;;;1;;;;;1;;;;;3;1;;;;;;;;;;;;;;;;;;;;;;;
+5;1;Reptincel;80;5;;14;;1;4;Tranche;;30;;;;;;;;;;;3;;;;;;;Lance-flamme;Défaussez 1 carte Énergie feu attachée à Reptincel pour pouvoir utiliser cette attaque;50;;;;;;2;;;;;1;;;;;3;1;;;;;;;;;;;;;;;;;;;;;;;
+6;1;Dracaufeu;120;5;;14;4;3;5;Danseflamme;Défaussez 2 cartes Énergie attachées à Dracaufeu pour pouvoir utiliser cette attaque.;100;;;;;;4;;;;;;;;;;3;2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Combustion d’énergie;Aussi souvent que vous le souhaitez pendant votre tour (avant votre attaque), vous pouvez transformer toutes les Énergies attachées à Dracaufeu en Énergie feu jusqu'à la fin du tour. Ce pouvoir ne peut être utilisé si Dracaufeu est Endormi, Confus ou Paralysé.;;
+7;1;Carapuce;40;14;;3;;1;;Ecume;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;10;;;;;;;;;;;;;;;1;2;2;Repli;Lances une pièce. Si c'est face, prévenez tous les dégâts infligés à Carapuce pendant le prochain tour de votre adversaire. (Tout autre effet ou attaque est toujours valide.);0;;;;;;;;;;;1;;;;1;5;;;;;;;;;;;;;;;;;;;;;;;;
 8;1;Carabaffe;70;14;;3;;1;7;Repli;Lancez une pièce. Si c'est face, prévenez tous les dégâts infligés à Carabaffe pendant le prochain tour de votre adversaire. (Tout autre effet ou attaque est toujours valide.);0;;;;;;;;;;;1;;;;1;5;;Morsure;;40;;;;;;;;;;;2;;;;1;;;;;;;;;;;;;;;;;;;;;;;;;
-9;1;Tortank;100;14;;;;3;8;Hydrocanon;Inflige 40 dégâts plus 10 dégâts supplémentaires pour chaque Énergie eau attachée à Tortank en plus du coût en Énergie de cette attaque. Les Énergies eau supplémentaires après la seconde ne comptent pas.;40;;;;;;;;;;;;;;;3;6;14;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Danse de la pluie;Aussi souvent que vous le souhaitez pendant votre tour (avant votre attaque), vous pouvez attacher 1 carte Énergie eau à 1 de vos Pokémon eau (En plus de la carte Énergie que vous pouvez attacher normalement.) Ce pouvoir ne peut être utilisé si Tortank est Endormi, Confus ou Paralysé.;;
-10;1;Chenipan;40;8;0;5;;1;;Sécrétion;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;10;;;;;;;;;1;;;;;;;2;2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-11;1;Chrysacier;70;8;;5;;2;10;Armure;Lancez une pièce. Si c'est face, prévenez tous les dégâts infligés à Chrysacier pendant le prochain tour de votre adversaire. (Tout autre effet ou attaque est toujours valide.) ;0;;;;;;;;;;;2;;;;;5;;Para-spore;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;20;;;;;;;;;2;;;;;;;2;2;;;;;;;;;;;;;;;;;;;;;;;
+9;1;Tortank;100;14;;;;3;8;Hydrocanon;Inflige 40 dégâts plus 10 dégâts supplémentaires pour chaque Énergie eau attachée à Tortank en plus du coût en Énergie de cette attaque. Les Énergies eau supplémentaires après la seconde ne comptent pas.;40;;;;;;;;;;;;;;;3;6;14;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Danse de la pluie;Aussi souvent que vous le souhaitez pendant votre tour (avant votre attaque), vous pouvez attacher 1 carte Énergie eau à 1 de vos Pokémon eau (En plus de la carte Énergie que vous pouvez attacher normalement.) Ce pouvoir ne peut être utilisé si Tortank est Endormi, Confus ou Paralysé.;;
+10;1;Chenipan;40;8;0;5;;1;;Sécrétion;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;10;;;;;;;;;1;;;;;;;2;2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+11;1;Chrysacier;70;8;;5;;2;10;Armure;Lancez une pièce. Si c'est face, prévenez tous les dégâts infligés à Chrysacier pendant le prochain tour de votre adversaire. (Tout autre effet ou attaque est toujours valide.) ;0;;;;;;;;;;;2;;;;;5;;Para-spore;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;20;;;;;;;;;2;;;;;;;2;2;;;;;;;;;;;;;;;;;;;;;;;
 12;0;Papilusion;;;;;;;11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 13;1;Aspicot;40;8;0;5;;1;;Dard-venin;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Empoisonné;10;;;;;;;;;1;;;;;;;2;2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 14;0;Coconfort;;;;;;;13;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -34,7 +34,7 @@
 34;1;Nidoking;90;8;;12;;3;33;Mania;"Lancez une pièce. Si c'est face, cette attaque inflige 30 dégâts plus 10 dégâts supplémentaires ; si c'est pile, cette attaque inflige 30 dégâts et Nidoking s'inflige 10 dégâts.";30;;;;;;;;;1;;2;;;;;8;10;Toxik;Le Pokémon Défenseur est maintenant Empoisonné. Il subit maintenant 20 dégâts Poison au lieu de 10 après le tour de chaque joueur (même s'il était déjà empoisonné).;20;;;;;;;;;3;;;;;;;9;20;;;;;;;;;;;;;;;;;;;;;;;
 35;1;Melofee;35;10;;6;12;1;;Berceuse;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Endormi.;0;;;;;;;;;;;1;;;;;2;4;Métronome;Choisissez 1 des attaques du Pokémon Défenseur. Métronome copie cette attaque à l'exception de son coût d'Énergie et de toute autre action requise pour utiliser cette attaque, comme par exemple, défausser des cartes Énergie. (Quel que soit le type du Pokémon Défenseur, Mélofée demeure de type Incolore.);0;;;;;;;;;;;3;;;;;7;;;;;;;;;;;;;;;;;;;;;;;;
 36;0;Mélodelfe;;;;;;;35;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-37;1;Goupix;50;5;;14;;1;;Onde folie;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Confus.;10;;;;;;2;;;;;;;;;;2;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+37;1;Goupix;50;5;;14;;1;;Onde folie;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Confus.;10;;;;;;2;;;;;;;;;;2;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 38;1;Feunard;80;5;;14;;1;37;Leurre;Si votre adversaire a des Pokémon sur le Banc, choisissez 1 d'entre eux et échangez-le avec le Pokémon Défenseur.;0;;;;;;;;;;;2;;;;;14;;Déflagration;Défaussez 1 carte Énergie feu attachée à Feunard pour pouvoir utiliser cette attaque.;80;;;;;;4;;;;;;;;;;3;5;;;;;;;;;;;;;;;;;;;;;;;
 39;0;Rondoudou;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 40;0;Grodoudou;;;;;;;39;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -111,14 +111,14 @@
 111;0;Rhinocorne;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 112;0;Rhinoféros;;;;;;;111;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 113;1;Leveinard;120;10;;4;12;1;;Compresse;Lancez une pièce. Si c'est face, prévenez tous les dégâts infligés à Leveinard pendant le prochain tour de votre adversaire. (Tout autre effet ou attaque est toujours valide.);0;;;;;;;;;;;2;;;;;5;;Damoclès;Leveinard s'inflige 80 points de dégâts.;80;;;;;;;;;;;4;;;;;17;;;;;;;;;;;;;;;;;;;;;;;;
-114;0;Saquedeneu;50;8;;5;;2;;Etreinte;Lancez une pièce. Si c'est face, le Pokémon défenseur est maintenant Paralysé.;20;;;;;;;;;1;;1;;;;;2;2;Poudre Toxik;Le Pokémon défenseur est maintenant Empoisonné.;20;;;;;;;;;3;;;;;;;1;3;;;;;;;;;;;;;;;;;;;;;;;
+114;0;Saquedeneu;50;8;;5;;2;;Etreinte;Lancez une pièce. Si c'est face, le Pokémon défenseur est maintenant Paralysé.;20;;;;;;;;;1;;1;;;;;2;2;Poudre Toxik;Le Pokémon défenseur est maintenant Empoisonné.;20;;;;;;;;;3;;;;;;;1;3;;;;;;;;;;;;;;;;;;;;;;;
 115;0;Kangourex;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 116;0;Hypotrempe;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 117;0;Hypocéan;;;;;;;116;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 118;0;Poissirène;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 119;0;Poissoroy;;;;;;;118;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 120;0;Stari;40;14;;3;;1;;Gifle;;20;;;;;;;;;;;;;;;1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-121;0;Staross;60;14;;3;;1;120;Soin;Défaussez une carte Énergie eau attachée à Staross pour pouvoir utiliser cette attaque. Retirez tous les marqueurs de dégâts sur Staross.;0;;;;;;;;;;;;;;;2;XX;XX;Etoile gelante;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;20;;;;;;;;;;;2;;;;1;2;2;;;;;;;;;;;;;;;;;;;;;;;
+121;0;Staross;60;14;;3;;1;120;Soin;Défaussez une carte Énergie eau attachée à Staross pour pouvoir utiliser cette attaque. Retirez tous les marqueurs de dégâts sur Staross.;0;;;;;;;;;;;;;;;2;XX;XX;Etoile gelante;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;20;;;;;;;;;;;2;;;;1;2;2;;;;;;;;;;;;;;;;;;;;;;;
 122;0;M. Mime;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 123;0;Insécateur;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 124;0;Lippoutou;70;12;;12;;2;;Torgnoles;Lancez 2 pièces. Cette attaque inflige 10 dégâts multipliés par le nombre de faces.;0;;;;;;;;;;;;;1;;;11;10;Yoga;Inflige 20 dégâts plus 10 dégâts supplémentaires pour chaque marqueur de dégâts sur le Pokémon Défenseur.;20;;;;;;;;;;;1;;2;;;16;10;;;;;;;;;;;;;;;;;;;;;;;
@@ -152,7 +152,7 @@
 1000;0;Bug;0;1
 1001;0;Dark;1;1
 1002;0;Dragon;2;1
-1003;1;Eletric;3;1
+1003;1;Electric;3;1
 1004;1;Fighting;4;1
 1005;1;Fire;5;1
 1006;0;Flying;6;1
