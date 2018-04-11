@@ -3,9 +3,9 @@
 #include <QDebug>
 #include <QtQml/qqml.h>
 #include <QUrl>
-#include "src_Actions/abstractaction.h"
+#include "../src_Actions/abstractaction.h"
 #include "cardenergy.h"
-#include "src_Models/modellistenergies.h"
+#include "../src_Models/modellistenergies.h"
 
 CardPokemon::CardPokemon(unsigned short id, 
 			const QString& name, 
@@ -182,27 +182,12 @@ void CardPokemon::removeEnergy(int index)
 
 unsigned short CardPokemon::countEnergies()
 {
-    int count = 0;
-
-    foreach (CardEnergy* energy, m_modelListEnergies->listOfEnergies())
-    {
-        count += energy->quantity();
-    }
-
-    return count;
+    return m_modelListEnergies->countEnergies();
 }
 
 unsigned short CardPokemon::countEnergies(Enum_element element)
 {
-	int count = 0;
-	
-    foreach (CardEnergy* energy, m_modelListEnergies->listOfEnergies())
-	{
-        if (energy->element() == element)
-            count += energy->quantity();
-	}
-	
-	return count;
+    return m_modelListEnergies->countEnergies(element);
 }
 
 ModelListEnergies* CardPokemon::modelListOfEnergies()
@@ -236,7 +221,7 @@ bool CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
 	}
     else
     {
-        qDebug() << name() << " n'as pas asser d'énergie";
+        qDebug() << name() << " n'as pas assez d'énergie";
     }
 	
 	return statusBack;
@@ -273,19 +258,7 @@ bool CardPokemon::canAttackFromStatus()
 
 bool CardPokemon::hasEnoughEnergies(AttackData attack)
 {
-	bool statusBack = true;
-	
-	if (0 < attack.costEnergies.count())
-	{
-        foreach (Enum_element indexElement, attack.costEnergies.keys())
-		{
-
-            if (countEnergies(indexElement) < attack.costEnergies.value(indexElement))
-				statusBack = false;
-		}
-	}
-		
-	return statusBack;
+    return m_modelListEnergies->hasEnoughEnergies(attack.costEnergies);
 }
 
 bool CardPokemon::hasEnoughEnergies(int indexAttack)

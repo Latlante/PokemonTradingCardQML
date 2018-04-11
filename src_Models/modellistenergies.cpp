@@ -1,8 +1,6 @@
 #include "modellistenergies.h"
 #include <QtQml/qqml.h>
 
-#include "src_Cards/cardenergy.h"
-
 ModelListEnergies::ModelListEnergies(QObject *parent) :
     QAbstractListModel(parent)
 {
@@ -60,6 +58,83 @@ void ModelListEnergies::removeEnergy(int index)
 QList<CardEnergy*> ModelListEnergies::listOfEnergies()
 {
     return m_listEnergies;
+}
+
+unsigned short ModelListEnergies::countEnergies()
+{
+    int count = 0;
+
+    foreach (CardEnergy* energy, m_listEnergies)
+    {
+        count += energy->quantity();
+    }
+
+    return count;
+}
+
+unsigned short ModelListEnergies::countEnergies(AbstractCard::Enum_element element)
+{
+    int count = 0;
+
+    foreach (CardEnergy* energy, m_listEnergies)
+    {
+        if (energy->element() == element)
+            count += energy->quantity();
+    }
+
+    return count;
+}
+
+bool ModelListEnergies::hasEnoughEnergies(QMap<AbstractCard::Enum_element, unsigned short> cost)
+{
+    bool statusBack = true;
+
+    if (cost.count() > 0)
+    {
+        QMap<AbstractCard::Enum_element, unsigned short> mapEnergiesAssigned;
+
+        //Création d'une copie des énergies assignées similaire au coût de l'attaque
+        //pour faciliter le traitement
+        foreach(CardEnergy* energy, m_listEnergies)
+        {
+            AbstractCard::Enum_element elementEnergy = energy->element();
+            unsigned short quantity = mapEnergiesAssigned[elementEnergy];
+            quantity += energy->quantity();
+            mapEnergiesAssigned[elementEnergy] = quantity;
+        }
+
+        //On commence par retirer toutes les énergies nécessaires à l'exception des normales
+        foreach (AbstractCard::Enum_element element, cost.keys())
+        {
+            if(element != AbstractCard::Element_Normal)
+            {
+                if (mapEnergiesAssigned.value(element) >= cost.value(element))
+                {
+                    unsigned short quantity = mapEnergiesAssigned[element];
+                    quantity -= cost.value(element);
+                    mapEnergiesAssigned[element] = quantity;
+                }
+                else
+                {
+                    statusBack = false;
+                    break;
+                }
+            }
+        }
+
+        //Si l'attaque nécessite des énergies "normales", on regarde ce qu'il reste
+        if((statusBack == true) && (cost.keys().contains(AbstractCard::Element_Normal)))
+        {
+            unsigned short countEnergiesLeft = 0;
+            foreach (AbstractCard::Enum_element element, mapEnergiesAssigned.keys())
+                countEnergiesLeft += mapEnergiesAssigned.value(element);
+
+            if(countEnergiesLeft < cost.value(AbstractCard::Element_Normal))
+                statusBack = false;
+        }
+    }
+
+    return statusBack;
 }
 
 QVariant ModelListEnergies::data(const QModelIndex &index, int role) const

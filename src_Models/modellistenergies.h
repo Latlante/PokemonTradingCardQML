@@ -4,7 +4,7 @@
 #include <QAbstractListModel>
 #include <QVariant>
 
-class CardEnergy;
+#include "../src_Cards/cardenergy.h"
 
 class ModelListEnergies : public QAbstractListModel
 {
@@ -23,6 +23,9 @@ public:
     void removeEnergy(int index);
 
     QList<CardEnergy*> listOfEnergies();
+    unsigned short countEnergies();
+    unsigned short countEnergies(AbstractCard::Enum_element element);
+    bool hasEnoughEnergies(QMap<AbstractCard::Enum_element, unsigned short> cost);
 
     static void declareQML();
 
