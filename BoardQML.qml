@@ -11,11 +11,20 @@ Item {
     property Player player2: ctrlGameBoard.playerAt(1)
     property Player currentPlayer: ctrlGameBoard.currentPlayer
 
-    Image {
-        id: imageBackground
+    onCurrentPlayerChanged: {
+        console.log("onCurrentPlayerChanged:" + currentPlayer.name())
+    }
+
+    /*Image {
+        id: background
         fillMode: Image.Tile
         anchors.fill: parent
-        source: "qrc:/textures/tapis.jpg"
+        source: "qrc:/textures/tapis.jpg"*/
+
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: "#2b95ff"
 
         //ZONE DE JOUEUR 2
         BoardPLayerAreaQML {
