@@ -132,7 +132,17 @@ void Player::attack()
 
 bool Player::isWinner()
 {
-    return 0 == m_rewards->countCard();
+    //Conditions de victoire:
+    //  -> Plus de récompense à piocher
+    //  -> Plus de carte dans le deck
+    //  -> Plus de pokémon sur la banc
+    bool hasAWinner = false;
+
+    hasAWinner |= rewards()->isEmpty();
+    hasAWinner |= deck()->isEmpty();
+    hasAWinner |= bench()->isEmpty();
+
+    return hasAWinner;
 }
 
 bool Player::moveCardFromDeckToReward()

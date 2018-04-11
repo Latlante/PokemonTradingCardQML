@@ -43,7 +43,7 @@ private:
     static const int m_NUMBER_REWARDS;
     static GameManager *m_instance;
 	QList<Player*> m_listPlayers;
-	unsigned short m_indexCurrentPlayer;
+    short m_indexCurrentPlayer;
     Player* m_playerAttacking;
     Player* m_playerAttacked;
 	

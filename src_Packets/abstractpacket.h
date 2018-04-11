@@ -33,6 +33,7 @@ public:
     virtual bool removeFromPacket(AbstractCard* card) = 0;
 
     bool isFull();
+    bool isEmpty();
     AbstractCard* card(int index);
 	
     virtual QVariant data(const QModelIndex &index, int role) const = 0;

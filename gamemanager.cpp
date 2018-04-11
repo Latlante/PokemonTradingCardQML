@@ -14,7 +14,7 @@ GameManager* GameManager::m_instance = NULL;
 GameManager::GameManager(QObject *parent) :
 	QObject(parent),
 	m_listPlayers(QList<Player*>()),
-	m_indexCurrentPlayer(0),
+    m_indexCurrentPlayer(-1),
     m_playerAttacking(nullptr),
     m_playerAttacked(nullptr),
 	m_gameIsReady(false)
@@ -233,7 +233,7 @@ bool GameManager::gameIsFinished()
 	
 	foreach(Player* play, m_listPlayers)
 	{
-		hasAWinner |= play->isWinner();
+        hasAWinner |= play->isWinner();
 	}
 	
 	return hasAWinner;
@@ -279,6 +279,8 @@ void GameManager::setIndexCurrentPlayer(int index)
 {
     //Sécurité pour ne pas dépasser l'index
     index = index % m_listPlayers.count();
+
+    qDebug() << __PRETTY_FUNCTION__ << m_indexCurrentPlayer << index;
 
     if(m_indexCurrentPlayer != index)
     {

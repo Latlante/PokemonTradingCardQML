@@ -36,6 +36,11 @@ bool AbstractPacket::isFull()
     return full;
 }
 
+bool AbstractPacket::isEmpty()
+{
+    return m_listCards.isEmpty();
+}
+
 AbstractCard* AbstractPacket::card(int index)
 {
     AbstractCard* card = NULL;

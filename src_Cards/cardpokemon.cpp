@@ -20,14 +20,16 @@ CardPokemon::CardPokemon(unsigned short id,
 	m_status(Status_Normal),
     m_invincibleOnNextTurn(false),
 	m_listAttacks(listAttacks),
-    //m_listEnergies(QList<CardEnergy*>()),
     m_modelListEnergies(new ModelListEnergies()),
 	m_evolutionFrom(evolutionFrom)
 {
 	
 }
 
-CardPokemon::CardPokemon(const CardPokemon &card)
+CardPokemon::CardPokemon(const CardPokemon &card) :
+    m_status(Status_Normal),
+    m_invincibleOnNextTurn(false),
+    m_modelListEnergies(new ModelListEnergies())
 {
     *this = card;
 }
@@ -319,10 +321,9 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     m_name = source.m_name;
     m_element = source.m_element;
     m_lifeTotal = source.m_lifeTotal;
-    m_lifeLeft = source.m_lifeLeft;
-    m_status = source.m_status;
+    m_lifeLeft = m_lifeTotal;
     m_listAttacks = source.m_listAttacks;
-    m_modelListEnergies = source.m_modelListEnergies;
+    //m_modelListEnergies = source.m_modelListEnergies;     //Pas besoin
     m_evolutionFrom = source.m_evolutionFrom;
 
     return *this;
