@@ -6,6 +6,7 @@
 #include "../src_Actions/abstractaction.h"
 #include "cardenergy.h"
 #include "../src_Models/modellistenergies.h"
+#include "utils.h"
 
 CardPokemon::CardPokemon(unsigned short id, 
 			const QString& name, 
@@ -258,7 +259,22 @@ void CardPokemon::restoreLife(unsigned short life)
 
 bool CardPokemon::canAttackFromStatus()
 {
-	return Status_Normal == m_status;
+    bool canAttack = true;
+
+    switch(status())
+    {
+    case Status_Confused:
+        if(Utils::headOrTail() == 0)    //Si pile
+            takeDamage(DAMAGE_WHEN_CONFUSED);
+        break;
+    case Status_Normal:
+    case Status_Poisoned:
+        break;
+    default:    //Paralysé ou endormi
+        canAttack = false;
+    }
+
+    return canAttack;
 }
 
 bool CardPokemon::hasEnoughEnergies(AttackData attack)

@@ -3,6 +3,7 @@
 
 #include "abstractpacketstatic.h"
 
+class CardPokemon;
 class ModelListEnergies;
 
 class BenchArea : public AbstractPacketStatic
@@ -16,6 +17,7 @@ public:
     static void declareQML();
 	
     int maxCards() const override;
+    CardPokemon* cardPok(int index);
 
     Q_INVOKABLE ModelListEnergies* modelFromCardPokemon(int index);
 

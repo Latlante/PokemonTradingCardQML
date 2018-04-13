@@ -54,6 +54,7 @@ private:
 
     void checkPokemonPoisoned();
     void checkPokemonDead();
+    void checkStatusPokemonForNewRound();
 
 
 };

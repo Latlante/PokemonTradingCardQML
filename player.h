@@ -41,7 +41,6 @@ public:
     bool isPlaying();
 	void drawOneCard();
     void drawOneReward();
-    void attack();
 	bool isWinner();
 
     bool moveCardFromDeckToHand();
