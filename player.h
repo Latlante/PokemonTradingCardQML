@@ -40,13 +40,17 @@ public:
 	void blockPlayer();
     bool isPlaying();
 	void drawOneCard();
+    void drawOneReward();
     void attack();
 	bool isWinner();
 
+    bool moveCardFromDeckToHand();
     bool moveCardFromDeckToReward();
     Q_INVOKABLE bool moveCardFromHandToBench(int indexHand, int indexBench);
     Q_INVOKABLE bool moveCardFromBenchToFight(int indexBench);
-    bool moveCardFromFightToTrash(const QModelIndex& index);
+    bool moveCardFromBenchToTrash(int index);
+    bool moveCardFromFightToTrash(int index);
+    bool moveCardFromRewardToHand();
 
 
 signals:
@@ -63,6 +67,7 @@ private:
     PacketHand* m_hand;
 	PacketRewards* m_rewards;
     PacketTrash* m_trash;
+
 
     void setCanPlay(bool status);
     bool moveCardFromPacketToAnother(AbstractPacket* source, AbstractPacket* destination, int index);

@@ -90,6 +90,7 @@ void Player::init(QList<AbstractCard*> listCards)
 void Player::newTurn()
 {
     setCanPlay(true);
+    fight()->pokemonFighter()->setStatus(CardPokemon::Status_Normal);
 }
 
 void Player::skipYourTurn()
@@ -140,9 +141,14 @@ bool Player::isWinner()
 
     hasAWinner |= rewards()->isEmpty();
     hasAWinner |= deck()->isEmpty();
-    hasAWinner |= bench()->isEmpty();
+    hasAWinner |= (bench()->isEmpty() && fight()->isEmpty();
 
     return hasAWinner;
+}
+
+bool Player::moveCardFromDeckToHand()
+{
+    return moveCardFromPacketToAnother(deck(), hand(), 0);
 }
 
 bool Player::moveCardFromDeckToReward()
@@ -247,9 +253,26 @@ bool Player::moveCardFromBenchToFight(int indexBench)
     return moveSuccess;
 }
 
-bool Player::moveCardFromFightToTrash(const QModelIndex &index)
+bool Player::moveCardFromBenchToTrash(int index)
 {
-    return moveCardFromPacketToAnother(fight(), trash(), index.column());
+    CardPokemon* pokemonBench = bench()->card(index);
+    QList<CardEnergy*> listEnergiesAttached = pokemonBench->takeAllEnergies();
+
+    foreach(CardEnergy* energy, listEnergiesAttached)
+        trash()->addNewCard(energy);
+
+    return moveCardFromPacketToAnother(bench(), trash(), index);
+}
+
+bool Player::moveCardFromFightToTrash(int index)
+{
+    CardPokemon* pokemonFighter = fight()->pokemonFighting(index);
+    QList<CardEnergy*> listEnergiesAttached = pokemonFighter->takeAllEnergies();
+
+    foreach(CardEnergy* energy, listEnergiesAttached)
+        trash()->addNewCard(energy);
+
+    return moveCardFromPacketToAnother(fight(), trash(), index);
 }
 
 /************************************************************

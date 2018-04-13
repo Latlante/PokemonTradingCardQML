@@ -30,7 +30,7 @@ public:
 	void nextPlayer();
     void attack(Player* playAttacking, unsigned short index, Player* playAttacked);
 	void endOfTurn();
-	bool gameIsFinished();
+    Player *gameIsFinished();
 
 signals:
     void indexCurrentPlayerChanged();
@@ -50,6 +50,12 @@ private:
 	bool m_gameIsReady;
 
     void setIndexCurrentPlayer(int index);
+    Player* ennemyOf(Player* play);
+
+    void checkPokemonPoisoned();
+    void checkPokemonDead();
+
+
 };
 
 #endif // GAMEMANAGER_H

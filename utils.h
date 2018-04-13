@@ -10,6 +10,8 @@
 #define MAXCARDS_REWARD     6
 #define MAXCARDS_TRASH      60
 
+#define DAMAGE_POISON       10
+
 
 class Utils : public QObject
 {

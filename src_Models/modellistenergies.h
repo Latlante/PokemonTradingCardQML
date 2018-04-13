@@ -22,7 +22,7 @@ public:
     CardEnergy* takeEnergy(int index);
     void removeEnergy(int index);
 
-    QList<CardEnergy*> listOfEnergies();
+    QList<CardEnergy*> takeAllEnergies();
     unsigned short countEnergies();
     unsigned short countEnergies(AbstractCard::Enum_element element);
     bool hasEnoughEnergies(QMap<AbstractCard::Enum_element, unsigned short> cost);

@@ -195,6 +195,11 @@ ModelListEnergies* CardPokemon::modelListOfEnergies()
     return m_modelListEnergies;
 }
 
+QList<CardEnergy*> CardPokemon::takeAllEnergies()
+{
+    return m_modelListEnergies->takeAllEnergies();
+}
+
 bool CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
 {
 	bool statusBack = false;
@@ -312,6 +317,8 @@ void CardPokemon::setLifeLeft(unsigned short life)
 
     if(m_lifeLeft != life)
     {
+        qDebug() << __PRETTY_FUNCTION__ << life;
+
         m_lifeLeft = life;
         emit lifeLeftChanged();
         emit dataChanged();

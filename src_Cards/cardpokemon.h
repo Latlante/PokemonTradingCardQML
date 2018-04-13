@@ -22,7 +22,7 @@ class CardPokemon : public AbstractCard
 {
 	Q_OBJECT
     Q_PROPERTY(unsigned short lifeLeft READ lifeLeft NOTIFY lifeLeftChanged)
-    Q_PROPERTY(QString status READ status NOTIFY statusChanged)
+    Q_PROPERTY(Enum_statusOfPokemon status READ status NOTIFY statusChanged)
 	
 public:
 	enum Enum_statusOfPokemon
@@ -71,6 +71,7 @@ public:
 	unsigned short countEnergies();
 	unsigned short countEnergies(Enum_element element);
     Q_INVOKABLE ModelListEnergies* modelListOfEnergies();
+    QList<CardEnergy*> takeAllEnergies();
 	
     bool tryToAttack(int indexAttack, CardPokemon *enemy);
 	void takeDamage(unsigned short damage);

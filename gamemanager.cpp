@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
+#include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
 #include "dlgselectcards.h"
 #include "utils.h"
@@ -213,30 +214,53 @@ void GameManager::attack(Player *playAttacking, unsigned short index, Player *pl
 
     qDebug() << __PRETTY_FUNCTION__ << pokemonAttacking->name() << " Attack " << pokemonAttacked->name();
     pokemonAttacking->tryToAttack(index, pokemonAttacked);
+
+    qDebug() << "Résultat du combat:" << pokemonAttacking->lifeLeft();
+    qDebug() << "\t-> Attaquant:" << pokemonAttacking->name() << " - " << pokemonAttacking->lifeLeft() << "/" << pokemonAttacking->lifeTotal() << " - " << pokemonAttacking->status();
+    qDebug() << "\t-> Attaqué:" << pokemonAttacked->name() << " - " << pokemonAttacked->lifeLeft() << "/" << pokemonAttacked->lifeTotal() << " - " << pokemonAttacked->status();
 }
 
 void GameManager::endOfTurn()
 {
-	foreach(Player* play, m_listPlayers)
+    /*foreach(Player* play, m_listPlayers)
 	{
 		play->blockPlayer();
-	}
+    }*/
+
+    //Application du poison s'il y a
+    checkPokemonPoisoned();
+
+    //Si le pokémon attaqué est mort, le joueur pioche sa récompense
+    checkPokemonDead();
+
+    //On vérifie les conditions de victoires
+    Player* playerWinner = gameIsFinished();
+    if(playerWinner != nullptr)
+    {
+        qDebug() << "VICTOIRE DE " << playerWinner->name();
+    }
+    else
+    {
+        //On passe au prochain tour
+        nextPlayer();
+    }
 }
 
-bool GameManager::gameIsFinished()
+Player* GameManager::gameIsFinished()
 {
     //Conditions de victoire:
     //  -> Plus de récompense à piocher
     //  -> Plus de carte dans le deck
     //  -> Plus de pokémon sur la banc
-	bool hasAWinner = false;
+    Player* playWinner = nullptr;
 	
 	foreach(Player* play, m_listPlayers)
 	{
-        hasAWinner |= play->isWinner();
+        if(play->isWinner())
+            playWinner = play;
 	}
 	
-	return hasAWinner;
+    return playWinner;
 }
 
 /************************************************************
@@ -287,17 +311,75 @@ void GameManager::setIndexCurrentPlayer(int index)
         m_indexCurrentPlayer = index;
         emit indexCurrentPlayerChanged();
 
-        //A REVOIR
-        if(index == 0)
-        {
-            m_playerAttacking = m_listPlayers[0];
-            m_playerAttacked = m_listPlayers[1];
-        }
-        else
-        {
-            m_playerAttacking = m_listPlayers[1];
-            m_playerAttacked = m_listPlayers[0];
-        }
+        m_playerAttacking = m_listPlayers[index];
+        m_playerAttacked = ennemyOf(m_playerAttacking);
     }
 
+}
+
+Player* GameManager::ennemyOf(Player *play)
+{
+    Player* playerEnnemy = nullptr;
+
+    //A REVOIR
+    if(play == m_listPlayers[0])
+    {
+        playerEnnemy = m_listPlayers[1];
+    }
+    else
+    {
+        playerEnnemy = m_listPlayers[0];
+    }
+
+    return playerEnnemy;
+}
+
+void GameManager::checkPokemonPoisoned()
+{
+    foreach (Player* play, m_listPlayers)
+    {
+        //fight area
+        CardPokemon* pokemonFighter = play->fight()->pokemonFighter();
+        if((pokemonFighter != nullptr) && (pokemonFighter->status() == CardPokemon::Status_Poisoned))
+        {
+            pokemonFighter->takeDamage(DAMAGE_POISON);
+        }
+
+        //bench
+        for(int i=0;i<play->bench()->countCard();++i)
+        {
+            CardPokemon* pokemonBench = play->bench()->card(i);
+            if((pokemonBench != nullptr) && (pokemonBench->status() == CardPokemon::Status_Poisoned))
+            {
+                pokemonBench->takeDamage(DAMAGE_POISON);
+            }
+        }
+    }
+}
+
+void GameManager::checkPokemonDead()
+{
+    foreach (Player* play, m_listPlayers)
+    {
+        //fight area
+        CardPokemon* pokemonFighter = play->fight()->pokemonFighter();
+        if((pokemonFighter != nullptr) && (pokemonFighter->isDied() == true))
+        {
+            play->moveCardFromFightToTrash(0);      //On jette le pokemon mort
+            play->moveCardFromBenchToFight(0);      //On remplace par un pokemon sur le banc s'il y a
+
+            ennemyOf(play)->drawOneReward();        //Le joueur adverse pioche une récompense
+        }
+
+        //bench
+        for(int i=0;i<play->bench()->countCard();++i)
+        {
+            CardPokemon* pokemonBench = play->bench()->card(i);
+            if((pokemonBench != nullptr) && (pokemonBench->isDied() == true))
+            {
+                play->moveCardFromBenchToTrash(i);
+                play->drawOneReward();
+            }
+        }
+    }
 }

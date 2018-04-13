@@ -55,9 +55,14 @@ void ModelListEnergies::removeEnergy(int index)
     }
 }
 
-QList<CardEnergy*> ModelListEnergies::listOfEnergies()
+QList<CardEnergy*> ModelListEnergies::takeAllEnergies()
 {
-    return m_listEnergies;
+    QList<CardEnergy*> listToReturn;
+
+    for(int i=0;i<rowCount();++i)
+        listToReturn.append(takeEnergy(i));
+
+    return listToReturn;
 }
 
 unsigned short ModelListEnergies::countEnergies()

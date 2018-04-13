@@ -143,14 +143,8 @@ void CtrlGameBoard::onClicked_ButtonAttack()
     Player* playerAttacked = m_gameManager->playerAttacked();
 
     m_gameManager->attack(playerAttacking, 0, playerAttacked);
+    m_gameManager->endOfTurn();
 
-    //Si le pokémon attaqué est mort, le joueur pioche sa récompense
-
-        //On vérifie les conditions de victoires
-
-        //S'il n'y a pas de victoire, le joueur attaqué remplace le pokémon
-
-    //On passe au prochain tour
 }
 
 /************************************************************
