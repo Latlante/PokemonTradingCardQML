@@ -10,6 +10,8 @@ Item {
     property Player player
     property Player currentPlayer
     property CardPokemon cardPok: player.fight().pokemonFighter
+    property int pokemonLifeLeft: cardPok.lifeLeft
+    property int pokemonStatus: cardPok.status
 
     onPlayerChanged: {
         console.log("onPlayerChanged");
@@ -30,6 +32,16 @@ Item {
         }*/
     }
 
+    onPokemonLifeLeftChanged: {
+        console.log("onPokemonLifeLeftChanged");
+        textLifePokemon.text = pokemonLifeLeft + "/" + cardPok.lifeTotal() + " PV"
+    }
+
+    onPokemonStatusChanged: {
+        console.log("onPokemonStatusChanged");
+        textStatusPokemon.text = cardPok.statusFormatString();
+    }
+
     onCardPokChanged: {
         console.log("onCardPokChanged");
         if(cardPok !== undefined)
@@ -40,7 +52,7 @@ Item {
             pokemonFighting.source = cardPok.image();
             textNamePokemon.text = cardPok.name();
             textStatusPokemon.text = cardPok.status;
-            textLifePokemon.text = cardPok.lifeLeft + "/" + cardPok.lifeTotal() + " PV"
+            //pokemonLifeLeft = cardPok.lifeLeft
             gridViewEnergies.model = cardPok.modelListOfEnergies();
         }
         else
@@ -49,6 +61,8 @@ Item {
             pokemonFighting.source = "back.png"
         }
     }
+
+
 
     Rectangle {
         id: rectangleFightingArea
@@ -68,6 +82,18 @@ Item {
             anchors.bottomMargin: 0
             fillMode: Image.PreserveAspectFit
             //source: cardPok.cardImage
+
+            MouseArea {
+                id: mouseAreaCardFighter
+                anchors.fill: parent
+                onClicked: {
+                    if(cardPok !== undefined)
+                    {
+                        popupCardDetailsComplete1.card = cardPok;
+                        popupCardDetailsComplete1.visible = true;
+                    }
+                }
+            }
         }
 
         /*ListView {
