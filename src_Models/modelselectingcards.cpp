@@ -190,7 +190,7 @@ void ModelSelectingCards::changeQuantityCard(int id, int quantity)
     if((id >= 0) && (id < m_listCardsFiltered.count()))
     {
         InfoCard* info = m_listCardsFiltered[id];
-        int delta = info->quantity - quantity;
+        int delta = quantity - info->quantity;
 
         if((info->quantity != quantity) &&
             (quantity >= 0) &&
