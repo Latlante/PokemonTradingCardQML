@@ -81,7 +81,6 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             fillMode: Image.PreserveAspectFit
-            //source: cardPok.cardImage
 
             MouseArea {
                 id: mouseAreaCardFighter
@@ -93,32 +92,44 @@ Item {
                         popupCardDetailsComplete1.visible = true;
                     }
                 }
-            }
-        }
 
-        /*ListView {
-            id: listViewPokemonFighting
-            width: (2./5.) * parent.width
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-
-            model: player.fight()
-            delegate:
-                Item {
-                    width: listViewPokemonFighting.width
-                    height: listViewPokemonFighting.height
-
-                    Image {
-                        anchors.fill: parent
-                        source: model.imageCard
-                        fillMode: Image.PreserveAspectFit
+                onPressAndHold: {
+                    if((cardPok !== undefined) && (player === currentPlayer))
+                    {
+                        popupPokemonSelectingAttack1.card = cardPok;
+                        popupPokemonSelectingAttack1.visible = true;
                     }
                 }
-        }*/
+            }
 
+            DropArea {
+                id: dropAreaFightingArea
+                anchors.fill: parent
+                onDropped: {
+                    //Si ca vient du banc
+                    if((drag.source.play === boardFightingInfo1.player) &&
+                            (drag.source.idArea === 0))
+                    {
+                        console.log("DropArea from bench");
+                        boardFightingInfo1.player.moveCardFromBenchToFight()
+                    }
+
+                    /*if((boardPlayer1.listViewPacketBench.dragItemIndex !== -1) &&
+                            (boardPlayer1.player === boardFightingInfo1.player))
+                    {
+                        console.log("DropArea from bench");
+                        player.moveCardFromBenchToFight()
+                    }
+                    if((boardPlayer1.listViewPacketBench.dragItemIndex !== -1) &&
+                            (boardPlayer1.player === boardFightingInfo1.player))
+                    {
+                        listView.model.append(listView3.model.get(listView3.dragItemIndex))
+                        listView3.model.remove(listView3.dragItemIndex)
+                        listView3.dragItemIndex = -1;
+                    }*/
+                }
+            }
+        }
 
         Rectangle {
             id: rectangleContainerInformation
@@ -200,7 +211,7 @@ Item {
                 }
             }
 
-            Button {
+            /*Button {
                 id: buttonAttack
                 height: 30
                 anchors.left: parent.left
@@ -211,8 +222,8 @@ Item {
 
                 text: "Attaquer"
 
-                onClicked: ctrlGameBoard.onClicked_ButtonAttack()
-            }
+                onClicked: ctrlGameBoard.onClicked_ButtonAttack(0)
+            }*/
         }
 
 

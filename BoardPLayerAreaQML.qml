@@ -3,6 +3,7 @@ import model 1.0
 
 Item {
     id: boardPlayerArea1
+    objectName: "boardPlayerArea1"
     width: 1000
     height: 600
 
@@ -136,6 +137,7 @@ Item {
     // |-----------------|
     ListView {
         id: listViewPacketBench
+        objectName: "listViewPacketBench"
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
@@ -145,6 +147,9 @@ Item {
         anchors.top: rectangleInfosPackets.bottom
         anchors.topMargin: 0
         orientation: ListView.Horizontal
+
+        property int dragItemIndex: -1
+
         model: player.bench()
         delegate: Loader {
             id: loaderListViewPacketBench
@@ -167,13 +172,6 @@ Item {
                 }
             }
         }
-            /*{
-            if(model.isCard === true)
-                return componentDelegateCardBench;
-            else
-                return componentDelegateCardEmptyBench;
-        }*/
-
 
         Component{
             id: componentDelegateCardBench
@@ -184,26 +182,68 @@ Item {
                 height: 120
 
                 Image {
+                    id: imageCardInBench
+                    objectName: "imageCardInBench"
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: listViewEnergiesByCard.top
+
+                    property Player play: boardPlayerArea1.player
+                    property int idArea: 0
+
                     source: modelImageCard
                     fillMode: Image.PreserveAspectFit
 
                     MouseArea {
                         id: mouseAreaCardBench
                         anchors.fill: parent
-                        onClicked: {
-                            if(modelCard !== undefined)
+                        drag.target: imageCardInHand
+
+                        drag.onActiveChanged: {
+                            if (mouseAreaCardBench.drag.active)
                             {
-                                popupCardDetailsComplete1.card = modelCard;
-                                popupCardDetailsComplete1.visible = true;
+                                listViewPacketBench.dragItemIndex = index;
                             }
+                            imageCardInBench.Drag.drop();
                         }
 
                         onPressAndHold: {
-                            player.moveCardFromBenchToFight(modelIndex)
+                            popupCardDetailsComplete1.card = modelCard;
+                            popupCardDetailsComplete1.visible = true;
+                        }
+                    }
+
+                    states: [
+                        State {
+                            when: imageCardInBench.Drag.active
+                            ParentChange {
+                                target: imageCardInBench
+                                parent: boardPlayerArea1
+                            }
+
+                            AnchorChanges {
+                                target: imageCardInBench
+                                anchors.horizontalCenter: undefined
+                                anchors.verticalCenter: undefined
+                            }
+                        }
+                    ]
+
+                    Drag.active: mouseAreaCardBench.drag.active
+                    Drag.hotSpot.x: imageCardInBench.width / 2
+                    Drag.hotSpot.y: imageCardInBench.height / 2
+
+                    DropArea {
+                        id: dropAreaBenchCardBench
+                        anchors.fill: parent
+                        onDropped: {
+                            console.log("onDropped");
+                            if(drag.source.objectName === "imageCardInHand")
+                            {
+                                player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, modelIndex);
+                                listViewPacketHand.dragItemIndex = -1;
+                            }
                         }
                     }
                 }
@@ -218,8 +258,8 @@ Item {
                     orientation: ListView.Horizontal
                     interactive: false
 
-                    model: listViewPacketBench.model.modelFromCardPokemon(modelIndex)
-                    //model: listViewPacketBench.model.data(modelIndex).modelListOfEnergies()
+                    //model: listViewPacketBench.model.modelFromCardPokemon(modelIndex)
+                    model: modelCard.modelListOfEnergies()
                     delegate:
                         Item {
                         width: 25
@@ -263,20 +303,31 @@ Item {
                     //color: "green"
                     color: "transparent"
                 }
+
+                DropArea {
+                    id: dropAreaBenchEmptyCard
+                    anchors.fill: parent
+                    onDropped: {
+                        console.log("onDropped");
+                        if(drag.source.objectName === "imageCardInHand")
+                        {
+                            player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, modelIndex);
+                            listViewPacketHand.dragItemIndex = -1;
+                        }
+                    }
+                }
             }
         }
 
-        DropArea {
+        /*DropArea {
             id: dropAreaBench
             anchors.fill: parent
             onDropped: {
                 console.log("onDropped");
-                //listView2.model.append(listView.model.get(listView.dragItemIndex))
-                //listView.model.remove(listView.dragItemIndex)
                 player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, 0);
                 listViewPacketHand.dragItemIndex = -1;
             }
-        }
+        }*/
     }
 
     // |-----------------|
@@ -287,9 +338,8 @@ Item {
     // |****** Hand *****|
     // |-----------------|
     ListView {
-        property int dragItemIndex: -1
-
         id: listViewPacketHand
+        objectName: "listViewPacketHand"
         y: 1728
         width: 110
         height: 80
@@ -301,6 +351,9 @@ Item {
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
+
+        property int dragItemIndex: -1
+
         model: player.hand()
         delegate: Item {
             width: 80
@@ -308,8 +361,13 @@ Item {
 
             Image {
                 id: imageCardInHand
+                objectName: "imageCardInHand"
                 width: 120
                 height: 160
+
+                property Player play: boardPlayerArea1.player
+                property int idArea: 1
+
                 source: model.imageCard
                 fillMode: Image.PreserveAspectFit
 
@@ -319,16 +377,17 @@ Item {
                     drag.target: imageCardInHand
 
                     drag.onActiveChanged: {
-                        if (mouseAreaCardHand.drag.active) {
+                        if (mouseAreaCardHand.drag.active)
+                        {
                             listViewPacketHand.dragItemIndex = index;
                         }
                         imageCardInHand.Drag.drop();
                     }
 
-                    /*onPressAndHold: {
+                    onPressAndHold: {
                         popupCardDetailsBasic1.card = model.card;
                         popupCardDetailsBasic1.visible = true;
-                    }*/
+                    }
                 }
 
                 states: [
@@ -336,7 +395,7 @@ Item {
                         when: imageCardInHand.Drag.active
                         ParentChange {
                             target: imageCardInHand
-                            parent: board1
+                            parent: boardPlayerArea1
                         }
 
                         AnchorChanges {
