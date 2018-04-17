@@ -37,7 +37,7 @@ public:
     Q_INVOKABLE void onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers);
     Q_INVOKABLE void displaySelectingCardsForNextPlayers();
     Q_INVOKABLE void onClicked_ButtonOk_SelectCards();
-    Q_INVOKABLE void onClicked_ButtonAttack();
+    Q_INVOKABLE void onClicked_ButtonAttack(int indexAttack);
 
 signals:
     void nextPlayer();

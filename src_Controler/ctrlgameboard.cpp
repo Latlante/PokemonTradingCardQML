@@ -134,7 +134,7 @@ void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
     m_factoryMainPageLoader->displayBoard();
 }
 
-void CtrlGameBoard::onClicked_ButtonAttack()
+void CtrlGameBoard::onClicked_ButtonAttack(int indexAttack)
 {
     //Procédure de fin de tour
 
@@ -142,7 +142,7 @@ void CtrlGameBoard::onClicked_ButtonAttack()
     Player* playerAttacking = m_gameManager->currentPlayer();
     Player* playerAttacked = m_gameManager->playerAttacked();
 
-    m_gameManager->attack(playerAttacking, 0, playerAttacked);
+    m_gameManager->attack(playerAttacking, indexAttack, playerAttacked);
     m_gameManager->endOfTurn();
 
 }

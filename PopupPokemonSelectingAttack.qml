@@ -6,7 +6,9 @@ Item {
 
     property CardPokemon card
 
-    signal clickedAttack1
+    signal clickedAttack(int index)
+    //signal clickedAttack2
+    //signal clickedAttack3
 
     width: 1000
     height: 1000
@@ -27,15 +29,64 @@ Item {
             //source: card.image
             source: "Images/cartes/pokemon/1.png"
 
-            MouseArea {
-                id: mouseArea
-                x: 334
-                y: 535
+            Rectangle {
+                id: rectangleAttack1
                 width: imageCard.paintedWidth
-                height: 127
+                height: 120 / card.attacksCount()
+                color: "transparent"
+                anchors.verticalCenterOffset: 102
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                border.color: "steelblue"
+                border.width: 3
 
-                onClicked: popupPokemonSelectingAttack1.clickedAttack1()
+                MouseArea {
+                    id: mouseAreaAttack1
+                    anchors.fill: parent
+
+                    onClicked: popupPokemonSelectingAttack1.clickedAttack(0)
+                }
             }
+
+            Rectangle {
+                id: rectangleAttack2
+                width: imageCard.paintedWidth
+                height: 120 / card.attacksCount()
+                color: "transparent"
+                anchors.top: rectangleAttack1.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                border.color: "black"
+                border.width: 3
+                visible: card.attacksCount() >= 2
+
+                MouseArea {
+                    id: mouseAreaAttack2
+                    anchors.fill: parent
+
+                    onClicked: popupPokemonSelectingAttack1.clickedAttack(1)
+                }
+            }
+
+            Rectangle {
+                id: rectangleAttack3
+                width: imageCard.paintedWidth
+                height: 120 / card.attacksCount()
+                color: "transparent"
+                anchors.top: rectangleAttack2.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                border.color: "red"
+                border.width: 3
+                visible: card.attacksCount() >= 3
+
+                MouseArea {
+                    id: mouseAreaAttack3
+                    anchors.fill: parent
+
+                    onClicked: popupPokemonSelectingAttack1.clickedAttack(2)
+                }
+            }
+
+
         }
     }
 }
