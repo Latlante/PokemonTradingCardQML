@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "gamemanager.h"
 #include "src_Packets/fightarea.h"
+#include "utils.h"
 
 ActionChangeEnemyStatusRandom::ActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon status) :
     AbstractAction(),
@@ -25,28 +26,33 @@ void ActionChangeEnemyStatusRandom::executeAction()
 
     if(manager != NULL)
     {
-        Player* playerAttacked = manager->playerAttacked();
+        unsigned short coin = Utils::headOrTail();
 
-        if(playerAttacked != NULL)
+        if(coin == 1)
         {
-            FightArea *fightAr = playerAttacked->fight();
+            Player* playerAttacked = manager->playerAttacked();
 
-            if(fightAr != NULL)
+            if(playerAttacked != NULL)
             {
-                CardPokemon *pokemonAttacked = fightAr->pokemonFighting(0);
+                FightArea *fightAr = playerAttacked->fight();
 
-                if(pokemonAttacked != NULL)
+                if(fightAr != NULL)
                 {
-                    pokemonAttacked->setStatus(m_status);
+                    CardPokemon *pokemonAttacked = fightAr->pokemonFighting(0);
+
+                    if(pokemonAttacked != NULL)
+                    {
+                        pokemonAttacked->setStatus(m_status);
+                    }
+                    else
+                        qCritical() << __PRETTY_FUNCTION__ << ", pokemonAttacked is NULL";
                 }
                 else
-                    qCritical() << __PRETTY_FUNCTION__ << ", pokemonAttacked is NULL";
+                    qCritical() << __PRETTY_FUNCTION__ << ", fightAr is NULL";
             }
             else
-                qCritical() << __PRETTY_FUNCTION__ << ", fightAr is NULL";
+                qCritical() << __PRETTY_FUNCTION__ << ", playerAttacked is NULL";
         }
-        else
-            qCritical() << __PRETTY_FUNCTION__ << ", playerAttacked is NULL";
     }
     else
         qCritical() << __PRETTY_FUNCTION__ << ", manager is NULL";

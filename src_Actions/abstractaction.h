@@ -15,8 +15,8 @@ public:
         Action_Healing = 4,
         Action_ProtectedAgainstDamage = 5,
         Action_MoreDamageByEnergy = 6,
-        Action_ReplicateOneAttackToEnemy = 7,
-        Action_MoreDamageOnEnemyOrHimSelf = 8,
+        Action_ReplicateOneAttackFromEnemy = 7,
+        Action_MoreDamageOnEnemyOrHimSelf = 8,              //Quantity of damage
         Action_PoisonedCustom = 9,
         Action_RandomDamageToHimself = 10,
         Action_DamageMultipliedByDoubleHeadOrTail = 11,
@@ -27,20 +27,22 @@ public:
         Action_MoreDamageByEnemyDamage = 16,
         Action_Suicide = 17,
         Action_HurtHimself_Random = 18,
-        Action_CompleteProtectionByPayingOneEnergy = 19,	//Type d'energie
+        Action_CompleteProtectionByPayingOneEnergy = 19,	//Type of energy
         Action_RemoveAllEnergiesAttached = 20,
-        Action_RemoveOneEnergyOnEnemy = 21,                 //Type d'energie
+        Action_RemoveOneEnergyOnEnemy = 21,                 //Type of energy
         Action_ReplicateLastAttackToEnemy = 22,
         Action_HurtHimself = 23,                            //Quantity of damage
         Action_UniqueAttack = 24,
         Action_AttackIfEnemyIsSleeping = 25,                //Quantity of damage
-        Action_FullHealingByPayingOneEnergy = 26,           //Type d'energie
+        Action_FullHealingByPayingOneEnergy = 26,           //Type of energy
         Action_AttackLessDamageOnHimself = 27,              //Orignal damage
         Action_MoreDamageByOwnDamage = 28,                  //Quantity of damage
         Action_BlockOneEnemyAttackForOneTurn = 29,
         Action_ChangeWeaknessOfEnemy = 30,
         Action_ChangeResistanceOfHimself = 31,
-        Action_DamageOfHalfEnemyLifeLeft = 32
+        Action_DamageOfHalfEnemyLifeLeft = 32,
+        Action_DamageOnlyIfEnemyIsSpleeping = 33,            //Quantity of damage
+        Action_ProtectedAgainstDamageRandom = 34
     };
 
     AbstractAction();

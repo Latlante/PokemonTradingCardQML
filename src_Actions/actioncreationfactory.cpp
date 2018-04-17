@@ -6,6 +6,7 @@
 #include "src_Actions/actionchangeenemystatusrandom.h"
 #include "src_Actions/actionhealing.h"
 #include "src_Actions/actionmoredamagebyenergy.h"
+#include "src_Actions/actionmoredamageonenemyorhimself.h"
 #include "src_Actions/actionprotectedagainstdamage.h"
 #include "src_Actions/actionremoveenergyattached.h"
 
@@ -50,6 +51,13 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 actionToReturn = createActionMoreDamageByEnergy(argInt);
         }
         break;
+    case AbstractAction::Action_MoreDamageOnEnemyOrHimSelf:
+        {
+        argInt = arg.toInt(&ok);
+        if(ok)
+            actionToReturn = createActionMoreDamageOnEnemyOrHimself(argInt);
+        }
+        break;
     case AbstractAction::Action_ProtectedAgainstDamage:
         {
             actionToReturn = createActionProtectedAgainstDamage();
@@ -63,6 +71,7 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
         }
         break;
     default:
+        qWarning() << __PRETTY_FUNCTION__ << idAction << " is not ready yet";
         break;
     }
 
@@ -87,6 +96,11 @@ ActionHealing* ActionCreationFactory::createActionHealing(unsigned short pv)
 ActionMoreDamageByEnergy* ActionCreationFactory::createActionMoreDamageByEnergy(unsigned short damagePerEnergy)
 {
     return new ActionMoreDamageByEnergy(damagePerEnergy);
+}
+
+ActionMoreDamageOnEnemyOrHimself* ActionCreationFactory::createActionMoreDamageOnEnemyOrHimself(unsigned short damage)
+{
+    return new ActionMoreDamageOnEnemyOrHimself();
 }
 
 ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgainstDamage()
