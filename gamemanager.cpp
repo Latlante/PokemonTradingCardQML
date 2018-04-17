@@ -173,6 +173,16 @@ Player* GameManager::playerAt(int index)
     return play;
 }
 
+GameManager::StepGame GameManager::gameStatus()
+{
+    return m_gameStatus;
+}
+
+void GameManager::setGameStatus(GameManager::StepGame step)
+{
+    m_gameStatus = step;
+}
+
 void GameManager::startGame()
 {
     onEndOfTurn_Player();
@@ -206,6 +216,7 @@ void GameManager::nextPlayer()
     setIndexCurrentPlayer(m_indexCurrentPlayer+1);
     checkStatusPokemonForNewRound();
     currentPlayer()->newTurn();
+    currentPlayer()->drawOneCard();
 }
 
 void GameManager::attack(Player *playAttacking, unsigned short index, Player *playAttacked)

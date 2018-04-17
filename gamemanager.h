@@ -11,6 +11,13 @@ class GameManager : public QObject
 	Q_OBJECT
 	
 public:
+    enum StepGame
+    {
+        StepPreparation = 0,
+        StepGameInProgress,
+        StepFinished
+    };
+
 	GameManager(QObject *parent = NULL);
 	~GameManager();
 
@@ -24,6 +31,8 @@ public:
     Player* currentPlayer();
     Player* playerAttacked();
     Player* playerAt(int index);
+    GameManager::StepGame gameStatus();
+    void setGameStatus(GameManager::StepGame step);
     void startGame();
     void drawFirstCards();
     void selectFirstPlayer();
@@ -46,6 +55,7 @@ private:
     short m_indexCurrentPlayer;
     Player* m_playerAttacking;
     Player* m_playerAttacked;
+    StepGame m_gameStatus;
 	
 	bool m_gameIsReady;
 
