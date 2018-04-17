@@ -74,10 +74,31 @@ Item {
             anchors.left: imageCard.right
             anchors.leftMargin: 20
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
+            //anchors.bottom: parent.bottom
             font.pixelSize: 30
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
+        }
+
+        ListView {
+            id: listViewEnergies
+            anchors.top: textDescription.bottom
+            anchors.left: imageCard.right
+            anchors.leftMargin: 20
+            anchors.right: parent.right
+
+            model: card.modelListOfEnergies()
+            delegate:
+                Item {
+                width: 25
+                height: 25
+
+                Image {
+                    id: imageIconEnergy
+                    anchors.fill: parent
+                    source: model.icon
+                }
+            }
         }
 
         MouseArea {
