@@ -51,7 +51,9 @@ SOURCES += \
     src_Models/modellistenergies.cpp \
     src_Packets/abstractpacketstatic.cpp \
     src_Packets/abstractpacketdynamic.cpp \
-    src_Tests/testsunitaires.cpp
+    src_Tests/testsunitaires.cpp \
+    src_Actions/actionreplicateoneattackfromenemy.cpp \
+    src_Actions/actionmoredamageonenemyorhimself.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -100,7 +102,9 @@ HEADERS += \
     src_Models/modellistenergies.h \
     src_Packets/abstractpacketstatic.h \
     src_Packets/abstractpacketdynamic.h \
-    src_Tests/testsunitaires.h
+    src_Tests/testsunitaires.h \
+    src_Actions/actionreplicateoneattackfromenemy.h \
+    src_Actions/actionmoredamageonenemyorhimself.h
 
 FORMS += \
     dlgselectcards.ui
