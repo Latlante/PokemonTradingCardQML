@@ -74,6 +74,14 @@ Item {
             anchors.fill: parent
             visible: false
         }
+
+        PopupPokemonSelectingAttack {
+            id: popupPokemonSelectingAttack1
+            anchors.fill: parent
+            visible: false
+
+            onClickedAttack: ctrlGameBoard.onClicked_ButtonAttack(index)
+        }
     }
 }
 
