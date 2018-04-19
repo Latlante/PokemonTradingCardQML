@@ -100,7 +100,7 @@ ActionMoreDamageByEnergy* ActionCreationFactory::createActionMoreDamageByEnergy(
 
 ActionMoreDamageOnEnemyOrHimself* ActionCreationFactory::createActionMoreDamageOnEnemyOrHimself(unsigned short damage)
 {
-    return new ActionMoreDamageOnEnemyOrHimself();
+    return new ActionMoreDamageOnEnemyOrHimself(damage);
 }
 
 ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgainstDamage()

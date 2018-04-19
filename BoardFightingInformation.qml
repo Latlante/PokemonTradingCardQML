@@ -106,12 +106,23 @@ Item {
                 id: dropAreaFightingArea
                 anchors.fill: parent
                 onDropped: {
+                    console.log("DropArea in fightingArea");
+                    console.log("drag.source: " + drag.source.parent.objectName);
                     //Si ca vient du banc
-                    if((drag.source.play === boardFightingInfo1.player) &&
-                            (drag.source.idArea === 0))
+                    if((drag.source.parent.player === boardFightingInfo1.player) &&
+                            (drag.source.objectName === "imageCardInBench"))
                     {
                         console.log("DropArea from bench");
-                        boardFightingInfo1.player.moveCardFromBenchToFight()
+                        boardFightingInfo1.player.moveCardFromBenchToFight(drag.source.parent.listViewPacketBench.dragItemIndex);
+                        drag.source.parent.listViewPacketBench.dragItemIndex = -1;
+                    }
+                    //Ca vient de la main
+                    else if((drag.source.parent.player === boardFightingInfo1.player) &&
+                            (drag.source.objectName === "imageCardInHand"))
+                    {
+                        console.log("DropArea from hand");
+                        //boardFightingInfo1.player.moveCardFromBenchToFight(drag.source.parent.listViewPacketBench.dragItemIndex);
+                        //drag.source.parent.listViewPacketBench.dragItemIndex = -1;
                     }
 
                     /*if((boardPlayer1.listViewPacketBench.dragItemIndex !== -1) &&

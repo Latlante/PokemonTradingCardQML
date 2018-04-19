@@ -189,21 +189,18 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: listViewEnergiesByCard.top
 
-                    property Player play: boardPlayerArea1.player
-                    property int idArea: 0
-
                     source: modelImageCard
                     fillMode: Image.PreserveAspectFit
 
                     MouseArea {
                         id: mouseAreaCardBench
                         anchors.fill: parent
-                        drag.target: imageCardInHand
+                        drag.target: imageCardInBench
 
                         drag.onActiveChanged: {
                             if (mouseAreaCardBench.drag.active)
                             {
-                                listViewPacketBench.dragItemIndex = index;
+                                listViewPacketBench.dragItemIndex = modelIndex;
                             }
                             imageCardInBench.Drag.drop();
                         }
@@ -364,9 +361,6 @@ Item {
                 objectName: "imageCardInHand"
                 width: 120
                 height: 160
-
-                property Player play: boardPlayerArea1.player
-                property int idArea: 1
 
                 source: model.imageCard
                 fillMode: Image.PreserveAspectFit
