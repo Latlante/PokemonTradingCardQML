@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QResource>
+#include "common/constantesqml.h"
 #include "src_Models/factorymainpageloader.h"
 #include "src_Controler/ctrlgameboard.h"
 #include "src_Controler/ctrlselectingcards.h"
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    ConstantesQML::declareQML();
     FactoryMainPageLoader::declareQML();
     CtrlGameBoard::declareQML();
     CtrlSelectingCards::declareQML();

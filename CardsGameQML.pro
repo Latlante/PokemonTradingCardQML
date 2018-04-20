@@ -53,7 +53,8 @@ SOURCES += \
     src_Packets/abstractpacketdynamic.cpp \
     src_Tests/testsunitaires.cpp \
     src_Actions/actionreplicateoneattackfromenemy.cpp \
-    src_Actions/actionmoredamageonenemyorhimself.cpp
+    src_Actions/actionmoredamageonenemyorhimself.cpp \
+    common/constantesqml.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -104,7 +105,8 @@ HEADERS += \
     src_Packets/abstractpacketdynamic.h \
     src_Tests/testsunitaires.h \
     src_Actions/actionreplicateoneattackfromenemy.h \
-    src_Actions/actionmoredamageonenemyorhimself.h
+    src_Actions/actionmoredamageonenemyorhimself.h \
+    common/constantesqml.h
 
 FORMS += \
     dlgselectcards.ui

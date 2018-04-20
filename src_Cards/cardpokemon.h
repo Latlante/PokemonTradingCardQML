@@ -25,14 +25,14 @@ class CardPokemon : public AbstractCard
     Q_PROPERTY(Enum_statusOfPokemon status READ status NOTIFY statusChanged)
 	
 public:
-	enum Enum_statusOfPokemon
-	{
-		Status_Confused = 0,
-		Status_Normal,
-		Status_Paralyzed,
-		Status_Poisoned,
-		Status_Slept
-	};
+    enum Enum_statusOfPokemon
+    {
+        Status_Confused = 0,
+        Status_Normal,
+        Status_Paralyzed,
+        Status_Poisoned,
+        Status_Slept
+    };
 
     CardPokemon(unsigned short id, 
 				const QString& name, 
@@ -94,9 +94,9 @@ private:
 	AbstractCard::Enum_element m_element;
 	unsigned short m_lifeTotal;
 	unsigned short m_lifeLeft;
-	Enum_statusOfPokemon m_status;
+    Enum_statusOfPokemon m_status;
     bool m_invincibleOnNextTurn;
-	QList<AttackData> m_listAttacks;
+    QList<AttackData> m_listAttacks;
     //QList<CardEnergy*> m_listEnergies;
     ModelListEnergies* m_modelListEnergies;
 	short m_evolutionFrom;

@@ -94,7 +94,9 @@ Item {
                 }
 
                 onPressAndHold: {
-                    if((cardPok !== undefined) && (player === currentPlayer))
+                    if((cardPok !== undefined) &&
+                            (player === currentPlayer) &&
+                            (ctrlGameBoard.gameStatus === ConstantesQML.StepGameInProgress))
                     {
                         popupPokemonSelectingAttack1.card = cardPok;
                         popupPokemonSelectingAttack1.visible = true;
@@ -105,24 +107,26 @@ Item {
             DropArea {
                 id: dropAreaFightingArea
                 anchors.fill: parent
+                onEntered: console.log("dropAreaFightingArea entered");
+                onExited: console.log("dropAreaFightingArea exited");
                 onDropped: {
                     console.log("DropArea in fightingArea");
                     console.log("drag.source: " + drag.source.parent.objectName);
                     //Si ca vient du banc
                     if((drag.source.parent.player === boardFightingInfo1.player) &&
-                            (drag.source.objectName === "imageCardInBench"))
+                            (drag.source.objectName === "itemDelegatePacketBench"))
                     {
                         console.log("DropArea from bench");
-                        boardFightingInfo1.player.moveCardFromBenchToFight(drag.source.parent.listViewPacketBench.dragItemIndex);
-                        drag.source.parent.listViewPacketBench.dragItemIndex = -1;
+                        //boardFightingInfo1.player.moveCardFromBenchToFight(drag.source.parent.listViewPacketBench.dragItemIndex);
+                        //drag.source.parent.listViewPacketBench.dragItemIndex = -1;
                     }
                     //Ca vient de la main
                     else if((drag.source.parent.player === boardFightingInfo1.player) &&
                             (drag.source.objectName === "imageCardInHand"))
                     {
-                        console.log("DropArea from hand");
-                        //boardFightingInfo1.player.moveCardFromBenchToFight(drag.source.parent.listViewPacketBench.dragItemIndex);
-                        //drag.source.parent.listViewPacketBench.dragItemIndex = -1;
+                        console.log("DropArea from hand, " + drag.source.parent.objectName);
+                        //boardFightingInfo1.player.moveCardFromHandToFight(drag.source.parent.listViewPacketHand.dragItemIndex);
+                        //drag.source.parent.listViewPacketHand.dragItemIndex = -1;
                     }
 
                     /*if((boardPlayer1.listViewPacketBench.dragItemIndex !== -1) &&
@@ -235,6 +239,19 @@ Item {
 
                 onClicked: ctrlGameBoard.onClicked_ButtonAttack(0)
             }*/
+
+            Button {
+                id: buttonReadyPreparation
+                height: 30
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                visible: ctrlGameBoard.gameStatus === ConstantesQML.StepPreparation
+
+                text: "Prêt"
+
+                onClicked: ctrlGameBoard.onClicked_ButtonReadyPreparation()
+            }
         }
 
 

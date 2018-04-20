@@ -4,6 +4,8 @@
 #include <QObject>
 #include "player.h"
 
+#include "common/constantesqml.h"
+
 class AbstractCard;
 
 class GameManager : public QObject
@@ -11,13 +13,6 @@ class GameManager : public QObject
 	Q_OBJECT
 	
 public:
-    enum StepGame
-    {
-        StepPreparation = 0,
-        StepGameInProgress,
-        StepFinished
-    };
-
 	GameManager(QObject *parent = NULL);
 	~GameManager();
 
@@ -31,8 +26,8 @@ public:
     Player* currentPlayer();
     Player* playerAttacked();
     Player* playerAt(int index);
-    GameManager::StepGame gameStatus();
-    void setGameStatus(GameManager::StepGame step);
+    ConstantesQML::StepGame gameStatus();
+    void setGameStatus(ConstantesQML::StepGame step);
     void startGame();
     void drawFirstCards();
     void selectFirstPlayer();
@@ -43,6 +38,7 @@ public:
 
 signals:
     void indexCurrentPlayerChanged();
+    void gameStatusChanged();
 
 private slots:
     void onEndOfTurn_Player();
@@ -55,7 +51,7 @@ private:
     short m_indexCurrentPlayer;
     Player* m_playerAttacking;
     Player* m_playerAttacked;
-    StepGame m_gameStatus;
+    ConstantesQML::StepGame m_gameStatus;
 	
 	bool m_gameIsReady;
 

@@ -41,7 +41,7 @@ Player::~Player()
 ************************************************************/
 void Player::declareQML()
 {
-    qmlRegisterUncreatableType<Player>("model", 1, 0, "Player", "BenchArea error");
+    qmlRegisterUncreatableType<Player>("model", 1, 0, "Player", "Player error");
 }
 
 /************************************************************

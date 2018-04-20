@@ -11,13 +11,26 @@ Item {
     //signal clickedAttack3
 
     width: 1000
-    height: 1000
+    height: 500
+
+    onCardChanged: {
+        console.log("popupPokemonSelectingAttack1 cardChanged");
+
+        imageCard.source = card.image();
+
+    }
 
     Rectangle {
         id: background
         anchors.fill: parent
 
         color: "#AAAAAAAA"
+
+        MouseArea {
+            id: mouseAreaClosing
+            anchors.fill: parent
+            onClicked: popupPokemonSelectingAttack1.visible = false
+        }
 
         Image {
             id: imageCard

@@ -150,9 +150,12 @@ Item {
 
         property int dragItemIndex: -1
 
+        spacing: 10
         model: player.bench()
         delegate: Loader {
             id: loaderListViewPacketBench
+            //width: 100
+            //height: 140
 
             property int modelIndex: index
             property bool modelIsCard: model.isCard
@@ -172,14 +175,148 @@ Item {
                 }
             }
         }
+            /*MouseArea {
+                id: mouseAreaTestCardBench
+                anchors.fill: parent
+                drag.target: loaderListViewPacketBench
+
+                drag.onActiveChanged: {
+                    if (mouseAreaTestCardBench.drag.active)
+                    {
+                        listViewPacketBench.dragItemIndex = index;
+                    }
+                    loaderListViewPacketBench.Drag.drop();
+                }
+
+                //onReleased: rectangleCardInBench.Drag.drop();
+
+                onPressAndHold: {
+                    popupCardDetailsComplete1.card = modelCard;
+                    popupCardDetailsComplete1.visible = true;
+                }
+            }
+
+            states: [
+                State {
+                    when: loaderListViewPacketBench.Drag.active
+                    ParentChange {
+                        target: loaderListViewPacketBench
+                        parent: boardPlayerArea1
+                    }
+
+                    AnchorChanges {
+                        target: loaderListViewPacketBench
+                        //anchors.horizontalCenter: undefined
+                        //anchors.verticalCenter: undefined
+                        anchors.top: undefined
+                        anchors.left: undefined
+                        anchors.right: undefined
+                        anchors.bottom: undefined
+                    }
+                }
+            ]
+
+            Drag.active: mouseAreaTestCardBench.drag.active
+            Drag.hotSpot.x: loaderListViewPacketBench.width / 2
+            Drag.hotSpot.y: loaderListViewPacketBench.height / 2
+        }*/
+                  /*Item {
+                      id: itemTestDelegatePacketBench
+                      x: 5
+                      width: 100
+                      height: 140
+
+                      Image {
+                          id: imageTestPacketBench
+                          objectName: "imageTestPacketBench"
+                          anchors.top: parent.top
+                          anchors.left: parent.left
+                          anchors.right: parent.right
+                          anchors.bottom: rectangleEmptyBarCardEmptyBench.top
+                          source: model.imageCard
+                          fillMode: Image.PreserveAspectFit
+
+                          MouseArea {
+                              id: mouseAreaTestCardBench
+                              anchors.fill: parent
+                              drag.target: imageTestPacketBench
+
+                              drag.onActiveChanged: {
+                                  if (mouseAreaTestCardBench.drag.active)
+                                  {
+                                      listViewPacketBench.dragItemIndex = index;
+                                  }
+                                  imageTestPacketBench.Drag.drop();
+                              }
+
+                              //onReleased: rectangleCardInBench.Drag.drop();
+
+                              onPressAndHold: {
+                                  popupCardDetailsComplete1.card = modelCard;
+                                  popupCardDetailsComplete1.visible = true;
+                              }
+                          }
+
+                          states: [
+                              State {
+                                  when: imageTestPacketBench.Drag.active
+                                  ParentChange {
+                                      target: imageTestPacketBench
+                                      parent: boardPlayerArea1
+                                  }
+
+                                  AnchorChanges {
+                                      target: imageTestPacketBench
+                                      //anchors.horizontalCenter: undefined
+                                      //anchors.verticalCenter: undefined
+                                      anchors.top: undefined
+                                      anchors.left: undefined
+                                      anchors.right: undefined
+                                      anchors.bottom: undefined
+                                  }
+                              }
+                          ]
+
+                          Drag.active: mouseAreaTestCardBench.drag.active
+                          Drag.hotSpot.x: imageTestPacketBench.width / 2
+                          Drag.hotSpot.y: imageTestPacketBench.height / 2
+                      }
+
+                      Rectangle {
+                          id: rectangleEmptyBarCardEmptyBench
+                          height: 25
+                          anchors.left: parent.left
+                          anchors.right: parent.right
+                          anchors.bottom: parent.bottom
+                          //color: "green"
+                          color: "transparent"
+                      }
+
+                      DropArea {
+                          id: dropAreaBenchEmptyCard
+                          anchors.fill: parent
+                          onEntered: console.log("dropAreaBenchEmptyCard entered");
+                          onExited: console.log("dropAreaBenchEmptyCard exited");
+                          onDropped: {
+                              console.log("onDropped dropAreaBenchEmptyCard");
+                              if(drag.source.objectName === "imageCardInHand")
+                              {
+                                  player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, modelIndex);
+                                  listViewPacketHand.dragItemIndex = -1;
+                              }
+                          }
+                      }
+                  }*/
+
 
         Component{
             id: componentDelegateCardBench
             Item {
                 id: itemDelegatePacketBench
+                objectName: "itemDelegatePacketBench"
                 x: 5
                 width: 80
-                height: 120
+                height: 140
 
                 Image {
                     id: imageCardInBench
@@ -205,9 +342,12 @@ Item {
                             imageCardInBench.Drag.drop();
                         }
 
+                        //onReleased: rectangleCardInBench.Drag.drop();
+
                         onPressAndHold: {
-                            popupCardDetailsComplete1.card = modelCard;
-                            popupCardDetailsComplete1.visible = true;
+                            //popupCardDetailsComplete1.card = modelCard;
+                            //popupCardDetailsComplete1.visible = true;
+                            player.moveCardFromBenchToFight(modelIndex)
                         }
                     }
 
@@ -221,8 +361,12 @@ Item {
 
                             AnchorChanges {
                                 target: imageCardInBench
-                                anchors.horizontalCenter: undefined
-                                anchors.verticalCenter: undefined
+                                //anchors.horizontalCenter: undefined
+                                //anchors.verticalCenter: undefined
+                                anchors.top: undefined
+                                anchors.left: undefined
+                                anchors.right: undefined
+                                anchors.bottom: undefined
                             }
                         }
                     ]
@@ -235,7 +379,7 @@ Item {
                         id: dropAreaBenchCardBench
                         anchors.fill: parent
                         onDropped: {
-                            console.log("onDropped");
+                            console.log("onDropped dropAreaBenchCardBench, " + drag.source.objectName);
                             if(drag.source.objectName === "imageCardInHand")
                             {
                                 player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, modelIndex);
@@ -244,6 +388,7 @@ Item {
                         }
                     }
                 }
+
 
 
                 ListView {
@@ -277,10 +422,10 @@ Item {
         Component {
             id: componentDelegateCardEmptyBench
             Item {
-                id: itemDelegatePacketBench
+                id: itemEmptyDelegatePacketBench
                 x: 5
                 width: 80
-                height: 120
+                height: 140
 
                 Image {
                     anchors.top: parent.top
@@ -304,8 +449,10 @@ Item {
                 DropArea {
                     id: dropAreaBenchEmptyCard
                     anchors.fill: parent
+                    onEntered: console.log("dropAreaBenchEmptyCard entered");
+                    onExited: console.log("dropAreaBenchEmptyCard exited");
                     onDropped: {
-                        console.log("onDropped");
+                        console.log("onDropped dropAreaBenchEmptyCard");
                         if(drag.source.objectName === "imageCardInHand")
                         {
                             player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, modelIndex);
@@ -353,6 +500,8 @@ Item {
 
         model: player.hand()
         delegate: Item {
+            id: itemCardInHand
+            objectName: "itemCardInHand"
             width: 80
             height: 160
 
@@ -361,6 +510,7 @@ Item {
                 objectName: "imageCardInHand"
                 width: 120
                 height: 160
+                //anchors.left: parent
 
                 source: model.imageCard
                 fillMode: Image.PreserveAspectFit
@@ -378,6 +528,8 @@ Item {
                         imageCardInHand.Drag.drop();
                     }
 
+                    //onReleased: imageCardInHand.Drag.drop();
+
                     onPressAndHold: {
                         popupCardDetailsBasic1.card = model.card;
                         popupCardDetailsBasic1.visible = true;
@@ -394,8 +546,9 @@ Item {
 
                         AnchorChanges {
                             target: imageCardInHand
-                            anchors.horizontalCenter: undefined
-                            anchors.verticalCenter: undefined
+                            //anchors.horizontalCenter: undefined
+                            //anchors.verticalCenter: undefined
+                            //anchors.left: undefined
                         }
                     }
                 ]

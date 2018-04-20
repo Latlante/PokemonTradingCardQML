@@ -18,6 +18,7 @@ GameManager::GameManager(QObject *parent) :
     m_indexCurrentPlayer(-1),
     m_playerAttacking(nullptr),
     m_playerAttacked(nullptr),
+    m_gameStatus(ConstantesQML::StepPreparation),
 	m_gameIsReady(false)
 {
 	
@@ -173,14 +174,18 @@ Player* GameManager::playerAt(int index)
     return play;
 }
 
-GameManager::StepGame GameManager::gameStatus()
+ConstantesQML::StepGame GameManager::gameStatus()
 {
     return m_gameStatus;
 }
 
-void GameManager::setGameStatus(GameManager::StepGame step)
+void GameManager::setGameStatus(ConstantesQML::StepGame step)
 {
-    m_gameStatus = step;
+    if(m_gameStatus != step)
+    {
+        m_gameStatus = step;
+        emit gameStatusChanged();
+    }
 }
 
 void GameManager::startGame()
@@ -321,12 +326,12 @@ void GameManager::setIndexCurrentPlayer(int index)
     if(m_indexCurrentPlayer != index)
     {
         m_indexCurrentPlayer = index;
-        emit indexCurrentPlayerChanged();
 
         m_playerAttacking = m_listPlayers[index];
         m_playerAttacked = ennemyOf(m_playerAttacking);
-    }
 
+        emit indexCurrentPlayerChanged();
+    }
 }
 
 Player* GameManager::ennemyOf(Player *play)

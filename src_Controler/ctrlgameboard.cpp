@@ -7,7 +7,6 @@
 #include <QtQml/qqml.h>
 
 #include "src_Models/factorymainpageloader.h"
-#include "gamemanager.h"
 #include "player.h"
 #include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/listplayers.h"
@@ -23,6 +22,7 @@ CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, QObject *paren
     //initGame();
     connect(&m_ctrlSelectingCards, &CtrlSelectingCards::listsComplete, this, &CtrlGameBoard::onListsComplete_CtrlSelectingCards);
     connect(m_gameManager, &GameManager::indexCurrentPlayerChanged, this, &CtrlGameBoard::currentPlayerChanged);
+    connect(m_gameManager, &GameManager::gameStatusChanged, this, &CtrlGameBoard::gameStatusChanged);
 }
 
 CtrlGameBoard::~CtrlGameBoard()
@@ -68,6 +68,11 @@ bool CtrlGameBoard::install(QQmlApplicationEngine *pEngine)
 Player* CtrlGameBoard::currentPlayer()
 {
     return m_gameManager->currentPlayer();
+}
+
+ConstantesQML::StepGame CtrlGameBoard::gameStatus()
+{
+    return m_gameManager->gameStatus();
 }
 
 ListPlayers* CtrlGameBoard::newListPlayers()
@@ -134,6 +139,11 @@ void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
     m_factoryMainPageLoader->displayBoard();
 }
 
+void CtrlGameBoard::onClicked_ButtonReadyPreparation()
+{
+    m_gameManager->setGameStatus(ConstantesQML::StepGameInProgress);
+}
+
 void CtrlGameBoard::onClicked_ButtonAttack(int indexAttack)
 {
     //Procédure de fin de tour
@@ -141,6 +151,8 @@ void CtrlGameBoard::onClicked_ButtonAttack(int indexAttack)
     //Le pokémon attaquant attaque
     Player* playerAttacking = m_gameManager->currentPlayer();
     Player* playerAttacked = m_gameManager->playerAttacked();
+
+    qDebug() << __PRETTY_FUNCTION__ << playerAttacking->name() << " attaque " << playerAttacked->name();
 
     m_gameManager->attack(playerAttacking, indexAttack, playerAttacked);
     m_gameManager->endOfTurn();
