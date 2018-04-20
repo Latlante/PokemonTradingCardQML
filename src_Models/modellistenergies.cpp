@@ -47,6 +47,18 @@ CardEnergy* ModelListEnergies::takeEnergy(int index)
     return energyToReturn;
 }
 
+CardEnergy* ModelListEnergies::energy(int index)
+{
+    CardEnergy* energyToReturn = nullptr;
+
+    if((index >= 0) && (index < rowCount()))
+    {
+        energyToReturn = m_listEnergies[index];
+    }
+
+    return energyToReturn;
+}
+
 void ModelListEnergies::removeEnergy(int index)
 {
     if((index >= 0) && (index < rowCount()))

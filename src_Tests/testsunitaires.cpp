@@ -342,7 +342,7 @@ const char *TestsUnitaires::messageToDisplayInConsole(const char *nameVar, QVari
     message += "\"";
 
     QByteArray messageArray = message.toUtf8();
-    const char* messageChar = messageArray.constData();
+    //const char* messageChar = messageArray.constData();
     //char* test = messageArray.data();
 
     qCritical() << message;

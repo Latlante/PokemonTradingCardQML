@@ -54,7 +54,8 @@ SOURCES += \
     src_Tests/testsunitaires.cpp \
     src_Actions/actionreplicateoneattackfromenemy.cpp \
     src_Actions/actionmoredamageonenemyorhimself.cpp \
-    common/constantesqml.cpp
+    common/constantesqml.cpp \
+    src_Models/modelpopupselectcardinpacket.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -106,7 +107,8 @@ HEADERS += \
     src_Tests/testsunitaires.h \
     src_Actions/actionreplicateoneattackfromenemy.h \
     src_Actions/actionmoredamageonenemyorhimself.h \
-    common/constantesqml.h
+    common/constantesqml.h \
+    src_Models/modelpopupselectcardinpacket.h
 
 FORMS += \
     dlgselectcards.ui
