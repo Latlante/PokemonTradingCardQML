@@ -7,21 +7,21 @@
 #include "common/constantesqml.h"
 
 class AbstractCard;
+class CtrlPopups;
 
 class GameManager : public QObject
 {
 	Q_OBJECT
 	
 public:
-	GameManager(QObject *parent = NULL);
+    GameManager(CtrlPopups &ctrlPopups, QObject *parent = NULL);
 	~GameManager();
 
-    static GameManager* createInstance();
+    static GameManager* createInstance(CtrlPopups &ctrlPopups);
     static void deleteInstance();
     static GameManager* instance();
 	
 	void initGame();
-	QList<AbstractCard*> chooseCards(const QString& name);
     Player* addNewPlayer(QString name, QList<AbstractCard*> listCards);
     Player* currentPlayer();
     Player* playerAttacked();
@@ -39,6 +39,7 @@ public:
 signals:
     void indexCurrentPlayerChanged();
     void gameStatusChanged();
+    void replacePokemonFighter(Player*);
 
 private slots:
     void onEndOfTurn_Player();
@@ -47,6 +48,7 @@ private:
     static const int m_NUMBER_FIRST_CARDS;
     static const int m_NUMBER_REWARDS;
     static GameManager *m_instance;
+    CtrlPopups& m_ctrlPopups;
 	QList<Player*> m_listPlayers;
     short m_indexCurrentPlayer;
     Player* m_playerAttacking;

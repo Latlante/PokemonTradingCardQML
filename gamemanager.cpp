@@ -1,10 +1,12 @@
 #include "gamemanager.h"
 
 #include <QDebug>
+#include "src_Controler/ctrlpopups.h"
 #include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
+#include "src_Packets/packetrewards.h"
 #include "dlgselectcards.h"
 #include "utils.h"
 
@@ -12,8 +14,9 @@ const int GameManager::m_NUMBER_FIRST_CARDS = 10;
 const int GameManager::m_NUMBER_REWARDS = 6;
 GameManager* GameManager::m_instance = NULL;
 
-GameManager::GameManager(QObject *parent) :
+GameManager::GameManager(CtrlPopups &ctrlPopups, QObject *parent) :
 	QObject(parent),
+    m_ctrlPopups(ctrlPopups),
 	m_listPlayers(QList<Player*>()),
     m_indexCurrentPlayer(-1),
     m_playerAttacking(nullptr),
@@ -32,11 +35,11 @@ GameManager::~GameManager()
 /************************************************************
 *****				FONCTIONS STATIQUES					*****
 ************************************************************/
-GameManager* GameManager::createInstance()
+GameManager* GameManager::createInstance(CtrlPopups &ctrlPopups)
 {
     if(m_instance == NULL)
     {
-        m_instance = new GameManager();
+        m_instance = new GameManager(ctrlPopups);
     }
 
     return m_instance;
@@ -61,25 +64,6 @@ GameManager* GameManager::instance()
 ************************************************************/
 void GameManager::initGame()
 {
-	//Création de 2 joueurs pour le moment
-    /*QStringList listNames = QStringList() << "Corentin" << "Alice";
-	
-	for(int i=0;i<listNames.count();++i)
-	{
-		//Création du deck
-        //QList<AbstractCard*> listCards = chooseCards(listNames[i]);
-		
-		//Création du nouveau joueur
-        //addNewPlayer(listNames[i], listCards);
-
-
-
-		
-
-        drawFirstCards();
-
-    }*/
-
     //Mise en place des récompenses
     foreach(Player *play, m_listPlayers)
     {
@@ -96,23 +80,6 @@ void GameManager::initGame()
 	selectFirstPlayer();
 }
 
-QList<AbstractCard*> GameManager::chooseCards(const QString& name)
-{
-	//Connecter à la fenêtre de sélection
-    QList<AbstractCard*> listCards;
-    DlgSelectCards *fen = new DlgSelectCards(name);
-#ifdef MODE_TEST
-    listCards = fen->listOfRandomCards();
-#else
-    fen->exec();
-    listCards = fen->listOfSelectedCards();
-#endif
-
-    delete fen;
-
-    return listCards;
-}
-
 Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
 {
 	Player* newPlayer = new Player(name, listCards);
@@ -126,35 +93,11 @@ Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
 
 Player* GameManager::currentPlayer()
 {
-    /*Player* playerPlaying = NULL;
-
-    foreach(Player *play, m_listPlayers)
-    {
-        if (true == play->isPlaying())
-        {
-            playerPlaying = play;
-            break;
-        }
-    }
-
-    return playerPlaying;*/
     return m_playerAttacking;
 }
 
 Player* GameManager::playerAttacked()
 {
-    /*Player* playerPlaying = NULL;
-
-    foreach(Player *play, m_listPlayers)
-    {
-        if (false == play->isPlaying())
-        {
-            playerPlaying = play;
-            break;
-        }
-    }
-
-    return playerPlaying;*/
     return m_playerAttacked;
 }
 
@@ -383,9 +326,10 @@ void GameManager::checkPokemonDead()
         if((pokemonFighter != nullptr) && (pokemonFighter->isDied() == true))
         {
             play->moveCardFromFightToTrash(0);      //On jette le pokemon mort
-            play->moveCardFromBenchToFight(0);      //On remplace par un pokemon sur le banc s'il y a
+            //play->moveCardFromBenchToFight(0);      //On remplace par un pokemon sur le banc s'il y a
 
-            ennemyOf(play)->drawOneReward();        //Le joueur adverse pioche une récompense
+            if(play->rewards()->countCard() > 0)
+                ennemyOf(play)->drawOneReward();        //Le joueur adverse pioche une récompense
         }
 
         //bench
@@ -395,8 +339,19 @@ void GameManager::checkPokemonDead()
             if((pokemonBench != nullptr) && (pokemonBench->isDied() == true))
             {
                 play->moveCardFromBenchToTrash(i);
-                play->drawOneReward();
+
+                if(play->rewards()->countCard() > 0)
+                    play->drawOneReward();
+
+                i--;
             }
+        }
+
+        if((play->fight()->pokemonFighter() == nullptr) && (play->bench()->countCard() > 0))
+        {
+            QList<int> listIndexPokemonToReplace = m_ctrlPopups.displayBench(play->bench());
+            play->moveCardFromBenchToFight(listIndexPokemonToReplace.first());
+            //emit replacePokemonFighter(play);
         }
     }
 }

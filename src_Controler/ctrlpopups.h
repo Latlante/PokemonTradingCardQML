@@ -26,10 +26,13 @@ public:
     void setVisible(bool state);
 
     Q_INVOKABLE ModelPopupSelectCardInPacket* model();
-    Q_INVOKABLE void displayBench(BenchArea* packet);
+    Q_INVOKABLE QList<int> displayBench(BenchArea* packet);
+
+    Q_INVOKABLE void selectionCardsFinished();
 
 signals:
     void visibleChanged();
+    void selectionFinished();
 
 private:
     ModelPopupSelectCardInPacket* m_modelPopups;

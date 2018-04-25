@@ -11,7 +11,6 @@ class MyModel;
 
 class FactoryMainPageLoader;
 class Player;
-class CtrlPopups;
 class CtrlSelectingCards;
 class ListPlayers;
 class ModelPopupSelectCardInPacket;
@@ -37,8 +36,7 @@ public:
 
     Q_INVOKABLE ListPlayers* newListPlayers();
     Q_INVOKABLE FactoryMainPageLoader* factory();
-    Q_INVOKABLE void initGame(QStringList listOfPlayers);
-    Q_INVOKABLE Player* createPlayer(const QString& name);
+    Q_INVOKABLE void initGame();
     Q_INVOKABLE Player* playerAt(int index);
 
     Q_INVOKABLE void onClicked_ButtonOk_SelectPlayers(QStringList listOfPlayers);
@@ -61,7 +59,6 @@ private slots:
 private:
     GameManager* m_gameManager;
     FactoryMainPageLoader* m_factoryMainPageLoader;
-    CtrlPopups& m_ctrlPopups;
     CtrlSelectingCards& m_ctrlSelectingCards;
 
 };

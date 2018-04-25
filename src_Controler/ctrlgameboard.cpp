@@ -8,7 +8,6 @@
 
 #include "src_Models/factorymainpageloader.h"
 #include "player.h"
-#include "src_Controler/ctrlpopups.h"
 #include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/listplayers.h"
 #include "src_Models/modelpopupselectcardinpacket.h"
@@ -17,9 +16,8 @@
 
 CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, CtrlPopups &ctrlPopups, QObject *parent) :
     QObject(parent),
-    m_gameManager(GameManager::createInstance()),
+    m_gameManager(GameManager::createInstance(ctrlPopups)),
     m_factoryMainPageLoader(new FactoryMainPageLoader()),
-    m_ctrlPopups(ctrlPopups),
     m_ctrlSelectingCards(ctrlSelectCards)
 {
     //initGame();
@@ -89,26 +87,9 @@ FactoryMainPageLoader* CtrlGameBoard::factory()
     return m_factoryMainPageLoader;
 }
 
-void CtrlGameBoard::initGame(QStringList listOfPlayers)
+void CtrlGameBoard::initGame()
 {
-    /*QString nom = "Corentin";
-    QList<AbstractCard*> listCards = m_gameManager->chooseCards(listOfPlayers[0]);
-    Player* playerCorentin = m_gameManager->addNewPlayer(nom, listCards);
-
-    nom = "Alice";
-    listCards = m_gameManager->chooseCards(listOfPlayers[1]);
-    Player* playerAlice = m_gameManager->addNewPlayer(nom, listCards);*/
-
-
-
     m_gameManager->initGame();
-}
-
-Player* CtrlGameBoard::createPlayer(const QString &name)
-{
-    //qDebug() << __PRETTY_FUNCTION__ << name;
-    QList<AbstractCard*> listCards = m_gameManager->chooseCards(name);
-    return m_gameManager->addNewPlayer(name, listCards);
 }
 
 Player* CtrlGameBoard::playerAt(int index)

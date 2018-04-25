@@ -1,8 +1,9 @@
 #include "ctrlpopups.h"
 
+#include <QDebug>
+#include <QEventLoop>
 #include <QQmlEngine>
 #include <QQmlApplicationEngine>
-#include <QDebug>
 #include <QQmlContext>
 #include <QtQml/qqml.h>
 
@@ -78,9 +79,25 @@ void CtrlPopups::setVisible(bool state)
     }
 }
 
-void CtrlPopups::displayBench(BenchArea *packet)
+QList<int> CtrlPopups::displayBench(BenchArea *packet)
 {
     m_modelPopups->addPacketFromAbstractPacket(packet);
 
     setVisible(true);
+
+    qDebug() << __PRETTY_FUNCTION__ << "En attente";
+
+    QEventLoop loop;
+    connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    qDebug() << __PRETTY_FUNCTION__ << "Popup closed";
+
+    return m_modelPopups->listIndexCardsSelected();
+}
+
+void CtrlPopups::selectionCardsFinished()
+{
+    setVisible(false);
+    emit selectionFinished();
 }

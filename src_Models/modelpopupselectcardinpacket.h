@@ -11,6 +11,8 @@ class ModelPopupSelectCardInPacket : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(unsigned short numberOfCardsSelected READ numberOfCardsSelected NOTIFY numberOfCardsSelectedChanged)
+    Q_PROPERTY(bool isMaximumCardsSelected READ isMaximumCardsSelected NOTIFY numberOfCardsSelectedChanged)
+
 public:
     struct SelectionCards
     {
@@ -34,6 +36,9 @@ public:
     Q_INVOKABLE unsigned short numberOfCardsToSelect();
     void setNumberOfCardsToSelect(unsigned short numberToSelect);
     unsigned short numberOfCardsSelected();
+    bool isMaximumCardsSelected();
+
+    QList<int> listIndexCardsSelected();
 
     virtual QVariant data(const QModelIndex &index, int role) const override;
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
@@ -41,6 +46,7 @@ public:
 
 signals:
     void numberOfCardsSelectedChanged();
+    void finished();
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
@@ -49,7 +55,7 @@ private:
     QList<SelectionCards> m_listCards;
     unsigned short m_numberOfCardsToSelect;
 
-    bool isMaximumCardsSelected();
+    void cleanPacket();
 
 };
 

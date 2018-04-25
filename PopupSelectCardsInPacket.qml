@@ -7,11 +7,16 @@ Item {
     width: 500
     height: 900
 
-    property int cardsToSelect: 1
     //property alias modelOfCards: viewCards.model
 
     property int colCount: 4
     property int space: 4   //PAS DE NOMBRE IMPAIRE
+
+    property int numberOfCardsSelected: viewCards.model.numberOfCardsSelected
+
+    onNumberOfCardsSelectedChanged: {
+        title.text = "Sélection (" + viewCards.model.numberOfCardsSelected + "/" + viewCards.model.numberOfCardsToSelect() + ")";
+    }
 
     Rectangle {
         id: background
@@ -26,7 +31,7 @@ Item {
             anchors.right: parent.right
             font.pixelSize: 35
             //text: viewCards.model.name + " (" + viewCards.model.countTotalQuantity + " / " + viewCards.model.maxCards() + ")"
-            text: "Test"
+            //text: "Sélection (" + viewCards.model.numberOfCardsSelected
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
         }
@@ -86,9 +91,10 @@ Item {
             anchors.rightMargin: 10
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
+            enabled: viewCards.model.isMaximumCardsSelected === true
             text: "OK"
 
-            onClicked: ctrlPopups.visible = false
+            onClicked: ctrlPopups.selectionCardsFinished()
         }
     }
 }

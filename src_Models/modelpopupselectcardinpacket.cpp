@@ -28,7 +28,7 @@ void ModelPopupSelectCardInPacket::addPacketFromAbstractPacket(AbstractPacket *p
 {
     if(packet != nullptr)
     {
-        m_listCards.clear();
+        cleanPacket();
 
         for(int i=0;i<packet->countCard();++i)
         {
@@ -47,7 +47,7 @@ void ModelPopupSelectCardInPacket::addPacketFromModelListEnergies(ModelListEnerg
 {
     if(model != nullptr)
     {
-        m_listCards.clear();
+        cleanPacket();
 
         for(int i=0;i<model->rowCount();++i)
         {
@@ -82,6 +82,26 @@ unsigned short ModelPopupSelectCardInPacket::numberOfCardsSelected()
     }
 
     return countSelected;
+}
+
+bool ModelPopupSelectCardInPacket::isMaximumCardsSelected()
+{
+    return numberOfCardsSelected() >= numberOfCardsToSelect();
+}
+
+QList<int> ModelPopupSelectCardInPacket::listIndexCardsSelected()
+{
+    QList<int> listIndex;
+
+    for(int i=0;i<m_listCards.count();++i)
+    {
+        if(m_listCards.at(i).selected == true)
+        {
+            listIndex.append(i);
+        }
+    }
+
+    return listIndex;
 }
 
 QVariant ModelPopupSelectCardInPacket::data(const QModelIndex &index, int role) const
@@ -127,6 +147,7 @@ bool ModelPopupSelectCardInPacket::setData(const QModelIndex &index, const QVari
                 selection.selected = isSelected;
                 m_listCards.replace(iRow, selection);
                 emit dataChanged(index, index);
+                emit numberOfCardsSelectedChanged();
             }
         }
         else
@@ -156,7 +177,9 @@ QHash<int, QByteArray> ModelPopupSelectCardInPacket::roleNames() const
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/
-bool ModelPopupSelectCardInPacket::isMaximumCardsSelected()
+void ModelPopupSelectCardInPacket::cleanPacket()
 {
-    return numberOfCardsSelected() >= numberOfCardsToSelect();
+    beginRemoveRows(QModelIndex(), 0, rowCount()-1);
+    m_listCards.clear();
+    endRemoveRows();
 }
