@@ -10,6 +10,7 @@ class ModelListEnergies;
 class ModelPopupSelectCardInPacket : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(unsigned short numberOfCardsSelected READ numberOfCardsSelected NOTIFY numberOfCardsSelectedChanged)
 public:
     struct SelectionCards
     {
@@ -39,6 +40,7 @@ public:
     virtual int rowCount(const QModelIndex & = QModelIndex()) const override;
 
 signals:
+    void numberOfCardsSelectedChanged();
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
@@ -46,6 +48,8 @@ protected:
 private:
     QList<SelectionCards> m_listCards;
     unsigned short m_numberOfCardsToSelect;
+
+    bool isMaximumCardsSelected();
 
 };
 

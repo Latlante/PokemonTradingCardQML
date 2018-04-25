@@ -24,8 +24,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        //color: "#2b95ff"
-        color: "#616F7C"
+        color: "#2b95ff"
 
         //ZONE DE JOUEUR 2
         BoardPLayerAreaQML {
@@ -85,6 +84,12 @@ Item {
                 visible = false;
                 ctrlGameBoard.onClicked_ButtonAttack(index);
             }
+        }
+
+        PopupSelectCardsInPacket {
+            id: popupSelectCardInPacket1
+            anchors.fill: parent
+            visible: ctrlPopups.visible
         }
     }
 }

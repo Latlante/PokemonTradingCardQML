@@ -11,8 +11,10 @@ class MyModel;
 
 class FactoryMainPageLoader;
 class Player;
+class CtrlPopups;
 class CtrlSelectingCards;
 class ListPlayers;
+class ModelPopupSelectCardInPacket;
 class BenchArea;
 class PacketDeck;
 
@@ -23,7 +25,7 @@ class CtrlGameBoard : public QObject
     Q_PROPERTY(ConstantesQML::StepGame gameStatus READ gameStatus NOTIFY gameStatusChanged)
 
 public:
-    explicit CtrlGameBoard(CtrlSelectingCards& ctrlSelectCards, QObject *parent = nullptr);
+    explicit CtrlGameBoard(CtrlSelectingCards& ctrlSelectCards, CtrlPopups& ctrlPopups, QObject *parent = nullptr);
     ~CtrlGameBoard();
 
     static void declareQML();
@@ -45,6 +47,7 @@ public:
     Q_INVOKABLE void onClicked_ButtonReadyPreparation();
     Q_INVOKABLE void onClicked_ButtonAttack(int indexAttack);
 
+
 signals:
     void nextPlayer();
     void currentPlayerChanged();
@@ -53,9 +56,12 @@ signals:
 private slots:
     void onListsComplete_CtrlSelectingCards();
 
+    void onReplacePokemonFighter_GameManager(Player* play);
+
 private:
     GameManager* m_gameManager;
     FactoryMainPageLoader* m_factoryMainPageLoader;
+    CtrlPopups& m_ctrlPopups;
     CtrlSelectingCards& m_ctrlSelectingCards;
 
 };

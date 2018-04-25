@@ -8,21 +8,25 @@
 
 #include "src_Models/factorymainpageloader.h"
 #include "player.h"
+#include "src_Controler/ctrlpopups.h"
 #include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/listplayers.h"
+#include "src_Models/modelpopupselectcardinpacket.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/packetdeck.h"
 
-CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, QObject *parent) :
+CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, CtrlPopups &ctrlPopups, QObject *parent) :
     QObject(parent),
     m_gameManager(GameManager::createInstance()),
     m_factoryMainPageLoader(new FactoryMainPageLoader()),
+    m_ctrlPopups(ctrlPopups),
     m_ctrlSelectingCards(ctrlSelectCards)
 {
     //initGame();
     connect(&m_ctrlSelectingCards, &CtrlSelectingCards::listsComplete, this, &CtrlGameBoard::onListsComplete_CtrlSelectingCards);
     connect(m_gameManager, &GameManager::indexCurrentPlayerChanged, this, &CtrlGameBoard::currentPlayerChanged);
     connect(m_gameManager, &GameManager::gameStatusChanged, this, &CtrlGameBoard::gameStatusChanged);
+    connect(m_gameManager, &GameManager::replacePokemonFighter, this, &CtrlGameBoard::onReplacePokemonFighter_GameManager);
 }
 
 CtrlGameBoard::~CtrlGameBoard()
@@ -53,7 +57,7 @@ bool CtrlGameBoard::install(QQmlApplicationEngine *pEngine)
         if (NULL != pContext)
         {
             bInstalled = true;
-            qDebug() << "FeaturesManagementVision is installed in QML engine";
+            qDebug() << "CtrlGameBoard is installed in QML engine";
             pContext->setContextProperty("ctrlGameBoard", this);
         }
         else
@@ -174,4 +178,9 @@ void CtrlGameBoard::onListsComplete_CtrlSelectingCards()
 
     m_gameManager->initGame();
     m_factoryMainPageLoader->displayBoard();
+}
+
+void CtrlGameBoard::onReplacePokemonFighter_GameManager(Player *play)
+{
+
 }

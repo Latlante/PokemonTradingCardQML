@@ -118,14 +118,19 @@ bool ModelPopupSelectCardInPacket::setData(const QModelIndex &index, const QVari
     case SelectCardsRole_Selected:
         if(value.type() == QVariant::Bool)
         {
-            SelectionCards selection = m_listCards[iRow];
-            selection.selected = value.toBool();
-            m_listCards.replace(iRow, selection);
-            emit dataChanged(index, index);
+            bool isSelected = value.toBool();
+            bool ignoreSelection = ((isSelected == true) && (isMaximumCardsSelected() == true));
+
+            if(ignoreSelection == false)
+            {
+                SelectionCards selection = m_listCards[iRow];
+                selection.selected = isSelected;
+                m_listCards.replace(iRow, selection);
+                emit dataChanged(index, index);
+            }
         }
         else
             return false;
-
     }
 
     return true;
@@ -148,3 +153,10 @@ QHash<int, QByteArray> ModelPopupSelectCardInPacket::roleNames() const
     return roles;
 }
 
+/************************************************************
+*****				FONCTIONS PRIVEES					*****
+************************************************************/
+bool ModelPopupSelectCardInPacket::isMaximumCardsSelected()
+{
+    return numberOfCardsSelected() >= numberOfCardsToSelect();
+}

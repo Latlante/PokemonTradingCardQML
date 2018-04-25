@@ -55,7 +55,8 @@ SOURCES += \
     src_Actions/actionreplicateoneattackfromenemy.cpp \
     src_Actions/actionmoredamageonenemyorhimself.cpp \
     common/constantesqml.cpp \
-    src_Models/modelpopupselectcardinpacket.cpp
+    src_Models/modelpopupselectcardinpacket.cpp \
+    src_Controler/ctrlpopups.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -108,7 +109,8 @@ HEADERS += \
     src_Actions/actionreplicateoneattackfromenemy.h \
     src_Actions/actionmoredamageonenemyorhimself.h \
     common/constantesqml.h \
-    src_Models/modelpopupselectcardinpacket.h
+    src_Models/modelpopupselectcardinpacket.h \
+    src_Controler/ctrlpopups.h
 
 FORMS += \
     dlgselectcards.ui

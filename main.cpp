@@ -4,9 +4,11 @@
 #include "common/constantesqml.h"
 #include "src_Models/factorymainpageloader.h"
 #include "src_Controler/ctrlgameboard.h"
+#include "src_Controler/ctrlpopups.h"
 #include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/listplayers.h"
 #include "src_Models/modellistenergies.h"
+#include "src_Models/modelpopupselectcardinpacket.h"
 #include "src_Models/modelselectingcards.h"
 #include "player.h"
 #include "src_Cards/abstractcard.h"
@@ -44,9 +46,11 @@ int main(int argc, char *argv[])
     ConstantesQML::declareQML();
     FactoryMainPageLoader::declareQML();
     CtrlGameBoard::declareQML();
+    CtrlPopups::declareQML();
     CtrlSelectingCards::declareQML();
     ListPlayers::declareQML();
     ModelListEnergies::declareQML();
+    ModelPopupSelectCardInPacket::declareQML();
     ModelSelectingCards::declareQML();
     Player::declareQML();
     AbstractCard::declareQML();
@@ -62,8 +66,10 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     CtrlSelectingCards ctrlSC;
-    CtrlGameBoard ctrlGB(ctrlSC);
+    CtrlPopups ctrlPopups;
+    CtrlGameBoard ctrlGB(ctrlSC, ctrlPopups);
     ctrlGB.install(&engine);
+    ctrlPopups.install(&engine);
     ctrlSC.install(&engine);
 
     const QUrl mainQml(QStringLiteral("qrc:/main.qml"));
