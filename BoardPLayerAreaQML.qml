@@ -348,6 +348,7 @@ Item {
                             //popupCardDetailsComplete1.card = modelCard;
                             //popupCardDetailsComplete1.visible = true;
                             player.moveCardFromBenchToFight(modelIndex)
+                            //ctrlPopups.displayBench(player.bench())
                         }
                     }
 
@@ -541,7 +542,7 @@ Item {
                         when: imageCardInHand.Drag.active
                         ParentChange {
                             target: imageCardInHand
-                            parent: boardPlayerArea1
+                            parent: listViewPacketHand
                         }
 
                         AnchorChanges {

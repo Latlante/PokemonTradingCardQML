@@ -206,6 +206,67 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
     return moveSuccess;
 }
 
+bool Player::moveCardFromHandToFight(int indexHand)
+{
+    bool moveSuccess = false;
+
+    AbstractCard* cardToMove = hand()->card(indexHand);
+
+    if (cardToMove != NULL)
+    {
+        //On autorise uniquement les cartes de type Pokemon a être posé sur le banc
+        if (cardToMove->type() == AbstractCard::TypeOfCard_Pokemon)
+        {
+            CardPokemon* cardPok = static_cast<CardPokemon*>(cardToMove);
+
+            //On refuse les évolutions
+            if ((cardPok != NULL) && (cardPok->isBase() == true))
+            {
+                moveSuccess = moveCardFromPacketToAnother(hand(), fight(), indexHand);
+            }
+            else
+            {
+                qDebug() << __PRETTY_FUNCTION__ << ", cardPok n'est pas une base";
+            }
+        }
+        else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
+        {
+            CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
+
+            if (cardEn != NULL)
+            {
+                //On récupére la carte Pokémon a laquelle l'associer
+                AbstractCard* cardToAssociate = fight()->pokemonFighter();
+
+                if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                {
+                    CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
+
+                    if (pokemonToAssociate != NULL)
+                    {
+                        //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
+                        //pour ne pas l'avoir en doublon
+                        pokemonToAssociate->addEnergy(cardEn);
+                        hand()->removeFromPacket(cardEn);
+
+                        moveSuccess = true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            qDebug() << __PRETTY_FUNCTION__ << ", cardToMove n'est pas du bon type:" << cardToMove->type();
+        }
+    }
+    else
+    {
+        qDebug() << __PRETTY_FUNCTION__ << ", cardToMove is NULL";
+    }
+
+    return moveSuccess;
+}
+
 bool Player::moveCardFromBenchToFight(int indexBench)
 {
     bool moveSuccess = false;

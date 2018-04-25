@@ -51,7 +51,7 @@ Item {
 
             pokemonFighting.source = cardPok.image();
             textNamePokemon.text = cardPok.name();
-            textStatusPokemon.text = cardPok.status;
+            textStatusPokemon.text = cardPok.statusFormatString();
             //pokemonLifeLeft = cardPok.lifeLeft
             gridViewEnergies.model = cardPok.modelListOfEnergies();
         }
@@ -121,11 +121,11 @@ Item {
                         //drag.source.parent.listViewPacketBench.dragItemIndex = -1;
                     }
                     //Ca vient de la main
-                    else if((drag.source.parent.player === boardFightingInfo1.player) &&
+                    else if((drag.source.parent.parent.player === boardFightingInfo1.player) &&
                             (drag.source.objectName === "imageCardInHand"))
                     {
                         console.log("DropArea from hand, " + drag.source.parent.objectName);
-                        //boardFightingInfo1.player.moveCardFromHandToFight(drag.source.parent.listViewPacketHand.dragItemIndex);
+                        boardFightingInfo1.player.moveCardFromHandToFight(drag.source.parent.dragItemIndex);
                         //drag.source.parent.listViewPacketHand.dragItemIndex = -1;
                     }
 
