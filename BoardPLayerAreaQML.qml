@@ -29,17 +29,30 @@ Item {
         border.width: 4
 
         Text {
+            id: textNamePlayer
+            verticalAlignment: Text.AlignVCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            font.pixelSize: 30
+            text: player.name()
+        }
+
+        Text {
             id: textDeckCst
             width: 80
             height: 45
             text: qsTr("Deck:")
+            anchors.right: textDeck.left
+            anchors.rightMargin: 0
             verticalAlignment: Text.AlignVCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 10
             fontSizeMode: Text.HorizontalFit
             renderType: Text.NativeRendering
             font.pixelSize: 30
@@ -49,9 +62,9 @@ Item {
             id: textDeck
             width: 50
             text: player.deck().countCard
+            anchors.right: textTrashCst.left
+            anchors.rightMargin: 0
             verticalAlignment: Text.AlignVCenter
-            anchors.left: textDeckCst.right
-            anchors.leftMargin: 0
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
@@ -66,9 +79,9 @@ Item {
             width: 92
             height: 45
             text: qsTr("Trash:")
+            anchors.right: textTrash.left
+            anchors.rightMargin: 0
             verticalAlignment: Text.AlignVCenter
-            anchors.left: textDeck.right
-            anchors.leftMargin: 30
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
@@ -82,9 +95,9 @@ Item {
             id: textTrash
             width: 50
             text: player.trash().countCard
+            anchors.right: textRewardsCst.left
+            anchors.rightMargin: 0
             verticalAlignment: Text.AlignVCenter
-            anchors.left: textTrashCst.right
-            anchors.leftMargin: 0
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
@@ -99,9 +112,9 @@ Item {
             width: 144
             height: 45
             text: qsTr("Rewards:")
+            anchors.right: textRewards.left
+            anchors.rightMargin: 0
             verticalAlignment: Text.AlignVCenter
-            anchors.left: textTrash.right
-            anchors.leftMargin: 30
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
@@ -115,9 +128,9 @@ Item {
             id: textRewards
             width: 50
             text: player.rewards().countCard
+            anchors.right: parent.right
+            anchors.rightMargin: 0
             verticalAlignment: Text.AlignVCenter
-            anchors.left: textRewardsCst.right
-            anchors.leftMargin: 0
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
@@ -147,8 +160,13 @@ Item {
         anchors.top: rectangleInfosPackets.bottom
         anchors.topMargin: 0
         orientation: ListView.Horizontal
+        preferredHighlightBegin: width/2 - widthComponent/2
+        preferredHighlightEnd: width/2 + widthComponent/2
+        //highlightRangeMode: ListView.StrictlyEnforceRange
 
         property int dragItemIndex: -1
+        property int widthComponent: 80
+        property int heightComponent: 140
 
         spacing: 10
         model: player.bench()
@@ -159,7 +177,7 @@ Item {
 
             property int modelIndex: index
             property bool modelIsCard: model.isCard
-            property AbstractCard modelCard: model.card
+            property AbstractCard modelCard: model.card === undefined ? null : model.card
             property string modelImageCard: model.imageCard
 
             sourceComponent: {
@@ -315,8 +333,8 @@ Item {
                 id: itemDelegatePacketBench
                 objectName: "itemDelegatePacketBench"
                 x: 5
-                width: 80
-                height: 140
+                width: listViewPacketBench.widthComponent
+                height: listViewPacketBench.heightComponent
 
                 Image {
                     id: imageCardInBench
@@ -345,10 +363,13 @@ Item {
                         //onReleased: rectangleCardInBench.Drag.drop();
 
                         onPressAndHold: {
-                            //popupCardDetailsComplete1.card = modelCard;
-                            //popupCardDetailsComplete1.visible = true;
-                            player.moveCardFromBenchToFight(modelIndex)
+                            popupCardDetailsComplete1.card = modelCard;
+                            popupCardDetailsComplete1.visible = true;
+                            //player.moveCardFromBenchToFight(modelIndex)
+
+                            //TESTS
                             //ctrlPopups.displayBench(player.bench())
+                            //ctrlPopups.displayDeck(player.deck())
                         }
                     }
 
@@ -425,8 +446,8 @@ Item {
             Item {
                 id: itemEmptyDelegatePacketBench
                 x: 5
-                width: 80
-                height: 140
+                width: listViewPacketBench.widthComponent
+                height: listViewPacketBench.heightComponent
 
                 Image {
                     anchors.top: parent.top
@@ -511,7 +532,10 @@ Item {
                 objectName: "imageCardInHand"
                 width: 120
                 height: 160
-                //anchors.left: parent
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                //anchors.fill: parent
 
                 source: model.imageCard
                 fillMode: Image.PreserveAspectFit
@@ -550,6 +574,9 @@ Item {
                             //anchors.horizontalCenter: undefined
                             //anchors.verticalCenter: undefined
                             //anchors.left: undefined
+                            anchors.top: undefined
+                            anchors.left: undefined
+                            anchors.bottom: undefined
                         }
                     }
                 ]
