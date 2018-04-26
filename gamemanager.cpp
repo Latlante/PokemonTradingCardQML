@@ -117,12 +117,16 @@ void GameManager::initGame()
     }
 
     //Distribution de la première main
-    checkHandOfEachPlayer();
-
-
-	
-	//On choisit le joueur qui va jouer en premier
-	selectFirstPlayer();
+    if(checkHandOfEachPlayer() == true)
+    {
+        //On choisit le joueur qui va jouer en premier
+        selectFirstPlayer();
+    }
+    else
+    {
+        //On arrête le jeu
+        setGameStatus(ConstantesQML::StepFinished);
+    }
 }
 
 Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
