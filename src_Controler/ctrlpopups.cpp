@@ -11,6 +11,8 @@
 #include "src_Models/modelpopupselectcardinpacket.h"
 #include "src_Packets/abstractpacket.h"
 #include "src_Packets/bencharea.h"
+#include "src_Packets/packetdeck.h"
+#include "src_Packets/packethand.h"
 
 CtrlPopups::CtrlPopups(QObject *parent) :
     QObject(parent),
@@ -81,6 +83,30 @@ void CtrlPopups::setVisible(bool state)
 
 QList<int> CtrlPopups::displayBench(BenchArea *packet)
 {
+    return displayAbstractPacket(packet);
+}
+
+QList<int> CtrlPopups::displayDeck(PacketDeck *packet)
+{
+    return displayAbstractPacket(packet);
+}
+
+QList<int> CtrlPopups::displayHand(PacketHand *packet)
+{
+    return displayAbstractPacket(packet);
+}
+
+void CtrlPopups::selectionCardsFinished()
+{
+    setVisible(false);
+    emit selectionFinished();
+}
+
+/************************************************************
+*****				FONCTIONS PRIVEES					*****
+************************************************************/
+QList<int> CtrlPopups::displayAbstractPacket(AbstractPacket *packet)
+{
     m_modelPopups->addPacketFromAbstractPacket(packet);
 
     setVisible(true);
@@ -94,10 +120,4 @@ QList<int> CtrlPopups::displayBench(BenchArea *packet)
     qDebug() << __PRETTY_FUNCTION__ << "Popup closed";
 
     return m_modelPopups->listIndexCardsSelected();
-}
-
-void CtrlPopups::selectionCardsFinished()
-{
-    setVisible(false);
-    emit selectionFinished();
 }

@@ -6,6 +6,8 @@
 class AbstractCard;
 class AbstractPacket;
 class BenchArea;
+class PacketDeck;
+class PacketHand;
 class ModelPopupSelectCardInPacket;
 class QQmlEngine;
 class QQmlApplicationEngine;
@@ -27,6 +29,8 @@ public:
 
     Q_INVOKABLE ModelPopupSelectCardInPacket* model();
     Q_INVOKABLE QList<int> displayBench(BenchArea* packet);
+    Q_INVOKABLE QList<int> displayDeck(PacketDeck* packet);
+    Q_INVOKABLE QList<int> displayHand(PacketHand* packet);
 
     Q_INVOKABLE void selectionCardsFinished();
 
@@ -37,6 +41,8 @@ signals:
 private:
     ModelPopupSelectCardInPacket* m_modelPopups;
     bool m_visible;
+
+    QList<int> displayAbstractPacket(AbstractPacket* packet);
 };
 
 #endif // CTRLPOPUPS_H

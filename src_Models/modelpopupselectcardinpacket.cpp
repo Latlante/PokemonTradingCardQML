@@ -179,7 +179,9 @@ QHash<int, QByteArray> ModelPopupSelectCardInPacket::roleNames() const
 ************************************************************/
 void ModelPopupSelectCardInPacket::cleanPacket()
 {
-    beginRemoveRows(QModelIndex(), 0, rowCount()-1);
+    beginRemoveRows(QModelIndex(), 0, rowCount());
     m_listCards.clear();
     endRemoveRows();
+
+    emit numberOfCardsSelectedChanged();
 }
