@@ -14,7 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG(compilation_test)
 {
-    DEFINES += MODE_TEST
+    DEFINES += TESTS_UNITAIRES
 }
 
 SOURCES += \
@@ -56,7 +56,11 @@ SOURCES += \
     src_Actions/actionmoredamageonenemyorhimself.cpp \
     common/constantesqml.cpp \
     src_Models/modelpopupselectcardinpacket.cpp \
-    src_Controler/ctrlpopups.cpp
+    src_Controler/ctrlpopups.cpp \
+    src_Actions/actiondamagemultipliedbydoubleheadortail.cpp \
+    src_Actions/actiondamagemultipliedbytripleheadortail.cpp \
+    src_Tests/testsunitairegeneral.cpp \
+    src_Tests/testsunitaireactions.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -110,7 +114,11 @@ HEADERS += \
     src_Actions/actionmoredamageonenemyorhimself.h \
     common/constantesqml.h \
     src_Models/modelpopupselectcardinpacket.h \
-    src_Controler/ctrlpopups.h
+    src_Controler/ctrlpopups.h \
+    src_Actions/actiondamagemultipliedbydoubleheadortail.h \
+    src_Actions/actiondamagemultipliedbytripleheadortail.h \
+    src_Tests/testsunitairegeneral.h \
+    src_Tests/testsunitaireactions.h
 
 FORMS += \
     dlgselectcards.ui

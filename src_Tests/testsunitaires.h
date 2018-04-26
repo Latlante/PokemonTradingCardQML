@@ -10,20 +10,11 @@ class TestsUnitaires : public QObject
 {
     Q_OBJECT
 public:
-    explicit TestsUnitaires(QObject *parent = nullptr);
+    explicit TestsUnitaires();
 
 signals:
 
-private:
-    //template<typename T> void COMPARE(T arg1, T arg2);
-
-    void checkStructCardPokemonByCreatingACustomOne();
-    void checkStructCardPokemonByCreatingASpecificOne();
-    void checkStructCardEnergyByCreatingACustomOne();
-    void checkStructCardEnergyByCreatingASpecificOne();
-    void checkModelListEnergiesCountEnergies();
-    void checkModelListEnergiesHasEnoughEnergies();
-
+protected:
     const char *messageToDisplayInConsole(const char* nameVar, QVariant arg1, QVariant arg2);
 };
 

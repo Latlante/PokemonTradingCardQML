@@ -23,7 +23,8 @@
 #include "src_Packets/packetrewards.h"
 #include "src_Packets/packettrash.h"
 
-#include "src_Tests/testsunitaires.h"
+#include "src_Tests/testsunitairegeneral.h"
+#include "src_Tests/testsunitaireactions.h"
 
 int main(int argc, char *argv[])
 {
@@ -37,11 +38,16 @@ int main(int argc, char *argv[])
     //QResource::registerResource("Ressources/energies.rcc");
     QResource::registerResource("Ressources/cards.rcc");
 
-    if(0)
+#ifdef TESTS_UNITAIRES
+    if(1)
     {
-        TestsUnitaires test;
+        CtrlPopups ctrlPopupsTest;
+        GameManager::createInstance(ctrlPopupsTest);
+        TestsUnitaireGeneral testGeneral;
+        TestsUnitaireActions testAction;
         return 0;
     }
+#endif
 
     ConstantesQML::declareQML();
     FactoryMainPageLoader::declareQML();
