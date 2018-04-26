@@ -49,7 +49,15 @@ public:
         Action_ChangeResistanceOfHimself = 31,
         Action_DamageOfHalfEnemyLifeLeft = 32,
         Action_DamageOnlyIfEnemyIsSpleeping = 33,            //Quantity of damage
-        Action_ProtectedAgainstDamageRandom = 34
+        Action_ProtectedAgainstDamageRandom = 34,
+        Action_EnemyDieIfYouDieInNextTurn = 35,
+
+        ActionTrainer_FakeProfessorChen = 2003,
+        ActionTrainer_TotalGuerison = 2012,
+        ActionTrainer_ProfessorChen = 2018,
+        ActionTrainer_SuperPotion = 2020,
+        ActionTrainer_Leo = 2021,
+        ActionTrainer_Potion = 2024
     };
 
     enum Enum_ElementsToCheck
