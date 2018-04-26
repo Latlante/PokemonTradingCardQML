@@ -6,6 +6,8 @@
 
 class ActionChangeEnemyStatus;
 class ActionChangeEnemyStatusRandom;
+class ActionDamageMultipliedByDoubleHeadOrTail;
+class ActionDamageMultipliedByTripleHeadOrTail;
 class ActionHealing;
 class ActionMoreDamageByEnergy;
 class ActionMoreDamageOnEnemyOrHimself;
@@ -21,6 +23,8 @@ public:
 
     static ActionChangeEnemyStatus* createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status);
     static ActionChangeEnemyStatusRandom* createActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon status);
+    static ActionDamageMultipliedByDoubleHeadOrTail* createActionDamageMultipliedByDoubleHeadOrTail(unsigned short damagePerHead);
+    static ActionDamageMultipliedByTripleHeadOrTail* createActionDamageMultipliedByTripleHeadOrTail(unsigned short damagePerHead);
     static ActionHealing* createActionHealing(unsigned short pv);
     static ActionMoreDamageByEnergy* createActionMoreDamageByEnergy(unsigned short damagePerEnergy);
     static ActionMoreDamageOnEnemyOrHimself* createActionMoreDamageOnEnemyOrHimself(unsigned short damage);

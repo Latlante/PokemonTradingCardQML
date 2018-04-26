@@ -4,6 +4,8 @@
 
 #include "src_Actions/actionchangeenemystatus.h"
 #include "src_Actions/actionchangeenemystatusrandom.h"
+#include "src_Actions/actiondamagemultipliedbydoubleheadortail.h"
+#include "src_Actions/actiondamagemultipliedbytripleheadortail.h"
 #include "src_Actions/actionhealing.h"
 #include "src_Actions/actionmoredamagebyenergy.h"
 #include "src_Actions/actionmoredamageonenemyorhimself.h"
@@ -37,6 +39,20 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
             argInt = arg.toInt(&ok);
             if(ok)
                 actionToReturn = createActionChangeEnemyStatusRandom(static_cast<CardPokemon::Enum_statusOfPokemon>(argInt));
+        }
+        break;
+    case AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail:
+        {
+            argInt = arg.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionDamageMultipliedByDoubleHeadOrTail(argInt);
+        }
+        break;
+    case AbstractAction::Action_DamageMultipliedByTripleHeadOrTail:
+        {
+            argInt = arg.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionDamageMultipliedByTripleHeadOrTail(argInt);
         }
         break;
     case AbstractAction::Action_Healing:
@@ -88,6 +104,16 @@ ActionChangeEnemyStatus* ActionCreationFactory::createActionChangeEnemyStatus(Ca
 ActionChangeEnemyStatusRandom* ActionCreationFactory::createActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon status)
 {
     return new ActionChangeEnemyStatusRandom(status);
+}
+
+ActionDamageMultipliedByDoubleHeadOrTail* ActionCreationFactory::createActionDamageMultipliedByDoubleHeadOrTail(unsigned short damagePerHead)
+{
+    return new ActionDamageMultipliedByDoubleHeadOrTail(damagePerHead);
+}
+
+ActionDamageMultipliedByTripleHeadOrTail* ActionCreationFactory::createActionDamageMultipliedByTripleHeadOrTail(unsigned short damagePerHead)
+{
+    return new ActionDamageMultipliedByTripleHeadOrTail(damagePerHead);
 }
 
 ActionHealing* ActionCreationFactory::createActionHealing(unsigned short pv)
