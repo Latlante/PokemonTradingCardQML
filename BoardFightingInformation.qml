@@ -10,54 +10,38 @@ Item {
     property Player player
     property Player currentPlayer
     property CardPokemon cardPok: player.fight().pokemonFighter
-    property int pokemonLifeLeft: cardPok.lifeLeft
-    property int pokemonStatus: cardPok.status
+    property int pokemonLifeLeft: cardPok === null ? 0 : cardPok.lifeLeft
+    property int pokemonStatus: cardPok === null ? 0 : cardPok.status
 
     onPlayerChanged: {
-        console.log("onPlayerChanged");
-        /*if(player !== undefined)
-        {
-            console.log("onPlayerChanged: player not null");
-            var cardPokemon = player.fight().pokemonFighting(0);
-
-            pokemonFighting.source = cardPokemon.image();
-            textNamePokemon.text = cardPokemon.name();
-            textLifePokemon.text = cardPokemon.lifeLeft + "/" + cardPokemon.lifeTotal() + " PV"
-            gridViewEnergies.model = cardPokemon.modelListOfEnergies();
-        }
-        else
-        {
-            console.log("onPlayerChanged: player is null");
-            pokemonFighting.source = "back.png"
-        }*/
+        console.log("boardFightingInfo1 onPlayerChanged");
     }
 
     onPokemonLifeLeftChanged: {
-        console.log("onPokemonLifeLeftChanged");
+        console.log("boardFightingInfo1 onPokemonLifeLeftChanged");
         textLifePokemon.text = pokemonLifeLeft + "/" + cardPok.lifeTotal() + " PV"
     }
 
     onPokemonStatusChanged: {
-        console.log("onPokemonStatusChanged");
+        console.log("boardFightingInfo1 onPokemonStatusChanged");
         textStatusPokemon.text = cardPok.statusFormatString();
     }
 
     onCardPokChanged: {
-        console.log("onCardPokChanged");
+        console.log("boardFightingInfo1 onCardPokChanged");
         if(cardPok !== undefined)
         {
-            console.log("onPlayerChanged: player not null");
-            //var cardPokemon = player.fight().pokemonFighting(0);
+            console.log("boardFightingInfo1 onPlayerChanged: player not null");
 
             pokemonFighting.source = cardPok.image();
             textNamePokemon.text = cardPok.name();
             textStatusPokemon.text = cardPok.statusFormatString();
-            //pokemonLifeLeft = cardPok.lifeLeft
+            pokemonLifeLeft = cardPok.lifeLeft
             gridViewEnergies.model = cardPok.modelListOfEnergies();
         }
         else
         {
-            console.log("onPlayerChanged: player is null");
+            console.log("boardFightingInfo1 onPlayerChanged: player is null");
             pokemonFighting.source = "back.png"
         }
     }
@@ -107,11 +91,11 @@ Item {
             DropArea {
                 id: dropAreaFightingArea
                 anchors.fill: parent
-                onEntered: console.log("dropAreaFightingArea entered");
-                onExited: console.log("dropAreaFightingArea exited");
+                //onEntered: console.log("dropAreaFightingArea entered");
+                //onExited: console.log("dropAreaFightingArea exited");
                 onDropped: {
-                    console.log("DropArea in fightingArea");
-                    console.log("drag.source: " + drag.source.parent.objectName);
+                    //console.log("DropArea in fightingArea");
+                    //console.log("drag.source: " + drag.source.parent.objectName);
                     //Si ca vient du banc
                     if((drag.source.parent.player === boardFightingInfo1.player) &&
                             (drag.source.objectName === "itemDelegatePacketBench"))
@@ -124,7 +108,7 @@ Item {
                     else if((drag.source.parent.parent.player === boardFightingInfo1.player) &&
                             (drag.source.objectName === "imageCardInHand"))
                     {
-                        console.log("DropArea from hand, " + drag.source.parent.objectName);
+                        //console.log("DropArea from hand, " + drag.source.parent.objectName);
                         boardFightingInfo1.player.moveCardFromHandToFight(drag.source.parent.dragItemIndex);
                         //drag.source.parent.listViewPacketHand.dragItemIndex = -1;
                     }
@@ -209,7 +193,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                anchors.bottom: buttonAttack.top
+                anchors.bottom: buttonReadyPreparation.top
                 //model: cardPok.modelListOfEnergies()
                 cellWidth: 25
                 cellHeight: 25
@@ -251,6 +235,18 @@ Item {
                 text: "Prêt"
 
                 onClicked: ctrlGameBoard.onClicked_ButtonReadyPreparation()
+            }
+
+            Text {
+                id: textYourTurn
+                height: 30
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                visible: (cardPok !== undefined) && (player === currentPlayer) &&
+                         (ctrlGameBoard.gameStatus === ConstantesQML.StepGameInProgress)
+
+                text: "A vous de jouer"
             }
         }
 

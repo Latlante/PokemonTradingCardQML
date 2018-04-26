@@ -60,7 +60,13 @@ SOURCES += \
     src_Actions/actiondamagemultipliedbydoubleheadortail.cpp \
     src_Actions/actiondamagemultipliedbytripleheadortail.cpp \
     src_Tests/testsunitairegeneral.cpp \
-    src_Tests/testsunitaireactions.cpp
+    src_Tests/testsunitaireactions.cpp \
+    src_Actions/actiontrainer_fakeprofessorchen.cpp \
+    src_Actions/actiontrainer_totalguerison.cpp \
+    src_Actions/actiontrainer_professorchen.cpp \
+    src_Actions/actiontrainer_superpotion.cpp \
+    src_Actions/actiontrainer_leo.cpp \
+    src_Actions/actiontrainer_potion.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -118,7 +124,13 @@ HEADERS += \
     src_Actions/actiondamagemultipliedbydoubleheadortail.h \
     src_Actions/actiondamagemultipliedbytripleheadortail.h \
     src_Tests/testsunitairegeneral.h \
-    src_Tests/testsunitaireactions.h
+    src_Tests/testsunitaireactions.h \
+    src_Actions/actiontrainer_fakeprofessorchen.h \
+    src_Actions/actiontrainer_totalguerison.h \
+    src_Actions/actiontrainer_professorchen.h \
+    src_Actions/actiontrainer_superpotion.h \
+    src_Actions/actiontrainer_leo.h \
+    src_Actions/actiontrainer_potion.h
 
 FORMS += \
     dlgselectcards.ui

@@ -346,7 +346,7 @@ QString CardPokemon::statusToString(Enum_statusOfPokemon status)
     switch(status)
     {
     case Status_Confused:   return "Confus";
-    case Status_Normal:     return "";
+    case Status_Normal:     return "OK";
     case Status_Paralyzed:  return "Paralysé";
     case Status_Poisoned:   return "Empoisonné";
     case Status_Slept:      return "Endormi";

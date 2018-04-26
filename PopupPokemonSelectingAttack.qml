@@ -16,8 +16,18 @@ Item {
     onCardChanged: {
         console.log("popupPokemonSelectingAttack1 cardChanged");
 
-        imageCard.source = card.image();
+        if(card !== null)
+        {
+            imageCard.source = card.image();
+            rectangleAttack1.height = 120 / card.attacksCount();
 
+            rectangleAttack2.height = 120 / card.attacksCount();
+            rectangleAttack2.visible = card.attacksCount() >= 2;
+
+            rectangleAttack3.height = 120 / card.attacksCount();
+            rectangleAttack3.visible = card.attacksCount() >= 3;
+
+        }
     }
 
     Rectangle {
@@ -40,12 +50,12 @@ Item {
             horizontalAlignment: Image.AlignHCenter
             verticalAlignment: Image.AlignVCenter
             //source: card.image
-            source: "Images/cartes/pokemon/1.png"
+            //source: "qrc:/Images/cartes/pokemon/1.png"
 
             Rectangle {
                 id: rectangleAttack1
                 width: imageCard.paintedWidth
-                height: 120 / card.attacksCount()
+                height: 0
                 color: "transparent"
                 anchors.verticalCenterOffset: 102
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -64,13 +74,13 @@ Item {
             Rectangle {
                 id: rectangleAttack2
                 width: imageCard.paintedWidth
-                height: 120 / card.attacksCount()
+                height: 0
                 color: "transparent"
                 anchors.top: rectangleAttack1.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 border.color: "black"
                 border.width: 3
-                visible: card.attacksCount() >= 2
+                visible: false
 
                 MouseArea {
                     id: mouseAreaAttack2
@@ -83,13 +93,13 @@ Item {
             Rectangle {
                 id: rectangleAttack3
                 width: imageCard.paintedWidth
-                height: 120 / card.attacksCount()
+                height: 0
                 color: "transparent"
                 anchors.top: rectangleAttack2.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 border.color: "red"
                 border.width: 3
-                visible: card.attacksCount() >= 3
+                visible: false
 
                 MouseArea {
                     id: mouseAreaAttack3

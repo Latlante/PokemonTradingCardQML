@@ -33,6 +33,7 @@ public:
         Status_Poisoned,
         Status_Slept
     };
+    Q_ENUMS(Enum_statusOfPokemon)
 
     CardPokemon(unsigned short id, 
 				const QString& name, 
@@ -94,7 +95,7 @@ private:
 	AbstractCard::Enum_element m_element;
 	unsigned short m_lifeTotal;
 	unsigned short m_lifeLeft;
-    Enum_statusOfPokemon m_status;
+    CardPokemon::Enum_statusOfPokemon m_status;
     bool m_invincibleOnNextTurn;
     QList<AttackData> m_listAttacks;
     //QList<CardEnergy*> m_listEnergies;
