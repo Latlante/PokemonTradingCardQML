@@ -2,7 +2,6 @@
 #define ACTIONCHANGEENEMYSTATUSRANDOM_H
 
 #include "abstractaction.h"
-#include "src_Cards/cardpokemon.h"
 
 class ActionChangeEnemyStatusRandom : public AbstractAction
 {
@@ -10,7 +9,8 @@ public:
     explicit ActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon status);
 
     AbstractAction::Enum_typeOfAction type() override;
-    void executeAction() override;
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    void action() override;
 
 signals:
 

@@ -1,7 +1,4 @@
 #include "actiondamagemultipliedbydoubleheadortail.h"
-#include "gamemanager.h"
-#include "src_Packets/fightarea.h"
-#include "src_Cards/cardpokemon.h"
 
 ActionDamageMultipliedByDoubleHeadOrTail::ActionDamageMultipliedByDoubleHeadOrTail(unsigned short damageByHead) :
     AbstractAction(),
@@ -18,44 +15,25 @@ AbstractAction::Enum_typeOfAction ActionDamageMultipliedByDoubleHeadOrTail::type
     return AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail;
 }
 
-void ActionDamageMultipliedByDoubleHeadOrTail::executeAction()
+QList<AbstractAction::Enum_ElementsToCheck> ActionDamageMultipliedByDoubleHeadOrTail::elementToCheck()
 {
-    GameManager *manager = GameManager::instance();
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked;
+}
 
-    if(manager != NULL)
+void ActionDamageMultipliedByDoubleHeadOrTail::action()
+{
+    if(pokemonAttacked() != nullptr)
     {
-        Player* playerAttacked = manager->currentPlayer();
+        unsigned short totalDamage = 0;
 
-        if(playerAttacked != NULL)
+        for(int i=0;i<2;++i)
         {
-            FightArea *fightArPlayerAttacked = playerAttacked->fight();
-
-            if(fightArPlayerAttacked != NULL)
-            {
-                CardPokemon *pokemonAttacked = fightArPlayerAttacked->pokemonFighter();
-
-                if(pokemonAttacked != NULL)
-                {
-                    unsigned short totalDamage = 0;
-                    //Tout est Ok
-                    for(int i=0;i<2;++i)
-                    {
-                        unsigned short coin = manager->headOrTail();
-                        if(coin == 1)
-                            totalDamage += m_damageByHead;
-                    }
-
-                    pokemonAttacked->takeDamage(totalDamage);
-                }
-                else
-                    qCritical() << __PRETTY_FUNCTION__ << ", pokemonAttacked is NULL";
-            }
-            else
-                qCritical() << __PRETTY_FUNCTION__ << ", fightAr of playerAttacked is NULL";
+            unsigned short coin = headOrTail();
+            if(coin == 1)
+                totalDamage += m_damageByHead;
         }
-        else
-            qCritical() << __PRETTY_FUNCTION__ << ", playerAttacked is NULL";
+
+        pokemonAttacked()->takeDamage(totalDamage);
     }
-    else
-        qCritical() << __PRETTY_FUNCTION__ << ", manager is NULL";
 }

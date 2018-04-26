@@ -14,7 +14,14 @@ AbstractAction::Enum_typeOfAction ActionReplicateOneAttackFromEnemy::type()
     return AbstractAction::Action_ReplicateOneAttackFromEnemy;
 }
 
-void ActionReplicateOneAttackFromEnemy::executeAction()
+QList<AbstractAction::Enum_ElementsToCheck> ActionReplicateOneAttackFromEnemy::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
+}
+
+void ActionReplicateOneAttackFromEnemy::action()
 {
 
 }

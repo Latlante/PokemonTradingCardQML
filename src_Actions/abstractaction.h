@@ -1,7 +1,14 @@
 #ifndef ABSTRACTACTION_H
 #define ABSTRACTACTION_H
 
+#include <QDebug>
 #include <QObject>
+
+#include "gamemanager.h"
+#include "player.h"
+#include "src_Cards/cardpokemon.h"
+#include "src_Packets/bencharea.h"
+#include "src_Packets/fightarea.h"
 
 class AbstractAction
 {
@@ -45,17 +52,55 @@ public:
         Action_ProtectedAgainstDamageRandom = 34
     };
 
+    enum Enum_ElementsToCheck
+    {
+        CheckGameManager = 0,
+        CheckPlayerAttacked,
+        CheckPlayerAttacking,
+        CheckPokemonAttacked,
+        CheckPokemonAttacking,
+        CheckBenchPlayerAttacked,
+        CheckBenchPlayerAttacking
+    };
+
     AbstractAction();
     virtual ~AbstractAction();
 	
     virtual Enum_typeOfAction type() = 0;
-    virtual void executeAction() = 0;
+    virtual QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() = 0;
+    void executeAction();
 
-    unsigned short id();
-	const QString name();
-	void setName(const QString& name);
+
+
+protected:
+    virtual void action() = 0;
+
+    unsigned short headOrTail();
+
+    GameManager* gameManager();
+    Player* playerAttacked();
+    Player* playerAttacking();
+    CardPokemon* pokemonAttacked();
+    CardPokemon* pokemonAttacking();
+    BenchArea* benchPlayerAttacked();
+    BenchArea* benchPlayerAttacking();
 
 private:
+    GameManager* m_gameManager;
+    Player* m_playerAttacked;
+    Player* m_playerAttacking;
+    CardPokemon* m_pokemonAttacked;
+    CardPokemon* m_pokemonAttacking;
+    BenchArea* m_benchPlayerAttacked;
+    BenchArea* m_benchPlayerAttacking;
+
+    bool checkGameManager();
+    bool checkPlayerAttacked();
+    bool checkPlayerAttacking();
+    bool checkPokemonAttacked();
+    bool checkPokemonAttacking();
+    bool checkBenchPlayerAttacked();
+    bool checkBenchPlayerAttacking();
 };
 
 #endif // ABSTRACTACTION_H

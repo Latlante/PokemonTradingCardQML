@@ -19,41 +19,22 @@ AbstractAction::Enum_typeOfAction ActionRemoveEnergyAttached::type()
     return AbstractAction::Action_RemoveOneEnergyAttached;
 }
 
-void ActionRemoveEnergyAttached::executeAction()
+QList<AbstractAction::Enum_ElementsToCheck> ActionRemoveEnergyAttached::elementToCheck()
 {
-    GameManager *manager = GameManager::instance();
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
+}
 
-    if(manager != NULL)
+void ActionRemoveEnergyAttached::action()
+{
+    if(pokemonAttacking() != nullptr)
     {
-        Player* playerAttacking = manager->currentPlayer();
+        int numberOfEnergyRemoved = 0;
 
-        if(playerAttacking != NULL)
+        while((numberOfEnergyRemoved < m_numberOfEnergiesToRemoved) && (pokemonAttacking()->countEnergies() > 0))
         {
-            FightArea *fightAr = playerAttacking->fight();
-
-            if(fightAr != NULL)
-            {
-                CardPokemon *pokemonAttacking = fightAr->pokemonFighter();
-
-                if(pokemonAttacking != NULL)
-                {
-                    int numberOfEnergyRemoved = 0;
-
-                    while((numberOfEnergyRemoved < m_numberOfEnergiesToRemoved) && (pokemonAttacking->countEnergies() > 0))
-                    {
-                        pokemonAttacking->removeEnergy(0);
-                        numberOfEnergyRemoved++;
-                    }
-                }
-                else
-                    qCritical() << __PRETTY_FUNCTION__ << ", pokemonAttacking is NULL";
-            }
-            else
-                qCritical() << __PRETTY_FUNCTION__ << ", fightAr is NULL";
+            pokemonAttacking()->removeEnergy(0);
+            numberOfEnergyRemoved++;
         }
-        else
-            qCritical() << __PRETTY_FUNCTION__ << ", playerAttacking is NULL";
     }
-    else
-        qCritical() << __PRETTY_FUNCTION__ << ", manager is NULL";
 }

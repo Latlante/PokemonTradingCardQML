@@ -9,7 +9,8 @@ public:
     ActionHealing(unsigned short pv);
 
     AbstractAction::Enum_typeOfAction type() override;
-    void executeAction() override;
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    void action() override;
 
 private:
     unsigned short m_pv;
