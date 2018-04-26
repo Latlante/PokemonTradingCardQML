@@ -26,7 +26,7 @@ void ActionChangeEnemyStatusRandom::executeAction()
 
     if(manager != NULL)
     {
-        unsigned short coin = Utils::headOrTail();
+        unsigned short coin = manager->headOrTail();
 
         if(coin == 1)
         {

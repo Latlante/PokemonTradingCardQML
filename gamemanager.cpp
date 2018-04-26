@@ -223,6 +223,11 @@ Player* GameManager::gameIsFinished()
     return playWinner;
 }
 
+unsigned short GameManager::headOrTail()
+{
+    return Utils::headOrTail();
+}
+
 /************************************************************
 *****			  FONCTIONS SLOTS PRIVEES				*****
 ************************************************************/

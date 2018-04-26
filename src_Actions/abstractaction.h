@@ -19,8 +19,8 @@ public:
         Action_MoreDamageOnEnemyOrHimSelf = 8,              //Quantity of damage
         Action_PoisonedCustom = 9,
         Action_RandomDamageToHimself = 10,
-        Action_DamageMultipliedByDoubleHeadOrTail = 11,
-        Action_DamageMultipliedByTripleHeadOrTail = 12,
+        Action_DamageMultipliedByDoubleHeadOrTail = 11,     //Quantity of damage
+        Action_DamageMultipliedByTripleHeadOrTail = 12,     //Quantity of damage
         Action_HurtEveryPokemonOnOwnBench = 13,
         Action_SwapPokemonBetweenFigthAndBench = 14,
         Action_Destruction = 15,

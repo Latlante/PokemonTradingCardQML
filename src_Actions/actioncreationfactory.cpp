@@ -23,6 +23,8 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
 
     switch(idAction)
     {
+    case AbstractAction::Action_None:
+        break;
     case AbstractAction::Action_ChangeEnemyStatus:
         {
             argInt = arg.toInt(&ok);

@@ -36,6 +36,8 @@ public:
 	void endOfTurn();
     Player *gameIsFinished();
 
+    unsigned short headOrTail();
+
 signals:
     void indexCurrentPlayerChanged();
     void gameStatusChanged();
