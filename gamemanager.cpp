@@ -6,6 +6,7 @@
 #include "src_Cards/cardpokemon.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
+#include "src_Packets/packethand.h"
 #include "src_Packets/packetrewards.h"
 #include "dlgselectcards.h"
 #include "utils.h"
@@ -62,35 +63,7 @@ GameManager* GameManager::instance()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-void GameManager::initGame()
-{
-    //Mise en place des récompenses
-    foreach(Player *play, m_listPlayers)
-    {
-        for(int i=0;i<m_NUMBER_REWARDS;++i)
-        {
-            play->moveCardFromDeckToReward();
-        }
-    }
-
-    //Distribution de la première main
-    drawFirstCards();
-	
-	//On choisit le joueur qui va jouer en premier
-	selectFirstPlayer();
-}
-
-Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
-{
-	Player* newPlayer = new Player(name, listCards);
-
-    connect(newPlayer, &Player::endOfTurn, this, &GameManager::onEndOfTurn_Player);
-
-	m_listPlayers.append(newPlayer);
-
-    return newPlayer;
-}
-
+//ACCESSEURS
 Player* GameManager::currentPlayer()
 {
     return m_playerAttacking;
@@ -131,22 +104,44 @@ void GameManager::setGameStatus(ConstantesQML::StepGame step)
     }
 }
 
+//PREPARATION DE LA PARTIE
+void GameManager::initGame()
+{
+    //Mise en place des récompenses
+    foreach(Player *play, m_listPlayers)
+    {
+        for(int i=0;i<m_NUMBER_REWARDS;++i)
+        {
+            play->moveCardFromDeckToReward();
+        }
+    }
+
+    //Distribution de la première main
+    checkHandOfEachPlayer();
+
+
+	
+	//On choisit le joueur qui va jouer en premier
+	selectFirstPlayer();
+}
+
+Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
+{
+	Player* newPlayer = new Player(name, listCards);
+
+    connect(newPlayer, &Player::endOfTurn, this, &GameManager::onEndOfTurn_Player);
+
+	m_listPlayers.append(newPlayer);
+
+    return newPlayer;
+}
+
+
 void GameManager::startGame()
 {
     onEndOfTurn_Player();
 }
 
-void GameManager::drawFirstCards()
-{
-    //qDebug() << "count Players:" << m_listPlayers.count();
-    foreach(Player *play, m_listPlayers)
-    {
-        for(int i=0;i<m_NUMBER_FIRST_CARDS;++i)
-        {
-            play->drawOneCard();
-        }
-    }
-}
 
 void GameManager::selectFirstPlayer()
 {
@@ -297,6 +292,51 @@ Player* GameManager::ennemyOf(Player *play)
     }
 
     return playerEnnemy;
+}
+
+bool GameManager::checkHandOfEachPlayer()
+{
+    foreach(Player* play, m_listPlayers)
+    {
+        unsigned short bonusCards = 0;
+
+        drawFirstCards(play);
+
+        //Si la main n'est pas bonne:
+        //  -> on remet les cartes dans le deck
+        //  -> on repioche
+        //  -> les autres joueurs ont le droit à une carte en plus
+        while((play->hand()->isFirstHandOk() == false) && (bonusCards < 5))
+        {
+            play->moveAllCardFromHandToDeck();
+            drawFirstCards(play);
+            bonusCards++;
+        }
+
+        if(bonusCards > 0)
+        {
+            foreach(Player* playBonusCard, m_listPlayers)
+            {
+                if(play != playBonusCard)
+                {
+                    for(int i=0;i<bonusCards;++i)
+                    {
+                        playBonusCard->drawOneCard();
+                    }
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+void GameManager::drawFirstCards(Player* play)
+{
+    for(int i=0;i<m_NUMBER_FIRST_CARDS;++i)
+    {
+        play->drawOneCard();
+    }
 }
 
 void GameManager::checkPokemonPoisoned()

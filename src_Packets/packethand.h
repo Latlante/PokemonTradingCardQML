@@ -14,6 +14,8 @@ public:
     static void declareQML();
 	
     int maxCards() const override;
+
+    bool isFirstHandOk();
 };
 
 #endif // PACKETHAND_H

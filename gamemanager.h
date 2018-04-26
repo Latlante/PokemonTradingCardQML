@@ -21,15 +21,18 @@ public:
     static void deleteInstance();
     static GameManager* instance();
 	
-	void initGame();
-    Player* addNewPlayer(QString name, QList<AbstractCard*> listCards);
+    //Accesseurs
     Player* currentPlayer();
     Player* playerAttacked();
     Player* playerAt(int index);
     ConstantesQML::StepGame gameStatus();
     void setGameStatus(ConstantesQML::StepGame step);
+
+    //Preparation de la partie
+    void initGame();
+
+    Player* addNewPlayer(QString name, QList<AbstractCard*> listCards);
     void startGame();
-    void drawFirstCards();
     void selectFirstPlayer();
 	void nextPlayer();
     void attack(Player* playAttacking, unsigned short index, Player* playAttacked);
@@ -62,6 +65,8 @@ private:
     void setIndexCurrentPlayer(int index);
     Player* ennemyOf(Player* play);
 
+    bool checkHandOfEachPlayer();
+    void drawFirstCards(Player *play);
     void checkPokemonPoisoned();
     void checkPokemonDead();
     void checkStatusPokemonForNewRound();
