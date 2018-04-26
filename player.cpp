@@ -15,13 +15,14 @@
 Player::Player(QString name, QList<AbstractCard*> listCards, QObject *parent) :
 	QObject(parent),
     m_name(name),
-    m_canPlay(true),
     m_bench(new BenchArea()),
     m_deck(new PacketDeck(listCards)),
     m_fight(new FightArea()),
     m_hand(new PacketHand()),
     m_rewards(new PacketRewards()),
-    m_trash(new PacketTrash())
+    m_trash(new PacketTrash()),
+    m_canPlay(true),
+    m_energyPlayedForThisRound(false)
 {
 	
 }
@@ -90,6 +91,7 @@ void Player::init(QList<AbstractCard*> listCards)
 void Player::newTurn()
 {
     setCanPlay(true);
+    m_energyPlayedForThisRound = false;
     //fight()->pokemonFighter()->setStatus(CardPokemon::Status_Normal);
 }
 
@@ -170,25 +172,29 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
         }
         else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
         {
-            CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
-
-            if (cardEn != NULL)
+            if(m_energyPlayedForThisRound == false)
             {
-                //On récupére la carte Pokémon a laquelle l'associer
-                AbstractCard* cardToAssociate = bench()->card(indexBench);
+                CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
 
-                if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                if (cardEn != NULL)
                 {
-                    CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
+                    //On récupére la carte Pokémon a laquelle l'associer
+                    AbstractCard* cardToAssociate = bench()->card(indexBench);
 
-                    if (pokemonToAssociate != NULL)
+                    if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
                     {
-                        //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
-                        //pour ne pas l'avoir en doublon
-                        pokemonToAssociate->addEnergy(cardEn);
-                        hand()->removeFromPacket(cardEn);
+                        CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
 
-                        moveSuccess = true;
+                        if (pokemonToAssociate != NULL)
+                        {
+                            //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
+                            //pour ne pas l'avoir en doublon
+                            pokemonToAssociate->addEnergy(cardEn);
+                            hand()->removeFromPacket(cardEn);
+
+                            m_energyPlayedForThisRound = true;
+                            moveSuccess = true;
+                        }
                     }
                 }
             }
@@ -204,6 +210,11 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
     }
 
     return moveSuccess;
+}
+
+bool Player::moveCardFromHandToDeck(int indexHand)
+{
+    return moveCardFromPacketToAnother(hand(), deck(), indexHand);
 }
 
 bool Player::moveCardFromHandToFight(int indexHand)
@@ -231,28 +242,33 @@ bool Player::moveCardFromHandToFight(int indexHand)
         }
         else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
         {
-            CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
-
-            if (cardEn != NULL)
+            if(m_energyPlayedForThisRound == false)
             {
-                //On récupére la carte Pokémon a laquelle l'associer
-                AbstractCard* cardToAssociate = fight()->pokemonFighter();
+                CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
 
-                if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                if (cardEn != NULL)
                 {
-                    CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
+                    //On récupére la carte Pokémon a laquelle l'associer
+                    AbstractCard* cardToAssociate = fight()->pokemonFighter();
 
-                    if (pokemonToAssociate != NULL)
+                    if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
                     {
-                        //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
-                        //pour ne pas l'avoir en doublon
-                        pokemonToAssociate->addEnergy(cardEn);
-                        hand()->removeFromPacket(cardEn);
+                        CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
 
-                        moveSuccess = true;
+                        if (pokemonToAssociate != NULL)
+                        {
+                            //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
+                            //pour ne pas l'avoir en doublon
+                            pokemonToAssociate->addEnergy(cardEn);
+                            hand()->removeFromPacket(cardEn);
+
+                            m_energyPlayedForThisRound = true;
+                            moveSuccess = true;
+                        }
                     }
                 }
             }
+
         }
         else
         {
@@ -328,6 +344,18 @@ bool Player::moveCardFromFightToTrash(int index)
 bool Player::moveCardFromRewardToHand()
 {
     return moveCardFromPacketToAnother(rewards(), hand(), 0);
+}
+
+bool Player::moveAllCardFromHandToDeck()
+{
+    bool status = true;
+
+    while((hand()->countCard() > 0) && (status == true))
+    {
+        status &= moveCardFromHandToDeck(0);
+    }
+
+    return status;
 }
 
 /************************************************************

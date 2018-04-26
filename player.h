@@ -46,11 +46,13 @@ public:
     bool moveCardFromDeckToHand();
     bool moveCardFromDeckToReward();
     Q_INVOKABLE bool moveCardFromHandToBench(int indexHand, int indexBench);
+    bool moveCardFromHandToDeck(int indexHand);
     Q_INVOKABLE bool moveCardFromHandToFight(int indexHand);
     Q_INVOKABLE bool moveCardFromBenchToFight(int indexBench);
     bool moveCardFromBenchToTrash(int index);
     bool moveCardFromFightToTrash(int index);
     bool moveCardFromRewardToHand();
+    bool moveAllCardFromHandToDeck();
 
 
 signals:
@@ -59,7 +61,6 @@ signals:
 
 private:
 	QString m_name;
-    bool m_canPlay;
 
     BenchArea* m_bench;
 	PacketDeck* m_deck;
@@ -67,6 +68,10 @@ private:
     PacketHand* m_hand;
 	PacketRewards* m_rewards;
     PacketTrash* m_trash;
+
+    //For the round
+    bool m_canPlay;
+    bool m_energyPlayedForThisRound;
 
 
     void setCanPlay(bool status);
