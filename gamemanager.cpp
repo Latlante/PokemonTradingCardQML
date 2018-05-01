@@ -181,11 +181,6 @@ void GameManager::attack(Player *playAttacking, unsigned short index, Player *pl
 
 void GameManager::endOfTurn()
 {
-    /*foreach(Player* play, m_listPlayers)
-	{
-		play->blockPlayer();
-    }*/
-
     //Application du poison s'il y a
     checkPokemonPoisoned();
 

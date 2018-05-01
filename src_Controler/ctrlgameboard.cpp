@@ -24,7 +24,6 @@ CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, CtrlPopups &ct
     connect(&m_ctrlSelectingCards, &CtrlSelectingCards::listsComplete, this, &CtrlGameBoard::onListsComplete_CtrlSelectingCards);
     connect(m_gameManager, &GameManager::indexCurrentPlayerChanged, this, &CtrlGameBoard::currentPlayerChanged);
     connect(m_gameManager, &GameManager::gameStatusChanged, this, &CtrlGameBoard::gameStatusChanged);
-    connect(m_gameManager, &GameManager::replacePokemonFighter, this, &CtrlGameBoard::onReplacePokemonFighter_GameManager);
 }
 
 CtrlGameBoard::~CtrlGameBoard()
@@ -126,6 +125,8 @@ void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
 
 void CtrlGameBoard::onClicked_ButtonReadyPreparation()
 {
+
+
     m_gameManager->setGameStatus(ConstantesQML::StepGameInProgress);
 }
 
@@ -161,7 +162,3 @@ void CtrlGameBoard::onListsComplete_CtrlSelectingCards()
     m_factoryMainPageLoader->displayBoard();
 }
 
-void CtrlGameBoard::onReplacePokemonFighter_GameManager(Player *play)
-{
-
-}

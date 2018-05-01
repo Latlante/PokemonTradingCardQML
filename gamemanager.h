@@ -30,7 +30,6 @@ public:
 
     //Preparation de la partie
     void initGame();
-
     Player* addNewPlayer(QString name, QList<AbstractCard*> listCards);
     void startGame();
     void selectFirstPlayer();

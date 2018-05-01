@@ -54,8 +54,6 @@ signals:
 private slots:
     void onListsComplete_CtrlSelectingCards();
 
-    void onReplacePokemonFighter_GameManager(Player* play);
-
 private:
     GameManager* m_gameManager;
     FactoryMainPageLoader* m_factoryMainPageLoader;

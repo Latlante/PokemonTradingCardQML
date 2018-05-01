@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     QResource::registerResource("Ressources/cards.rcc");
 
 #ifdef TESTS_UNITAIRES
-    if(1)
+    if(0)
     {
         CtrlPopups ctrlPopupsTest;
         GameManager::createInstance(ctrlPopupsTest);

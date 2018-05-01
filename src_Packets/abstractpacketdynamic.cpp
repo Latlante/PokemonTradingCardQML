@@ -29,8 +29,6 @@ bool AbstractPacketDynamic::addNewCard(AbstractCard* newCard)
 
         connect(newCard, &AbstractCard::dataChanged, this, &AbstractPacketDynamic::updateAllData);
 
-        //qDebug() << __PRETTY_FUNCTION__ << "Carte ajoutée";
-
         emit countChanged();
         statusBack = true;
     }
