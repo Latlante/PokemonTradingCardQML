@@ -5,7 +5,6 @@
 
 class ActionTrainer_Leo : public AbstractAction
 {
-    Q_OBJECT
 public:
     ActionTrainer_Leo();
 

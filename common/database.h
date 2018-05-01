@@ -65,6 +65,7 @@ public:
 
     QList<int> listIdAllCardsPokemon();
     QList<int> listIdAllCardsEnergies();
+    QList<int> listIdAllCardsTrainers();
     AbstractCard* cardById(int id);
 
 signals:

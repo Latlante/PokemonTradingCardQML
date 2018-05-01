@@ -5,7 +5,6 @@
 
 class ActionTrainer_FakeProfessorChen : public AbstractAction
 {
-    Q_OBJECT
 public:
     ActionTrainer_FakeProfessorChen();
 

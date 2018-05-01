@@ -67,6 +67,31 @@ QList<int> Database::listIdAllCardsEnergies()
     return listId;
 }
 
+QList<int> Database::listIdAllCardsTrainers()
+{
+    QList<int> listId;
+
+    QFile fichier(m_PATH_DB);
+    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QByteArray textFromFile = fichier.readAll();
+    QString contenuGeneral = QString::fromLatin1(textFromFile);
+    QStringList textSplitted = contenuGeneral.split("\n");
+
+    foreach(QString line, textSplitted)
+    {
+        int idEnergy = line.section(";", InfoDbNrj_Id, InfoDbNrj_Id).toInt();
+        if((idEnergy >= INDEX_START_ACTION) &&
+                (line.section(";", InfoDbNrj_Useable, InfoDbNrj_Useable) == "1"))
+        {
+            listId.append(idEnergy);
+        }
+
+    }
+
+    return listId;
+}
+
 AbstractCard* Database::cardById(int id)
 {
     AbstractCard* cardToReturn = NULL;
@@ -98,6 +123,10 @@ AbstractCard* Database::cardById(int id)
     else if ((id >= INDEX_START_ENERGIES) && (id < INDEX_START_ACTION))
     {
         cardToReturn = newCardEnergy(contenuParLigne[indexLine]);
+    }
+    else if(id < INDEX_START_ACTION)
+    {
+
     }
 
     return cardToReturn;

@@ -5,7 +5,6 @@
 
 class ActionTrainer_Potion : public AbstractAction
 {
-    Q_OBJECT
 public:
     ActionTrainer_Potion();
 
