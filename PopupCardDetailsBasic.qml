@@ -12,17 +12,17 @@ Item {
         if(card != undefined)
         {
             var description = "";
-            imageCard.source = card.image();
+            imageCard.source = card.image;
 
             if(card.type() === AbstractCard.TypeOfCard_Pokemon)
             {
                 //description = card.id() + " - " + card.name();
                 //description += " (" + card.lifeTotal() + ")";
 
-                description += "----- " + card.name() + " -----\n\n";
+                description += "----- " + card.name + " -----\n\n";
                 description += "ID: " + card.id() + "\n";
                 description += "Element: " + card.elementFormatString() + "\n";
-                description += "Vie totale: " + card.lifeTotal() + "\n\n";
+                description += "Vie totale: " + card.lifeTotal + "\n\n";
 
                 for(var i=0;i<card.attacksCount();++i)
                 {

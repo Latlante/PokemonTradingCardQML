@@ -52,7 +52,7 @@ AbstractCard* AbstractPacketDynamic::takeACard(int indexCard)
     return card;
 }
 
-bool AbstractPacketDynamic::removeFromPacket(AbstractCard *card)
+bool AbstractPacketDynamic::removeFromPacketWithoutDelete(AbstractCard *card)
 {
     bool removeSuccess = false;
 
@@ -63,7 +63,7 @@ bool AbstractPacketDynamic::removeFromPacket(AbstractCard *card)
         removeSuccess = m_listCards.removeOne(card);
         endRemoveRows();
 
-        delete card;
+        //On ne delete pas la carte volontairement
 
         emit countChanged();
     }

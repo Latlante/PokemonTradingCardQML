@@ -10,16 +10,34 @@ Item {
     property Player player
     property Player currentPlayer
     property CardPokemon cardPok: player.fight().pokemonFighter
-    property int pokemonLifeLeft: cardPok === null ? 0 : cardPok.lifeLeft
-    property int pokemonStatus: cardPok === null ? 0 : cardPok.status
+    property string pokemonName: cardPok.name
+    property string pokemonImage: cardPok.image
+    property int pokemonLifeTotal: cardPok.lifeTotal
+    property int pokemonLifeLeft: /*cardPok === null ? 0 : */cardPok.lifeLeft
+    property int pokemonStatus: /*cardPok === null ? 0 : */cardPok.status
 
     onPlayerChanged: {
         console.log("boardFightingInfo1 onPlayerChanged");
     }
 
+    onPokemonNameChanged: {
+        console.log("boardFightingInfo1 onPokemonNameChanged");
+        textNamePokemon.text = pokemonName;
+    }
+
+    onPokemonImageChanged: {
+        console.log("boardFightingInfo1 onPokemonImageChanged");
+        pokemonFighting.source = pokemonImage;
+    }
+
+    onPokemonLifeTotalChanged: {
+        console.log("boardFightingInfo1 onPokemonLifeTotalChanged");
+        textLifePokemon.text = pokemonLifeLeft + "/" + pokemonLifeTotal + " PV"
+    }
+
     onPokemonLifeLeftChanged: {
         console.log("boardFightingInfo1 onPokemonLifeLeftChanged");
-        textLifePokemon.text = pokemonLifeLeft + "/" + cardPok.lifeTotal() + " PV"
+        textLifePokemon.text = pokemonLifeLeft + "/" + pokemonLifeTotal + " PV"
     }
 
     onPokemonStatusChanged: {
@@ -33,10 +51,10 @@ Item {
         {
             console.log("boardFightingInfo1 onPlayerChanged: player not null");
 
-            pokemonFighting.source = cardPok.image();
-            textNamePokemon.text = cardPok.name();
+            //pokemonFighting.source = cardPok.image;
+            textNamePokemon.text = cardPok.name;
             textStatusPokemon.text = cardPok.statusFormatString();
-            pokemonLifeLeft = cardPok.lifeLeft
+            //pokemonLifeLeft = cardPok.lifeLeft
             gridViewEnergies.model = cardPok.modelListOfEnergies();
         }
         else

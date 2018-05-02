@@ -30,7 +30,7 @@ public:
     virtual int countCard() const = 0;
     virtual bool addNewCard(AbstractCard* newCard) = 0;
     virtual AbstractCard* takeACard(int indexCard) = 0;
-    virtual bool removeFromPacket(AbstractCard* card) = 0;
+    virtual bool removeFromPacketWithoutDelete(AbstractCard* card) = 0;
 
     bool isFull();
     bool isEmpty();

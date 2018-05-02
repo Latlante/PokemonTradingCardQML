@@ -49,8 +49,8 @@ public:
     Q_INVOKABLE virtual QUrl image() = 0;
     virtual AbstractCard* clone() = 0;
 	
-    Q_INVOKABLE int id();
-    Q_INVOKABLE const QString name();
+    Q_INVOKABLE virtual int id();
+    Q_INVOKABLE virtual const QString name();
 	void setName(const QString& name);
 
     Q_INVOKABLE QString elementToString(Enum_element element);

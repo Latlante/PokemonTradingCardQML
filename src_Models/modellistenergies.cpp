@@ -2,7 +2,8 @@
 #include <QtQml/qqml.h>
 
 ModelListEnergies::ModelListEnergies(QObject *parent) :
-    QAbstractListModel(parent)
+    QAbstractListModel(parent),
+    m_listEnergies(QList<CardEnergy*>())
 {
 
 }

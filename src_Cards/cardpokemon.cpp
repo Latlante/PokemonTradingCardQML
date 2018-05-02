@@ -17,11 +17,12 @@ CardPokemon::CardPokemon(unsigned short id,
     AbstractCard(id, name),
 	m_element(element),
 	m_lifeTotal(lifeTotal),
-	m_lifeLeft(lifeTotal),
+    m_damage(0),
     m_status(Status_Normal),
     m_invincibleOnNextTurn(false),
 	m_listAttacks(listAttacks),
     m_modelListEnergies(new ModelListEnergies()),
+    m_cardEvolution(nullptr),
 	m_evolutionFrom(evolutionFrom)
 {
 	
@@ -30,7 +31,8 @@ CardPokemon::CardPokemon(unsigned short id,
 CardPokemon::CardPokemon(const CardPokemon &card) :
     m_status(Status_Normal),
     m_invincibleOnNextTurn(false),
-    m_modelListEnergies(new ModelListEnergies())
+    m_modelListEnergies(new ModelListEnergies()),
+    m_cardEvolution(nullptr)
 {
     *this = card;
 }
@@ -51,6 +53,32 @@ void CardPokemon::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
+int CardPokemon::id()
+{
+    int idCard = -1;
+
+    if(m_cardEvolution != nullptr)
+        idCard = m_cardEvolution->id();
+    else
+        idCard = m_id;
+
+    return idCard;
+}
+
+const QString CardPokemon::name()
+{
+    QString nameCard = "";
+
+    if(m_cardEvolution != nullptr)
+        nameCard = m_cardEvolution->name();
+    else
+        nameCard = m_name;
+
+    qDebug() << __PRETTY_FUNCTION__ << nameCard;
+
+    return nameCard;
+}
+
 AbstractCard::Enum_typeOfCard CardPokemon::type()
 {
     return AbstractCard::TypeOfCard_Pokemon;
@@ -58,11 +86,15 @@ AbstractCard::Enum_typeOfCard CardPokemon::type()
 
 QUrl CardPokemon::image()
 {
-    const QString path = "pokemon/cards/" + QString::number(id()) + ".png";
-    //qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
+    QUrl path;
 
-    //return QPixmap(path);
-    //return QUrl::fromLocalFile(path);
+    qDebug() << __PRETTY_FUNCTION__ << this << m_id << m_name << m_cardEvolution;
+
+    if(m_cardEvolution != nullptr)
+        path = m_cardEvolution->image();
+    else
+        path = QUrl("pokemon/cards/" + QString::number(id()) + ".png");
+
     return path;
 }
 
@@ -73,6 +105,10 @@ AbstractCard* CardPokemon::clone()
 
 AbstractCard::Enum_element CardPokemon::element()
 {
+    //Element ne change pas entre les évolutions (pour le set de base)
+    /*if(m_cardEvolution != nullptr)
+        return m_cardEvolution->element();*/
+
     return m_element;
 }
 
@@ -83,6 +119,9 @@ QString CardPokemon::elementFormatString()
 
 unsigned short CardPokemon::lifeTotal()
 {
+    if(m_cardEvolution != nullptr)
+        return m_cardEvolution->lifeTotal();
+
 	return m_lifeTotal;
 }
 
@@ -93,7 +132,7 @@ bool CardPokemon::isDied()
 
 unsigned short CardPokemon::lifeLeft()
 {
-	return m_lifeLeft;
+    return lifeTotal() - currentDamage();
 }
 
 CardPokemon::Enum_statusOfPokemon CardPokemon::status()
@@ -128,12 +167,15 @@ void CardPokemon::setInvincibleForTheNextTurn(bool status)
 
 QList<AttackData> CardPokemon::listAttacks()
 {
+    if(m_cardEvolution != nullptr)
+        return m_cardEvolution->listAttacks();
+
 	return m_listAttacks;
 }
 
 int CardPokemon::attacksCount()
 {
-    return m_listAttacks.count();
+    return listAttacks().count();
 }
 
 QString CardPokemon::attackName(int index)
@@ -141,7 +183,7 @@ QString CardPokemon::attackName(int index)
     QString nameToReturn = "";
 
     if((index >= 0) && (index < attacksCount()))
-        nameToReturn = m_listAttacks[index].name;
+        nameToReturn = listAttacks()[index].name;
 
     return nameToReturn;
 }
@@ -151,7 +193,7 @@ QString CardPokemon::attackDescription(int index)
     QString descriptionToReturn = "";
 
     if((index >= 0) && (index < attacksCount()))
-        descriptionToReturn = m_listAttacks[index].description;
+        descriptionToReturn = listAttacks()[index].description;
 
     return descriptionToReturn;
 }
@@ -161,7 +203,7 @@ unsigned short CardPokemon::attackDamage(int index)
     unsigned short damageToReturn = 0;
 
     if((index >= 0) && (index < attacksCount()))
-        damageToReturn = m_listAttacks[index].damage;
+        damageToReturn = listAttacks()[index].damage;
 
     return damageToReturn;
 }
@@ -205,14 +247,14 @@ bool CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
 {
 	bool statusBack = false;
 	
-	if ((0 > indexAttack) || (m_listAttacks.count() <= indexAttack))
+    if ((0 > indexAttack) || (listAttacks().count() <= indexAttack))
         throw "CardPokemon::attack() => index incohérent (" + QString::number(indexAttack) + ")";
 	
 	if (true == hasEnoughEnergies(indexAttack))
 	{
 		if (true == canAttackFromStatus())
 		{
-			AttackData attack = m_listAttacks[indexAttack];
+            AttackData attack = listAttacks()[indexAttack];
             enemy->takeDamage(attack.damage);
 
             if(attack.action != NULL)
@@ -241,20 +283,16 @@ void CardPokemon::takeDamage(unsigned short damage)
     }
     else
     {
-        if (damage > lifeLeft())
-        {
-            setLifeLeft(0);
-        }
-        else
-        {
-            setLifeLeft(lifeLeft() - damage);
-        }
+        setDamage(currentDamage() + damage);
     }
 }
 
 void CardPokemon::restoreLife(unsigned short life)
 {
-    setLifeLeft(lifeLeft() + life);
+    if(life > currentDamage())
+        setDamage(0);
+    else
+        setDamage(currentDamage() - life);
 }
 
 bool CardPokemon::canAttackFromStatus()
@@ -286,12 +324,54 @@ bool CardPokemon::hasEnoughEnergies(int indexAttack)
 {
 	bool statusBack = false;
 	
-	if ((0 <= indexAttack) && (m_listAttacks.count() > indexAttack))
+    if ((0 <= indexAttack) && (listAttacks().count() > indexAttack))
 	{
-		statusBack = hasEnoughEnergies(m_listAttacks[indexAttack]);
+        statusBack = hasEnoughEnergies(listAttacks()[indexAttack]);
 	}
 	
 	return statusBack;
+}
+
+bool CardPokemon::evolve(CardPokemon *evolution)
+{
+    bool evolutionOk = false;
+
+    //Il y a déjà une évolution
+    if(m_cardEvolution != nullptr)
+    {
+        if(m_cardEvolution->isSubEvolutionOf(evolution))
+        {
+            m_cardEvolution->evolve(evolution);
+            evolutionOk = true;
+        }
+    }
+    else
+    {
+        if(isSubEvolutionOf(evolution))
+        {
+            m_cardEvolution = evolution;
+            connect(m_cardEvolution, &CardPokemon::dataChanged, this, &CardPokemon::dataChanged);
+            connect(m_cardEvolution, &CardPokemon::lifeLeftChanged, this, &CardPokemon::lifeLeftChanged);
+            connect(m_cardEvolution, &CardPokemon::statusChanged, this, &CardPokemon::statusChanged);
+            connect(m_cardEvolution, &CardPokemon::listEnergiesChanged, this, &CardPokemon::listEnergiesChanged);
+            connect(m_cardEvolution, &CardPokemon::hasEvolved, this, &CardPokemon::hasEvolved);
+
+            evolutionOk = true;
+        }
+    }
+
+
+    if(evolutionOk)
+    {
+        //L'évolution reset le status
+        setStatus(CardPokemon::Status_Normal);
+
+        emit hasEvolved();
+        emit lifeLeftChanged();
+        emit dataChanged();
+    }
+
+    return evolutionOk;
 }
 
 bool CardPokemon::isBase()
@@ -304,9 +384,9 @@ bool CardPokemon::isSubEvolutionOf(CardPokemon* evolution)
     return m_id == evolution->m_evolutionFrom;
 }
 
-bool CardPokemon::isEvolutionOf(CardPokemon* evolution)
+bool CardPokemon::isEvolutionOf(CardPokemon* subEvolution)
 {
-    return m_evolutionFrom == evolution->m_id;
+    return m_evolutionFrom == subEvolution->m_id;
 }
 
 CardPokemon& CardPokemon::operator =(const CardPokemon& source)
@@ -315,9 +395,10 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     m_name = source.m_name;
     m_element = source.m_element;
     m_lifeTotal = source.m_lifeTotal;
-    m_lifeLeft = m_lifeTotal;
+    m_damage = 0;
     m_listAttacks = source.m_listAttacks;
     //m_modelListEnergies = source.m_modelListEnergies;     //Pas besoin
+    m_cardEvolution = source.m_cardEvolution;
     m_evolutionFrom = source.m_evolutionFrom;
 
     return *this;
@@ -326,16 +407,19 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/
-void CardPokemon::setLifeLeft(unsigned short life)
+unsigned short CardPokemon::currentDamage()
 {
-    if(life > lifeTotal())
-        life = lifeTotal();
+    return m_damage;
+}
 
-    if(m_lifeLeft != life)
+void CardPokemon::setDamage(unsigned short damage)
+{
+    if(damage > lifeTotal())
+        damage = lifeTotal();
+
+    if(m_damage != damage)
     {
-        qDebug() << __PRETTY_FUNCTION__ << life;
-
-        m_lifeLeft = life;
+        m_damage = damage;
         emit lifeLeftChanged();
         emit dataChanged();
     }

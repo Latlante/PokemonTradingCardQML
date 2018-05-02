@@ -18,7 +18,7 @@ Item {
 
         if(card !== null)
         {
-            imageCard.source = card.image();
+            imageCard.source = card.image;
             rectangleAttack1.height = 120 / card.attacksCount();
 
             rectangleAttack2.height = 120 / card.attacksCount();
@@ -27,6 +27,10 @@ Item {
             rectangleAttack3.height = 120 / card.attacksCount();
             rectangleAttack3.visible = card.attacksCount() >= 3;
 
+        }
+        else
+        {
+            console.log("popupPokemonSelectingAttack1 card is null");
         }
     }
 

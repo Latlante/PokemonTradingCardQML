@@ -22,7 +22,7 @@ public:
     virtual int countCard() const override;
     virtual bool addNewCard(AbstractCard *newCard) override;
     virtual AbstractCard* takeACard(int indexCard) override;
-    virtual bool removeFromPacket(AbstractCard* card) override;
+    virtual bool removeFromPacketWithoutDelete(AbstractCard* card) override;
 
     virtual QVariant data(const QModelIndex &index, int role) const final;
     virtual int rowCount(const QModelIndex & = QModelIndex()) const final;

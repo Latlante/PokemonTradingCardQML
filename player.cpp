@@ -160,19 +160,44 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
         {
             CardPokemon* cardPok = static_cast<CardPokemon*>(cardToMove);
 
-            //On refuse les évolutions
-            if ((cardPok != NULL) && (cardPok->isBase() == true))
+            if(cardPok != NULL)
             {
-                moveSuccess = moveCardFromPacketToAnother(hand(), bench(), indexHand);
+                //Pokémon de base
+                if(cardPok->isBase() == true)
+                {
+                    moveSuccess = moveCardFromPacketToAnother(hand(), bench(), indexHand);
+                }
+                //Evolution
+                else
+                {
+                    //On récupére la carte Pokémon a laquelle l'associer
+                    AbstractCard* cardToAssociate = bench()->card(indexBench);
+
+                    if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                    {
+                        CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
+
+                        if (pokemonToAssociate != NULL)
+                        {
+                            //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
+                            //pour ne pas l'avoir en doublon
+                            if(pokemonToAssociate->evolve(cardPok))
+                            {
+                                hand()->removeFromPacketWithoutDelete(cardPok);
+                                moveSuccess = true;
+                            }
+                        }
+                    }
+                }
             }
             else
             {
-                qDebug() << __PRETTY_FUNCTION__ << ", cardPok n'est pas une base";
+                qDebug() << __PRETTY_FUNCTION__ << ", cardPok est NULL";
             }
         }
         else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
         {
-            if(m_energyPlayedForThisRound == false)
+            if((m_energyPlayedForThisRound == false))
             {
                 CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
 
@@ -190,7 +215,7 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
                             //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
                             //pour ne pas l'avoir en doublon
                             pokemonToAssociate->addEnergy(cardEn);
-                            hand()->removeFromPacket(cardEn);
+                            hand()->removeFromPacketWithoutDelete(cardEn);
 
                             m_energyPlayedForThisRound = true;
                             moveSuccess = true;
@@ -230,14 +255,32 @@ bool Player::moveCardFromHandToFight(int indexHand)
         {
             CardPokemon* cardPok = static_cast<CardPokemon*>(cardToMove);
 
-            //On refuse les évolutions
-            if ((cardPok != NULL) && (cardPok->isBase() == true))
+            //Pokémon de base
+            if(cardPok->isBase() == true)
             {
                 moveSuccess = moveCardFromPacketToAnother(hand(), fight(), indexHand);
             }
+            //Evolution
             else
             {
-                qDebug() << __PRETTY_FUNCTION__ << ", cardPok n'est pas une base";
+                //On récupére la carte Pokémon a laquelle l'associer
+                AbstractCard* cardToAssociate = fight()->pokemonFighter();
+
+                if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                {
+                    CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
+
+                    if (pokemonToAssociate != NULL)
+                    {
+                        //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
+                        //pour ne pas l'avoir en doublon
+                        if(pokemonToAssociate->evolve(cardPok))
+                        {
+                            hand()->removeFromPacketWithoutDelete(cardPok);
+                            moveSuccess = true;
+                        }
+                    }
+                }
             }
         }
         else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
@@ -260,7 +303,7 @@ bool Player::moveCardFromHandToFight(int indexHand)
                             //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
                             //pour ne pas l'avoir en doublon
                             pokemonToAssociate->addEnergy(cardEn);
-                            hand()->removeFromPacket(cardEn);
+                            hand()->removeFromPacketWithoutDelete(cardEn);
 
                             m_energyPlayedForThisRound = true;
                             moveSuccess = true;
