@@ -16,8 +16,8 @@ public:
 	enum Enum_typeOfAction
 	{
         Action_None = 0,
-        Action_ChangeEnemyStatus = 1,
-        Action_ChangeEnemyStatus_Random = 2,
+        Action_ChangeEnemyStatus = 1,                       //Status to apply
+        Action_ChangeEnemyStatus_Random = 2,                //Status to apply
         Action_RemoveOneEnergyAttached = 3,
         Action_Healing = 4,
         Action_ProtectedAgainstDamage = 5,
@@ -30,7 +30,7 @@ public:
         Action_DamageMultipliedByTripleHeadOrTail = 12,     //Quantity of damage
         Action_HurtEveryPokemonOnOwnBench = 13,
         Action_SwapPokemonBetweenFigthAndBench = 14,
-        Action_Destruction = 15,
+        Action_Destruction = 15,                            //Quantity of damage for each pokemon en Bench
         Action_MoreDamageByEnemyDamage = 16,
         Action_Suicide = 17,
         Action_HurtHimself_Random = 18,
@@ -51,6 +51,10 @@ public:
         Action_DamageOnlyIfEnemyIsSpleeping = 33,            //Quantity of damage
         Action_ProtectedAgainstDamageRandom = 34,
         Action_EnemyDieIfYouDieInNextTurn = 35,
+        Action_ChangeEnemyStatusOnHeadOrEnemyIsConfused = 36,//Status to apply
+        Action_CanAttack_Random = 37,                       //Quantity of damage
+        Action_NoDamageOnThreshold = 38,                    //Limit of damage
+        Action_EnemyCanAttackOnNextTurn_Random = 39,
 
         ActionTrainer_FakeProfessorChen = 2003,
         ActionTrainer_TotalGuerison = 2012,

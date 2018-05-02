@@ -87,5 +87,31 @@
         <file>energies/icones/12.png</file>
         <file>energies/icones/14.png</file>
         <file>energies/db/db_energies.csv</file>
+		<file>trainer/cards/2000.png</file>
+		<file>trainer/cards/2001.png</file>
+		<file>trainer/cards/2002.png</file>
+		<file>trainer/cards/2003.png</file>
+		<file>trainer/cards/2004.png</file>
+		<file>trainer/cards/2005.png</file>
+		<file>trainer/cards/2006.png</file>
+		<file>trainer/cards/2007.png</file>
+		<file>trainer/cards/2008.png</file>
+		<file>trainer/cards/2009.png</file>
+		<file>trainer/cards/2010.png</file>
+		<file>trainer/cards/2011.png</file>
+		<file>trainer/cards/2012.png</file>
+		<file>trainer/cards/2013.png</file>
+		<file>trainer/cards/2014.png</file>
+		<file>trainer/cards/2015.png</file>
+		<file>trainer/cards/2016.png</file>
+		<file>trainer/cards/2017.png</file>
+		<file>trainer/cards/2018.png</file>
+		<file>trainer/cards/2019.png</file>
+		<file>trainer/cards/2020.png</file>
+		<file>trainer/cards/2021.png</file>
+		<file>trainer/cards/2022.png</file>
+		<file>trainer/cards/2023.png</file>
+		<file>trainer/cards/2024.png</file>
+		<file>trainer/cards/2025.png</file>
     </qresource>
 </RCC>
