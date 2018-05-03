@@ -16,7 +16,11 @@
 
 CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, CtrlPopups &ctrlPopups, QObject *parent) :
     QObject(parent),
+#ifdef TESTS_UNITAIRES
+    m_gameManager(GameManager::createInstance()),
+#else
     m_gameManager(GameManager::createInstance(ctrlPopups)),
+#endif
     m_factoryMainPageLoader(new FactoryMainPageLoader()),
     m_ctrlSelectingCards(ctrlSelectCards)
 {

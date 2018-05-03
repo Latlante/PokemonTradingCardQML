@@ -39,14 +39,10 @@ int main(int argc, char *argv[])
     QResource::registerResource("Ressources/cards.rcc");
 
 #ifdef TESTS_UNITAIRES
-    if(0)
-    {
-        CtrlPopups ctrlPopupsTest;
-        GameManager::createInstance(ctrlPopupsTest);
-        TestsUnitaireGeneral testGeneral;
-        TestsUnitaireActions testAction;
-        return 0;
-    }
+    GameManager::createInstance();
+    TestsUnitaireGeneral testGeneral;
+    TestsUnitaireActions testAction;
+    return 0;
 #endif
 
     ConstantesQML::declareQML();

@@ -4,6 +4,7 @@
 #include "testsunitaires.h"
 
 #include "src_Actions/abstractaction.h"
+class GameManager;
 class CardPokemon;
 
 class TestsUnitaireActions : public TestsUnitaires
@@ -15,11 +16,13 @@ public:
 private:
     CardPokemon* m_pokemonAttacking;
     CardPokemon* m_pokemonAttacked;
+    GameManager* m_manager;
 
     void checkActionChangeEnemyStatus();
 
 
-    void createPokemonToFight(AbstractAction::Enum_typeOfAction action, QVariant arg);
+    void createGameManager();
+    CardPokemon *createCustomPokemonToFight(AbstractAction::Enum_typeOfAction action, QVariant arg);
     void deletePokemonToFight();
 };
 

@@ -8,6 +8,9 @@ AbstractAction::AbstractAction() :
     m_pokemonAttacking(nullptr),
     m_benchPlayerAttacked(nullptr),
     m_benchPlayerAttacking(nullptr)
+#ifdef TESTS_UNITAIRES
+    , m_listCoins(QList<unsigned short>())
+#endif
 {
 
 }
@@ -68,6 +71,13 @@ void AbstractAction::executeAction()
     }
 }
 
+#ifdef TESTS_UNITAIRES
+QList<unsigned short> AbstractAction::listCoins()
+{
+    return m_listCoins;
+}
+#endif
+
 /************************************************************
 *****				FONCTIONS PROTEGEES					*****
 ************************************************************/
@@ -78,6 +88,10 @@ unsigned short AbstractAction::headOrTail()
 
     if(gameManager() != nullptr)
         coin = gameManager()->headOrTail();
+
+#ifdef TESTS_UNITAIRES
+    m_listCoins.append(coin);
+#endif
 
     return coin;
 }

@@ -14,10 +14,15 @@ class GameManager : public QObject
 	Q_OBJECT
 	
 public:
+#ifdef TESTS_UNITAIRES
+    GameManager(QObject *parent = NULL);
+    static GameManager* createInstance();
+#else
     GameManager(CtrlPopups &ctrlPopups, QObject *parent = NULL);
+    static GameManager* createInstance(CtrlPopups &ctrlPopups);
+#endif
 	~GameManager();
 
-    static GameManager* createInstance(CtrlPopups &ctrlPopups);
     static void deleteInstance();
     static GameManager* instance();
 	
@@ -49,10 +54,13 @@ private slots:
     void onEndOfTurn_Player();
 
 private:
+#ifndef TESTS_UNITAIRES
+    CtrlPopups& m_ctrlPopups;
+#endif
+
     static const int m_NUMBER_FIRST_CARDS;
     static const int m_NUMBER_REWARDS;
     static GameManager *m_instance;
-    CtrlPopups& m_ctrlPopups;
 	QList<Player*> m_listPlayers;
     short m_indexCurrentPlayer;
     Player* m_playerAttacking;

@@ -14,11 +14,11 @@ public:
 
     static void declareQML();
 	
-    AbstractCard::Enum_typeOfCard type() override;
-    QUrl image() override;
+    Q_INVOKABLE AbstractCard::Enum_typeOfCard type() override;
+    Q_INVOKABLE QUrl image() override;
     AbstractCard* clone() override;
 
-	const QString description();
+    Q_INVOKABLE const QString description();
     AbstractAction* action();
 	
 	void executeAction();

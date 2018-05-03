@@ -15,9 +15,14 @@ const int GameManager::m_NUMBER_FIRST_CARDS = 10;
 const int GameManager::m_NUMBER_REWARDS = 6;
 GameManager* GameManager::m_instance = NULL;
 
+#ifdef TESTS_UNITAIRES
+GameManager::GameManager(QObject *parent) :
+    QObject(parent),
+#else
 GameManager::GameManager(CtrlPopups &ctrlPopups, QObject *parent) :
-	QObject(parent),
+    QObject(parent),
     m_ctrlPopups(ctrlPopups),
+#endif
 	m_listPlayers(QList<Player*>()),
     m_indexCurrentPlayer(-1),
     m_playerAttacking(nullptr),
@@ -36,6 +41,17 @@ GameManager::~GameManager()
 /************************************************************
 *****				FONCTIONS STATIQUES					*****
 ************************************************************/
+#ifdef TESTS_UNITAIRES
+GameManager* GameManager::createInstance()
+{
+    if(m_instance == NULL)
+    {
+        m_instance = new GameManager();
+    }
+
+    return m_instance;
+}
+#else
 GameManager* GameManager::createInstance(CtrlPopups &ctrlPopups)
 {
     if(m_instance == NULL)
@@ -45,6 +61,7 @@ GameManager* GameManager::createInstance(CtrlPopups &ctrlPopups)
 
     return m_instance;
 }
+#endif
 
 void GameManager::deleteInstance()
 {
@@ -149,8 +166,12 @@ void GameManager::startGame()
 
 void GameManager::selectFirstPlayer()
 {
+#ifdef TESTS_UNITAIRES
+    setIndexCurrentPlayer(0);
+#else
     int indexCurrentPlayer = Utils::selectFirstPlayer(m_listPlayers.count());
     setIndexCurrentPlayer(indexCurrentPlayer);
+#endif
 }
 
 void GameManager::nextPlayer()
@@ -263,7 +284,7 @@ void GameManager::setIndexCurrentPlayer(int index)
     //Sécurité pour ne pas dépasser l'index
     index = index % m_listPlayers.count();
 
-    qDebug() << __PRETTY_FUNCTION__ << m_indexCurrentPlayer << index;
+    //qDebug() << __PRETTY_FUNCTION__ << m_indexCurrentPlayer << index;
 
     if(m_indexCurrentPlayer != index)
     {
@@ -393,9 +414,13 @@ void GameManager::checkPokemonDead()
 
         if((play->fight()->pokemonFighter() == nullptr) && (play->bench()->countCard() > 0))
         {
+#ifdef TESTS_UNITAIRES
+            play->moveCardFromBenchToFight(0);
+#else
             QList<int> listIndexPokemonToReplace = m_ctrlPopups.displayBench(play->bench());
             play->moveCardFromBenchToFight(listIndexPokemonToReplace.first());
             //emit replacePokemonFighter(play);
+#endif
         }
     }
 }

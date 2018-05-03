@@ -52,7 +52,7 @@ public:
     int id() override;
     const QString name() override;
     Q_INVOKABLE AbstractCard::Enum_typeOfCard type() override;
-    QUrl image() override;
+    Q_INVOKABLE QUrl image() override;
     AbstractCard* clone() override;
     Q_INVOKABLE AbstractCard::Enum_element element();
     Q_INVOKABLE QString elementFormatString();

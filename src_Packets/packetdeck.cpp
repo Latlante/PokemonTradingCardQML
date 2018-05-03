@@ -5,7 +5,9 @@
 PacketDeck::PacketDeck(QList<AbstractCard*> listCards) :
     AbstractPacketDynamic(listCards)
 {
+#ifndef TESTS_UNITAIRES
     mixCards();
+#endif
 }
 
 PacketDeck::~PacketDeck()

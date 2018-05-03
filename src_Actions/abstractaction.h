@@ -82,6 +82,9 @@ public:
     virtual QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() = 0;
     void executeAction();
 
+#ifdef TESTS_UNITAIRES
+    QList<unsigned short> listCoins();
+#endif
 
 
 protected:
@@ -105,6 +108,10 @@ private:
     CardPokemon* m_pokemonAttacking;
     BenchArea* m_benchPlayerAttacked;
     BenchArea* m_benchPlayerAttacking;
+
+#ifdef TESTS_UNITAIRES
+    QList<unsigned short> m_listCoins;
+#endif
 
     bool checkGameManager();
     bool checkPlayerAttacked();
