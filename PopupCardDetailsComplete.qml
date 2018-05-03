@@ -43,6 +43,11 @@ Item {
                 description += "Element: " + card.elementFormatString() + "\n";
                 description += "Quantité: " + card.quantity();
             }
+            else if(card.type() === AbstractCard.TypeOfCard_Action)
+            {
+                description += "----- Dresseur " + card.name() + " -----\n\n";
+                description += "Element: " + card.description();
+            }
 
             textDescription.text = description;
         }

@@ -12,7 +12,7 @@ Item {
         if(card != undefined)
         {
             var description = "";
-            imageCard.source = card.image;
+            imageCard.source = card.image();
 
             if(card.type() === AbstractCard.TypeOfCard_Pokemon)
             {
@@ -40,6 +40,11 @@ Item {
                 description += "----- Energie " + card.name() + " -----\n\n";
                 description += "Element: " + card.elementFormatString() + "\n";
                 description += "Quantité: " + card.quantity();
+            }
+            else if(card.type() === AbstractCard.TypeOfCard_Action)
+            {
+                description += "----- Dresseur " + card.name() + " -----\n\n";
+                description += "Element: " + card.description();
             }
 
             textDescription.text = description;
