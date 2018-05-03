@@ -80,11 +80,11 @@ QList<int> Database::listIdAllCardsTrainers()
 
     foreach(QString line, textSplitted)
     {
-        int idEnergy = line.section(";", InfoDbNrj_Id, InfoDbNrj_Id).toInt();
-        if((idEnergy >= INDEX_START_ACTION) &&
-                (line.section(";", InfoDbNrj_Useable, InfoDbNrj_Useable) == "1"))
+        int idTrainer = line.section(";", InfoDbTrainer_Id, InfoDbTrainer_Id).toInt();
+        if((idTrainer >= INDEX_START_ACTION) &&
+                (line.section(";", InfoDbTrainer_Useable, InfoDbTrainer_Useable) == "1"))
         {
-            listId.append(idEnergy);
+            listId.append(idTrainer);
         }
 
     }
@@ -124,9 +124,9 @@ AbstractCard* Database::cardById(int id)
     {
         cardToReturn = newCardEnergy(contenuParLigne[indexLine]);
     }
-    else if(id < INDEX_START_ACTION)
+    else if(id >= INDEX_START_ACTION)
     {
-
+        cardToReturn = newCardTrainer(contenuParLigne[indexLine]);
     }
 
     return cardToReturn;
@@ -201,20 +201,25 @@ CardEnergy* Database::newCardEnergy(const QString &infoCsv)
     return cardEnergyToReturn;
 }
 
-/*CardTrainer* Database::newCardTrainer(const QString &infoCsv)
+CardAction *Database::newCardTrainer(const QString &infoCsv)
 {
-    CardTrainer* cardTrainerToReturn = NULL;
+    CardAction* cardTrainerToReturn = NULL;
     QStringList arguments = infoCsv.split(";");
+    bool ok;
 
     if(arguments[InfoDbTrainer_Useable] == "1")
     {
         int idAction = arguments[InfoDbTrainer_Type].toInt(&ok);
 
-        cardTrainerToReturn = new CardTrainer(arguments[InfoDbTrainer_Id].toInt(),
-                                              arguments[InfoDbTrainer_Name],
-                                              arguments[InfoDbTrainer_Description],
-                                              ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction), QVariant::fromValue(arguments[InfoDbTrainer_Argument]));
+        if(ok)
+        {
+            cardTrainerToReturn = new CardAction(arguments[InfoDbTrainer_Id].toInt(),
+                                                  arguments[InfoDbTrainer_Name],
+                                                  arguments[InfoDbTrainer_Description],
+                                                  ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction), QVariant::fromValue(arguments[InfoDbTrainer_Argument])));
+        }
+
     }
 
     return cardTrainerToReturn;
-}*/
+}

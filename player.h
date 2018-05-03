@@ -48,6 +48,7 @@ public:
     Q_INVOKABLE bool moveCardFromHandToBench(int indexHand, int indexBench);
     bool moveCardFromHandToDeck(int indexHand);
     Q_INVOKABLE bool moveCardFromHandToFight(int indexHand);
+    bool moveCardFromHandToTrash(int indexHand);
     Q_INVOKABLE bool moveCardFromBenchToFight(int indexBench);
     bool moveCardFromBenchToTrash(int index);
     bool moveCardFromFightToTrash(int index);

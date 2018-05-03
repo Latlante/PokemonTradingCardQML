@@ -3,10 +3,12 @@
 
 #include "abstractcard.h"
 
+class AbstractAction;
+
 class CardAction : public AbstractCard
 {
 public:
-    CardAction(unsigned short id, const QString& name, const QString& description/*, AbstractAction* action*/);
+    CardAction(unsigned short id, const QString& name, const QString& description, AbstractAction* action);
     CardAction(const CardAction& card);
     ~CardAction();
 
@@ -17,7 +19,7 @@ public:
     AbstractCard* clone() override;
 
 	const QString description();
-    //AbstractAction* action();
+    AbstractAction* action();
 	
 	void executeAction();
 
@@ -25,7 +27,7 @@ public:
 
 private:
 	QString m_description;
-    //AbstractAction* m_action;
+    AbstractAction* m_action;
 };
 
 #endif // CARDACTION_H

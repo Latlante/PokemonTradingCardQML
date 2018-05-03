@@ -4,6 +4,7 @@
 #include <QObject>
 #include "src_Cards/cardenergy.h"
 #include "src_Cards/cardpokemon.h"
+#include "src_Cards/cardaction.h"
 
 #define INDEX_START_POKEMON     1
 #define INDEX_START_ENERGIES    1000
@@ -77,7 +78,7 @@ private:
 
     CardPokemon* newCardPokemon(const QString &infoCsv);
     CardEnergy* newCardEnergy(const QString& infoCsv);
-    //CardTrainer* newCardTrainer(const QString& infoCsv);
+    CardAction* newCardTrainer(const QString& infoCsv);
 };
 
 #endif // DATABASE_H

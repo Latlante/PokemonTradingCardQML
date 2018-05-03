@@ -153,14 +153,14 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
 
     AbstractCard* cardToMove = hand()->card(indexHand);
 
-    if (cardToMove != NULL)
+    if (cardToMove != nullptr)
     {
         //On autorise uniquement les cartes de type Pokemon a être posé sur le banc
         if (cardToMove->type() == AbstractCard::TypeOfCard_Pokemon)
         {
             CardPokemon* cardPok = static_cast<CardPokemon*>(cardToMove);
 
-            if(cardPok != NULL)
+            if(cardPok != nullptr)
             {
                 //Pokémon de base
                 if(cardPok->isBase() == true)
@@ -173,11 +173,11 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
                     //On récupére la carte Pokémon a laquelle l'associer
                     AbstractCard* cardToAssociate = bench()->card(indexBench);
 
-                    if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                    if ((cardToAssociate != nullptr) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
                     {
                         CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
 
-                        if (pokemonToAssociate != NULL)
+                        if (pokemonToAssociate != nullptr)
                         {
                             //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
                             //pour ne pas l'avoir en doublon
@@ -192,7 +192,7 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
             }
             else
             {
-                qDebug() << __PRETTY_FUNCTION__ << ", cardPok est NULL";
+                qDebug() << __PRETTY_FUNCTION__ << ", cardPok est nullptr";
             }
         }
         else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
@@ -201,16 +201,16 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
             {
                 CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
 
-                if (cardEn != NULL)
+                if (cardEn != nullptr)
                 {
                     //On récupére la carte Pokémon a laquelle l'associer
                     AbstractCard* cardToAssociate = bench()->card(indexBench);
 
-                    if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                    if ((cardToAssociate != nullptr) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
                     {
                         CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
 
-                        if (pokemonToAssociate != NULL)
+                        if (pokemonToAssociate != nullptr)
                         {
                             //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
                             //pour ne pas l'avoir en doublon
@@ -231,7 +231,7 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
     }
     else
     {
-        qDebug() << __PRETTY_FUNCTION__ << ", cardToMove is NULL";
+        qDebug() << __PRETTY_FUNCTION__ << ", cardToMove is nullptr";
     }
 
     return moveSuccess;
@@ -248,7 +248,7 @@ bool Player::moveCardFromHandToFight(int indexHand)
 
     AbstractCard* cardToMove = hand()->card(indexHand);
 
-    if (cardToMove != NULL)
+    if (cardToMove != nullptr)
     {
         //On autorise uniquement les cartes de type Pokemon a être posé sur le banc
         if (cardToMove->type() == AbstractCard::TypeOfCard_Pokemon)
@@ -266,11 +266,11 @@ bool Player::moveCardFromHandToFight(int indexHand)
                 //On récupére la carte Pokémon a laquelle l'associer
                 AbstractCard* cardToAssociate = fight()->pokemonFighter();
 
-                if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                if ((cardToAssociate != nullptr) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
                 {
                     CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
 
-                    if (pokemonToAssociate != NULL)
+                    if (pokemonToAssociate != nullptr)
                     {
                         //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
                         //pour ne pas l'avoir en doublon
@@ -289,16 +289,16 @@ bool Player::moveCardFromHandToFight(int indexHand)
             {
                 CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
 
-                if (cardEn != NULL)
+                if (cardEn != nullptr)
                 {
                     //On récupére la carte Pokémon a laquelle l'associer
                     AbstractCard* cardToAssociate = fight()->pokemonFighter();
 
-                    if ((cardToAssociate != NULL) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
+                    if ((cardToAssociate != nullptr) && (cardToAssociate->type() == AbstractCard::TypeOfCard_Pokemon))
                     {
                         CardPokemon* pokemonToAssociate = static_cast<CardPokemon*>(cardToAssociate);
 
-                        if (pokemonToAssociate != NULL)
+                        if (pokemonToAssociate != nullptr)
                         {
                             //On l'associe au Pokémon et on peut la supprimer du paquet d'origine
                             //pour ne pas l'avoir en doublon
@@ -313,6 +313,16 @@ bool Player::moveCardFromHandToFight(int indexHand)
             }
 
         }
+        else if (cardToMove->type() == AbstractCard::TypeOfCard_Action)
+        {
+            CardAction* cardTrainer = static_cast<CardAction*>(cardToMove);
+
+            if(cardTrainer != nullptr)
+            {
+                cardTrainer->executeAction();
+                moveSuccess = moveCardFromHandToTrash(indexHand);
+            }
+        }
         else
         {
             qDebug() << __PRETTY_FUNCTION__ << ", cardToMove n'est pas du bon type:" << cardToMove->type();
@@ -320,10 +330,15 @@ bool Player::moveCardFromHandToFight(int indexHand)
     }
     else
     {
-        qDebug() << __PRETTY_FUNCTION__ << ", cardToMove is NULL";
+        qDebug() << __PRETTY_FUNCTION__ << ", cardToMove is nullptr";
     }
 
     return moveSuccess;
+}
+
+bool Player::moveCardFromHandToTrash(int indexHand)
+{
+    return moveCardFromPacketToAnother(hand(), trash(), indexHand);
 }
 
 bool Player::moveCardFromBenchToFight(int indexBench)
@@ -332,7 +347,7 @@ bool Player::moveCardFromBenchToFight(int indexBench)
 
     AbstractCard* cardToMove = bench()->card(indexBench);
 
-    if (cardToMove != NULL)
+    if (cardToMove != nullptr)
     {
         //On autorise uniquement les cartes de type Pokemon a être posé sur le banc
         if (cardToMove->type() == AbstractCard::TypeOfCard_Pokemon)
@@ -356,7 +371,7 @@ bool Player::moveCardFromBenchToFight(int indexBench)
     }
     else
     {
-        qDebug() << __PRETTY_FUNCTION__ << ", cardToMove is NULL";
+        qDebug() << __PRETTY_FUNCTION__ << ", cardToMove is nullptr";
     }
 
     return moveSuccess;
@@ -421,14 +436,14 @@ bool Player::moveCardFromPacketToAnother(AbstractPacket *source, AbstractPacket 
     {
         AbstractCard* cardToMove = source->takeACard(index);
 
-        if (cardToMove != NULL)
+        if (cardToMove != nullptr)
         {
             destination->addNewCard(cardToMove);
             moveSuccess = true;
         }
         else
         {
-            qCritical() << __PRETTY_FUNCTION__ << "Card is NULL";
+            qCritical() << __PRETTY_FUNCTION__ << "Card is nullptr";
 
         }
     }

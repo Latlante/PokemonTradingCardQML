@@ -2,10 +2,12 @@
 #include <QUrl>
 #include <QtQml/qqml.h>
 
-CardAction::CardAction(unsigned short id, const QString& name, const QString& description/*, AbstractAction* action*/) :
+#include "src_Actions/abstractaction.h"
+
+CardAction::CardAction(unsigned short id, const QString& name, const QString& description, AbstractAction* action) :
     AbstractCard(id, name),
-    m_description(description)
-    //m_action(action)
+    m_description(description),
+    m_action(action)
 {
 	
 }
@@ -38,11 +40,9 @@ AbstractCard::Enum_typeOfCard CardAction::type()
 
 QUrl CardAction::image()
 {
-    const QString path = "Images/cartes/dresseurs/" + QString::number(id()) + ".png";
+    const QString path = "trainer/cards/" + QString::number(id()) + ".png";
     qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
 
-    //return QPixmap(path);
-    //return QUrl::fromLocalFile(path);
     return path;
 }
 
@@ -56,14 +56,15 @@ const QString CardAction::description()
 	return m_description;
 }
 
-/*AbstractAction* CardAction::action()
+AbstractAction* CardAction::action()
 {
 	return m_action;
-}*/
+}
 
 void CardAction::executeAction()
 {
-    //m_action->execute();
+    if(action() != nullptr)
+        action()->executeAction();
 }
 
 CardAction& CardAction::operator =(const CardAction& source)
@@ -71,6 +72,7 @@ CardAction& CardAction::operator =(const CardAction& source)
     m_id = source.m_id;
     m_name = source.m_name;
     m_description = source.m_description;
+    m_action = source.m_action;
 
     return *this;
 }

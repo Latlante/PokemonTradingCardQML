@@ -88,7 +88,7 @@ QUrl CardPokemon::image()
 {
     QUrl path;
 
-    qDebug() << __PRETTY_FUNCTION__ << this << m_id << m_name << m_cardEvolution;
+    //qDebug() << __PRETTY_FUNCTION__ << this << m_id << m_name << m_cardEvolution;
 
     if(m_cardEvolution != nullptr)
         path = m_cardEvolution->image();

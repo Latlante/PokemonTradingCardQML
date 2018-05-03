@@ -275,6 +275,7 @@ void ModelSelectingCards::initListCards()
     //Pokemon
     QList<int> listId = db.listIdAllCardsPokemon();
     listId += db.listIdAllCardsEnergies();
+    listId += db.listIdAllCardsTrainers();
 
     qDebug() << __PRETTY_FUNCTION__ << "listCards:" << listId;
 

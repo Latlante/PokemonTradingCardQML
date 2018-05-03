@@ -12,6 +12,13 @@
 #include "src_Actions/actionprotectedagainstdamage.h"
 #include "src_Actions/actionremoveenergyattached.h"
 
+#include "src_Actions/actiontrainer_fakeprofessorchen.h"
+#include "src_Actions/actiontrainer_leo.h"
+#include "src_Actions/actiontrainer_potion.h"
+#include "src_Actions/actiontrainer_professorchen.h"
+#include "src_Actions/actiontrainer_superpotion.h"
+#include "src_Actions/actiontrainer_totalguerison.h"
+
 ActionCreationFactory::ActionCreationFactory()
 {
 
@@ -25,6 +32,7 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
 
     switch(idAction)
     {
+    //ACTIONS POKEMON
     case AbstractAction::Action_None:
         break;
     case AbstractAction::Action_ChangeEnemyStatus:
@@ -88,6 +96,25 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 actionToReturn = createActionRemoveEnergyAttached(argInt);
         }
         break;
+    //ACTIONS TRAINERS
+    case AbstractAction::ActionTrainer_FakeProfessorChen:
+        actionToReturn = createActionTrainer_FakeProfessorChen();
+        break;
+    case AbstractAction::ActionTrainer_Leo:
+        actionToReturn = createActionTrainer_Leo();
+        break;
+    case AbstractAction::ActionTrainer_Potion:
+        actionToReturn = createActionTrainer_Potion();
+        break;
+    case AbstractAction::ActionTrainer_ProfessorChen:
+        actionToReturn = createActionTrainer_ProfessorChen();
+        break;
+    case AbstractAction::ActionTrainer_SuperPotion:
+        actionToReturn = createActionTrainer_SuperPotion();
+        break;
+    case AbstractAction::ActionTrainer_TotalGuerison:
+        actionToReturn = createActionTrainer_TotalGuerison();
+        break;
     default:
         qWarning() << __PRETTY_FUNCTION__ << idAction << " is not ready yet";
         break;
@@ -96,6 +123,7 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
     return actionToReturn;
 }
 
+//ACTIONS POKEMON
 ActionChangeEnemyStatus* ActionCreationFactory::createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status)
 {
     return new ActionChangeEnemyStatus(status);
@@ -139,4 +167,35 @@ ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgains
 ActionRemoveEnergyAttached* ActionCreationFactory::createActionRemoveEnergyAttached(unsigned short numberOfEnergies)
 {
     return new ActionRemoveEnergyAttached(numberOfEnergies);
+}
+
+//ACTIONS TRAINERS
+ActionTrainer_FakeProfessorChen* ActionCreationFactory::createActionTrainer_FakeProfessorChen()
+{
+    return new ActionTrainer_FakeProfessorChen();
+}
+
+ActionTrainer_Leo* ActionCreationFactory::createActionTrainer_Leo()
+{
+    return new ActionTrainer_Leo();
+}
+
+ActionTrainer_Potion* ActionCreationFactory::createActionTrainer_Potion()
+{
+    return new ActionTrainer_Potion();
+}
+
+ActionTrainer_ProfessorChen* ActionCreationFactory::createActionTrainer_ProfessorChen()
+{
+    return new ActionTrainer_ProfessorChen();
+}
+
+ActionTrainer_SuperPotion* ActionCreationFactory::createActionTrainer_SuperPotion()
+{
+    return new ActionTrainer_SuperPotion();
+}
+
+ActionTrainer_TotalGuerison* ActionCreationFactory::createActionTrainer_TotalGuerison()
+{
+    return new ActionTrainer_TotalGuerison();
 }
