@@ -19,12 +19,13 @@ Item {
         if(card !== null)
         {
             imageCard.source = card.image;
-            rectangleAttack1.height = 120 / card.attacksCount();
+            var heightPerAttack = 0.26 * imageCard.paintedHeight;
+            rectangleAttack1.height = heightPerAttack / card.attacksCount();
 
-            rectangleAttack2.height = 120 / card.attacksCount();
+            rectangleAttack2.height = heightPerAttack / card.attacksCount();
             rectangleAttack2.visible = card.attacksCount() >= 2;
 
-            rectangleAttack3.height = 120 / card.attacksCount();
+            rectangleAttack3.height = heightPerAttack / card.attacksCount();
             rectangleAttack3.visible = card.attacksCount() >= 3;
 
         }
@@ -61,7 +62,7 @@ Item {
                 width: imageCard.paintedWidth
                 height: 0
                 color: "transparent"
-                anchors.verticalCenterOffset: 102
+                anchors.verticalCenterOffset: (0.07 * imageCard.paintedHeight) + (0.5 * height)
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 border.color: "steelblue"
