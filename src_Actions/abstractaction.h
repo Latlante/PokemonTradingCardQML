@@ -80,7 +80,7 @@ public:
 	
     virtual Enum_typeOfAction type() = 0;
     virtual QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() = 0;
-    void executeAction();
+    void executeAction(short index = -1);
 
 #ifdef TESTS_UNITAIRES
     QList<unsigned short> listCoins();
@@ -99,6 +99,7 @@ protected:
     CardPokemon* pokemonAttacking();
     BenchArea* benchPlayerAttacked();
     BenchArea* benchPlayerAttacking();
+    short indexAttack();
 
 private:
     GameManager* m_gameManager;
@@ -108,6 +109,7 @@ private:
     CardPokemon* m_pokemonAttacking;
     BenchArea* m_benchPlayerAttacked;
     BenchArea* m_benchPlayerAttacking;
+    short m_indexAttack;
 
 #ifdef TESTS_UNITAIRES
     QList<unsigned short> m_listCoins;

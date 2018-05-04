@@ -12,7 +12,8 @@ CardAction::CardAction(unsigned short id, const QString& name, const QString& de
 	
 }
 
-CardAction::CardAction(const CardAction &card)
+CardAction::CardAction(const CardAction &card) :
+    AbstractCard()
 {
     *this = card;
 }

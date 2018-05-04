@@ -30,10 +30,11 @@ void ActionMoreDamageByEnergy::action()
     bool status = false;
     unsigned short countEnergies = 0;
 
-    if(pokemonAttacking() != nullptr)
+    if((pokemonAttacking() != nullptr) && (indexAttack() != -1))
     {
         AbstractCard::Enum_element elementEnergy = pokemonAttacking()->element();
         countEnergies = pokemonAttacking()->countEnergies(elementEnergy);
+        countEnergies -= pokemonAttacking()->listAttacks()[indexAttack()].costEnergies[elementEnergy];
         status = true;
     }
 

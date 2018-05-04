@@ -74,8 +74,6 @@ const QString CardPokemon::name()
     else
         nameCard = m_name;
 
-    qDebug() << __PRETTY_FUNCTION__ << nameCard;
-
     return nameCard;
 }
 
@@ -267,9 +265,10 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
                 AttackData attack = listAttacks()[indexAttack];
                 enemy->takeDamage(attack.damage);
 
-                if(attack.action != NULL)
-                    attack.action->executeAction();
+                if(attack.action != nullptr)
+                    attack.action->executeAction(indexAttack);
 
+                enemy->setInvincibleForTheNextTurn(false);
                 statusBack = Attack_OK;
             }
             else
@@ -292,11 +291,7 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
 
 void CardPokemon::takeDamage(unsigned short damage)
 {
-    if(isInvincibleForTheNextTurn())
-    {
-        setInvincibleForTheNextTurn(false);
-    }
-    else
+    if(!isInvincibleForTheNextTurn())
     {
         setDamage(currentDamage() + damage);
     }

@@ -7,7 +7,8 @@ AbstractAction::AbstractAction() :
     m_pokemonAttacked(nullptr),
     m_pokemonAttacking(nullptr),
     m_benchPlayerAttacked(nullptr),
-    m_benchPlayerAttacking(nullptr)
+    m_benchPlayerAttacking(nullptr),
+    m_indexAttack(-1)
 #ifdef TESTS_UNITAIRES
     , m_listCoins(QList<unsigned short>())
 #endif
@@ -23,11 +24,12 @@ AbstractAction::~AbstractAction()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-void AbstractAction::executeAction()
+void AbstractAction::executeAction(short index)
 {
     //Vérifications
     QList<AbstractAction::Enum_ElementsToCheck> listElementsToCheck = elementToCheck();
     bool statusCanBeExecuted = true;
+    m_indexAttack = index;
 
     foreach(AbstractAction::Enum_ElementsToCheck element, listElementsToCheck)
     {
@@ -131,6 +133,10 @@ BenchArea* AbstractAction::benchPlayerAttacking()
     return m_benchPlayerAttacking;
 }
 
+short AbstractAction::indexAttack()
+{
+    return m_indexAttack;
+}
 
 /************************************************************
 *****				FONCTIONS PRIVEES					*****

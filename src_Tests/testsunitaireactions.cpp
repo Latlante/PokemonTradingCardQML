@@ -11,12 +11,12 @@ const QString TestsUnitaireActions::m_pokAttacking_Name = "pok fighter";
 const AbstractCard::Enum_element TestsUnitaireActions::m_pokAttacking_Element = AbstractCard::Element_Fire;
 const unsigned short TestsUnitaireActions::m_pokAttacking_MaxLife = 200;
 const unsigned short TestsUnitaireActions::m_pokAttacking_Life = 100;
-const AbstractCard::Enum_element TestsUnitaireActions::m_pokAttacking_AttElement = AbstractCard::Element_Grass;
-const unsigned short TestsUnitaireActions::m_pokAttacking_AttDamage = 30;
+const unsigned short TestsUnitaireActions::m_pokAttacking_AttDamage = 40;
 const unsigned short TestsUnitaireActions::m_pokAttacking_AttQuantityOfEnergies = 3;
-const unsigned short TestsUnitaireActions::m_pokAttacking_numberOfEnergiesAttached = 3;
+const unsigned short TestsUnitaireActions::m_pokAttacking_numberOfEnergiesAttached = 5;
 
 const unsigned short TestsUnitaireActions::m_pokAttacked_Life = 100;
+const unsigned short TestsUnitaireActions::m_pokAttacked_AttDamage = 40;
 
 TestsUnitaireActions::TestsUnitaireActions() :
     TestsUnitaires(),
@@ -35,6 +35,42 @@ TestsUnitaireActions::TestsUnitaireActions() :
     checkActionChangeEnemyStatus();
     checkActionChangeEnemyStatusRandom();
     checkActionRemoveOneEnergyAttached();
+    checkActionHealing();
+    checkActionProtectedAgainstDamage();
+    checkActionMoreDamageByEnergy();
+    checkActionReplicateOneAttackFromEnemy();
+    checkActionMoreDamageOnEnemyOrHimSelf();
+    checkActionPoisonedCustom();
+    checkActionRandomDamageToHimself();
+    checkActionDamageMultipliedByDoubleHeadOrTail();
+    checkActionDamageMultipliedByTripleHeadOrTail();
+    checkActionHurtEveryPokemonOnOwnBench();
+    checkActionSwapPokemonBetweenFigthAndBench();
+    checkActionDestruction();
+    checkActionMoreDamageByEnemyDamage();
+    checkActionSuicide();
+    checkActionHurtHimself_Random();
+    checkActionCompleteProtectionByPayingOneEnergy();
+    checkActionRemoveAllEnergiesAttached();
+    checkActionRemoveOneEnergyOnEnemy();
+    checkActionReplicateLastAttackToEnemy();
+    checkActionHurtHimself();
+    checkActionUniqueAttack();
+    checkActionAttackIfEnemyIsSleeping();
+    checkActionFullHealingByPayingOneEnergy();
+    checkActionAttackLessDamageOnHimself();
+    checkActionMoreDamageByOwnDamage();
+    checkActionBlockOneEnemyAttackForOneTurn();
+    checkActionChangeWeaknessOfEnemy();
+    checkActionChangeResistanceOfHimself();
+    checkActionDamageOfHalfEnemyLifeLeft();
+    checkActionDamageOnlyIfEnemyIsSpleeping();
+    checkActionProtectedAgainstDamageRandom();
+    checkActionEnemyDieIfYouDieInNextTurn();
+    checkActionChangeEnemyStatusOnHeadOrEnemyIsConfused();
+    checkActionCanAttack_Random();
+    checkActionNoDamageOnThreshold();
+    checkActionEnemyCanAttackOnNextTurn_Random();
 
     //Nettoyage
     deletePokemonToFight();
@@ -93,7 +129,7 @@ void TestsUnitaireActions::checkActionChangeEnemyStatusRandom()
 
     //CAS N°1
         //Init du random (PILE)
-    m_manager->setNextValueHeadOrTail(0);
+    m_manager->setForcedValueHeadOrTail(true, 0);
 
         //Attaque
     statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
@@ -105,7 +141,7 @@ void TestsUnitaireActions::checkActionChangeEnemyStatusRandom()
 
     //CAS N°2
         //Init du random (FACE)
-    m_manager->setNextValueHeadOrTail(1);
+    m_manager->setForcedValueHeadOrTail(true, 1);
 
         //Attaque
     statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
@@ -179,6 +215,241 @@ void TestsUnitaireActions::checkActionHealing()
     resetPokemons();
 }
 
+void TestsUnitaireActions::checkActionProtectedAgainstDamage()
+{
+    //Informations
+    AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_ProtectedAgainstDamage;
+    CardPokemon::Enum_StatusOfAttack statusOfAttack;
+
+    //Création
+    setActionOnPokemonAttacking(enumAction);
+
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
+
+    //CAS N°1: Première attaque
+        //Attaque
+    statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-m_pokAttacking_AttDamage);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+    COMPARE(m_pokemonAttacking->isInvincibleForTheNextTurn(), true);
+
+    //CAS N°1: Riposte
+    m_manager->nextPlayer();
+        //Attaque
+    m_manager->setForcedValueHeadOrTail(true, 1);
+    statusOfAttack = m_pokemonAttacked->tryToAttack(0, m_pokemonAttacking);
+    m_manager->setForcedValueHeadOrTail(false);
+
+        //Tests
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacking->lifeLeft(), m_pokAttacking_Life);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemons();
+}
+
+void TestsUnitaireActions::checkActionMoreDamageByEnergy()
+{
+    //Informations
+    AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_MoreDamageByEnergy;
+    int quantityOfDamagePerEnergy = 10;
+    QVariant argAction = QVariant::fromValue(static_cast<int>(quantityOfDamagePerEnergy));
+    CardPokemon::Enum_StatusOfAttack statusOfAttack;
+
+    //Création
+    setActionOnPokemonAttacking(enumAction, argAction);
+
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
+
+    //CAS N°1
+        //Attaque
+    statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-m_pokAttacking_AttDamage-(quantityOfDamagePerEnergy*(m_pokAttacking_numberOfEnergiesAttached-m_pokAttacking_AttQuantityOfEnergies)));
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemons();
+}
+
+void TestsUnitaireActions::checkActionReplicateOneAttackFromEnemy()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionMoreDamageOnEnemyOrHimSelf()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionPoisonedCustom()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionRandomDamageToHimself()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionDamageMultipliedByDoubleHeadOrTail()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionDamageMultipliedByTripleHeadOrTail()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionHurtEveryPokemonOnOwnBench()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionSwapPokemonBetweenFigthAndBench()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionDestruction()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionMoreDamageByEnemyDamage()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionSuicide()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionHurtHimself_Random()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionCompleteProtectionByPayingOneEnergy()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionRemoveAllEnergiesAttached()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionRemoveOneEnergyOnEnemy()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionReplicateLastAttackToEnemy()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionHurtHimself()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionUniqueAttack()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionAttackIfEnemyIsSleeping()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionFullHealingByPayingOneEnergy()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionAttackLessDamageOnHimself()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionMoreDamageByOwnDamage()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionBlockOneEnemyAttackForOneTurn()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionChangeWeaknessOfEnemy()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionChangeResistanceOfHimself()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionDamageOfHalfEnemyLifeLeft()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionDamageOnlyIfEnemyIsSpleeping()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionProtectedAgainstDamageRandom()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionEnemyDieIfYouDieInNextTurn()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionChangeEnemyStatusOnHeadOrEnemyIsConfused()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionCanAttack_Random()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionNoDamageOnThreshold()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+void TestsUnitaireActions::checkActionEnemyCanAttackOnNextTurn_Random()
+{
+    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+}
+
+
 /******************************************************
  ***        CREATION DE LA ZONE DE COMBAT           ***
  *****************************************************/
@@ -221,7 +492,7 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacking()
 
     //Création
     QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
-    costEnergies.insert(m_pokAttacking_AttElement, m_pokAttacking_AttQuantityOfEnergies);
+    costEnergies.insert(m_pokAttacking_Element, m_pokAttacking_AttQuantityOfEnergies);
 
     //Création du pokémon attaquant
     QList<AttackData> listAttacks;
@@ -239,10 +510,12 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacking()
                                          m_pokAttacking_MaxLife,
                                          listAttacks);
 
+    cardPokemonToReturn->takeDamage(m_pokAttacking_MaxLife-m_pokAttacking_Life);
+
     //Association des énergies
     for(int i=0;i<m_pokAttacking_numberOfEnergiesAttached;++i)
     {
-        CardEnergy* energy = new CardEnergy(1000+static_cast<int>(m_pokAttacking_AttElement), "Plante", m_pokAttacking_AttElement);
+        CardEnergy* energy = new CardEnergy(1000+static_cast<int>(m_pokAttacking_Element), "Plante", m_pokAttacking_Element);
         cardPokemonToReturn->addEnergy(energy);
     }
 
@@ -275,10 +548,8 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacked()
     const unsigned short pokemonId = 2;
     const QString pokemonName = "pok attaqué";
     const AbstractCard::Enum_element pokemonElement = AbstractCard::Element_Fire;
-    const unsigned short pokemonLife = 100;
     const QString attack1Name = "attaque test";
     const QString attack1Description = "attaque principale";
-    const unsigned short attack1Damage = 0;
     const AbstractCard::Enum_element attack1CostEnergiesElement = AbstractCard::Element_Normal;
     const unsigned short attack1CostEnergiesQuantity = 0;   //Pour ne pas utiliser d'énergies
 
@@ -291,14 +562,15 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacked()
     AttackData attack1;
     attack1.name = attack1Name;
     attack1.description = attack1Description;
-    attack1.damage = attack1Damage;
+    attack1.damage = m_pokAttacked_AttDamage;
     attack1.costEnergies = costEnergies;
+    attack1.action = ActionCreationFactory::createAction(AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail, QVariant(m_pokAttacked_AttDamage/2));;
     listAttacks.append(attack1);
 
     cardPokemonToReturn = new CardPokemon(pokemonId,
                                          pokemonName,
                                          pokemonElement,
-                                         pokemonLife,
+                                         m_pokAttacked_Life,
                                          listAttacks);
 
     return cardPokemonToReturn;
@@ -306,11 +578,14 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacked()
 
 void TestsUnitaireActions::resetPokemons()
 {
+    m_manager->setForcedValueHeadOrTail(false);
+    m_manager->selectFirstPlayer();
+
     if(m_pokemonAttacking != nullptr)
     {
-        m_pokemonAttacked->restoreLife(m_pokAttacking_MaxLife);
-        m_pokemonAttacked->takeDamage(m_pokAttacking_MaxLife-m_pokAttacking_Life);
-        m_pokemonAttacked->setStatus(CardPokemon::Status_Normal);
+        m_pokemonAttacking->restoreLife(m_pokAttacking_MaxLife);
+        m_pokemonAttacking->takeDamage(m_pokAttacking_MaxLife-m_pokAttacking_Life);
+        m_pokemonAttacking->setStatus(CardPokemon::Status_Normal);
 
         while(m_pokemonAttacking->countEnergies() > m_pokAttacking_numberOfEnergiesAttached)
         {
@@ -319,7 +594,7 @@ void TestsUnitaireActions::resetPokemons()
 
         while(m_pokemonAttacking->countEnergies() < m_pokAttacking_numberOfEnergiesAttached)
         {
-            CardEnergy* energy = new CardEnergy(1000+static_cast<int>(m_pokAttacking_AttElement), "Plante", m_pokAttacking_AttElement);
+            CardEnergy* energy = new CardEnergy(1000+static_cast<int>(m_pokAttacking_Element), "Plante", m_pokAttacking_Element);
             m_pokemonAttacking->addEnergy(energy);
         }
 
