@@ -16,7 +16,7 @@ ActionRemoveEnergyAttached::ActionRemoveEnergyAttached(unsigned short numberOfEn
 ************************************************************/
 AbstractAction::Enum_typeOfAction ActionRemoveEnergyAttached::type()
 {
-    return AbstractAction::Action_RemoveOneEnergyAttached;
+    return AbstractAction::Action_RemoveEnergyAttached;
 }
 
 QList<AbstractAction::Enum_ElementsToCheck> ActionRemoveEnergyAttached::elementToCheck()

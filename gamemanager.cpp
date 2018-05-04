@@ -13,11 +13,12 @@
 
 const int GameManager::m_NUMBER_FIRST_CARDS = 10;
 const int GameManager::m_NUMBER_REWARDS = 6;
-GameManager* GameManager::m_instance = NULL;
+GameManager* GameManager::m_instance = nullptr;
 
 #ifdef TESTS_UNITAIRES
 GameManager::GameManager(QObject *parent) :
     QObject(parent),
+    m_nextValueHeadOrTail(0),
 #else
 GameManager::GameManager(CtrlPopups &ctrlPopups, QObject *parent) :
     QObject(parent),
@@ -238,10 +239,24 @@ Player* GameManager::gameIsFinished()
     return playWinner;
 }
 
+
+
+#ifdef TESTS_UNITAIRES
+void GameManager::setNextValueHeadOrTail(unsigned short value)
+{
+    m_nextValueHeadOrTail = value;
+}
+
+unsigned short GameManager::headOrTail()
+{
+    return m_nextValueHeadOrTail;
+}
+#else
 unsigned short GameManager::headOrTail()
 {
     return Utils::headOrTail();
 }
+#endif
 
 /************************************************************
 *****			  FONCTIONS SLOTS PRIVEES				*****

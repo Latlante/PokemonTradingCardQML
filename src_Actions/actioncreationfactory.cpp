@@ -28,7 +28,7 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
 {
     bool ok;
     int argInt = 0;
-    AbstractAction* actionToReturn = NULL;
+    AbstractAction* actionToReturn = nullptr;
 
     switch(idAction)
     {
@@ -89,7 +89,7 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
             actionToReturn = createActionProtectedAgainstDamage();
         }
         break;
-    case AbstractAction::Action_RemoveOneEnergyAttached:
+    case AbstractAction::Action_RemoveEnergyAttached:
         {
             argInt = arg.toInt(&ok);
             if(ok)

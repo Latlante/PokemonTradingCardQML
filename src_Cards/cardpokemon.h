@@ -38,6 +38,14 @@ public:
     };
     Q_ENUMS(Enum_statusOfPokemon)
 
+    enum Enum_StatusOfAttack
+    {
+        Attack_OK = 0,
+        Attack_IndexNOK,
+        Attack_NotEnoughEnergies,
+        Attack_WrongStatus
+    };
+
     CardPokemon(unsigned short id, 
 				const QString& name, 
 				AbstractCard::Enum_element element,
@@ -70,6 +78,9 @@ public:
     Q_INVOKABLE QString attackName(int index);
     Q_INVOKABLE QString attackDescription(int index);
     Q_INVOKABLE unsigned short attackDamage(int index);
+#ifdef TESTS_UNITAIRES
+    void setAttacks(int index, AttackData data);
+#endif
 	
     void addEnergy(CardEnergy* energy);
     CardEnergy* takeEnergy(int index);

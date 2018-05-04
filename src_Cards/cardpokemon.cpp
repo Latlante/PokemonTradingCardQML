@@ -208,6 +208,16 @@ unsigned short CardPokemon::attackDamage(int index)
     return damageToReturn;
 }
 
+#ifdef TESTS_UNITAIRES
+void CardPokemon::setAttacks(int index, AttackData data)
+{
+    if(index > m_listAttacks.count())
+        m_listAttacks.append(data);
+    else
+        m_listAttacks.replace(index, data);
+}
+#endif
+
 void CardPokemon::addEnergy(CardEnergy *energy)
 {
     m_modelListEnergies->addEnergy(energy);

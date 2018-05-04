@@ -18,11 +18,23 @@ private:
     CardPokemon* m_pokemonAttacked;
     GameManager* m_manager;
 
-    void checkActionChangeEnemyStatus();
+    static const QString m_pokAttacking_Name;
+    static const AbstractCard::Enum_element m_pokAttacking_Element;
+    static const unsigned short m_pokAttacking_Life;
+    static const AbstractCard::Enum_element m_pokAttacking_AttElement;
+    static const unsigned short m_pokAttacking_AttDamage;
+    static const unsigned short m_pokAttacking_AttQuantityOfEnergies;
+    static const unsigned short m_pokAttacking_numberOfEnergiesAttached;
 
+    void checkActionChangeEnemyStatus();
+    void checkActionChangeEnemyStatusRandom();
+    void checkActionRemoveOneEnergyAttached();
 
     void createGameManager();
-    CardPokemon *createCustomPokemonToFight(AbstractAction::Enum_typeOfAction action, QVariant arg);
+    CardPokemon *createCustomPokemonAttacking();
+    void setActionOnPokemonAttacking(AbstractAction::Enum_typeOfAction action, QVariant arg);
+    CardPokemon *createCustomPokemonAttacked();
+    void resetPokemonAttacked();
     void deletePokemonToFight();
 };
 

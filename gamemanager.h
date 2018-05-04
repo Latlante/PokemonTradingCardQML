@@ -43,7 +43,11 @@ public:
 	void endOfTurn();
     Player *gameIsFinished();
 
+#ifdef TESTS_UNITAIRES
+    void setNextValueHeadOrTail(unsigned short value);
+#endif
     unsigned short headOrTail();
+
 
 signals:
     void indexCurrentPlayerChanged();
@@ -54,7 +58,9 @@ private slots:
     void onEndOfTurn_Player();
 
 private:
-#ifndef TESTS_UNITAIRES
+#ifdef TESTS_UNITAIRES
+    unsigned short m_nextValueHeadOrTail;
+#else
     CtrlPopups& m_ctrlPopups;
 #endif
 

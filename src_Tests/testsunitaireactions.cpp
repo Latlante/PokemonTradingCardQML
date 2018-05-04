@@ -7,6 +7,14 @@
 #include "src_Packets/fightarea.h"
 #include "src_Packets/packethand.h"
 
+const QString TestsUnitaireActions::m_pokAttacking_Name = "pok fighter";
+const AbstractCard::Enum_element TestsUnitaireActions::m_pokAttacking_Element = AbstractCard::Element_Fire;
+const unsigned short TestsUnitaireActions::m_pokAttacking_Life = 100;
+const AbstractCard::Enum_element TestsUnitaireActions::m_pokAttacking_AttElement = AbstractCard::Element_Grass;
+const unsigned short TestsUnitaireActions::m_pokAttacking_AttDamage = 30;
+const unsigned short TestsUnitaireActions::m_pokAttacking_AttQuantityOfEnergies = 3;
+const unsigned short TestsUnitaireActions::m_pokAttacking_numberOfEnergiesAttached = 3;
+
 TestsUnitaireActions::TestsUnitaireActions() :
     TestsUnitaires(),
     m_pokemonAttacking(nullptr),
@@ -17,9 +25,16 @@ TestsUnitaireActions::TestsUnitaireActions() :
     qDebug() << "*** Démarrage des tests unitaire actions ***";
     qDebug() << "********************************************";
 
+    //Création de la zone de combat
     createGameManager();
 
+    //Tests
     checkActionChangeEnemyStatus();
+    checkActionChangeEnemyStatusRandom();
+    checkActionRemoveOneEnergyAttached();
+
+    //Nettoyage
+    deletePokemonToFight();
 }
 
 /************************************************************
@@ -28,39 +43,104 @@ TestsUnitaireActions::TestsUnitaireActions() :
 void TestsUnitaireActions::checkActionChangeEnemyStatus()
 {
     //Informations
-    CardPokemon* pokAttacking = nullptr;
-    CardPokemon* pokAttacked = nullptr;
     AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_ChangeEnemyStatus;
     CardPokemon::Enum_statusOfPokemon statusAction = CardPokemon::Status_Paralyzed;
     QVariant argAction = QVariant::fromValue(static_cast<int>(statusAction));
     bool attackOk = false;
 
     //Création
-    pokAttacking = createCustomPokemonToFight(enumAction, argAction);
-    AbstractCard* abCard = m_manager->playerAttacked()->hand()->card(0);
+    setActionOnPokemonAttacking(enumAction, argAction);
 
-    if(abCard->type() == AbstractCard::TypeOfCard_Pokemon)
-        pokAttacked = static_cast<CardPokemon*>(abCard);
-    else
-        COMPARE("La carte selectionnee dans la main n'est pas un pokemon", "");
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
 
-    //Transfert dans la zone de combat
-    m_manager->currentPlayer()->fight()->addNewCard(pokAttacking);
-    m_manager->playerAttacked()->moveCardFromHandToFight(0);
+    //CAS N°1
+        //Attaque
+    attackOk = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
 
-
-    //Attaque
-    attackOk = pokAttacking->tryToAttack(0, pokAttacked);
-
-    //Tests
+        //Tests
     COMPARE(attackOk, true);
-    COMPARE(pokAttacked->lifeLeft(), 10);
-    COMPARE(pokAttacked->status(), statusAction);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacking_Life-m_pokAttacking_AttDamage);
+    COMPARE(m_pokemonAttacked->status(), statusAction);
 
     qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemonAttacked();
+}
 
-    //Nettoyage
-    deletePokemonToFight();
+void TestsUnitaireActions::checkActionChangeEnemyStatusRandom()
+{
+    //Informations
+    AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_ChangeEnemyStatus_Random;
+    CardPokemon::Enum_statusOfPokemon statusAction = CardPokemon::Status_Paralyzed;
+    QVariant argAction = QVariant::fromValue(static_cast<int>(statusAction));
+    bool attackOk = false;
+
+    //Création
+    setActionOnPokemonAttacking(enumAction, argAction);
+
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
+
+    //CAS N°1
+        //Init du random (PILE)
+    m_manager->setNextValueHeadOrTail(0);
+
+        //Attaque
+    attackOk = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(attackOk, true);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacking_Life-m_pokAttacking_AttDamage);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+
+    //CAS N°2
+        //Init du random (FACE)
+    m_manager->setNextValueHeadOrTail(1);
+
+        //Attaque
+    attackOk = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(attackOk, true);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacking_Life-(2*m_pokAttacking_AttDamage));
+    COMPARE(m_pokemonAttacked->status(), statusAction);
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemonAttacked();
+}
+
+void TestsUnitaireActions::checkActionRemoveOneEnergyAttached()
+{
+    //Informations
+    AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_RemoveEnergyAttached;
+    int numberOfEnergyToRemoved = 1;
+    QVariant argAction = QVariant::fromValue(static_cast<int>(numberOfEnergyToRemoved));
+    bool attackOk = false;
+
+    //Création
+    setActionOnPokemonAttacking(enumAction, argAction);
+
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
+
+    //CAS N°1
+        //Attaque
+    attackOk = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(attackOk, true);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacking_Life-m_pokAttacking_AttDamage);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+    COMPARE(m_pokemonAttacking->countEnergies(), m_pokAttacking_numberOfEnergiesAttached-numberOfEnergyToRemoved);
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemonAttacked();
 }
 
 void TestsUnitaireActions::createGameManager()
@@ -85,34 +165,97 @@ void TestsUnitaireActions::createGameManager()
 
     m_manager->initGame();
 
+    //Affiliation des pokémons aux zones de combat
+    m_pokemonAttacking = createCustomPokemonAttacking();
+    m_pokemonAttacked = createCustomPokemonAttacked();
+    m_manager->currentPlayer()->fight()->addNewCard(m_pokemonAttacking);
+    m_manager->playerAttacked()->fight()->addNewCard(m_pokemonAttacked);
 }
 
-CardPokemon* TestsUnitaireActions::createCustomPokemonToFight(AbstractAction::Enum_typeOfAction action, QVariant arg)
+CardPokemon* TestsUnitaireActions::createCustomPokemonAttacking()
 {
     //Informations
     CardPokemon* cardPokemonToReturn = nullptr;
     const unsigned short pokemonId = 1;
-    const QString pokemonName = "pokemon test";
-    const AbstractCard::Enum_element pokemonElement = AbstractCard::Element_Fire;
-    const unsigned short pokemonLife = 100;
     const QString attack1Name = "attaque test";
-    const QString attack1Description = "attaque principale";
-    const unsigned short attack1Damage = 30;
-    const AbstractCard::Enum_element attack1CostEnergiesElement = AbstractCard::Element_Grass;
-    const unsigned short attack1CostEnergiesQuantity = 0;   //Pour ne pas utiliser d'énergies
+    const QString attack1Description = "attaque description";
 
     //Création
     QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
-    costEnergies.insert(attack1CostEnergiesElement, attack1CostEnergiesQuantity);
+    costEnergies.insert(m_pokAttacking_AttElement, m_pokAttacking_AttQuantityOfEnergies);
 
     //Création du pokémon attaquant
     QList<AttackData> listAttacks;
     AttackData attack1;
     attack1.name = attack1Name;
     attack1.description = attack1Description;
+    attack1.damage = m_pokAttacking_AttDamage;
+    attack1.costEnergies = costEnergies;
+    attack1.action = ActionCreationFactory::createAction(AbstractAction::Action_None, QVariant());
+    listAttacks.append(attack1);
+
+    cardPokemonToReturn = new CardPokemon(pokemonId,
+                                         m_pokAttacking_Name,
+                                         m_pokAttacking_Element,
+                                         m_pokAttacking_Life,
+                                         listAttacks);
+
+    //Association des énergies
+    for(int i=0;i<m_pokAttacking_numberOfEnergiesAttached;++i)
+    {
+        CardEnergy* energy = new CardEnergy(1008, "Plante", AbstractCard::Element_Grass);
+        cardPokemonToReturn->addEnergy(energy);
+    }
+
+    qDebug() << "Test" << cardPokemonToReturn->countEnergies();
+
+    return cardPokemonToReturn;
+}
+
+void TestsUnitaireActions::setActionOnPokemonAttacking(AbstractAction::Enum_typeOfAction action, QVariant arg)
+{
+    if(m_pokemonAttacking != nullptr)
+    {
+        AttackData attData = m_pokemonAttacking->listAttacks()[0];
+        AbstractAction* actionAttack = attData.action;
+
+        if(actionAttack != nullptr)
+        {
+            delete actionAttack;
+            actionAttack = nullptr;
+        }
+
+        actionAttack = ActionCreationFactory::createAction(action, arg);
+        attData.action = actionAttack;
+        m_pokemonAttacking->setAttacks(0, attData);
+    }
+}
+
+CardPokemon* TestsUnitaireActions::createCustomPokemonAttacked()
+{
+    //Informations
+    CardPokemon* cardPokemonToReturn = nullptr;
+    const unsigned short pokemonId = 2;
+    const QString pokemonName = "pok attaqué";
+    const AbstractCard::Enum_element pokemonElement = AbstractCard::Element_Fire;
+    const unsigned short pokemonLife = 100;
+    const QString attack1Name = "attaque test";
+    const QString attack1Description = "attaque principale";
+    const unsigned short attack1Damage = 0;
+    const AbstractCard::Enum_element attack1CostEnergiesElement = AbstractCard::Element_Normal;
+    const unsigned short attack1CostEnergiesQuantity = 0;   //Pour ne pas utiliser d'énergies
+
+    //Création
+    QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
+    costEnergies.insert(attack1CostEnergiesElement, attack1CostEnergiesQuantity);
+
+    //Création du pokémon attaqué
+    QList<AttackData> listAttacks;
+    AttackData attack1;
+    attack1.name = attack1Name;
+    attack1.description = attack1Description;
     attack1.damage = attack1Damage;
     attack1.costEnergies = costEnergies;
-    attack1.action = ActionCreationFactory::createAction(action, arg);
     listAttacks.append(attack1);
 
     cardPokemonToReturn = new CardPokemon(pokemonId,
@@ -121,27 +264,16 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonToFight(AbstractAction::En
                                          pokemonLife,
                                          listAttacks);
 
-
-    //Création du pokémon attaqué
-    /*if(m_pokemonAttacked == nullptr)
-    {
-        QList<AttackData> listAttacks;
-        AttackData attack1;
-        attack1.name = attack1Name;
-        attack1.description = attack1Description;
-        attack1.damage = attack1Damage;
-        attack1.costEnergies = costEnergies;
-        //Pas d'action pour le pokémon attaqué
-        listAttacks.append(attack1);
-
-        m_pokemonAttacked = new CardPokemon(pokemonId,
-                                            pokemonName,
-                                            pokemonElement,
-                                            pokemonLife,
-                                            listAttacks);
-    }*/
-
     return cardPokemonToReturn;
+}
+
+void TestsUnitaireActions::resetPokemonAttacked()
+{
+    if(m_pokemonAttacked != nullptr)
+    {
+        m_pokemonAttacked->restoreLife(m_pokAttacking_Life);
+        m_pokemonAttacked->setStatus(CardPokemon::Status_Normal);
+    }
 }
 
 void TestsUnitaireActions::deletePokemonToFight()

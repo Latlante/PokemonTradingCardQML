@@ -12,7 +12,7 @@ TestsUnitaires::TestsUnitaires() : QObject()
 ************************************************************/
 const char *TestsUnitaires::messageToDisplayInConsole(const char *nameVar, QVariant arg1, QVariant arg2)
 {
-    QString message = "ERROR: " + QString::fromUtf8(nameVar) + " => \"";
+    QString message = "ERROR: " + QString::fromUtf8(nameVar) + " => '";
 
     switch(arg1.type())
     {
@@ -32,7 +32,7 @@ const char *TestsUnitaires::messageToDisplayInConsole(const char *nameVar, QVari
         qCritical() << "Type arg1 inconnue:" << arg1.type();
     }
 
-    message += "\" <!=> \"";
+    message += "' <!=> '";
 
     switch(arg2.type())
     {
@@ -52,7 +52,7 @@ const char *TestsUnitaires::messageToDisplayInConsole(const char *nameVar, QVari
         qCritical() << "Type arg2 inconnue:" << arg2.type();
     }
 
-    message += "\"";
+    message += "'";
 
     QByteArray messageArray = message.toUtf8();
     //const char* messageChar = messageArray.constData();

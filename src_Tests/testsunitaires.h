@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QVariant>
 
 #define COMPARE(arg1,arg2)  (Q_ASSERT_X(arg1 == arg2, __FUNCTION__, messageToDisplayInConsole(#arg1, arg1, arg2)))
 

@@ -18,10 +18,10 @@ public:
         Action_None = 0,
         Action_ChangeEnemyStatus = 1,                       //Status to apply
         Action_ChangeEnemyStatus_Random = 2,                //Status to apply
-        Action_RemoveOneEnergyAttached = 3,
-        Action_Healing = 4,
+        Action_RemoveEnergyAttached = 3,                    //Number of energy
+        Action_Healing = 4,                                 //Quantity of heal
         Action_ProtectedAgainstDamage = 5,
-        Action_MoreDamageByEnergy = 6,
+        Action_MoreDamageByEnergy = 6,                      //Quantity of damage per energy
         Action_ReplicateOneAttackFromEnemy = 7,
         Action_MoreDamageOnEnemyOrHimSelf = 8,              //Quantity of damage
         Action_PoisonedCustom = 9,
