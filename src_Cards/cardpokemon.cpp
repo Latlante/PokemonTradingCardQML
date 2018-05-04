@@ -253,33 +253,38 @@ QList<CardEnergy*> CardPokemon::takeAllEnergies()
     return m_modelListEnergies->takeAllEnergies();
 }
 
-bool CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
+CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
 {
-	bool statusBack = false;
+    //bool statusBack = false;
+    Enum_StatusOfAttack statusBack = Attack_UnknownError;
 	
-    if ((0 > indexAttack) || (listAttacks().count() <= indexAttack))
-        throw "CardPokemon::attack() => index incohérent (" + QString::number(indexAttack) + ")";
-	
-	if (true == hasEnoughEnergies(indexAttack))
-	{
-		if (true == canAttackFromStatus())
-		{
-            AttackData attack = listAttacks()[indexAttack];
-            enemy->takeDamage(attack.damage);
+    if ((0 <= indexAttack) && (listAttacks().count() > indexAttack))
+    {
+        if (true == hasEnoughEnergies(indexAttack))
+        {
+            if (true == canAttackFromStatus())
+            {
+                AttackData attack = listAttacks()[indexAttack];
+                enemy->takeDamage(attack.damage);
 
-            if(attack.action != NULL)
-                attack.action->executeAction();
-			
-			statusBack = true;
-		}
+                if(attack.action != NULL)
+                    attack.action->executeAction();
+
+                statusBack = Attack_OK;
+            }
+            else
+            {
+                statusBack = Attack_WrongStatus;
+            }
+        }
         else
         {
-            qDebug() << name() << " est dans un état empechant d'attaquer";
+            statusBack = Attack_NotEnoughEnergies;
         }
-	}
+    }
     else
     {
-        qDebug() << name() << " n'as pas assez d'énergie";
+        statusBack = Attack_IndexNOK;
     }
 	
 	return statusBack;

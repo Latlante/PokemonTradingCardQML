@@ -41,6 +41,7 @@ public:
     enum Enum_StatusOfAttack
     {
         Attack_OK = 0,
+        Attack_UnknownError,
         Attack_IndexNOK,
         Attack_NotEnoughEnergies,
         Attack_WrongStatus
@@ -90,7 +91,7 @@ public:
     Q_INVOKABLE ModelListEnergies* modelListOfEnergies();
     QList<CardEnergy*> takeAllEnergies();
 	
-    bool tryToAttack(int indexAttack, CardPokemon *enemy);
+    Enum_StatusOfAttack tryToAttack(int indexAttack, CardPokemon *enemy);
 	void takeDamage(unsigned short damage);
     void restoreLife(unsigned short life);
 	bool canAttackFromStatus();
