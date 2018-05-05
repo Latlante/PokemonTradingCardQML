@@ -30,6 +30,7 @@ private:
     static const unsigned short m_pokAttacked_Life;
     static const unsigned short m_pokAttacked_AttDamage;
 
+#ifdef TESTS_UNITAIRES
     //TESTS UNITAIRES
     void checkActionChangeEnemyStatus();
     void checkActionChangeEnemyStatusRandom();
@@ -78,6 +79,7 @@ private:
     CardPokemon *createCustomPokemonAttacked();
     void resetPokemons();
     void deletePokemonToFight();
+#endif
 };
 
 #endif // TESTSUNITAIREACTIONS_H

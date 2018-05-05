@@ -45,6 +45,8 @@ public:
     Q_INVOKABLE void onClicked_ButtonReadyPreparation();
     Q_INVOKABLE void onClicked_ButtonAttack(int indexAttack);
 
+    Q_INVOKABLE void actionAttack(CardPokemon* card);
+
 
 signals:
     void nextPlayer();

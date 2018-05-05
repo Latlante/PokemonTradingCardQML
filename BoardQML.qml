@@ -78,12 +78,7 @@ Item {
         PopupPokemonSelectingAttack {
             id: popupPokemonSelectingAttack1
             anchors.fill: parent
-            visible: false
-
-            onClickedAttack: {
-                visible = false;
-                ctrlGameBoard.onClicked_ButtonAttack(index);
-            }
+            visible: ctrlPopups.popupSelectingAttacks_Visible
         }
 
         PopupSelectCardsInPacket {

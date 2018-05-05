@@ -149,6 +149,21 @@ void CtrlGameBoard::onClicked_ButtonAttack(int indexAttack)
 
 }
 
+void CtrlGameBoard::actionAttack(CardPokemon *card)
+{
+    //Choix de l'attaque
+    int indexAttack = m_gameManager->displayAttacks(card);
+
+    //Le pokémon attaquant attaque
+    Player* playerAttacking = m_gameManager->currentPlayer();
+    Player* playerAttacked = m_gameManager->playerAttacked();
+
+    qDebug() << __PRETTY_FUNCTION__ << playerAttacking->name() << " attaque " << playerAttacked->name();
+
+    m_gameManager->attack(playerAttacking, indexAttack, playerAttacked);
+    m_gameManager->endOfTurn();
+}
+
 /************************************************************
 *****             FONCTIONS SLOTS PRIVEES				*****
 ************************************************************/

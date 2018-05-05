@@ -4,7 +4,7 @@ import model 1.0
 Item {
     id: popupPokemonSelectingAttack1
 
-    property CardPokemon card
+    property CardPokemon card: ctrlPopups.popupSelectingAttacks_Card
 
     signal clickedAttack(int index)
     //signal clickedAttack2
@@ -72,7 +72,10 @@ Item {
                     id: mouseAreaAttack1
                     anchors.fill: parent
 
-                    onClicked: popupPokemonSelectingAttack1.clickedAttack(0)
+                    onClicked: {
+                        ctrlPopups.popupSelectingAttacks_IndexAttack = 0;
+                        ctrlPopups.selectionCardsFinished();
+                    }
                 }
             }
 
@@ -91,7 +94,10 @@ Item {
                     id: mouseAreaAttack2
                     anchors.fill: parent
 
-                    onClicked: popupPokemonSelectingAttack1.clickedAttack(1)
+                    onClicked: {
+                        ctrlPopups.popupSelectingAttacks_IndexAttack = 1;
+                        ctrlPopups.selectionCardsFinished();
+                    }
                 }
             }
 
@@ -110,7 +116,10 @@ Item {
                     id: mouseAreaAttack3
                     anchors.fill: parent
 
-                    onClicked: popupPokemonSelectingAttack1.clickedAttack(2)
+                    onClicked: {
+                        ctrlPopups.popupSelectingAttacks_IndexAttack = 2;
+                        ctrlPopups.selectionCardsFinished();
+                    }
                 }
             }
 

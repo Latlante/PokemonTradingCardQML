@@ -18,6 +18,7 @@ GameManager* GameManager::m_instance = nullptr;
 #ifdef TESTS_UNITAIRES
 GameManager::GameManager(QObject *parent) :
     QObject(parent),
+    m_forcedValueHeadOrTail(false),
     m_nextValueHeadOrTail(0),
 #else
 GameManager::GameManager(CtrlPopups &ctrlPopups, QObject *parent) :
@@ -239,17 +240,29 @@ Player* GameManager::gameIsFinished()
     return playWinner;
 }
 
+int GameManager::displayAttacks(CardPokemon* card)
+{
+#ifdef TESTS_UNITAIRES
+    return 0;
+#else
+    return m_ctrlPopups.displayAttacks(card);
+#endif
+}
 
 
 #ifdef TESTS_UNITAIRES
-void GameManager::setNextValueHeadOrTail(unsigned short value)
+void GameManager::setForcedValueHeadOrTail(bool forced, unsigned short value)
 {
+    m_forcedValueHeadOrTail = forced;
     m_nextValueHeadOrTail = value;
 }
 
 unsigned short GameManager::headOrTail()
 {
-    return m_nextValueHeadOrTail;
+    if(m_forcedValueHeadOrTail)
+        return m_nextValueHeadOrTail;
+
+    return Utils::headOrTail();
 }
 #else
 unsigned short GameManager::headOrTail()

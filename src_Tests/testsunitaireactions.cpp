@@ -11,12 +11,12 @@ const QString TestsUnitaireActions::m_pokAttacking_Name = "pok fighter";
 const AbstractCard::Enum_element TestsUnitaireActions::m_pokAttacking_Element = AbstractCard::Element_Fire;
 const unsigned short TestsUnitaireActions::m_pokAttacking_MaxLife = 200;
 const unsigned short TestsUnitaireActions::m_pokAttacking_Life = 100;
-const unsigned short TestsUnitaireActions::m_pokAttacking_AttDamage = 40;
+const unsigned short TestsUnitaireActions::m_pokAttacking_AttDamage = 60;
 const unsigned short TestsUnitaireActions::m_pokAttacking_AttQuantityOfEnergies = 3;
 const unsigned short TestsUnitaireActions::m_pokAttacking_numberOfEnergiesAttached = 5;
 
 const unsigned short TestsUnitaireActions::m_pokAttacked_Life = 100;
-const unsigned short TestsUnitaireActions::m_pokAttacked_AttDamage = 40;
+const unsigned short TestsUnitaireActions::m_pokAttacked_AttDamage = 20;
 
 TestsUnitaireActions::TestsUnitaireActions() :
     TestsUnitaires(),
@@ -24,6 +24,7 @@ TestsUnitaireActions::TestsUnitaireActions() :
     m_pokemonAttacked(nullptr),
     m_manager(nullptr)
 {
+#ifdef TESTS_UNITAIRES
     qDebug() << "********************************************";
     qDebug() << "*** Démarrage des tests unitaire actions ***";
     qDebug() << "********************************************";
@@ -74,6 +75,8 @@ TestsUnitaireActions::TestsUnitaireActions() :
 
     //Nettoyage
     deletePokemonToFight();
+
+#endif
 }
 
 /************************************************************
@@ -82,6 +85,7 @@ TestsUnitaireActions::TestsUnitaireActions() :
 /******************************************************
  ***                  TESTS UNITAIRES               ***
  *****************************************************/
+#ifdef TESTS_UNITAIRES
 void TestsUnitaireActions::checkActionChangeEnemyStatus()
 {
     //Informations
@@ -622,3 +626,4 @@ void TestsUnitaireActions::deletePokemonToFight()
         m_pokemonAttacked = nullptr;
     }
 }
+#endif

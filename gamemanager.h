@@ -43,8 +43,10 @@ public:
 	void endOfTurn();
     Player *gameIsFinished();
 
+    int displayAttacks(CardPokemon* card);
+
 #ifdef TESTS_UNITAIRES
-    void setNextValueHeadOrTail(unsigned short value);
+    void setForcedValueHeadOrTail(bool forced, unsigned short value = 0);
 #endif
     unsigned short headOrTail();
 
@@ -59,6 +61,7 @@ private slots:
 
 private:
 #ifdef TESTS_UNITAIRES
+    bool m_forcedValueHeadOrTail;
     unsigned short m_nextValueHeadOrTail;
 #else
     CtrlPopups& m_ctrlPopups;

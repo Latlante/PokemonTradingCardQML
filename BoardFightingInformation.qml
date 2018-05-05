@@ -100,8 +100,9 @@ Item {
                             (player === currentPlayer) &&
                             (ctrlGameBoard.gameStatus === ConstantesQML.StepGameInProgress))
                     {
-                        popupPokemonSelectingAttack1.card = cardPok;
-                        popupPokemonSelectingAttack1.visible = true;
+                        //popupPokemonSelectingAttack1.card = cardPok;
+                        //popupPokemonSelectingAttack1.visible = true;
+                        ctrlGameBoard.actionAttack(cardPok);
                     }
                 }
             }

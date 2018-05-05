@@ -79,6 +79,7 @@ public:
     Q_INVOKABLE QString attackName(int index);
     Q_INVOKABLE QString attackDescription(int index);
     Q_INVOKABLE unsigned short attackDamage(int index);
+    bool replaceOneAttack(int index, AttackData data);
 #ifdef TESTS_UNITAIRES
     void setAttacks(int index, AttackData data);
 #endif

@@ -206,6 +206,29 @@ unsigned short CardPokemon::attackDamage(int index)
     return damageToReturn;
 }
 
+bool CardPokemon::replaceOneAttack(int index, AttackData data)
+{
+    bool statusBack = true;
+
+    if((index >= 0) && (index < listAttacks().count()))
+    {
+        //Nettoyage de l'ancienne action
+        AttackData oldData = listAttacks()[index];
+        if(oldData.action != nullptr)
+        {
+            delete oldData.action;
+            oldData.action = nullptr;
+        }
+
+        //Copie
+        m_listAttacks.replace(index, data);
+    }
+    else
+        statusBack = false;
+    
+    return statusBack;
+}
+
 #ifdef TESTS_UNITAIRES
 void CardPokemon::setAttacks(int index, AttackData data)
 {

@@ -23,8 +23,10 @@
 #include "src_Packets/packetrewards.h"
 #include "src_Packets/packettrash.h"
 
+#ifdef TESTS_UNITAIRES
 #include "src_Tests/testsunitairegeneral.h"
 #include "src_Tests/testsunitaireactions.h"
+#endif
 
 int main(int argc, char *argv[])
 {
