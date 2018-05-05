@@ -9,8 +9,10 @@
 #include "src_Actions/actionhealing.h"
 #include "src_Actions/actionmoredamagebyenergy.h"
 #include "src_Actions/actionmoredamageonenemyorhimself.h"
+#include "src_Actions/actionpoisonedcustom.h"
 #include "src_Actions/actionprotectedagainstdamage.h"
 #include "src_Actions/actionremoveenergyattached.h"
+#include "src_Actions/actionreplicateoneattackfromenemy.h"
 
 #include "src_Actions/actiontrainer_fakeprofessorchen.h"
 #include "src_Actions/actiontrainer_leo.h"
@@ -79,9 +81,16 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
         break;
     case AbstractAction::Action_MoreDamageOnEnemyOrHimSelf:
         {
-        argInt = arg.toInt(&ok);
-        if(ok)
-            actionToReturn = createActionMoreDamageOnEnemyOrHimself(argInt);
+            argInt = arg.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionMoreDamageOnEnemyOrHimself(argInt);
+        }
+        break;
+    case AbstractAction::Action_PoisonedCustom:
+        {
+            argInt = arg.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionPoisonedCustom(argInt);
         }
         break;
     case AbstractAction::Action_ProtectedAgainstDamage:
@@ -94,6 +103,11 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
             argInt = arg.toInt(&ok);
             if(ok)
                 actionToReturn = createActionRemoveEnergyAttached(argInt);
+        }
+        break;
+    case AbstractAction::Action_ReplicateOneAttackFromEnemy:
+        {
+            actionToReturn = createActionReplicateOneAttackFromEnemy();
         }
         break;
     //ACTIONS TRAINERS
@@ -159,6 +173,11 @@ ActionMoreDamageOnEnemyOrHimself* ActionCreationFactory::createActionMoreDamageO
     return new ActionMoreDamageOnEnemyOrHimself(damage);
 }
 
+ActionPoisonedCustom* ActionCreationFactory::createActionPoisonedCustom(unsigned short damage)
+{
+    return new ActionPoisonedCustom(damage);
+}
+
 ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgainstDamage()
 {
     return new ActionProtectedAgainstDamage();
@@ -167,6 +186,11 @@ ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgains
 ActionRemoveEnergyAttached* ActionCreationFactory::createActionRemoveEnergyAttached(unsigned short numberOfEnergies)
 {
     return new ActionRemoveEnergyAttached(numberOfEnergies);
+}
+
+ActionReplicateOneAttackFromEnemy* ActionCreationFactory::createActionReplicateOneAttackFromEnemy()
+{
+    return new ActionReplicateOneAttackFromEnemy();
 }
 
 //ACTIONS TRAINERS

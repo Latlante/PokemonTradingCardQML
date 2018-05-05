@@ -29,6 +29,8 @@ private:
 
     static const unsigned short m_pokAttacked_Life;
     static const unsigned short m_pokAttacked_AttDamage;
+    static const AbstractAction::Enum_typeOfAction m_pokAttacked_TypeOfAction;
+    static const unsigned short m_pokAttacked_ActionDamage;
 
 #ifdef TESTS_UNITAIRES
     //TESTS UNITAIRES
@@ -76,8 +78,10 @@ private:
     void createGameManager();
     CardPokemon *createCustomPokemonAttacking();
     void setActionOnPokemonAttacking(AbstractAction::Enum_typeOfAction action, QVariant arg = QVariant());
+    AttackData newAttackPokemonAttacking();
     CardPokemon *createCustomPokemonAttacked();
     void resetPokemons();
+
     void deletePokemonToFight();
 #endif
 };

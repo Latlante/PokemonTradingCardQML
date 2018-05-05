@@ -34,7 +34,6 @@ public:
     Q_INVOKABLE PacketRewards* rewards();
     Q_INVOKABLE PacketTrash* trash();
 	
-	void init(QList<AbstractCard*> listCards);
 	void newTurn();
     void skipYourTurn();
 	void blockPlayer();

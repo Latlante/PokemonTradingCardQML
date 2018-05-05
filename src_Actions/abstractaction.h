@@ -24,7 +24,7 @@ public:
         Action_MoreDamageByEnergy = 6,                      //Quantity of damage per energy
         Action_ReplicateOneAttackFromEnemy = 7,
         Action_MoreDamageOnEnemyOrHimSelf = 8,              //Quantity of damage
-        Action_PoisonedCustom = 9,
+        Action_PoisonedCustom = 9,                          //Quantity of damage per round
         Action_RandomDamageToHimself = 10,
         Action_DamageMultipliedByDoubleHeadOrTail = 11,     //Quantity of damage
         Action_DamageMultipliedByTripleHeadOrTail = 12,     //Quantity of damage

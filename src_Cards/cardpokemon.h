@@ -16,7 +16,25 @@ struct AttackData
 	unsigned short damage;
     QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
     AbstractAction* action;
+
+    bool operator ==(const AttackData& extData)
+    {
+        return ((name == extData.name) &&
+                (description == extData.description) &&
+                (damage == extData.damage) &&
+                (costEnergies == extData.costEnergies) &&
+                (action == extData.action));
+    }
 };
+
+/*bool operator ==(const AttackData& data1, const AttackData& data2)
+{
+    return ((data1.name == data2.name) &&
+            (data1.description == data2.description) &&
+            (data1.damage == data2.damage) &&
+            (data1.costEnergies == data2.costEnergies) &&
+            (data1.action == data2.action));
+}*/
 
 class CardPokemon : public AbstractCard
 {
@@ -104,6 +122,13 @@ public:
 	bool isSubEvolutionOf(CardPokemon* evolution);
     bool isEvolutionOf(CardPokemon* subEvolution);
 
+    void applyDamageIfPoisoned();
+    unsigned short damagePoisonPerRound();
+    void setDamagePoisonPerRound(unsigned short damage);
+
+    AttackData lastAttackUsed();
+    int lastIndexOfAttackUsed();
+
     CardPokemon& operator =(const CardPokemon& source);
 
 signals:
@@ -122,6 +147,9 @@ private:
     ModelListEnergies* m_modelListEnergies;
     CardPokemon* m_cardEvolution;
 	short m_evolutionFrom;
+
+    unsigned short m_damageOfPoisonPerRound;
+    AttackData m_lastAttackUsed;
 	
     unsigned short currentDamage();
     void setDamage(unsigned short damage);

@@ -152,6 +152,8 @@ int CtrlPopups::displayAttacks(CardPokemon* card)
     loop.exec();
 
     setPopupSelectingAttacks_Visible(false);
+
+    return m_popupSelectingAttacks_IndexAttack;
 }
 
 void CtrlPopups::selectionCardsFinished()

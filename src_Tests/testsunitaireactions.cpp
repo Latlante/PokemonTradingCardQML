@@ -15,8 +15,10 @@ const unsigned short TestsUnitaireActions::m_pokAttacking_AttDamage = 60;
 const unsigned short TestsUnitaireActions::m_pokAttacking_AttQuantityOfEnergies = 3;
 const unsigned short TestsUnitaireActions::m_pokAttacking_numberOfEnergiesAttached = 5;
 
-const unsigned short TestsUnitaireActions::m_pokAttacked_Life = 100;
+const unsigned short TestsUnitaireActions::m_pokAttacked_Life = 300;
 const unsigned short TestsUnitaireActions::m_pokAttacked_AttDamage = 20;
+const AbstractAction::Enum_typeOfAction TestsUnitaireActions::m_pokAttacked_TypeOfAction = AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail;
+const unsigned short TestsUnitaireActions::m_pokAttacked_ActionDamage = 10;
 
 TestsUnitaireActions::TestsUnitaireActions() :
     TestsUnitaires(),
@@ -290,17 +292,126 @@ void TestsUnitaireActions::checkActionMoreDamageByEnergy()
 
 void TestsUnitaireActions::checkActionReplicateOneAttackFromEnemy()
 {
-    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+    //Informations
+    AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_ReplicateOneAttackFromEnemy;
+    CardPokemon::Enum_StatusOfAttack statusOfAttack;
+
+    //Création
+    setActionOnPokemonAttacking(enumAction);
+
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
+
+    //CAS N°1: Attaque de base avant la copie
+        //Attaque
+    statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+            //Vérification des dégats de base
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-m_pokAttacking_AttDamage);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+
+            //Vérification de la nouvelle attaque
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].damage, m_pokAttacked_AttDamage);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), m_pokAttacked_TypeOfAction);
+
+    //CAS N°2: Attaque après la copie
+        //Attaque
+    m_manager->setForcedValueHeadOrTail(true, 1);
+    statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+    m_manager->setForcedValueHeadOrTail(false);
+
+        //Tests
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-m_pokAttacking_AttDamage-m_pokAttacked_AttDamage-(2*m_pokAttacked_ActionDamage));
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemons();
 }
 
 void TestsUnitaireActions::checkActionMoreDamageOnEnemyOrHimSelf()
 {
-    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+    //Informations
+    AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_MoreDamageOnEnemyOrHimSelf;
+    int quantityOfDamage = 10;
+    QVariant argAction = QVariant::fromValue(static_cast<int>(quantityOfDamage));
+    CardPokemon::Enum_StatusOfAttack statusOfAttack;
+
+    //Création
+    setActionOnPokemonAttacking(enumAction, argAction);
+
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
+
+    //CAS N°1: PILE
+        //Attaque
+    m_manager->setForcedValueHeadOrTail(true, 0);
+    statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-m_pokAttacking_AttDamage);
+    COMPARE(m_pokemonAttacking->lifeLeft(), m_pokAttacking_Life-quantityOfDamage);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+
+    //CAS N°2: FACE
+        //Attaque
+    m_manager->setForcedValueHeadOrTail(true, 1);
+    statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-(2*m_pokAttacking_AttDamage)-quantityOfDamage);
+    COMPARE(m_pokemonAttacking->lifeLeft(), m_pokAttacking_Life-quantityOfDamage);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Normal);
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemons();
 }
 
 void TestsUnitaireActions::checkActionPoisonedCustom()
 {
-    qDebug() << __PRETTY_FUNCTION__ << "Not tested yet";
+    //Informations
+    AbstractAction::Enum_typeOfAction enumAction = AbstractAction::Action_PoisonedCustom;
+    int quantityOfDamagePerRound = 20;
+    QVariant argAction = QVariant::fromValue(static_cast<int>(quantityOfDamagePerRound));
+    CardPokemon::Enum_StatusOfAttack statusOfAttack;
+
+    //Création
+    setActionOnPokemonAttacking(enumAction, argAction);
+
+    //CAS GENERAL
+    COMPARE(m_pokemonAttacking->listAttacks().count(), 1);
+    Q_ASSERT(m_pokemonAttacking->listAttacks()[0].action != nullptr);
+    COMPARE(m_pokemonAttacking->listAttacks()[0].action->type(), enumAction);
+
+    //CAS N°1: Avant l'empoisonnement
+        //Attaque
+    statusOfAttack = m_pokemonAttacking->tryToAttack(0, m_pokemonAttacked);
+
+        //Tests
+    COMPARE(statusOfAttack, CardPokemon::Attack_OK);
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-m_pokAttacking_AttDamage);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Poisoned);
+
+    //CAS N°2: Après l'empoisonnement
+    m_manager->endOfTurn();
+
+        //Tests
+    COMPARE(m_pokemonAttacked->lifeLeft(), m_pokAttacked_Life-m_pokAttacking_AttDamage-quantityOfDamagePerRound);
+    COMPARE(m_pokemonAttacked->status(), CardPokemon::Status_Poisoned);
+
+    qDebug() << __PRETTY_FUNCTION__ << "OK";
+    resetPokemons();
 }
 
 void TestsUnitaireActions::checkActionRandomDamageToHimself()
@@ -491,23 +602,9 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacking()
     //Informations
     CardPokemon* cardPokemonToReturn = nullptr;
     const unsigned short pokemonId = 1;
-    const QString attack1Name = "attaque test";
-    const QString attack1Description = "attaque description";
-
-    //Création
-    QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
-    costEnergies.insert(m_pokAttacking_Element, m_pokAttacking_AttQuantityOfEnergies);
 
     //Création du pokémon attaquant
-    QList<AttackData> listAttacks;
-    AttackData attack1;
-    attack1.name = attack1Name;
-    attack1.description = attack1Description;
-    attack1.damage = m_pokAttacking_AttDamage;
-    attack1.costEnergies = costEnergies;
-    attack1.action = ActionCreationFactory::createAction(AbstractAction::Action_None, QVariant());
-    listAttacks.append(attack1);
-
+    QList<AttackData> listAttacks = QList<AttackData>() << newAttackPokemonAttacking();
     cardPokemonToReturn = new CardPokemon(pokemonId,
                                          m_pokAttacking_Name,
                                          m_pokAttacking_Element,
@@ -545,6 +642,26 @@ void TestsUnitaireActions::setActionOnPokemonAttacking(AbstractAction::Enum_type
     }
 }
 
+AttackData TestsUnitaireActions::newAttackPokemonAttacking()
+{
+    //Informations
+    const QString attack1Name = "attaque test";
+    const QString attack1Description = "attaque description";
+
+    //Création
+    QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
+    costEnergies.insert(m_pokAttacking_Element, m_pokAttacking_AttQuantityOfEnergies);
+
+    AttackData attack1;
+    attack1.name = attack1Name;
+    attack1.description = attack1Description;
+    attack1.damage = m_pokAttacking_AttDamage;
+    attack1.costEnergies = costEnergies;
+    attack1.action = ActionCreationFactory::createAction(AbstractAction::Action_None, QVariant());
+
+    return attack1;
+}
+
 CardPokemon* TestsUnitaireActions::createCustomPokemonAttacked()
 {
     //Informations
@@ -568,7 +685,7 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacked()
     attack1.description = attack1Description;
     attack1.damage = m_pokAttacked_AttDamage;
     attack1.costEnergies = costEnergies;
-    attack1.action = ActionCreationFactory::createAction(AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail, QVariant(m_pokAttacked_AttDamage/2));;
+    attack1.action = ActionCreationFactory::createAction(m_pokAttacked_TypeOfAction, QVariant(m_pokAttacked_ActionDamage));
     listAttacks.append(attack1);
 
     cardPokemonToReturn = new CardPokemon(pokemonId,
@@ -601,6 +718,11 @@ void TestsUnitaireActions::resetPokemons()
             CardEnergy* energy = new CardEnergy(1000+static_cast<int>(m_pokAttacking_Element), "Plante", m_pokAttacking_Element);
             m_pokemonAttacking->addEnergy(energy);
         }
+
+        m_pokemonAttacking->replaceOneAttack(m_pokemonAttacking->lastIndexOfAttackUsed(), newAttackPokemonAttacking());
+
+        //delete m_pokemonAttacking;
+        //m_pokemonAttacking = createCustomPokemonAttacking();
 
     }
 

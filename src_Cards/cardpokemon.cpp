@@ -23,12 +23,14 @@ CardPokemon::CardPokemon(unsigned short id,
 	m_listAttacks(listAttacks),
     m_modelListEnergies(new ModelListEnergies()),
     m_cardEvolution(nullptr),
-	m_evolutionFrom(evolutionFrom)
+    m_evolutionFrom(evolutionFrom),
+    m_damageOfPoisonPerRound(DAMAGE_POISON)
 {
 	
 }
 
 CardPokemon::CardPokemon(const CardPokemon &card) :
+    AbstractCard(),
     m_status(Status_Normal),
     m_invincibleOnNextTurn(false),
     m_modelListEnergies(new ModelListEnergies()),
@@ -285,11 +287,11 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
         {
             if (true == canAttackFromStatus())
             {
-                AttackData attack = listAttacks()[indexAttack];
-                enemy->takeDamage(attack.damage);
+                m_lastAttackUsed = listAttacks()[indexAttack];
+                enemy->takeDamage(m_lastAttackUsed.damage);
 
-                if(attack.action != nullptr)
-                    attack.action->executeAction(indexAttack);
+                if(m_lastAttackUsed.action != nullptr)
+                    m_lastAttackUsed.action->executeAction(indexAttack);
 
                 enemy->setInvincibleForTheNextTurn(false);
                 statusBack = Attack_OK;
@@ -422,6 +424,32 @@ bool CardPokemon::isEvolutionOf(CardPokemon* subEvolution)
     return m_evolutionFrom == subEvolution->m_id;
 }
 
+void CardPokemon::applyDamageIfPoisoned()
+{
+    if(status() == CardPokemon::Status_Poisoned)
+        takeDamage(damagePoisonPerRound());
+}
+
+unsigned short CardPokemon::damagePoisonPerRound()
+{
+    return m_damageOfPoisonPerRound;
+}
+
+void CardPokemon::setDamagePoisonPerRound(unsigned short damage)
+{
+    m_damageOfPoisonPerRound = damage;
+}
+
+AttackData CardPokemon::lastAttackUsed()
+{
+    return m_lastAttackUsed;
+}
+
+int CardPokemon::lastIndexOfAttackUsed()
+{
+    return m_listAttacks.indexOf(m_lastAttackUsed);
+}
+
 CardPokemon& CardPokemon::operator =(const CardPokemon& source)
 {
     m_id = source.m_id;
@@ -433,6 +461,8 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     //m_modelListEnergies = source.m_modelListEnergies;     //Pas besoin
     m_cardEvolution = source.m_cardEvolution;
     m_evolutionFrom = source.m_evolutionFrom;
+    m_damageOfPoisonPerRound = source.m_damageOfPoisonPerRound;
+    m_lastAttackUsed = source.m_lastAttackUsed;
 
     return *this;
 }

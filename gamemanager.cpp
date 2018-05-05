@@ -231,11 +231,13 @@ Player* GameManager::gameIsFinished()
     //  -> Plus de pokémon sur la banc
     Player* playWinner = nullptr;
 	
+#ifndef TESTS_UNITAIRES
 	foreach(Player* play, m_listPlayers)
 	{
         if(play->isWinner())
             playWinner = play;
 	}
+#endif
 	
     return playWinner;
 }
@@ -243,6 +245,7 @@ Player* GameManager::gameIsFinished()
 int GameManager::displayAttacks(CardPokemon* card)
 {
 #ifdef TESTS_UNITAIRES
+    Q_UNUSED(card)
     return 0;
 #else
     return m_ctrlPopups.displayAttacks(card);
@@ -393,18 +396,18 @@ void GameManager::checkPokemonPoisoned()
     {
         //fight area
         CardPokemon* pokemonFighter = play->fight()->pokemonFighter();
-        if((pokemonFighter != nullptr) && (pokemonFighter->status() == CardPokemon::Status_Poisoned))
+        if(pokemonFighter != nullptr)
         {
-            pokemonFighter->takeDamage(DAMAGE_POISON);
+            pokemonFighter->applyDamageIfPoisoned();
         }
 
         //bench
         for(int i=0;i<play->bench()->countCard();++i)
         {
             CardPokemon* pokemonBench = play->bench()->cardPok(i);
-            if((pokemonBench != nullptr) && (pokemonBench->status() == CardPokemon::Status_Poisoned))
+            if(pokemonBench != nullptr)
             {
-                pokemonBench->takeDamage(DAMAGE_POISON);
+                pokemonBench->applyDamageIfPoisoned();
             }
         }
     }

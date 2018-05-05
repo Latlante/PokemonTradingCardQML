@@ -83,11 +83,6 @@ PacketTrash* Player::trash()
     return m_trash;
 }
 
-void Player::init(QList<AbstractCard*> listCards)
-{
-	
-}
-
 void Player::newTurn()
 {
     setCanPlay(true);

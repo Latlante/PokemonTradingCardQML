@@ -11,8 +11,10 @@ class ActionDamageMultipliedByTripleHeadOrTail;
 class ActionHealing;
 class ActionMoreDamageByEnergy;
 class ActionMoreDamageOnEnemyOrHimself;
+class ActionPoisonedCustom;
 class ActionProtectedAgainstDamage;
 class ActionRemoveEnergyAttached;
+class ActionReplicateOneAttackFromEnemy;
 
 class ActionTrainer_FakeProfessorChen;
 class ActionTrainer_Leo;
@@ -36,8 +38,10 @@ public:
     static ActionHealing* createActionHealing(unsigned short pv);
     static ActionMoreDamageByEnergy* createActionMoreDamageByEnergy(unsigned short damagePerEnergy);
     static ActionMoreDamageOnEnemyOrHimself* createActionMoreDamageOnEnemyOrHimself(unsigned short damage);
+    static ActionPoisonedCustom* createActionPoisonedCustom(unsigned short damage);
     static ActionProtectedAgainstDamage* createActionProtectedAgainstDamage();
     static ActionRemoveEnergyAttached* createActionRemoveEnergyAttached(unsigned short numberOfEnergies);
+    static ActionReplicateOneAttackFromEnemy* createActionReplicateOneAttackFromEnemy();
 
     //ACTIONS TRAINERS
     static ActionTrainer_FakeProfessorChen* createActionTrainer_FakeProfessorChen();
