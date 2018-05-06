@@ -13,6 +13,7 @@ class ActionMoreDamageByEnergy;
 class ActionMoreDamageOnEnemyOrHimself;
 class ActionPoisonedCustom;
 class ActionProtectedAgainstDamage;
+class ActionRandomDamageToHimself;
 class ActionRemoveEnergyAttached;
 class ActionReplicateOneAttackFromEnemy;
 
@@ -40,6 +41,7 @@ public:
     static ActionMoreDamageOnEnemyOrHimself* createActionMoreDamageOnEnemyOrHimself(unsigned short damage);
     static ActionPoisonedCustom* createActionPoisonedCustom(unsigned short damage);
     static ActionProtectedAgainstDamage* createActionProtectedAgainstDamage();
+    static ActionRandomDamageToHimself* createActionRandomDamageToHimself(unsigned short damage);
     static ActionRemoveEnergyAttached* createActionRemoveEnergyAttached(unsigned short numberOfEnergies);
     static ActionReplicateOneAttackFromEnemy* createActionReplicateOneAttackFromEnemy();
 

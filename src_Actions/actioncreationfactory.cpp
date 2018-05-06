@@ -11,6 +11,7 @@
 #include "src_Actions/actionmoredamageonenemyorhimself.h"
 #include "src_Actions/actionpoisonedcustom.h"
 #include "src_Actions/actionprotectedagainstdamage.h"
+#include "src_Actions/actionrandomdamagetohimself.h"
 #include "src_Actions/actionremoveenergyattached.h"
 #include "src_Actions/actionreplicateoneattackfromenemy.h"
 
@@ -98,6 +99,13 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
             actionToReturn = createActionProtectedAgainstDamage();
         }
         break;
+    case AbstractAction::Action_RandomDamageToHimself:
+        {
+            argInt = arg.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionRandomDamageToHimself(argInt);
+        }
+        break;
     case AbstractAction::Action_RemoveEnergyAttached:
         {
             argInt = arg.toInt(&ok);
@@ -181,6 +189,11 @@ ActionPoisonedCustom* ActionCreationFactory::createActionPoisonedCustom(unsigned
 ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgainstDamage()
 {
     return new ActionProtectedAgainstDamage();
+}
+
+ActionRandomDamageToHimself* ActionCreationFactory::createActionRandomDamageToHimself(unsigned short damage)
+{
+    return new ActionRandomDamageToHimself(damage);
 }
 
 ActionRemoveEnergyAttached* ActionCreationFactory::createActionRemoveEnergyAttached(unsigned short numberOfEnergies)
