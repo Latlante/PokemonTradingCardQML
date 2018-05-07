@@ -42,7 +42,6 @@ AbstractCard::Enum_typeOfCard CardAction::type()
 QUrl CardAction::image()
 {
     const QString path = "trainer/cards/" + QString::number(id()) + ".png";
-    qDebug() << __PRETTY_FUNCTION__ << "path image:" << path;
 
     return path;
 }

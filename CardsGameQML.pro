@@ -14,7 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG(compilation_test)
 {
-    DEFINES += TESTS_UNITAIRES
+    #DEFINES += TESTS_UNITAIRES
 }
 
 SOURCES += \
@@ -67,7 +67,11 @@ SOURCES += \
     src_Actions/actiontrainer_superpotion.cpp \
     src_Actions/actiontrainer_leo.cpp \
     src_Actions/actiontrainer_potion.cpp \
-    src_Actions/actionpoisonedcustom.cpp
+    src_Actions/actionpoisonedcustom.cpp \
+    src_Actions/actionrandomdamagetohimself.cpp \
+    src_Actions/actionhurteverypokemononownbench.cpp \
+    src_Actions/actionswappokemonbetweenfigthandbench.cpp \
+    src_Models/modelpopupselectenergyinpokemon.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -132,7 +136,11 @@ HEADERS += \
     src_Actions/actiontrainer_superpotion.h \
     src_Actions/actiontrainer_leo.h \
     src_Actions/actiontrainer_potion.h \
-    src_Actions/actionpoisonedcustom.h
+    src_Actions/actionpoisonedcustom.h \
+    src_Actions/actionrandomdamagetohimself.h \
+    src_Actions/actionhurteverypokemononownbench.h \
+    src_Actions/actionswappokemonbetweenfigthandbench.h \
+    src_Models/modelpopupselectenergyinpokemon.h
 
 FORMS += \
     dlgselectcards.ui

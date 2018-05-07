@@ -20,7 +20,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionHurtEveryPokemonOnOwnBench::el
     return QList<AbstractAction::Enum_ElementsToCheck>()
             << AbstractAction::CheckBenchPlayerAttacking;
 }
-p
+
 void ActionHurtEveryPokemonOnOwnBench::action()
 {
     if(benchPlayerAttacking() != nullptr)

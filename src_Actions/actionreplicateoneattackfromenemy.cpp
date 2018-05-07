@@ -26,7 +26,7 @@ void ActionReplicateOneAttackFromEnemy::action()
 {
     if(pokemonAttacked() != nullptr)
     {
-        int indexAttackToReplicate = gameManager()->displayAttacks(pokemonAttacked());
+        int indexAttackToReplicate = gameManager()->displayAttacks(pokemonAttacked(), true);
         int indexLastAttack = pokemonAttacking()->lastIndexOfAttackUsed();
 
         if((indexAttackToReplicate >= 0) && (indexLastAttack >= 0) && (pokemonAttacking() != nullptr))
