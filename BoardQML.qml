@@ -84,7 +84,13 @@ Item {
         PopupSelectCardsInPacket {
             id: popupSelectCardInPacket1
             anchors.fill: parent
-            visible: ctrlPopups.visible
+            visible: ctrlPopups.selectCardInPacketVisible
+        }
+
+        PopupSelectEnergiesInPokemon {
+            id: popupSelectEnergiesInPokemon1
+            anchors.fill: parent
+            visible: ctrlPopups.selectEnergiesInPokemonVisible
         }
     }
 }

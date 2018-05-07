@@ -411,6 +411,29 @@ bool Player::moveAllCardFromHandToDeck()
     return status;
 }
 
+bool Player::swapCardsBetweenBenchAndFight(int indexBench)
+{
+    bool status = true;
+
+    if((fight() != nullptr) && (bench() != nullptr))
+    {
+        if((fight()->pokemonFighting(0) != nullptr) && (bench()->cardPok(indexBench) != nullptr))
+        {
+            //A ce moment là, on sait que tout est bon
+            //On commence donc par récupérer le pokémon qui se bat pour le remplace
+            AbstractCard* pokFigther = fight()->takeACard(0);
+            status &= moveCardFromBenchToFight(indexBench);
+            status &= bench()->addNewCard(pokFigther);
+        }
+        else
+            status = false;
+    }
+    else
+        status = false;
+
+    return status;
+}
+
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/

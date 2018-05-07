@@ -12,5 +12,6 @@
         <file>BoardFightingArea.qml</file>
         <file>PopupPokemonSelectingAttack.qml</file>
         <file>PopupSelectCardsInPacket.qml</file>
+        <file>PopupSelectEnergiesInPokemon.qml</file>
     </qresource>
 </RCC>

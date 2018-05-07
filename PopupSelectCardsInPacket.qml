@@ -30,7 +30,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: 35
-            //text: viewCards.model.name + " (" + viewCards.model.countTotalQuantity + " / " + viewCards.model.maxCards() + ")"
+            text: "Sélection (" + viewCards.model.numberOfCardsSelected + "/" + viewCards.model.numberOfCardsToSelect() + ")"
             //text: "Sélection (" + viewCards.model.numberOfCardsSelected
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
@@ -50,7 +50,7 @@ Item {
             cellHeight: 270
             clip: true
 
-            model: ctrlPopups.model()
+            model: ctrlPopups.modelSelectCardInPacket()
             delegate: Item {
                 id: itemCard
                 //anchors.fill: parent

@@ -43,7 +43,9 @@ public:
 	void endOfTurn();
     Player *gameIsFinished();
 
-    int displayAttacks(CardPokemon* card);
+    QList<int> displayBench(BenchArea* bench);
+    QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon);
+    int displayAttacks(CardPokemon* card, bool blockRetreat = false);
 
 #ifdef TESTS_UNITAIRES
     void setForcedValueHeadOrTail(bool forced, unsigned short value = 0);

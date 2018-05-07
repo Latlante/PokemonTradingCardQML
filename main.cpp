@@ -9,6 +9,7 @@
 #include "src_Models/listplayers.h"
 #include "src_Models/modellistenergies.h"
 #include "src_Models/modelpopupselectcardinpacket.h"
+#include "src_Models/modelpopupselectenergyinpokemon.h"
 #include "src_Models/modelselectingcards.h"
 #include "player.h"
 #include "src_Cards/abstractcard.h"
@@ -55,6 +56,7 @@ int main(int argc, char *argv[])
     ListPlayers::declareQML();
     ModelListEnergies::declareQML();
     ModelPopupSelectCardInPacket::declareQML();
+    ModelPopupSelectEnergyInPokemon::declareQML();
     ModelSelectingCards::declareQML();
     Player::declareQML();
     AbstractCard::declareQML();

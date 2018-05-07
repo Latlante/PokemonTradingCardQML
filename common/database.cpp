@@ -175,11 +175,12 @@ CardPokemon* Database::newCardPokemon(const QString& infoCsv)
         }
 
         cardPokemonToReturn = new CardPokemon(arguments[InfoDbPok_Id].toInt(),
-                                            arguments[InfoDbPok_Name],
-                                            static_cast<AbstractCard::Enum_element>(arguments[InfoDbPok_Element].toInt()),
-                                            arguments[InfoDbPok_Life].toUShort(),
-                                            listAttacks,
-                                            arguments[InfoDbPok_IdSubevolution] == "" ? -1 : arguments[InfoDbPok_IdSubevolution].toShort());
+                                              arguments[InfoDbPok_Name],
+                                              static_cast<AbstractCard::Enum_element>(arguments[InfoDbPok_Element].toInt()),
+                                              arguments[InfoDbPok_Life].toUShort(),
+                                              listAttacks,
+                                              arguments[InfoDbPok_IdSubevolution] == "" ? -1 : arguments[InfoDbPok_IdSubevolution].toShort(),
+                                              arguments[InfoDbPok_CostRetreat].toUShort());
     }
 
     return cardPokemonToReturn;

@@ -70,7 +70,8 @@ public:
 				AbstractCard::Enum_element element,
 				unsigned short lifeTotal,
 				QList<AttackData> listAttacks,
-				short evolutionFrom = -1);
+                short evolutionFrom = -1,
+                unsigned short costRetreat = 0);
     CardPokemon(const CardPokemon& card);
     ~CardPokemon();
 
@@ -129,6 +130,9 @@ public:
     AttackData lastAttackUsed();
     int lastIndexOfAttackUsed();
 
+    unsigned short costRetreat();
+    bool canRetreat();
+
     CardPokemon& operator =(const CardPokemon& source);
 
 signals:
@@ -147,6 +151,7 @@ private:
     ModelListEnergies* m_modelListEnergies;
     CardPokemon* m_cardEvolution;
 	short m_evolutionFrom;
+    unsigned short m_costRetreat;
 
     unsigned short m_damageOfPoisonPerRound;
     AttackData m_lastAttackUsed;

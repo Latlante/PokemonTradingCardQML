@@ -21,13 +21,31 @@ Item {
             imageCard.source = card.image;
             var heightPerAttack = 0.26 * imageCard.paintedHeight;
             rectangleAttack1.height = heightPerAttack / card.attacksCount();
+            //rectangleRetreat.anchors.top = rectangleAttack1.anchors.bottom
 
-            rectangleAttack2.height = heightPerAttack / card.attacksCount();
-            rectangleAttack2.visible = card.attacksCount() >= 2;
+            if(card.attacksCount() >= 2)
+            {
+                rectangleAttack2.visible = true;
+                rectangleAttack2.height = heightPerAttack / card.attacksCount();
+                //rectangleRetreat.anchors.top = rectangleAttack2.anchors.bottom
+            }
+            else
+            {
+                rectangleAttack2.visible = false;
+                rectangleAttack2.height = 0;
+            }
 
-            rectangleAttack3.height = heightPerAttack / card.attacksCount();
-            rectangleAttack3.visible = card.attacksCount() >= 3;
-
+            if(card.attacksCount() >= 3)
+            {
+                rectangleAttack3.height = heightPerAttack / card.attacksCount();
+                rectangleAttack3.visible = true;
+                //rectangleRetreat.anchors.top = rectangleAttack3.anchors.bottom
+            }
+            else
+            {
+                rectangleAttack3.visible = false;
+                rectangleAttack3.height = 0;
+            }
         }
         else
         {
@@ -44,7 +62,7 @@ Item {
         MouseArea {
             id: mouseAreaClosing
             anchors.fill: parent
-            onClicked: popupPokemonSelectingAttack1.visible = false
+            onClicked: ctrlPopups.selectionCardsFinished();
         }
 
         Image {
@@ -123,7 +141,28 @@ Item {
                 }
             }
 
+            Rectangle {
+                id: rectangleRetreat
+                width: 0.33*imageCard.paintedWidth
+                height: 0.1*imageCard.paintedHeight
+                color: "transparent"
+                anchors.top: rectangleAttack3.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: (imageCard.paintedWidth/2) - (width/2)
+                border.color: "yellow"
+                border.width: 3
+                visible: ctrlPopups.popupSelectingAttacks_AuthorizeRetreat
 
+                MouseArea {
+                    id: mouseAreaRetreat
+                    anchors.fill: parent
+
+                    onClicked: {
+                        ctrlPopups.popupSelectingAttacks_IndexAttack = 4;
+                        ctrlPopups.selectionCardsFinished();
+                    }
+                }
+            }
         }
     }
 }

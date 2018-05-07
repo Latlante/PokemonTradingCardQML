@@ -242,16 +242,40 @@ Player* GameManager::gameIsFinished()
     return playWinner;
 }
 
-int GameManager::displayAttacks(CardPokemon* card)
+QList<int> GameManager::displayBench(BenchArea *bench)
+{
+#ifdef TESTS_UNITAIRES
+    Q_UNUSED(card)
+    return QList<int>() << 0;
+#else
+    return m_ctrlPopups.displayBench(bench);
+#endif
+}
+
+QList<int> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon)
+{
+#ifdef TESTS_UNITAIRES
+    Q_UNUSED(card)
+    return QList<int>() << 0;
+#else
+    return m_ctrlPopups.displayEnergiesForAPokemon(pokemon);
+#endif
+}
+
+int GameManager::displayAttacks(CardPokemon* card, bool blockRetreat)
 {
 #ifdef TESTS_UNITAIRES
     Q_UNUSED(card)
     return 0;
 #else
-    return m_ctrlPopups.displayAttacks(card);
+    bool authorizeRetreat = false;
+
+    if(blockRetreat == false)
+        authorizeRetreat = card->canRetreat();
+
+    return m_ctrlPopups.displayAttacks(card, authorizeRetreat);
 #endif
 }
-
 
 #ifdef TESTS_UNITAIRES
 void GameManager::setForcedValueHeadOrTail(bool forced, unsigned short value)

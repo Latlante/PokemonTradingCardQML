@@ -8,12 +8,12 @@
 #include "../src_Models/modellistenergies.h"
 #include "utils.h"
 
-CardPokemon::CardPokemon(unsigned short id, 
-			const QString& name, 
-			AbstractCard::Enum_element element,
-			unsigned short lifeTotal,
-			QList<AttackData> listAttacks,
-			short evolutionFrom) :
+CardPokemon::CardPokemon(unsigned short id,
+            const QString& name,
+            AbstractCard::Enum_element element,
+            unsigned short lifeTotal,
+            QList<AttackData> listAttacks,
+            short evolutionFrom, unsigned short costRetreat) :
     AbstractCard(id, name),
 	m_element(element),
 	m_lifeTotal(lifeTotal),
@@ -24,6 +24,7 @@ CardPokemon::CardPokemon(unsigned short id,
     m_modelListEnergies(new ModelListEnergies()),
     m_cardEvolution(nullptr),
     m_evolutionFrom(evolutionFrom),
+    m_costRetreat(costRetreat),
     m_damageOfPoisonPerRound(DAMAGE_POISON)
 {
 	
@@ -450,6 +451,16 @@ int CardPokemon::lastIndexOfAttackUsed()
     return m_listAttacks.indexOf(m_lastAttackUsed);
 }
 
+unsigned short CardPokemon::costRetreat()
+{
+    return m_costRetreat;
+}
+
+bool CardPokemon::canRetreat()
+{
+    return countEnergies() >= m_costRetreat;
+}
+
 CardPokemon& CardPokemon::operator =(const CardPokemon& source)
 {
     m_id = source.m_id;
@@ -461,6 +472,7 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     //m_modelListEnergies = source.m_modelListEnergies;     //Pas besoin
     m_cardEvolution = source.m_cardEvolution;
     m_evolutionFrom = source.m_evolutionFrom;
+    m_costRetreat = source.m_costRetreat;
     m_damageOfPoisonPerRound = source.m_damageOfPoisonPerRound;
     m_lastAttackUsed = source.m_lastAttackUsed;
 

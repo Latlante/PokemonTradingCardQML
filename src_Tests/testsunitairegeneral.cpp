@@ -39,6 +39,7 @@ void TestsUnitaireGeneral::checkStructCardPokemonByCreatingACustomOne()
     const unsigned short attack1Damage = 50;
     const AbstractCard::Enum_element attack1CostEnergiesElement = AbstractCard::Element_Grass;
     const unsigned short attack1CostEnergiesQuantity = 3;
+    const unsigned short costRetreat = 2;
 
     //Création
     QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
@@ -56,7 +57,9 @@ void TestsUnitaireGeneral::checkStructCardPokemonByCreatingACustomOne()
                                                  pokemonName,
                                                  pokemonElement,
                                                  pokemonLife,
-                                                 listAttacks);
+                                                 listAttacks,
+                                                 -1,
+                                                 costRetreat);
 
     //Tests
     COMPARE(customPokemon->id(), pokemonId);
@@ -67,6 +70,7 @@ void TestsUnitaireGeneral::checkStructCardPokemonByCreatingACustomOne()
     COMPARE(customPokemon->lifeLeft(), pokemonLife);
     COMPARE(customPokemon->status(), CardPokemon::Status_Normal);
     COMPARE(customPokemon->isBase(), true);
+    COMPARE(customPokemon->costRetreat(), costRetreat);
 
     QList<AttackData> listAttacksFromCard = customPokemon->listAttacks();
     COMPARE(listAttacksFromCard.count(), 1);
@@ -97,6 +101,7 @@ void TestsUnitaireGeneral::checkStructCardPokemonByCreatingASpecificOne()
     const unsigned short attack1Damage = 10;
     const AbstractCard::Enum_element attack1CostEnergiesElement = AbstractCard::Element_Grass;
     const unsigned short attack1CostEnergiesQuantity = 1;
+    const unsigned short costRetreat = 1;
 
     //Création
     Database db;
@@ -120,6 +125,7 @@ void TestsUnitaireGeneral::checkStructCardPokemonByCreatingASpecificOne()
             COMPARE(customPokemon->lifeLeft(), pokemonLife);
             COMPARE(customPokemon->status(), CardPokemon::Status_Normal);
             COMPARE(customPokemon->isBase(), true);
+            COMPARE(customPokemon->costRetreat(), costRetreat);
 
             QList<AttackData> listAttacksFromCard = customPokemon->listAttacks();
             COMPARE(listAttacksFromCard.count(), 1);

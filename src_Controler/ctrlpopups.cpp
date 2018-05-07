@@ -10,6 +10,7 @@
 #include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
 #include "src_Models/modelpopupselectcardinpacket.h"
+#include "src_Models/modelpopupselectenergyinpokemon.h"
 #include "src_Packets/abstractpacket.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/packetdeck.h"
@@ -17,18 +18,22 @@
 
 CtrlPopups::CtrlPopups(QObject *parent) :
     QObject(parent),
-    m_modelPopups(new ModelPopupSelectCardInPacket()),
-    m_visible(false),
+    m_modelSelectCardInPacket(new ModelPopupSelectCardInPacket()),
+    m_selectCardInPacketVisible(false),
     m_popupSelectingAttacks_Visible(false),
     m_popupSelectingAttacks_Card(nullptr),
-    m_popupSelectingAttacks_IndexAttack(-1)
+    m_popupSelectingAttacks_IndexAttack(-1),
+    m_popupSelectingAttacks_AuthorizeRetreat(false),
+    m_modelSelectEnergyInPokemon(new ModelPopupSelectEnergyInPokemon()),
+    m_selectEnergiesInPokemonVisible(false)
 {
 
 }
 
 CtrlPopups::~CtrlPopups()
 {
-    delete m_modelPopups;
+    delete m_modelSelectCardInPacket;
+    delete m_modelSelectEnergyInPokemon;
 }
 
 /************************************************************
@@ -66,23 +71,64 @@ bool CtrlPopups::install(QQmlApplicationEngine *pEngine)
     return bInstalled;
 }
 
-ModelPopupSelectCardInPacket* CtrlPopups::model()
+//**************************************
+//      SELECT CARD IN PACKET
+//**************************************
+ModelPopupSelectCardInPacket* CtrlPopups::modelSelectCardInPacket()
 {
-    return m_modelPopups;
+    return m_modelSelectCardInPacket;
 }
 
-bool CtrlPopups::visible()
+QList<int> CtrlPopups::displayBench(BenchArea *packet)
 {
-    return m_visible;
+    return displayAbstractPacket(packet);
 }
 
-void CtrlPopups::setVisible(bool state)
+QList<int> CtrlPopups::displayDeck(PacketDeck *packet)
 {
-    if(m_visible != state)
+    return displayAbstractPacket(packet);
+}
+
+QList<int> CtrlPopups::displayHand(PacketHand *packet)
+{
+    return displayAbstractPacket(packet);
+}
+
+bool CtrlPopups::selectCardInPacketVisible()
+{
+    return m_selectCardInPacketVisible;
+}
+
+void CtrlPopups::setSelectCardInPacketVisible(bool state)
+{
+    if(m_selectCardInPacketVisible != state)
     {
-        m_visible = state;
-        emit visibleChanged();
+        m_selectCardInPacketVisible = state;
+        emit selectCardInPacketVisibleChanged();
     }
+}
+
+//**************************************
+//      SELECT ATTACK
+//**************************************
+int CtrlPopups::displayAttacks(CardPokemon* card, bool authorizeRetreat)
+{
+    //Initialisation
+    setPopupSelectingAttacks_IndexAttack(-1);
+    setPopupSelectingAttacks_AuthorizeRetreat(authorizeRetreat);
+    setPopupSelectingAttacks_Card(card);
+    setPopupSelectingAttacks_Visible(true);
+
+    //En attente
+    QEventLoop loop;
+    connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    //Configuration de fin
+    setPopupSelectingAttacks_Visible(false);
+
+    //Renvoi de l'information
+    return m_popupSelectingAttacks_IndexAttack;
 }
 
 bool CtrlPopups::popupSelectingAttacks_Visible()
@@ -127,38 +173,66 @@ void CtrlPopups::setPopupSelectingAttacks_IndexAttack(int index)
     }
 }
 
-QList<int> CtrlPopups::displayBench(BenchArea *packet)
+bool CtrlPopups::popupSelectingAttacks_AuthorizeRetreat()
 {
-    return displayAbstractPacket(packet);
+    return m_popupSelectingAttacks_AuthorizeRetreat;
 }
 
-QList<int> CtrlPopups::displayDeck(PacketDeck *packet)
+void CtrlPopups::setPopupSelectingAttacks_AuthorizeRetreat(bool authorize)
 {
-    return displayAbstractPacket(packet);
+    if(m_popupSelectingAttacks_AuthorizeRetreat != authorize)
+    {
+        m_popupSelectingAttacks_AuthorizeRetreat = authorize;
+        emit popupSelectingAttacks_AuthorizeRetreatChanged();
+    }
 }
 
-QList<int> CtrlPopups::displayHand(PacketHand *packet)
+//**************************************
+//      SELECT ENERGY IN POKEMON
+//**************************************
+ModelPopupSelectEnergyInPokemon* CtrlPopups::modelSelectEnergyInPokemon()
 {
-    return displayAbstractPacket(packet);
+    return m_modelSelectEnergyInPokemon;
 }
 
-int CtrlPopups::displayAttacks(CardPokemon* card)
+QList<int> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon)
 {
-    setPopupSelectingAttacks_Card(card);
-    setPopupSelectingAttacks_Visible(true);
+    //Initialisation
+    m_modelSelectEnergyInPokemon->addListEnergyFromPokemon(pokemon);
+    setSelectEnergiesInPokemonVisible(true);
 
+    qDebug() << __PRETTY_FUNCTION__ << "En attente";
+
+    //En attente
     QEventLoop loop;
     connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    setPopupSelectingAttacks_Visible(false);
+    qDebug() << __PRETTY_FUNCTION__ << "Popup closed";
 
-    return m_popupSelectingAttacks_IndexAttack;
+    //Configuration de fin
+    setSelectEnergiesInPokemonVisible(false);
+
+    //Renvoi de l'information
+    return m_modelSelectEnergyInPokemon->listIndexEnergiesSelected();
+}
+
+bool CtrlPopups::selectEnergiesInPokemonVisible()
+{
+    return m_selectEnergiesInPokemonVisible;
+}
+
+void CtrlPopups::setSelectEnergiesInPokemonVisible(bool state)
+{
+    if(m_selectEnergiesInPokemonVisible != state)
+    {
+        m_selectEnergiesInPokemonVisible = state;
+        emit selectEnergiesInPokemonVisibleChanged();
+    }
 }
 
 void CtrlPopups::selectionCardsFinished()
 {
-    //setVisible(false);
     emit selectionFinished();
 }
 
@@ -167,18 +241,22 @@ void CtrlPopups::selectionCardsFinished()
 ************************************************************/
 QList<int> CtrlPopups::displayAbstractPacket(AbstractPacket *packet)
 {
-    m_modelPopups->addPacketFromAbstractPacket(packet);
-
-    setVisible(true);
+    //Initialisation
+    m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
+    setSelectCardInPacketVisible(true);
 
     qDebug() << __PRETTY_FUNCTION__ << "En attente";
 
+    //En attente
     QEventLoop loop;
     connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
     loop.exec();
 
     qDebug() << __PRETTY_FUNCTION__ << "Popup closed";
 
-    setVisible(false);
-    return m_modelPopups->listIndexCardsSelected();
+    //Configuration de fin
+    setSelectCardInPacketVisible(false);
+
+    //Renvoi de l'information
+    return m_modelSelectCardInPacket->listIndexCardsSelected();
 }

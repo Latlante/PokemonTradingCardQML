@@ -54,6 +54,8 @@ public:
     bool moveCardFromRewardToHand();
     bool moveAllCardFromHandToDeck();
 
+    bool swapCardsBetweenBenchAndFight(int indexBench);
+
 
 signals:
     void endOfTurn();
