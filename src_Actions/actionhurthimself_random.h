@@ -1,12 +1,12 @@
-#ifndef ACTIONRANDOMDAMAGETOHIMSELF_H
-#define ACTIONRANDOMDAMAGETOHIMSELF_H
+#ifndef ACTIONHURTHIMSELF_RANDOM_H
+#define ACTIONHURTHIMSELF_RANDOM_H
 
 #include "abstractaction.h"
 
-class ActionRandomDamageToHimself : public AbstractAction
+class ActionHurtHimself_Random : public AbstractAction
 {
 public:
-    ActionRandomDamageToHimself(unsigned short damage);
+    ActionHurtHimself_Random(unsigned short damage);
 
     AbstractAction::Enum_typeOfAction type() override;
     QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
@@ -16,4 +16,4 @@ private:
     unsigned short m_damage;
 };
 
-#endif // ACTIONRANDOMDAMAGETOHIMSELF_H
+#endif // ACTIONHURTHIMSELF_RANDOM_H

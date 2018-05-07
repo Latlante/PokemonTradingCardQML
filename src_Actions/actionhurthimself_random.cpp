@@ -1,6 +1,6 @@
-#include "actionrandomdamagetohimself.h"
+#include "actionhurthimself_random.h"
 
-ActionRandomDamageToHimself::ActionRandomDamageToHimself(unsigned short damage) :
+ActionHurtHimself_Random::ActionHurtHimself_Random(unsigned short damage) :
     AbstractAction(),
     m_damage(damage)
 {
@@ -10,18 +10,18 @@ ActionRandomDamageToHimself::ActionRandomDamageToHimself(unsigned short damage) 
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-AbstractAction::Enum_typeOfAction ActionRandomDamageToHimself::type()
+AbstractAction::Enum_typeOfAction ActionHurtHimself_Random::type()
 {
-    return AbstractAction::Action_RandomDamageToHimself;
+    return AbstractAction::Action_HurtHimself_Random;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionRandomDamageToHimself::elementToCheck()
+QList<AbstractAction::Enum_ElementsToCheck> ActionHurtHimself_Random::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionRandomDamageToHimself::action()
+void ActionHurtHimself_Random::action()
 {
     if(pokemonAttacking() != nullptr)
     {

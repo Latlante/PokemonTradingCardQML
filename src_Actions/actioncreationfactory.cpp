@@ -7,11 +7,12 @@
 #include "src_Actions/actiondamagemultipliedbydoubleheadortail.h"
 #include "src_Actions/actiondamagemultipliedbytripleheadortail.h"
 #include "src_Actions/actionhealing.h"
+#include "src_Actions/actionhurthimself.h"
+#include "src_Actions/actionhurthimself_random.h"
 #include "src_Actions/actionmoredamagebyenergy.h"
 #include "src_Actions/actionmoredamageonenemyorhimself.h"
 #include "src_Actions/actionpoisonedcustom.h"
 #include "src_Actions/actionprotectedagainstdamage.h"
-#include "src_Actions/actionrandomdamagetohimself.h"
 #include "src_Actions/actionremoveenergyattached.h"
 #include "src_Actions/actionreplicateoneattackfromenemy.h"
 
@@ -73,6 +74,20 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 actionToReturn = createActionHealing(argInt);
         }
         break;
+    case AbstractAction::Action_HurtHimself:
+        {
+            argInt = arg.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionHurtHimself(argInt);
+        }
+        break;
+    case AbstractAction::Action_HurtHimself_Random:
+        {
+            argInt = arg.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionHurtHimself_Random(argInt);
+        }
+        break;
     case AbstractAction::Action_MoreDamageByEnergy:
         {
             argInt = arg.toInt(&ok);
@@ -97,13 +112,6 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
     case AbstractAction::Action_ProtectedAgainstDamage:
         {
             actionToReturn = createActionProtectedAgainstDamage();
-        }
-        break;
-    case AbstractAction::Action_RandomDamageToHimself:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionRandomDamageToHimself(argInt);
         }
         break;
     case AbstractAction::Action_RemoveEnergyAttached:
@@ -171,6 +179,16 @@ ActionHealing* ActionCreationFactory::createActionHealing(unsigned short pv)
     return new ActionHealing(pv);
 }
 
+ActionHurtHimself* ActionCreationFactory::createActionHurtHimself(unsigned short damage)
+{
+    return new ActionHurtHimself(damage);
+}
+
+ActionHurtHimself_Random* ActionCreationFactory::createActionHurtHimself_Random(unsigned short damage)
+{
+    return new ActionHurtHimself_Random(damage);
+}
+
 ActionMoreDamageByEnergy* ActionCreationFactory::createActionMoreDamageByEnergy(unsigned short damagePerEnergy)
 {
     return new ActionMoreDamageByEnergy(damagePerEnergy);
@@ -189,11 +207,6 @@ ActionPoisonedCustom* ActionCreationFactory::createActionPoisonedCustom(unsigned
 ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgainstDamage()
 {
     return new ActionProtectedAgainstDamage();
-}
-
-ActionRandomDamageToHimself* ActionCreationFactory::createActionRandomDamageToHimself(unsigned short damage)
-{
-    return new ActionRandomDamageToHimself(damage);
 }
 
 ActionRemoveEnergyAttached* ActionCreationFactory::createActionRemoveEnergyAttached(unsigned short numberOfEnergies)

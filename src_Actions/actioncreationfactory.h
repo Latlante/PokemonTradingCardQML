@@ -9,14 +9,14 @@ class ActionChangeEnemyStatusRandom;
 class ActionDamageMultipliedByDoubleHeadOrTail;
 class ActionDamageMultipliedByTripleHeadOrTail;
 class ActionHealing;
+class ActionHurtHimself;
+class ActionHurtHimself_Random;
 class ActionMoreDamageByEnergy;
 class ActionMoreDamageOnEnemyOrHimself;
 class ActionPoisonedCustom;
 class ActionProtectedAgainstDamage;
-class ActionRandomDamageToHimself;
 class ActionRemoveEnergyAttached;
 class ActionReplicateOneAttackFromEnemy;
-
 class ActionTrainer_FakeProfessorChen;
 class ActionTrainer_Leo;
 class ActionTrainer_Potion;
@@ -37,11 +37,12 @@ public:
     static ActionDamageMultipliedByDoubleHeadOrTail* createActionDamageMultipliedByDoubleHeadOrTail(unsigned short damagePerHead);
     static ActionDamageMultipliedByTripleHeadOrTail* createActionDamageMultipliedByTripleHeadOrTail(unsigned short damagePerHead);
     static ActionHealing* createActionHealing(unsigned short pv);
+    static ActionHurtHimself* createActionHurtHimself(unsigned short damage);
+    static ActionHurtHimself_Random* createActionHurtHimself_Random(unsigned short damage);
     static ActionMoreDamageByEnergy* createActionMoreDamageByEnergy(unsigned short damagePerEnergy);
     static ActionMoreDamageOnEnemyOrHimself* createActionMoreDamageOnEnemyOrHimself(unsigned short damage);
     static ActionPoisonedCustom* createActionPoisonedCustom(unsigned short damage);
     static ActionProtectedAgainstDamage* createActionProtectedAgainstDamage();
-    static ActionRandomDamageToHimself* createActionRandomDamageToHimself(unsigned short damage);
     static ActionRemoveEnergyAttached* createActionRemoveEnergyAttached(unsigned short numberOfEnergies);
     static ActionReplicateOneAttackFromEnemy* createActionReplicateOneAttackFromEnemy();
 

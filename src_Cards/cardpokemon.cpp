@@ -136,6 +136,11 @@ unsigned short CardPokemon::lifeLeft()
     return lifeTotal() - currentDamage();
 }
 
+unsigned short CardPokemon::damageMarker()
+{
+    return currentDamage() / DAMAGE_MARQUER_VALUE;
+}
+
 CardPokemon::Enum_statusOfPokemon CardPokemon::status()
 {
 	return m_status;

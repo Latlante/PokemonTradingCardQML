@@ -27,10 +27,10 @@ void ActionSwapPokemonBetweenFigthAndBench::action()
     {
         if(benchPlayerAttacked()->countCard() > 0)
         {
-            AbstractCard* cardFigther = playerAttacked()->fight()->takeACard(0);
-            //m_gameManager->display();
-            //playerAttacked()->move
+            QList<int> listIndexPokemonChoose = gameManager()->displayBench(benchPlayerAttacked());
 
+            if(listIndexPokemonChoose.count() >= 1)
+                playerAttacked()->swapCardsBetweenBenchAndFight(listIndexPokemonChoose.first());
         }
     }
 }

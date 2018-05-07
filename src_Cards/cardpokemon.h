@@ -87,6 +87,7 @@ public:
     unsigned short lifeTotal();
     bool isDied();
     unsigned short lifeLeft();
+    unsigned short damageMarker();
     Enum_statusOfPokemon status();
     Q_INVOKABLE QString statusFormatString();
     void setStatus(Enum_statusOfPokemon status);
