@@ -4,10 +4,12 @@
 #include "src_Controler/ctrlpopups.h"
 #include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
+#include "src_Models/modellistenergies.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
 #include "src_Packets/packethand.h"
 #include "src_Packets/packetrewards.h"
+#include "src_Packets/packettrash.h"
 #include "dlgselectcards.h"
 #include "utils.h"
 
@@ -189,17 +191,74 @@ void GameManager::nextPlayer()
     currentPlayer()->drawOneCard();
 }
 
-void GameManager::attack(Player *playAttacking, unsigned short index, Player *playAttacked)
+void GameManager::attack(CardPokemon *pokemonAttacking, unsigned short index)
 {
-    CardPokemon *pokemonAttacking = playAttacking->fight()->pokemonFighting(0);
-    CardPokemon *pokemonAttacked = playAttacked->fight()->pokemonFighting(0);
+    CardPokemon::Enum_StatusOfAttack statusOfAttack = CardPokemon::Attack_UnknownError;
 
-    qDebug() << __PRETTY_FUNCTION__ << pokemonAttacking->name() << " Attack " << pokemonAttacked->name();
-    pokemonAttacking->tryToAttack(index, pokemonAttacked);
+    if(pokemonAttacking != nullptr)
+    {
+        Player* playerAttacked = enemyOf(pokemonAttacking->owner());
 
-    qDebug() << "Résultat du combat:" << pokemonAttacking->lifeLeft();
-    qDebug() << "\t-> Attaquant:" << pokemonAttacking->name() << " - " << pokemonAttacking->lifeLeft() << "/" << pokemonAttacking->lifeTotal() << " - " << pokemonAttacking->status();
-    qDebug() << "\t-> Attaqué:" << pokemonAttacked->name() << " - " << pokemonAttacked->lifeLeft() << "/" << pokemonAttacked->lifeTotal() << " - " << pokemonAttacked->status();
+        if(playerAttacked != nullptr)
+        {
+            CardPokemon *pokemonAttacked = playerAttacked->fight()->pokemonFighting(0);
+
+            qDebug() << __PRETTY_FUNCTION__ << pokemonAttacking->name() << " Attack " << pokemonAttacked->name();
+            statusOfAttack = pokemonAttacking->tryToAttack(index, pokemonAttacked);
+
+            qDebug() << "Résultat du combat:" << static_cast<int>(statusOfAttack);
+            qDebug() << "\t-> Attaquant:" << pokemonAttacking->name() << " - " << pokemonAttacking->lifeLeft() << "/" << pokemonAttacking->lifeTotal() << " - " << pokemonAttacking->status();
+            qDebug() << "\t-> Attaqué:" << pokemonAttacked->name() << " - " << pokemonAttacked->lifeLeft() << "/" << pokemonAttacked->lifeTotal() << " - " << pokemonAttacked->status();
+        }
+        else
+            qCritical() << __PRETTY_FUNCTION__ << "playerAttacked is null";
+    }
+    else
+        qCritical() << __PRETTY_FUNCTION__ << "pokemonAttacking is null";
+}
+
+bool GameManager::retreat(CardPokemon *pokemonToRetreat)
+{
+    bool success = false;
+    QList<int> listIndexBench;
+
+    //On revérifie qu'on peut
+    if(pokemonToRetreat->canRetreat() == true)
+    {
+        Player* playerAttacking = pokemonToRetreat->owner();
+        if(playerAttacking != nullptr)
+        {
+            if(pokemonToRetreat->costRetreat() > 0)
+            {
+                //On sélectionne les énergies à mettre dans la pile de défausse
+                QList<int> listIndexEnergies = displayEnergiesForAPokemon(pokemonToRetreat);
+                QList<CardEnergy*> listEnergies;
+                ModelListEnergies* modelEnergies = pokemonToRetreat->modelListOfEnergies();
+
+                //On les récupére sans les supprimer du modèle pour ne pas décaler l'index
+                foreach(int index, listIndexEnergies)
+                    listEnergies.append(modelEnergies->energy(index));
+
+                //Maintenant on peut les supprimer
+                foreach(int index, listIndexEnergies)
+                    modelEnergies->takeEnergy(index);
+
+                //Maintenant on peut les placer dans la défausse
+                foreach(CardEnergy* energy, listEnergies)
+                    playerAttacking->trash()->addNewCard(energy);
+            }
+
+            listIndexBench = displayBench(playerAttacking->bench());
+            success = playerAttacking->swapCardsBetweenBenchAndFight(listIndexBench.first());
+        }
+        else
+            qCritical() << __PRETTY_FUNCTION__ << "pokemonToRetreat->owner() is null";
+
+    }
+    else
+        qCritical() << __PRETTY_FUNCTION__ << "pokemonToRetreat->canRetreat() is false";
+
+    return success;
 }
 
 void GameManager::endOfTurn()
@@ -346,13 +405,13 @@ void GameManager::setIndexCurrentPlayer(int index)
         m_indexCurrentPlayer = index;
 
         m_playerAttacking = m_listPlayers[index];
-        m_playerAttacked = ennemyOf(m_playerAttacking);
+        m_playerAttacked = enemyOf(m_playerAttacking);
 
         emit indexCurrentPlayerChanged();
     }
 }
 
-Player* GameManager::ennemyOf(Player *play)
+Player* GameManager::enemyOf(Player *play)
 {
     Player* playerEnnemy = nullptr;
 
@@ -361,7 +420,7 @@ Player* GameManager::ennemyOf(Player *play)
     {
         playerEnnemy = m_listPlayers[1];
     }
-    else
+    else if(play == m_listPlayers[1])
     {
         playerEnnemy = m_listPlayers[0];
     }
@@ -449,7 +508,7 @@ void GameManager::checkPokemonDead()
             //play->moveCardFromBenchToFight(0);      //On remplace par un pokemon sur le banc s'il y a
 
             if(play->rewards()->countCard() > 0)
-                ennemyOf(play)->drawOneReward();        //Le joueur adverse pioche une récompense
+                enemyOf(play)->drawOneReward();        //Le joueur adverse pioche une récompense
         }
 
         //bench

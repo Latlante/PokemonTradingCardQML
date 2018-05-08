@@ -2,9 +2,11 @@
 #include <QPixmap>
 #include <QtQml/qqml.h>
 
+#include "player.h"
 
 AbstractCard::AbstractCard(unsigned short id, const QString& name) :
     QObject(),
+    m_owner(nullptr),
 	m_id(id),
     m_name(name)
 {
@@ -36,6 +38,16 @@ QString AbstractCard::imageByDefault()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
+Player* AbstractCard::owner()
+{
+    return m_owner;
+}
+
+void AbstractCard::setOwner(Player *play)
+{
+    m_owner = play;
+}
+
 int AbstractCard::id()
 {
     return m_id;

@@ -10,7 +10,8 @@ ModelListEnergies::ModelListEnergies(QObject *parent) :
 
 ModelListEnergies::~ModelListEnergies()
 {
-
+    while(m_listEnergies.count() > 0)
+        delete m_listEnergies.takeFirst();
 }
 
 /************************************************************
@@ -58,14 +59,6 @@ CardEnergy* ModelListEnergies::energy(int index)
     }
 
     return energyToReturn;
-}
-
-void ModelListEnergies::removeEnergy(int index)
-{
-    if((index >= 0) && (index < rowCount()))
-    {
-        delete takeEnergy(index);
-    }
 }
 
 QList<CardEnergy*> ModelListEnergies::takeAllEnergies()

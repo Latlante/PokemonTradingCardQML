@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QDebug>
-
 #include <QUrl>
+
+class Player;
 
 class AbstractCard : public QObject
 {
@@ -48,7 +49,9 @@ public:
     Q_INVOKABLE virtual Enum_typeOfCard type() = 0;
     Q_INVOKABLE virtual QUrl image() = 0;
     virtual AbstractCard* clone() = 0;
-	
+
+    Player* owner();
+    void setOwner(Player* play);
     Q_INVOKABLE virtual int id();
     Q_INVOKABLE virtual const QString name();
 	void setName(const QString& name);
@@ -59,6 +62,7 @@ signals:
     void dataChanged();
 
 protected:
+    Player* m_owner;
 	unsigned short m_id;
 	QString m_name;
 

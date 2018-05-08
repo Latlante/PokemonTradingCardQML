@@ -43,7 +43,6 @@ public:
     Q_INVOKABLE void displaySelectingCardsForNextPlayers();
     Q_INVOKABLE void onClicked_ButtonOk_SelectCards();
     Q_INVOKABLE void onClicked_ButtonReadyPreparation();
-    Q_INVOKABLE void onClicked_ButtonAttack(int indexAttack);
 
     Q_INVOKABLE void actionAttack(CardPokemon* card);
 

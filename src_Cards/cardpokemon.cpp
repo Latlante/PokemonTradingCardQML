@@ -3,17 +3,18 @@
 #include <QDebug>
 #include <QtQml/qqml.h>
 #include <QUrl>
-#include "../src_Actions/abstractaction.h"
-#include "cardenergy.h"
-#include "../src_Models/modellistenergies.h"
 #include "utils.h"
+#include "src_Actions/abstractaction.h"
+#include "src_Cards/cardenergy.h"
+#include "src_Models/modellistenergies.h"
 
 CardPokemon::CardPokemon(unsigned short id,
-            const QString& name,
-            AbstractCard::Enum_element element,
-            unsigned short lifeTotal,
-            QList<AttackData> listAttacks,
-            short evolutionFrom, unsigned short costRetreat) :
+                         const QString& name,
+                         AbstractCard::Enum_element element,
+                         unsigned short lifeTotal,
+                         QList<AttackData> listAttacks,
+                         short evolutionFrom,
+                         unsigned short costRetreat) :
     AbstractCard(id, name),
 	m_element(element),
 	m_lifeTotal(lifeTotal),
@@ -44,7 +45,8 @@ CardPokemon::CardPokemon(const CardPokemon &card) :
 				
 CardPokemon::~CardPokemon()
 {
-    //delete m_modelListEnergies;
+    delete m_cardEvolution;
+    delete m_modelListEnergies;
 }
 
 /************************************************************
@@ -275,11 +277,6 @@ CardEnergy* CardPokemon::takeEnergy(int index)
     return m_modelListEnergies->takeEnergy(index);
 }
 
-void CardPokemon::removeEnergy(int index)
-{
-    m_modelListEnergies->removeEnergy(index);
-}
-
 unsigned short CardPokemon::countEnergies()
 {
     return m_modelListEnergies->countEnergies();
@@ -488,6 +485,7 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
 {
     m_id = source.m_id;
     m_name = source.m_name;
+    m_owner = source.m_owner;
     m_element = source.m_element;
     m_lifeTotal = source.m_lifeTotal;
     m_damage = 0;

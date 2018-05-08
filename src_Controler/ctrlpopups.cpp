@@ -201,14 +201,10 @@ QList<int> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon)
     m_modelSelectEnergyInPokemon->addListEnergyFromPokemon(pokemon);
     setSelectEnergiesInPokemonVisible(true);
 
-    qDebug() << __PRETTY_FUNCTION__ << "En attente";
-
     //En attente
     QEventLoop loop;
     connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
     loop.exec();
-
-    qDebug() << __PRETTY_FUNCTION__ << "Popup closed";
 
     //Configuration de fin
     setSelectEnergiesInPokemonVisible(false);
@@ -245,14 +241,10 @@ QList<int> CtrlPopups::displayAbstractPacket(AbstractPacket *packet)
     m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
     setSelectCardInPacketVisible(true);
 
-    qDebug() << __PRETTY_FUNCTION__ << "En attente";
-
     //En attente
     QEventLoop loop;
     connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
     loop.exec();
-
-    qDebug() << __PRETTY_FUNCTION__ << "Popup closed";
 
     //Configuration de fin
     setSelectCardInPacketVisible(false);

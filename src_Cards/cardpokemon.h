@@ -109,7 +109,6 @@ public:
 	
     void addEnergy(CardEnergy* energy);
     CardEnergy* takeEnergy(int index);
-    void removeEnergy(int index);
 	unsigned short countEnergies();
 	unsigned short countEnergies(Enum_element element);
     Q_INVOKABLE ModelListEnergies* modelListOfEnergies();

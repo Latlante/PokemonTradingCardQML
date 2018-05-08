@@ -17,9 +17,6 @@ public:
     };
     Q_ENUMS(StepGame)
 
-
-
-
     explicit ConstantesQML(QObject *parent = nullptr);
 
     static void declareQML();

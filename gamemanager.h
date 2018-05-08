@@ -39,7 +39,8 @@ public:
     void startGame();
     void selectFirstPlayer();
 	void nextPlayer();
-    void attack(Player* playAttacking, unsigned short index, Player* playAttacked);
+    void attack(CardPokemon* pokemonAttacking, unsigned short index);
+    bool retreat(CardPokemon *pokemonToRetreat);
 	void endOfTurn();
     Player *gameIsFinished();
 
@@ -81,7 +82,7 @@ private:
 	bool m_gameIsReady;
 
     void setIndexCurrentPlayer(int index);
-    Player* ennemyOf(Player* play);
+    Player* enemyOf(Player* play);
 
     bool checkHandOfEachPlayer();
     void drawFirstCards(Player *play);

@@ -24,7 +24,8 @@ Player::Player(QString name, QList<AbstractCard*> listCards, QObject *parent) :
     m_canPlay(true),
     m_energyPlayedForThisRound(false)
 {
-	
+    foreach(AbstractCard* card, listCards)
+        card->setOwner(this);
 }
 
 Player::~Player()

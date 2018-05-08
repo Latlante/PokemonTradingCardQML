@@ -1,5 +1,11 @@
 #include "actionremoveallenergiesattached.h"
 
+#include "gamemanager.h"
+#include "src_Packets/fightarea.h"
+#include "src_Packets/packettrash.h"
+#include "src_Cards/cardenergy.h"
+#include "src_Cards/cardpokemon.h"
+
 ActionRemoveAllEnergiesAttached::ActionRemoveAllEnergiesAttached() :
     AbstractAction()
 {
@@ -24,7 +30,20 @@ void ActionRemoveAllEnergiesAttached::action()
 {
     if(pokemonAttacking() != nullptr)
     {
-        while(pokemonAttacking()->countEnergies() > 0)
-            pokemonAttacking()->removeEnergy(0);
+        Player* playerAttacking = pokemonAttacking()->owner();
+
+        if(playerAttacking != nullptr)
+        {
+            PacketTrash* trash = playerAttacking->trash();
+
+            if(trash != nullptr)
+            {
+                while(pokemonAttacking()->countEnergies() > 0)
+                {
+                    CardEnergy* energy = pokemonAttacking()->takeEnergy(0);
+                    trash->addNewCard(energy);
+                }
+            }
+        }
     }
 }
