@@ -12,12 +12,12 @@ Item {
         if(card != undefined)
         {
             var description = "";
-            imageCard.source = card.image;
 
             if(card.type() === AbstractCard.TypeOfCard_Pokemon)
             {
                 //description = card.id() + " - " + card.name();
                 //description += " (" + card.lifeTotal() + ")";
+                imageCard.source = card.image;
 
                 description += "----- " + card.name + " -----\n\n";
                 description += "ID: " + card.id() + "\n";
@@ -38,6 +38,7 @@ Item {
             {
                 //description = card.id() + " - " + card.name();
                 //description += " (" + card.quantity() + ")";
+                imageCard.source = card.image();
 
                 description += "----- Energie " + card.name() + " -----\n\n";
                 description += "Element: " + card.elementFormatString() + "\n";
@@ -45,6 +46,8 @@ Item {
             }
             else if(card.type() === AbstractCard.TypeOfCard_Action)
             {
+                imageCard.source = card.image();
+
                 description += "----- Dresseur " + card.name() + " -----\n\n";
                 description += "Element: " + card.description();
             }
