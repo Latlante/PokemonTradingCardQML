@@ -74,7 +74,9 @@ SOURCES += \
     src_Actions/actiondestruction.cpp \
     src_Actions/actionmoredamagebyenemydamage.cpp \
     src_Actions/actionhurthimself.cpp \
-    src_Actions/actionhurthimself_random.cpp
+    src_Actions/actionhurthimself_random.cpp \
+    src_Actions/actioncompleteprotectionbypayingoneenergy.cpp \
+    src_Actions/actionremoveallenergiesattached.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -146,7 +148,9 @@ HEADERS += \
     src_Actions/actiondestruction.h \
     src_Actions/actionmoredamagebyenemydamage.h \
     src_Actions/actionhurthimself.h \
-    src_Actions/actionhurthimself_random.h
+    src_Actions/actionhurthimself_random.h \
+    src_Actions/actioncompleteprotectionbypayingoneenergy.h \
+    src_Actions/actionremoveallenergiesattached.h
 
 FORMS += \
     dlgselectcards.ui

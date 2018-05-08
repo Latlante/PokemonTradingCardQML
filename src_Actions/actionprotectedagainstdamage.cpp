@@ -23,5 +23,5 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionProtectedAgainstDamage::elemen
 void ActionProtectedAgainstDamage::action()
 {
     if(pokemonAttacking() != nullptr)
-        pokemonAttacking()->setInvincibleForTheNextTurn(true);
+        pokemonAttacking()->setProtectedAgainstDamageForTheNextTurn(true);
 }

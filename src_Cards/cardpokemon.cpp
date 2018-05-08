@@ -19,7 +19,8 @@ CardPokemon::CardPokemon(unsigned short id,
 	m_lifeTotal(lifeTotal),
     m_damage(0),
     m_status(Status_Normal),
-    m_invincibleOnNextTurn(false),
+    m_protectedAgainstDamageForTheNextTurn(false),
+    m_protectedAgainstEffectForTheNextTurn(false),
 	m_listAttacks(listAttacks),
     m_modelListEnergies(new ModelListEnergies()),
     m_cardEvolution(nullptr),
@@ -33,7 +34,8 @@ CardPokemon::CardPokemon(unsigned short id,
 CardPokemon::CardPokemon(const CardPokemon &card) :
     AbstractCard(),
     m_status(Status_Normal),
-    m_invincibleOnNextTurn(false),
+    m_protectedAgainstDamageForTheNextTurn(false),
+    m_protectedAgainstEffectForTheNextTurn(false),
     m_modelListEnergies(new ModelListEnergies()),
     m_cardEvolution(nullptr)
 {
@@ -153,7 +155,7 @@ QString CardPokemon::statusFormatString()
 
 void CardPokemon::setStatus(Enum_statusOfPokemon status)
 {
-    if(m_status != status)
+    if((m_status != status) && (!isProtectedAgainstEffectForTheNextTurn()))
     {
         m_status = status;
         emit statusChanged();
@@ -161,14 +163,30 @@ void CardPokemon::setStatus(Enum_statusOfPokemon status)
     }
 }
 
-bool CardPokemon::isInvincibleForTheNextTurn()
+bool CardPokemon::isProtectedAgainstDamageForTheNextTurn()
 {
-    return m_invincibleOnNextTurn;
+    return m_protectedAgainstDamageForTheNextTurn;
+}
+
+void CardPokemon::setProtectedAgainstDamageForTheNextTurn(bool status)
+{
+    m_protectedAgainstDamageForTheNextTurn = status;
+}
+
+bool CardPokemon::isProtectedAgainstEffectForTheNextTurn()
+{
+    return m_protectedAgainstEffectForTheNextTurn;
+}
+
+void CardPokemon::setProtectedAgainstEffectForTheNextTurn(bool status)
+{
+    m_protectedAgainstEffectForTheNextTurn = status;
 }
 
 void CardPokemon::setInvincibleForTheNextTurn(bool status)
 {
-    m_invincibleOnNextTurn = status;
+    setProtectedAgainstDamageForTheNextTurn(status);
+    setProtectedAgainstEffectForTheNextTurn(status);
 }
 
 QList<AttackData> CardPokemon::listAttacks()
@@ -322,7 +340,7 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
 
 void CardPokemon::takeDamage(unsigned short damage)
 {
-    if(!isInvincibleForTheNextTurn())
+    if(!isProtectedAgainstDamageForTheNextTurn())
     {
         setDamage(currentDamage() + damage);
     }
