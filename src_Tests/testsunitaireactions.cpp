@@ -17,7 +17,7 @@ const unsigned short TestsUnitaireActions::m_pokAttacking_numberOfEnergiesAttach
 
 const unsigned short TestsUnitaireActions::m_pokAttacked_Life = 300;
 const unsigned short TestsUnitaireActions::m_pokAttacked_AttDamage = 20;
-const AbstractAction::Enum_typeOfAction TestsUnitaireActions::m_pokAttacked_TypeOfAction = AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail;
+const AbstractAction::Enum_typeOfAction TestsUnitaireActions::m_pokAttacked_TypeOfAction = AbstractAction::Action_DamageMultipliedByHeadOrTail;
 const unsigned short TestsUnitaireActions::m_pokAttacked_ActionDamage = 10;
 
 TestsUnitaireActions::TestsUnitaireActions() :

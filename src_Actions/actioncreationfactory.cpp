@@ -4,17 +4,20 @@
 
 #include "src_Actions/actionchangeenemystatus.h"
 #include "src_Actions/actionchangeenemystatusrandom.h"
-#include "src_Actions/actiondamagemultipliedbydoubleheadortail.h"
-#include "src_Actions/actiondamagemultipliedbytripleheadortail.h"
+#include "src_Actions/actioncompleteprotectionbypayingoneenergy.h"
+#include "src_Actions/actiondamagemultipliedbyheadortail.h"
+#include "src_Actions/actionenemypoisoned.h"
 #include "src_Actions/actionhealing.h"
+#include "src_Actions/actionhurteverypokemononownbench.h"
 #include "src_Actions/actionhurthimself.h"
-#include "src_Actions/actionhurthimself_random.h"
+#include "src_Actions/actionmoredamagebyenemydamage.h"
 #include "src_Actions/actionmoredamagebyenergy.h"
-#include "src_Actions/actionmoredamageonenemyorhimself.h"
-#include "src_Actions/actionpoisonedcustom.h"
+#include "src_Actions/actionmoredamageorhurthimself.h"
 #include "src_Actions/actionprotectedagainstdamage.h"
+#include "src_Actions/actionprotectedagainstdamagerandom.h"
 #include "src_Actions/actionremoveenergyattached.h"
 #include "src_Actions/actionreplicateoneattackfromenemy.h"
+#include "src_Actions/actionswappokemonbetweenfigthandbench.h"
 
 #include "src_Actions/actiontrainer_fakeprofessorchen.h"
 #include "src_Actions/actiontrainer_leo.h"
@@ -28,104 +31,148 @@ ActionCreationFactory::ActionCreationFactory()
 
 }
 
-AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfAction idAction, QVariant arg)
+AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfAction idAction, QVariant arg1, QVariant arg2)
 {
     bool ok;
-    int argInt = 0;
+    int argInt1 = 0;
+    int argInt2 = 0;
     AbstractAction* actionToReturn = nullptr;
 
     switch(idAction)
     {
-    //ACTIONS POKEMON
+    //GENERAL
     case AbstractAction::Action_None:
         break;
-    case AbstractAction::Action_ChangeEnemyStatus:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionChangeEnemyStatus(static_cast<CardPokemon::Enum_statusOfPokemon>(argInt));
-        }
-        break;
-    case AbstractAction::Action_ChangeEnemyStatus_Random:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionChangeEnemyStatusRandom(static_cast<CardPokemon::Enum_statusOfPokemon>(argInt));
-        }
-        break;
-    case AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionDamageMultipliedByDoubleHeadOrTail(argInt);
-        }
-        break;
-    case AbstractAction::Action_DamageMultipliedByTripleHeadOrTail:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionDamageMultipliedByTripleHeadOrTail(argInt);
-        }
-        break;
-    case AbstractAction::Action_Healing:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionHealing(argInt);
-        }
-        break;
-    case AbstractAction::Action_HurtHimself:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionHurtHimself(argInt);
-        }
-        break;
-    case AbstractAction::Action_HurtHimself_Random:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionHurtHimself_Random(argInt);
-        }
-        break;
-    case AbstractAction::Action_MoreDamageByEnergy:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionMoreDamageByEnergy(argInt);
-        }
-        break;
-    case AbstractAction::Action_MoreDamageOnEnemyOrHimSelf:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionMoreDamageOnEnemyOrHimself(argInt);
-        }
-        break;
-    case AbstractAction::Action_PoisonedCustom:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionPoisonedCustom(argInt);
-        }
-        break;
-    case AbstractAction::Action_ProtectedAgainstDamage:
-        {
-            actionToReturn = createActionProtectedAgainstDamage();
-        }
-        break;
-    case AbstractAction::Action_RemoveEnergyAttached:
-        {
-            argInt = arg.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionRemoveEnergyAttached(argInt);
-        }
-        break;
+
+
+    //ATTAQUES
     case AbstractAction::Action_ReplicateOneAttackFromEnemy:
         {
             actionToReturn = createActionReplicateOneAttackFromEnemy();
         }
         break;
+
+    //GESTION DES DEGATS
+    case AbstractAction::Action_MoreDamageByEnergy:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionMoreDamageByEnergy(argInt1, argInt2);
+        }
+        break;
+    case AbstractAction::Action_DamageMultipliedByHeadOrTail:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionDamageMultipliedByHeadOrTail(argInt1, argInt2);
+        }
+        break;
+    case AbstractAction::Action_MoreDamageByEnemyDamage:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionMoreDamageByEnemyDamage(argInt1);
+        }
+        break;
+    case AbstractAction::Action_HurtHimself:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionHurtHimself(argInt1);
+        }
+        break;
+    case AbstractAction::Action_MoreDamageOrHurtHimSelf:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionMoreDamageOrHurtHimSelf(argInt1, argInt2);
+        }
+        break;
+
+    //ENERGIES
+    case AbstractAction::Action_RemoveEnergyAttached:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionRemoveEnergyAttached(argInt1, static_cast<AbstractCard::Enum_element>(argInt2));
+        }
+        break;
+
+    //SOIN
+    case AbstractAction::Action_Healing:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionHealing(argInt1, static_cast<AbstractCard::Enum_element>(argInt2));
+        }
+        break;
+
+    //PROTECTION
+    case AbstractAction::Action_ProtectedAgainstDamage:
+        {
+            actionToReturn = createActionProtectedAgainstDamage();
+        }
+        break;
+    case AbstractAction::Action_ProtectedAgainstDamageRandom:
+        {
+            actionToReturn = createActionProtectedAgainstDamageRandom();
+        }
+        break;
+    case AbstractAction::Action_CompleteProtectionByPayingOneEnergy:
+        {
+            actionToReturn = createActionCompleteProtectionByPayingOneEnergy();
+        }
+        break;
+
+    //STATUS
+    case AbstractAction::Action_ChangeEnemyStatus:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionChangeEnemyStatus(static_cast<CardPokemon::Enum_statusOfPokemon>(argInt1));
+        }
+        break;
+    case AbstractAction::Action_ChangeEnemyStatus_Random:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionChangeEnemyStatusRandom(static_cast<CardPokemon::Enum_statusOfPokemon>(argInt1), static_cast<CardPokemon::Enum_statusOfPokemon>(argInt2));
+        }
+        break;
+    case AbstractAction::Action_EnemyPoisoned:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionEnemyPoisoned(argInt1);
+        }
+        break;
+
+    //BANC
+    case AbstractAction::Action_HurtEveryPokemonOnOwnBench:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionHurtEveryPokemonOnOwnBench(argInt1);
+        }
+        break;
+    case AbstractAction::Action_SwapPokemonBetweenFigthAndBench:
+        {
+            actionToReturn = createActionSwapPokemonBetweenFigthAndBench();
+        }
+        break;
+
     //ACTIONS TRAINERS
     case AbstractAction::ActionTrainer_FakeProfessorChen:
         actionToReturn = createActionTrainer_FakeProfessorChen();
@@ -153,30 +200,28 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
     return actionToReturn;
 }
 
-//ACTIONS POKEMON
-ActionChangeEnemyStatus* ActionCreationFactory::createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status)
+//GENERAL
+
+//ATTAQUES
+ActionReplicateOneAttackFromEnemy* ActionCreationFactory::createActionReplicateOneAttackFromEnemy()
 {
-    return new ActionChangeEnemyStatus(status);
+    return new ActionReplicateOneAttackFromEnemy();
 }
 
-ActionChangeEnemyStatusRandom* ActionCreationFactory::createActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon status)
+//GESTION DES DEGATS
+ActionMoreDamageByEnergy* ActionCreationFactory::createActionMoreDamageByEnergy(unsigned short damagePerEnergy, unsigned short indexOfAttack)
 {
-    return new ActionChangeEnemyStatusRandom(status);
+    return new ActionMoreDamageByEnergy(damagePerEnergy, indexOfAttack);
 }
 
-ActionDamageMultipliedByDoubleHeadOrTail* ActionCreationFactory::createActionDamageMultipliedByDoubleHeadOrTail(unsigned short damagePerHead)
+ActionDamageMultipliedByHeadOrTail* ActionCreationFactory::createActionDamageMultipliedByHeadOrTail(unsigned short damagePerHead, unsigned short numberOfCoins)
 {
-    return new ActionDamageMultipliedByDoubleHeadOrTail(damagePerHead);
+    return new ActionDamageMultipliedByHeadOrTail(damagePerHead, numberOfCoins);
 }
 
-ActionDamageMultipliedByTripleHeadOrTail* ActionCreationFactory::createActionDamageMultipliedByTripleHeadOrTail(unsigned short damagePerHead)
+ActionMoreDamageByEnemyDamage* ActionCreationFactory::createActionMoreDamageByEnemyDamage(unsigned short damagePerMarquer)
 {
-    return new ActionDamageMultipliedByTripleHeadOrTail(damagePerHead);
-}
-
-ActionHealing* ActionCreationFactory::createActionHealing(unsigned short pv)
-{
-    return new ActionHealing(pv);
+    return new ActionMoreDamageByEnemyDamage(damagePerMarquer);
 }
 
 ActionHurtHimself* ActionCreationFactory::createActionHurtHimself(unsigned short damage)
@@ -184,40 +229,66 @@ ActionHurtHimself* ActionCreationFactory::createActionHurtHimself(unsigned short
     return new ActionHurtHimself(damage);
 }
 
-ActionHurtHimself_Random* ActionCreationFactory::createActionHurtHimself_Random(unsigned short damage)
+ActionMoreDamageOrHurtHimSelf* ActionCreationFactory::createActionMoreDamageOrHurtHimSelf(unsigned short damageOnHead, unsigned short damageOnTail)
 {
-    return new ActionHurtHimself_Random(damage);
+    return new ActionMoreDamageOrHurtHimSelf(damageOnHead, damageOnTail);
 }
 
-ActionMoreDamageByEnergy* ActionCreationFactory::createActionMoreDamageByEnergy(unsigned short damagePerEnergy)
+//ENERGIES
+ActionRemoveEnergyAttached* ActionCreationFactory::createActionRemoveEnergyAttached(unsigned short numberOfEnergies, AbstractCard::Enum_element elementToRemove)
 {
-    return new ActionMoreDamageByEnergy(damagePerEnergy);
+    return new ActionRemoveEnergyAttached(numberOfEnergies, elementToRemove);
 }
 
-ActionMoreDamageOnEnemyOrHimself* ActionCreationFactory::createActionMoreDamageOnEnemyOrHimself(unsigned short damage)
+//SOIN
+ActionHealing* ActionCreationFactory::createActionHealing(unsigned short pv, AbstractCard::Enum_element energyToPay)
 {
-    return new ActionMoreDamageOnEnemyOrHimself(damage);
+    return new ActionHealing(pv, energyToPay);
 }
 
-ActionPoisonedCustom* ActionCreationFactory::createActionPoisonedCustom(unsigned short damage)
-{
-    return new ActionPoisonedCustom(damage);
-}
-
+//PROTECTION
 ActionProtectedAgainstDamage* ActionCreationFactory::createActionProtectedAgainstDamage()
 {
     return new ActionProtectedAgainstDamage();
 }
 
-ActionRemoveEnergyAttached* ActionCreationFactory::createActionRemoveEnergyAttached(unsigned short numberOfEnergies)
+ActionProtectedAgainstDamageRandom* ActionCreationFactory::createActionProtectedAgainstDamageRandom()
 {
-    return new ActionRemoveEnergyAttached(numberOfEnergies);
+    return new ActionProtectedAgainstDamageRandom();
 }
 
-ActionReplicateOneAttackFromEnemy* ActionCreationFactory::createActionReplicateOneAttackFromEnemy()
+ActionCompleteProtectionByPayingOneEnergy* ActionCreationFactory::createActionCompleteProtectionByPayingOneEnergy()
 {
-    return new ActionReplicateOneAttackFromEnemy();
+    return new ActionCompleteProtectionByPayingOneEnergy();
 }
+
+//STATUS
+ActionChangeEnemyStatus* ActionCreationFactory::createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status)
+{
+    return new ActionChangeEnemyStatus(status);
+}
+
+ActionChangeEnemyStatusRandom* ActionCreationFactory::createActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon statusOnHead, CardPokemon::Enum_statusOfPokemon statusOnTail)
+{
+    return new ActionChangeEnemyStatusRandom(statusOnHead, statusOnTail);
+}
+
+ActionEnemyPoisoned* ActionCreationFactory::createActionEnemyPoisoned(unsigned short damage)
+{
+    return new ActionEnemyPoisoned(damage);
+}
+
+//BANC
+ActionHurtEveryPokemonOnOwnBench* ActionCreationFactory::createActionHurtEveryPokemonOnOwnBench(unsigned short damage)
+{
+    return new ActionHurtEveryPokemonOnOwnBench(damage);
+}
+
+ActionSwapPokemonBetweenFigthAndBench* ActionCreationFactory::createActionSwapPokemonBetweenFigthAndBench()
+{
+    return new ActionSwapPokemonBetweenFigthAndBench();
+}
+
 
 //ACTIONS TRAINERS
 ActionTrainer_FakeProfessorChen* ActionCreationFactory::createActionTrainer_FakeProfessorChen()

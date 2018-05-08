@@ -6,7 +6,7 @@
 class ActionMoreDamageByEnergy : public AbstractAction
 {
 public:
-    ActionMoreDamageByEnergy(unsigned short damageByEnergy);
+    ActionMoreDamageByEnergy(unsigned short damageByEnergy, unsigned short indexOfAttack);
 
     AbstractAction::Enum_typeOfAction type() override;
     QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
@@ -14,6 +14,7 @@ public:
 
 private:
     unsigned short m_damageByEnergy;
+    unsigned short m_indexOfAttack;
 
 };
 

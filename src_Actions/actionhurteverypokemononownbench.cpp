@@ -12,7 +12,7 @@ ActionHurtEveryPokemonOnOwnBench::ActionHurtEveryPokemonOnOwnBench(unsigned shor
 ************************************************************/
 AbstractAction::Enum_typeOfAction ActionHurtEveryPokemonOnOwnBench::type()
 {
-    return AbstractAction::Action_DamageMultipliedByDoubleHeadOrTail;
+    return AbstractAction::Action_HurtEveryPokemonOnOwnBench;
 }
 
 QList<AbstractAction::Enum_ElementsToCheck> ActionHurtEveryPokemonOnOwnBench::elementToCheck()

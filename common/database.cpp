@@ -168,7 +168,9 @@ CardPokemon* Database::newCardPokemon(const QString& infoCsv)
                 attack.costEnergies = listEnergies;
                 bool ok;
                 int idAction = arguments[offset+InfoAtt_ActionType].toInt(&ok);
-                attack.action = ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction), QVariant::fromValue(arguments[offset+InfoAtt_ActionArgument]));
+                attack.action = ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction),
+                                                                    QVariant::fromValue(arguments[offset+InfoAtt_ActionArgument1]),
+                                                                    QVariant::fromValue(arguments[offset+InfoAtt_ActionArgument2]));
                 listAttacks.append(attack);
             }
             offset += InfoAtt_COUNT;
@@ -217,7 +219,9 @@ CardAction *Database::newCardTrainer(const QString &infoCsv)
             cardTrainerToReturn = new CardAction(arguments[InfoDbTrainer_Id].toInt(),
                                                   arguments[InfoDbTrainer_Name],
                                                   arguments[InfoDbTrainer_Description],
-                                                  ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction), QVariant::fromValue(arguments[InfoDbTrainer_Argument])));
+                                                  ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction)));
+                                                                                      //QVariant::fromValue(arguments[InfoDbTrainer_Argument1]),
+                                                                                      //QVariant::fromValue(arguments[InfoDbTrainer_Argument2])));
         }
 
     }

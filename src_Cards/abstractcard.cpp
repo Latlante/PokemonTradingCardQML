@@ -76,21 +76,20 @@ QString AbstractCard::elementToString(Enum_element element)
 {
     switch(element)
     {
-    case Element_Bug:       return "Insecte";
-    case Element_Dark:      return "Ombre";
+    case Element_None:      return "";
+    case Element_Dark:      return "Obscurité";
     case Element_Dragon:    return "Dragon";
     case Element_Electric:  return "Electrique";
     case Element_Fighting:  return "Combat";
     case Element_Fire:      return "Feu";
-    case Element_Flying:    return "Volant";
-    case Element_Ghost:     return "Fantôme";
+    case Element_Fairy:     return "Fée";
     case Element_Grass:     return "Plante";
-    case Element_Ice:       return "Glace";
+    case Element_Metal:     return "Métal";
     case Element_Normal:    return "Normal";
-    case Element_Poison:    return "Poison";
     case Element_Psychic:   return "Psy";
-    case Element_Rock:      return "Pierre";
     case Element_Water:     return "Eau";
+    case Element_COUNT:     return "";
+    case Element_Whatever:  return "";
     }
 
     return "Erreur de type";

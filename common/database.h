@@ -19,9 +19,11 @@ public:
         InfoAtt_Name = 0,
         InfoAtt_Description,
         InfoAtt_Damage,
+        InfoAtt_DamageCaption,
         InfoAtt_FirstEnergies,
         InfoAtt_ActionType = InfoAtt_FirstEnergies + AbstractCard::Element_COUNT,
-        InfoAtt_ActionArgument,
+        InfoAtt_ActionArgument1,
+        InfoAtt_ActionArgument2,
         InfoAtt_COUNT
     };
 
@@ -58,8 +60,9 @@ public:
         InfoDbTrainer_Useable,
         InfoDbTrainer_Name,
         InfoDbTrainer_Description,
-        InfoDbTrainer_Type,
-        InfoDbTrainer_Argument
+        InfoDbTrainer_Type
+        //InfoDbTrainer_Argument1,
+        //InfoDbTrainer_Argument2
     };
 
     explicit Database(QObject *parent = nullptr);

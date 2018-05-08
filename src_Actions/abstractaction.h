@@ -15,47 +15,55 @@ class AbstractAction
 public:
 	enum Enum_typeOfAction
 	{
+        //GENERAL
         Action_None = 0,
-        Action_ChangeEnemyStatus = 1,                       //Status to apply
-        Action_ChangeEnemyStatus_Random = 2,                //Status to apply
-        Action_RemoveEnergyAttached = 3,                    //Number of energy
-        Action_Healing = 4,                                 //Quantity of heal
-        Action_ProtectedAgainstDamage = 5,
-        Action_MoreDamageByEnergy = 6,                      //Quantity of damage per energy
-        Action_ReplicateOneAttackFromEnemy = 7,
-        Action_MoreDamageOnEnemyOrHimSelf = 8,              //Quantity of damage
-        Action_PoisonedCustom = 9,                          //Quantity of damage per round
-        //Action_RandomDamageToHimself = 10,
-        Action_DamageMultipliedByDoubleHeadOrTail = 11,     //Quantity of damage
-        Action_DamageMultipliedByTripleHeadOrTail = 12,     //Quantity of damage
-        Action_HurtEveryPokemonOnOwnBench = 13,
-        Action_SwapPokemonBetweenFigthAndBench = 14,
-        Action_Destruction = 15,                            //Quantity of damage for each pokemon in Bench
-        Action_MoreDamageByEnemyDamage = 16,
-        Action_HurtHimself = 17,                            //Quantity of damage
-        Action_HurtHimself_Random = 18,                     //Quantity of damage
-        Action_CompleteProtectionByPayingOneEnergy = 19,	//Type of energy
-        Action_RemoveAllEnergiesAttached = 20,
-        Action_RemoveOneEnergyOnEnemy = 21,                 //Type of energy
-        Action_ReplicateLastAttackToEnemy = 22,
-        //Action_HurtHimself = 23,                            //Quantity of damage
-        Action_UniqueAttack = 24,
-        Action_AttackIfEnemyIsSleeping = 25,                //Quantity of damage
-        Action_FullHealingByPayingOneEnergy = 26,           //Type of energy
-        Action_AttackLessDamageOnHimself = 27,              //Orignal damage
-        Action_MoreDamageByOwnDamage = 28,                  //Quantity of damage
-        Action_BlockOneEnemyAttackForOneTurn = 29,
-        Action_ChangeWeaknessOfEnemy = 30,
-        Action_ChangeResistanceOfHimself = 31,
-        Action_DamageOfHalfEnemyLifeLeft = 32,
-        Action_DamageOnlyIfEnemyIsSpleeping = 33,            //Quantity of damage
-        Action_ProtectedAgainstDamageRandom = 34,
-        Action_EnemyDieIfYouDieInNextTurn = 35,
-        Action_ChangeEnemyStatusOnHeadOrEnemyIsConfused = 36,//Status to apply
-        Action_CanAttack_Random = 37,                       //Quantity of damage
-        Action_NoDamageOnThreshold = 38,                    //Limit of damage
-        Action_EnemyCanAttackOnNextTurn_Random = 39,
+        Action_ChangeWeaknessOfEnemy = 1,
+        Action_ChangeResistanceOfHimself = 2,
+        Action_EnemyDieIfYouDieInNextTurn = 3,
 
+        //ATTAQUES
+        Action_ReplicateOneAttackFromEnemy = 100,
+        Action_ReplicateLastDamageToEnemy = 101,
+        Action_UniqueAttack_Random = 102,                   //Index of attack
+        Action_AttackOnlyIfEnemyIsSleeping = 103,           //Quantity of damage
+        Action_BlockOneEnemyAttackForOneTurn = 104,
+        Action_CanAttack_Random = 105,                      //Quantity of damage
+        Action_EnemyCanAttackOnNextTurn_Random = 106,
+
+        //GESTION DES DEGATS
+        Action_MoreDamageByEnergy = 200,                    //Quantity of damage per energy - index of attack
+        Action_DamageMultipliedByHeadOrTail = 201,          //Quantity of damage - number of coins
+        Action_MoreDamageByEnemyDamage = 202,               //Quantity of damage per marquer
+        Action_MoreDamageByOwnDamage = 203,                 //Quantity of damage
+        Action_AttackLessDamageOnHimself = 204,             //Original damage - less damage per marquer
+        Action_DamageOfHalfEnemyLifeLeft = 205,
+        Action_HurtHimself = 206,                           //Quantity of damage
+        Action_MoreDamageOrHurtHimSelf  = 207,              //Quantity of damage on head - quantity of damage on tail
+
+        //ENERGIES
+        Action_RemoveEnergyAttached = 300,                  //Number of energy - type of energy
+        Action_RemoveOneEnergyOnEnemy = 301,                //Number of energy - Type of energy
+
+        //SOIN
+        Action_Healing = 400,                               //Quantity of heal - type of energy
+
+        //PROTECTION
+        Action_ProtectedAgainstDamage = 500,
+        Action_ProtectedAgainstDamageRandom = 501,
+        Action_CompleteProtectionByPayingOneEnergy = 502,	//Type of energy
+        Action_NoDamageOnThreshold = 503,                   //Limit of damage
+
+        //STATUS
+        Action_ChangeEnemyStatus = 600,                     //Status to apply
+        Action_ChangeEnemyStatus_Random = 601,              //Status to apply on head - Status to apply on tail
+        Action_EnemyPoisoned = 602,                         //Quantity of damage per round
+
+        //BANC
+        Action_HurtEveryPokemonOnOwnBench = 700,            //Quantity of damage
+        Action_DieAndHurtEveryPokemonOnEachBench = 701,     //Quantity of damage for each pokemon in Bench
+        Action_SwapPokemonBetweenFigthAndBench = 702,
+
+        //CARTES DRESSEUR
         ActionTrainer_FakeProfessorChen = 2003,
         ActionTrainer_TotalGuerison = 2012,
         ActionTrainer_ProfessorChen = 2018,

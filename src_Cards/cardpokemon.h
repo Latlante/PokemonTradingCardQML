@@ -48,6 +48,7 @@ class CardPokemon : public AbstractCard
 public:
     enum Enum_statusOfPokemon
     {
+        Status_None = -1,
         Status_Confused = 0,
         Status_Normal,
         Status_Paralyzed,

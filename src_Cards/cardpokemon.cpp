@@ -157,7 +157,7 @@ QString CardPokemon::statusFormatString()
 
 void CardPokemon::setStatus(Enum_statusOfPokemon status)
 {
-    if((m_status != status) && (!isProtectedAgainstEffectForTheNextTurn()))
+    if((m_status != status) && (!isProtectedAgainstEffectForTheNextTurn()) && (status != Status_None))
     {
         m_status = status;
         emit statusChanged();

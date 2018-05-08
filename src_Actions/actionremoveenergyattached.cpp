@@ -6,9 +6,10 @@
 #include "src_Cards/cardenergy.h"
 #include "src_Cards/cardpokemon.h"
 
-ActionRemoveEnergyAttached::ActionRemoveEnergyAttached(unsigned short numberOfEnergiesToRemoved) :
+ActionRemoveEnergyAttached::ActionRemoveEnergyAttached(unsigned short numberOfEnergiesToRemoved, AbstractCard::Enum_element elementToRemove) :
     AbstractAction(),
-    m_numberOfEnergiesToRemoved(numberOfEnergiesToRemoved)
+    m_numberOfEnergiesToRemoved(numberOfEnergiesToRemoved),
+    m_elementToRemove(elementToRemove)
 {
 
 }

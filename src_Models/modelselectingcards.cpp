@@ -96,7 +96,7 @@ void ModelSelectingCards::applyAFilter(int filter)
             elementPokemon = AbstractCard::Element_Water;
             break;
         default:
-            elementPokemon = AbstractCard::Element_Bug;
+            elementPokemon = AbstractCard::Element_Whatever;
         }
 
         foreach(InfoCard* info, m_listCardsSelected)

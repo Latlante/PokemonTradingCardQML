@@ -21,22 +21,23 @@ public:
 	
 	enum Enum_element
 	{
-		Element_Bug = 0,
+        Element_None = 0,
 		Element_Dark = 1,
-		Element_Dragon = 2,
+        Element_Dragon = 2,
 		Element_Electric = 3,
 		Element_Fighting = 4,
 		Element_Fire = 5,
-		Element_Flying = 6,
-		Element_Ghost = 7,
+        Element_Fairy = 6,
+        //Element_Ghost = 7,
 		Element_Grass = 8,
-		Element_Ice = 9,
+        Element_Metal = 9,
 		Element_Normal = 10,		
-		Element_Poison = 11,
+        //Element_Poison = 11,
 		Element_Psychic = 12,
-		Element_Rock = 13,
+        //Element_Rock = 13,
         Element_Water = 14,
-        Element_COUNT
+        Element_COUNT,
+        Element_Whatever = 255
 	};
 
     AbstractCard(unsigned short id, const QString& name);

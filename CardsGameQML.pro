@@ -40,7 +40,6 @@ SOURCES += \
     src_Packets/packetrewards.cpp \
     src_Packets/packettrash.cpp \
     src_Controler/ctrlgameboard.cpp \
-    dlgselectcards.cpp \
     gamemanager.cpp \
     player.cpp \
     utils.cpp \
@@ -53,12 +52,9 @@ SOURCES += \
     src_Packets/abstractpacketdynamic.cpp \
     src_Tests/testsunitaires.cpp \
     src_Actions/actionreplicateoneattackfromenemy.cpp \
-    src_Actions/actionmoredamageonenemyorhimself.cpp \
     common/constantesqml.cpp \
     src_Models/modelpopupselectcardinpacket.cpp \
     src_Controler/ctrlpopups.cpp \
-    src_Actions/actiondamagemultipliedbydoubleheadortail.cpp \
-    src_Actions/actiondamagemultipliedbytripleheadortail.cpp \
     src_Tests/testsunitairegeneral.cpp \
     src_Tests/testsunitaireactions.cpp \
     src_Actions/actiontrainer_fakeprofessorchen.cpp \
@@ -67,16 +63,16 @@ SOURCES += \
     src_Actions/actiontrainer_superpotion.cpp \
     src_Actions/actiontrainer_leo.cpp \
     src_Actions/actiontrainer_potion.cpp \
-    src_Actions/actionpoisonedcustom.cpp \
     src_Actions/actionhurteverypokemononownbench.cpp \
     src_Actions/actionswappokemonbetweenfigthandbench.cpp \
     src_Models/modelpopupselectenergyinpokemon.cpp \
-    src_Actions/actiondestruction.cpp \
     src_Actions/actionmoredamagebyenemydamage.cpp \
     src_Actions/actionhurthimself.cpp \
-    src_Actions/actionhurthimself_random.cpp \
     src_Actions/actioncompleteprotectionbypayingoneenergy.cpp \
-    src_Actions/actionremoveallenergiesattached.cpp
+    src_Actions/actiondamagemultipliedbyheadortail.cpp \
+    src_Actions/actionmoredamageorhurthimself.cpp \
+    src_Actions/actionenemypoisoned.cpp \
+    src_Actions/actionprotectedagainstdamagerandom.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -114,7 +110,6 @@ HEADERS += \
     src_Packets/packetrewards.h \
     src_Packets/packettrash.h \
     src_Controler/ctrlgameboard.h \
-    dlgselectcards.h \
     gamemanager.h \
     player.h \
     utils.h \
@@ -127,12 +122,9 @@ HEADERS += \
     src_Packets/abstractpacketdynamic.h \
     src_Tests/testsunitaires.h \
     src_Actions/actionreplicateoneattackfromenemy.h \
-    src_Actions/actionmoredamageonenemyorhimself.h \
     common/constantesqml.h \
     src_Models/modelpopupselectcardinpacket.h \
     src_Controler/ctrlpopups.h \
-    src_Actions/actiondamagemultipliedbydoubleheadortail.h \
-    src_Actions/actiondamagemultipliedbytripleheadortail.h \
     src_Tests/testsunitairegeneral.h \
     src_Tests/testsunitaireactions.h \
     src_Actions/actiontrainer_fakeprofessorchen.h \
@@ -141,16 +133,16 @@ HEADERS += \
     src_Actions/actiontrainer_superpotion.h \
     src_Actions/actiontrainer_leo.h \
     src_Actions/actiontrainer_potion.h \
-    src_Actions/actionpoisonedcustom.h \
     src_Actions/actionhurteverypokemononownbench.h \
     src_Actions/actionswappokemonbetweenfigthandbench.h \
     src_Models/modelpopupselectenergyinpokemon.h \
-    src_Actions/actiondestruction.h \
     src_Actions/actionmoredamagebyenemydamage.h \
     src_Actions/actionhurthimself.h \
-    src_Actions/actionhurthimself_random.h \
     src_Actions/actioncompleteprotectionbypayingoneenergy.h \
-    src_Actions/actionremoveallenergiesattached.h
+    src_Actions/actiondamagemultipliedbyheadortail.h \
+    src_Actions/actionmoredamageorhurthimself.h \
+    src_Actions/actionenemypoisoned.h \
+    src_Actions/actionprotectedagainstdamagerandom.h
 
 FORMS += \
     dlgselectcards.ui

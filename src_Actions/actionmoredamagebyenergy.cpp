@@ -3,11 +3,11 @@
 #include "src_Packets/fightarea.h"
 #include "src_Cards/cardpokemon.h"
 
-ActionMoreDamageByEnergy::ActionMoreDamageByEnergy(unsigned short damageByEnergy) :
+ActionMoreDamageByEnergy::ActionMoreDamageByEnergy(unsigned short damageByEnergy, unsigned short indexOfAttack) :
     AbstractAction(),
-    m_damageByEnergy(damageByEnergy)
+    m_damageByEnergy(damageByEnergy),
+    m_indexOfAttack(indexOfAttack)
 {
-
 }
 
 /************************************************************

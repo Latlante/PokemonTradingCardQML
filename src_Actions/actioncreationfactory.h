@@ -6,17 +6,21 @@
 
 class ActionChangeEnemyStatus;
 class ActionChangeEnemyStatusRandom;
-class ActionDamageMultipliedByDoubleHeadOrTail;
-class ActionDamageMultipliedByTripleHeadOrTail;
+class ActionCompleteProtectionByPayingOneEnergy;
+class ActionDamageMultipliedByHeadOrTail;
+class ActionEnemyPoisoned;
 class ActionHealing;
+class ActionHurtEveryPokemonOnOwnBench;
 class ActionHurtHimself;
-class ActionHurtHimself_Random;
+class ActionMoreDamageByEnemyDamage;
 class ActionMoreDamageByEnergy;
-class ActionMoreDamageOnEnemyOrHimself;
-class ActionPoisonedCustom;
+class ActionMoreDamageOrHurtHimSelf;
 class ActionProtectedAgainstDamage;
+class ActionProtectedAgainstDamageRandom;
 class ActionRemoveEnergyAttached;
 class ActionReplicateOneAttackFromEnemy;
+class ActionSwapPokemonBetweenFigthAndBench;
+
 class ActionTrainer_FakeProfessorChen;
 class ActionTrainer_Leo;
 class ActionTrainer_Potion;
@@ -29,22 +33,39 @@ class ActionCreationFactory
 public:
     ActionCreationFactory();
 
-    static AbstractAction* createAction(AbstractAction::Enum_typeOfAction idAction, QVariant arg);
+    static AbstractAction* createAction(AbstractAction::Enum_typeOfAction idAction, QVariant arg1 = QVariant(), QVariant arg2 = QVariant());
 
-    //ACTIONS POKEMON
-    static ActionChangeEnemyStatus* createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status);
-    static ActionChangeEnemyStatusRandom* createActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon status);
-    static ActionDamageMultipliedByDoubleHeadOrTail* createActionDamageMultipliedByDoubleHeadOrTail(unsigned short damagePerHead);
-    static ActionDamageMultipliedByTripleHeadOrTail* createActionDamageMultipliedByTripleHeadOrTail(unsigned short damagePerHead);
-    static ActionHealing* createActionHealing(unsigned short pv);
-    static ActionHurtHimself* createActionHurtHimself(unsigned short damage);
-    static ActionHurtHimself_Random* createActionHurtHimself_Random(unsigned short damage);
-    static ActionMoreDamageByEnergy* createActionMoreDamageByEnergy(unsigned short damagePerEnergy);
-    static ActionMoreDamageOnEnemyOrHimself* createActionMoreDamageOnEnemyOrHimself(unsigned short damage);
-    static ActionPoisonedCustom* createActionPoisonedCustom(unsigned short damage);
-    static ActionProtectedAgainstDamage* createActionProtectedAgainstDamage();
-    static ActionRemoveEnergyAttached* createActionRemoveEnergyAttached(unsigned short numberOfEnergies);
+    //GENERAL
+
+    //ATTAQUES
     static ActionReplicateOneAttackFromEnemy* createActionReplicateOneAttackFromEnemy();
+
+    //GESTION DES DEGATS
+    static ActionMoreDamageByEnergy* createActionMoreDamageByEnergy(unsigned short damagePerEnergy, unsigned short indexOfAttack);
+    static ActionDamageMultipliedByHeadOrTail* createActionDamageMultipliedByHeadOrTail(unsigned short damagePerHead, unsigned short numberOfCoins);
+    static ActionMoreDamageByEnemyDamage* createActionMoreDamageByEnemyDamage(unsigned short damagePerMarquer);
+    static ActionHurtHimself* createActionHurtHimself(unsigned short damage);
+    static ActionMoreDamageOrHurtHimSelf* createActionMoreDamageOrHurtHimSelf(unsigned short damageOnHead, unsigned short damageOnTail);
+
+    //ENERGIES
+    static ActionRemoveEnergyAttached* createActionRemoveEnergyAttached(unsigned short numberOfEnergies, AbstractCard::Enum_element elementToRemove);
+
+    //SOIN
+    static ActionHealing* createActionHealing(unsigned short pv, AbstractCard::Enum_element energyToPay);
+
+    //PROTECTION
+    static ActionProtectedAgainstDamage* createActionProtectedAgainstDamage();
+    static ActionProtectedAgainstDamageRandom* createActionProtectedAgainstDamageRandom();
+    static ActionCompleteProtectionByPayingOneEnergy* createActionCompleteProtectionByPayingOneEnergy();
+
+    //STATUS
+    static ActionChangeEnemyStatus* createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status);
+    static ActionChangeEnemyStatusRandom* createActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon statusOnHead, CardPokemon::Enum_statusOfPokemon statusOnTail);
+    static ActionEnemyPoisoned* createActionEnemyPoisoned(unsigned short damage);
+
+    //BANC
+    static ActionHurtEveryPokemonOnOwnBench* createActionHurtEveryPokemonOnOwnBench(unsigned short damage);
+    static ActionSwapPokemonBetweenFigthAndBench* createActionSwapPokemonBetweenFigthAndBench();
 
     //ACTIONS TRAINERS
     static ActionTrainer_FakeProfessorChen* createActionTrainer_FakeProfessorChen();

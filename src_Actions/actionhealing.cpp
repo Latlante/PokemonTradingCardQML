@@ -1,8 +1,9 @@
 #include "actionhealing.h"
 
-ActionHealing::ActionHealing(unsigned short pv) :
+ActionHealing::ActionHealing(unsigned short pv, AbstractCard::Enum_element energyToPay) :
     AbstractAction(),
-    m_pv(pv)
+    m_pv(pv),
+    m_energyToPay(energyToPay)
 {
 
 }

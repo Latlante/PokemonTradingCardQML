@@ -1,8 +1,9 @@
 #include "actionchangeenemystatusrandom.h"
 
-ActionChangeEnemyStatusRandom::ActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon status) :
+ActionChangeEnemyStatusRandom::ActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon statusOnHead, CardPokemon::Enum_statusOfPokemon statusOnTail) :
     AbstractAction(),
-    m_status(status)
+    m_statusOnHead(statusOnHead),
+    m_statusOnTail(statusOnTail)
 {
 
 }
@@ -27,8 +28,8 @@ void ActionChangeEnemyStatusRandom::action()
     if(pokemonAttacked() != nullptr)
     {
         if(headOrTail() == 1)
-        {
-            pokemonAttacked()->setStatus(m_status);
-        }
+            pokemonAttacked()->setStatus(m_statusOnHead);
+        else
+            pokemonAttacked()->setStatus(m_statusOnTail);
     }
 }
