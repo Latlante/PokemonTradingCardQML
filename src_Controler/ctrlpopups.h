@@ -3,7 +3,8 @@
 
 #include <QObject>
 
-class AbstractCard;
+#include "src_Cards/abstractcard.h"
+
 class CardPokemon;
 class AbstractPacket;
 class BenchArea;
@@ -54,7 +55,7 @@ public:
 
     //SELECT ENERGY IN POKEMON
     Q_INVOKABLE ModelPopupSelectEnergyInPokemon* modelSelectEnergyInPokemon();
-    QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon);
+    QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     bool selectEnergiesInPokemonVisible();
     void setSelectEnergiesInPokemonVisible(bool state);
 

@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include "src_Controler/ctrlpopups.h"
-#include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
 #include "src_Models/modellistenergies.h"
 #include "src_Packets/bencharea.h"
@@ -10,7 +9,6 @@
 #include "src_Packets/packethand.h"
 #include "src_Packets/packetrewards.h"
 #include "src_Packets/packettrash.h"
-#include "dlgselectcards.h"
 #include "utils.h"
 
 const int GameManager::m_NUMBER_FIRST_CARDS = 10;
@@ -231,7 +229,7 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
             if(pokemonToRetreat->costRetreat() > 0)
             {
                 //On sélectionne les énergies à mettre dans la pile de défausse
-                QList<int> listIndexEnergies = displayEnergiesForAPokemon(pokemonToRetreat);
+                QList<int> listIndexEnergies = displayEnergiesForAPokemon(pokemonToRetreat, pokemonToRetreat->costRetreat(), AbstractCard::Element_Whatever);
                 QList<CardEnergy*> listEnergies;
                 ModelListEnergies* modelEnergies = pokemonToRetreat->modelListOfEnergies();
 
@@ -311,13 +309,13 @@ QList<int> GameManager::displayBench(BenchArea *bench)
 #endif
 }
 
-QList<int> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon)
+QList<int> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
 {
 #ifdef TESTS_UNITAIRES
     Q_UNUSED(card)
     return QList<int>() << 0;
 #else
-    return m_ctrlPopups.displayEnergiesForAPokemon(pokemon);
+    return m_ctrlPopups.displayEnergiesForAPokemon(pokemon, quantity, element);
 #endif
 }
 

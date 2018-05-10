@@ -7,7 +7,6 @@
 #include <QQmlContext>
 #include <QtQml/qqml.h>
 
-#include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
 #include "src_Models/modelpopupselectcardinpacket.h"
 #include "src_Models/modelpopupselectenergyinpokemon.h"
@@ -195,10 +194,11 @@ ModelPopupSelectEnergyInPokemon* CtrlPopups::modelSelectEnergyInPokemon()
     return m_modelSelectEnergyInPokemon;
 }
 
-QList<int> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon)
+QList<int> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon, unsigned short quantity, AbstractCard::Enum_element element)
 {
     //Initialisation
     m_modelSelectEnergyInPokemon->addListEnergyFromPokemon(pokemon);
+    m_modelSelectEnergyInPokemon->setNumberOfEnergiesToSelect(quantity);
     setSelectEnergiesInPokemonVisible(true);
 
     //En attente

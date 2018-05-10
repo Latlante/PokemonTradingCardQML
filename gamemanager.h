@@ -5,8 +5,8 @@
 #include "player.h"
 
 #include "common/constantesqml.h"
+#include "src_Cards/abstractcard.h"
 
-class AbstractCard;
 class CtrlPopups;
 
 class GameManager : public QObject
@@ -45,7 +45,7 @@ public:
     Player *gameIsFinished();
 
     QList<int> displayBench(BenchArea* bench);
-    QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon);
+    QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     int displayAttacks(CardPokemon* card, bool blockRetreat = false);
 
 #ifdef TESTS_UNITAIRES
