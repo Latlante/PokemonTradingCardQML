@@ -72,7 +72,10 @@ SOURCES += \
     src_Actions/actiondamagemultipliedbyheadortail.cpp \
     src_Actions/actionmoredamageorhurthimself.cpp \
     src_Actions/actionenemypoisoned.cpp \
-    src_Actions/actionprotectedagainstdamagerandom.cpp
+    src_Actions/actionprotectedagainstdamagerandom.cpp \
+    src_Actions/actionremoveoneenergyonenemy.cpp \
+    src_Actions/actiondieandhurteverypokemononeachbench.cpp \
+    src_Actions/actionnodamageonthreshold.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -142,7 +145,10 @@ HEADERS += \
     src_Actions/actiondamagemultipliedbyheadortail.h \
     src_Actions/actionmoredamageorhurthimself.h \
     src_Actions/actionenemypoisoned.h \
-    src_Actions/actionprotectedagainstdamagerandom.h
+    src_Actions/actionprotectedagainstdamagerandom.h \
+    src_Actions/actionremoveoneenergyonenemy.h \
+    src_Actions/actiondieandhurteverypokemononeachbench.h \
+    src_Actions/actionnodamageonthreshold.h
 
 FORMS += \
     dlgselectcards.ui

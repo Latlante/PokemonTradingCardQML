@@ -93,7 +93,9 @@ public:
     Q_INVOKABLE QString statusFormatString();
     void setStatus(Enum_statusOfPokemon status);
     bool isProtectedAgainstDamageForTheNextTurn();
+    unsigned short protectedAgainstDamageForTheNextTurnThreshold();
     void setProtectedAgainstDamageForTheNextTurn(bool status);
+    void setProtectedAgainstDamageForTheNextTurn(unsigned short threshold);
     bool isProtectedAgainstEffectForTheNextTurn();
     void setProtectedAgainstEffectForTheNextTurn(bool status);
     void setInvincibleForTheNextTurn(bool status);
@@ -151,7 +153,7 @@ private:
 	unsigned short m_lifeTotal;
     unsigned short m_damage;
     CardPokemon::Enum_statusOfPokemon m_status;
-    bool m_protectedAgainstDamageForTheNextTurn;
+    unsigned short m_protectedAgainstDamageForTheNextTurnThreshold;
     bool m_protectedAgainstEffectForTheNextTurn;
     QList<AttackData> m_listAttacks;
     ModelListEnergies* m_modelListEnergies;

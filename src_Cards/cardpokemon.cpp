@@ -20,7 +20,7 @@ CardPokemon::CardPokemon(unsigned short id,
 	m_lifeTotal(lifeTotal),
     m_damage(0),
     m_status(Status_Normal),
-    m_protectedAgainstDamageForTheNextTurn(false),
+    m_protectedAgainstDamageForTheNextTurnThreshold(0),
     m_protectedAgainstEffectForTheNextTurn(false),
 	m_listAttacks(listAttacks),
     m_modelListEnergies(new ModelListEnergies()),
@@ -35,7 +35,7 @@ CardPokemon::CardPokemon(unsigned short id,
 CardPokemon::CardPokemon(const CardPokemon &card) :
     AbstractCard(),
     m_status(Status_Normal),
-    m_protectedAgainstDamageForTheNextTurn(false),
+    m_protectedAgainstDamageForTheNextTurnThreshold(0),
     m_protectedAgainstEffectForTheNextTurn(false),
     m_modelListEnergies(new ModelListEnergies()),
     m_cardEvolution(nullptr)
@@ -167,12 +167,22 @@ void CardPokemon::setStatus(Enum_statusOfPokemon status)
 
 bool CardPokemon::isProtectedAgainstDamageForTheNextTurn()
 {
-    return m_protectedAgainstDamageForTheNextTurn;
+    return m_protectedAgainstDamageForTheNextTurnThreshold != 0;
+}
+
+unsigned short CardPokemon::protectedAgainstDamageForTheNextTurnThreshold()
+{
+    return m_protectedAgainstDamageForTheNextTurnThreshold;
 }
 
 void CardPokemon::setProtectedAgainstDamageForTheNextTurn(bool status)
 {
-    m_protectedAgainstDamageForTheNextTurn = status;
+    m_protectedAgainstDamageForTheNextTurnThreshold = status == true ? 0xFFFF : 0;
+}
+
+void CardPokemon::setProtectedAgainstDamageForTheNextTurn(unsigned short threshold)
+{
+    m_protectedAgainstDamageForTheNextTurnThreshold = threshold;
 }
 
 bool CardPokemon::isProtectedAgainstEffectForTheNextTurn()
@@ -332,10 +342,17 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
 
 void CardPokemon::takeDamage(unsigned short damage)
 {
-    if(!isProtectedAgainstDamageForTheNextTurn())
+    unsigned short damageRecalculated = damage;
+
+    if(isProtectedAgainstDamageForTheNextTurn())
     {
-        setDamage(currentDamage() + damage);
+        if(damage <= protectedAgainstDamageForTheNextTurnThreshold())
+            damageRecalculated = 0;
+        else
+            damageRecalculated = damage - protectedAgainstDamageForTheNextTurnThreshold();
     }
+
+    setDamage(currentDamage() + damageRecalculated);
 }
 
 void CardPokemon::restoreLife(unsigned short life)
