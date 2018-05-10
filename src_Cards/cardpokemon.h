@@ -113,7 +113,6 @@ public:
 	unsigned short countEnergies();
 	unsigned short countEnergies(Enum_element element);
     Q_INVOKABLE ModelListEnergies* modelListOfEnergies();
-    QList<CardEnergy*> takeAllEnergies();
 	
     Enum_StatusOfAttack tryToAttack(int indexAttack, CardPokemon *enemy);
 	void takeDamage(unsigned short damage);
@@ -138,6 +137,8 @@ public:
     bool canRetreat();
 
     CardPokemon& operator =(const CardPokemon& source);
+
+    QList<AbstractCard*> purge();
 
 signals:
     void lifeLeftChanged();

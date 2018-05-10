@@ -292,11 +292,6 @@ ModelListEnergies* CardPokemon::modelListOfEnergies()
     return m_modelListEnergies;
 }
 
-QList<CardEnergy*> CardPokemon::takeAllEnergies()
-{
-    return m_modelListEnergies->takeAllEnergies();
-}
-
 CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
 {
     //bool statusBack = false;
@@ -473,7 +468,14 @@ int CardPokemon::lastIndexOfAttackUsed()
 
 unsigned short CardPokemon::costRetreat()
 {
-    return m_costRetreat;
+    unsigned short cost;
+
+    if(m_cardEvolution != nullptr)
+        cost = m_cardEvolution->costRetreat();
+    else
+        cost = m_costRetreat;
+
+    return cost;
 }
 
 bool CardPokemon::canRetreat()
@@ -498,6 +500,24 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     m_lastAttackUsed = source.m_lastAttackUsed;
 
     return *this;
+}
+
+QList<AbstractCard*> CardPokemon::purge()
+{
+    QList<AbstractCard*> listPurge;
+
+    if(m_cardEvolution != nullptr)
+    {
+        listPurge = m_cardEvolution->purge();
+        listPurge.append(m_cardEvolution);
+        m_cardEvolution = nullptr;
+    }
+
+    QList<CardEnergy*> listEnergies = m_modelListEnergies->takeAllEnergies();
+    foreach(CardEnergy* energy, listEnergies)
+        listPurge.append(energy);
+
+    return listPurge;
 }
 
 /************************************************************

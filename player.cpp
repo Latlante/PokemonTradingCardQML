@@ -376,10 +376,10 @@ bool Player::moveCardFromBenchToFight(int indexBench)
 bool Player::moveCardFromBenchToTrash(int index)
 {
     CardPokemon* pokemonBench = bench()->cardPok(index);
-    QList<CardEnergy*> listEnergiesAttached = pokemonBench->takeAllEnergies();
+    QList<AbstractCard*> listCardAttached = pokemonBench->purge();
 
-    foreach(CardEnergy* energy, listEnergiesAttached)
-        trash()->addNewCard(energy);
+    foreach(AbstractCard* card, listCardAttached)
+        trash()->addNewCard(card);
 
     return moveCardFromPacketToAnother(bench(), trash(), index);
 }
@@ -387,10 +387,10 @@ bool Player::moveCardFromBenchToTrash(int index)
 bool Player::moveCardFromFightToTrash(int index)
 {
     CardPokemon* pokemonFighter = fight()->pokemonFighting(index);
-    QList<CardEnergy*> listEnergiesAttached = pokemonFighter->takeAllEnergies();
+    QList<AbstractCard*> listCardAttached = pokemonFighter->purge();
 
-    foreach(CardEnergy* energy, listEnergiesAttached)
-        trash()->addNewCard(energy);
+    foreach(AbstractCard* card, listCardAttached)
+        trash()->addNewCard(card);
 
     return moveCardFromPacketToAnother(fight(), trash(), index);
 }
