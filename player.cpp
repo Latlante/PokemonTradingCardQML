@@ -220,6 +220,16 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
                 }
             }
         }
+        else if (cardToMove->type() == AbstractCard::TypeOfCard_Action)
+        {
+            CardAction* cardTrainer = static_cast<CardAction*>(cardToMove);
+
+            if(cardTrainer != nullptr)
+            {
+                cardTrainer->executeAction(bench()->cardPok(indexBench));
+                moveSuccess = moveCardFromHandToTrash(indexHand);
+            }
+        }
         else
         {
             qDebug() << __PRETTY_FUNCTION__ << ", cardToMove n'est pas du bon type:" << cardToMove->type();
@@ -315,7 +325,7 @@ bool Player::moveCardFromHandToFight(int indexHand)
 
             if(cardTrainer != nullptr)
             {
-                cardTrainer->executeAction();
+                cardTrainer->executeAction(fight()->pokemonFighting(0));
                 moveSuccess = moveCardFromHandToTrash(indexHand);
             }
         }

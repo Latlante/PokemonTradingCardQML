@@ -17,13 +17,13 @@ AbstractAction::Enum_typeOfAction ActionTrainer_Potion::type()
 QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_Potion::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+            << AbstractAction::CheckPokemonAttached;
 }
 
 void ActionTrainer_Potion::action()
 {
-    if(pokemonAttacking() != nullptr)
+    if(pokemonAttached() != nullptr)
     {
-        pokemonAttacking()->restoreLife(20);
+        pokemonAttached()->restoreLife(20);
     }
 }

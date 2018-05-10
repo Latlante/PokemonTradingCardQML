@@ -307,7 +307,7 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
                 enemy->takeDamage(m_lastAttackUsed.damage);
 
                 if(m_lastAttackUsed.action != nullptr)
-                    m_lastAttackUsed.action->executeAction(indexAttack);
+                    m_lastAttackUsed.action->executeAction(this, indexAttack);
 
                 enemy->setInvincibleForTheNextTurn(false);
                 statusBack = Attack_OK;

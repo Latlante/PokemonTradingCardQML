@@ -3,6 +3,7 @@
 #include <QtQml/qqml.h>
 
 #include "src_Actions/abstractaction.h"
+#include "src_Cards/cardpokemon.h"
 
 CardAction::CardAction(unsigned short id, const QString& name, const QString& description, AbstractAction* action) :
     AbstractCard(id, name),
@@ -61,10 +62,10 @@ AbstractAction* CardAction::action()
 	return m_action;
 }
 
-void CardAction::executeAction()
+void CardAction::executeAction(CardPokemon *pokemonAttached)
 {
     if(action() != nullptr)
-        action()->executeAction();
+        action()->executeAction(pokemonAttached);
 }
 
 CardAction& CardAction::operator =(const CardAction& source)

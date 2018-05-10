@@ -4,6 +4,7 @@ AbstractAction::AbstractAction() :
     m_gameManager(nullptr),
     m_playerAttacked(nullptr),
     m_playerAttacking(nullptr),
+    m_pokemonAttached(nullptr),
     m_pokemonAttacked(nullptr),
     m_pokemonAttacking(nullptr),
     m_benchPlayerAttacked(nullptr),
@@ -24,8 +25,10 @@ AbstractAction::~AbstractAction()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-void AbstractAction::executeAction(short index)
+void AbstractAction::executeAction(CardPokemon *pokemonAttached, short index)
 {
+    m_pokemonAttached = pokemonAttached;
+
     //Vérifications
     QList<AbstractAction::Enum_ElementsToCheck> listElementsToCheck = elementToCheck();
     bool statusCanBeExecuted = true;
@@ -43,6 +46,9 @@ void AbstractAction::executeAction(short index)
             break;
         case AbstractAction::CheckPlayerAttacking:
             statusCanBeExecuted &= checkPlayerAttacking();
+            break;
+        case AbstractAction::CheckPokemonAttached:
+            statusCanBeExecuted &= checkPokemonAttached();
             break;
         case AbstractAction::CheckPokemonAttacked:
             statusCanBeExecuted &= checkPokemonAttacked();
@@ -111,6 +117,11 @@ Player* AbstractAction::playerAttacked()
 Player* AbstractAction::playerAttacking()
 {
     return m_playerAttacking;
+}
+
+CardPokemon* AbstractAction::pokemonAttached()
+{
+    return m_pokemonAttached;
 }
 
 CardPokemon* AbstractAction::pokemonAttacked()
@@ -187,6 +198,14 @@ bool AbstractAction::checkPlayerAttacking()
         else
             qCritical() << __PRETTY_FUNCTION__ << ", playerAttacking is NULL";
     }
+
+    return false;
+}
+
+bool AbstractAction::checkPokemonAttached()
+{
+    if(m_pokemonAttached != nullptr)
+        return true;
 
     return false;
 }

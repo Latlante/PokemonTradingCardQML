@@ -17,13 +17,13 @@ AbstractAction::Enum_typeOfAction ActionTrainer_SuperPotion::type()
 QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_SuperPotion::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+            << AbstractAction::CheckPokemonAttached;
 }
 
 void ActionTrainer_SuperPotion::action()
 {
-    if(pokemonAttacking() != nullptr)
+    if(pokemonAttached() != nullptr)
     {
-        pokemonAttacking()->restoreLife(40);
+        pokemonAttached()->restoreLife(40);
     }
 }

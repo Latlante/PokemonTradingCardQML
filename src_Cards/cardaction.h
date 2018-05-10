@@ -4,6 +4,7 @@
 #include "abstractcard.h"
 
 class AbstractAction;
+class CardPokemon;
 
 class CardAction : public AbstractCard
 {
@@ -21,7 +22,7 @@ public:
     Q_INVOKABLE const QString description();
     AbstractAction* action();
 	
-	void executeAction();
+    void executeAction(CardPokemon* pokemonAttached);
 
     CardAction& operator =(const CardAction& source);
 

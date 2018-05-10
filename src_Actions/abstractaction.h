@@ -77,6 +77,7 @@ public:
         CheckGameManager = 0,
         CheckPlayerAttacked,
         CheckPlayerAttacking,
+        CheckPokemonAttached,
         CheckPokemonAttacked,
         CheckPokemonAttacking,
         CheckBenchPlayerAttacked,
@@ -88,7 +89,7 @@ public:
 	
     virtual Enum_typeOfAction type() = 0;
     virtual QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() = 0;
-    void executeAction(short index = -1);
+    void executeAction(CardPokemon* pokemonAttached = nullptr, short index = -1);
 
 #ifdef TESTS_UNITAIRES
     QList<unsigned short> listCoins();
@@ -103,6 +104,7 @@ protected:
     GameManager* gameManager();
     Player* playerAttacked();
     Player* playerAttacking();
+    CardPokemon* pokemonAttached();
     CardPokemon* pokemonAttacked();
     CardPokemon* pokemonAttacking();
     BenchArea* benchPlayerAttacked();
@@ -113,6 +115,7 @@ private:
     GameManager* m_gameManager;
     Player* m_playerAttacked;
     Player* m_playerAttacking;
+    CardPokemon* m_pokemonAttached;
     CardPokemon* m_pokemonAttacked;
     CardPokemon* m_pokemonAttacking;
     BenchArea* m_benchPlayerAttacked;
@@ -126,6 +129,7 @@ private:
     bool checkGameManager();
     bool checkPlayerAttacked();
     bool checkPlayerAttacking();
+    bool checkPokemonAttached();
     bool checkPokemonAttacked();
     bool checkPokemonAttacking();
     bool checkBenchPlayerAttacked();

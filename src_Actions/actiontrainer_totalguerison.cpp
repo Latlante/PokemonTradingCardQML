@@ -17,13 +17,13 @@ AbstractAction::Enum_typeOfAction ActionTrainer_TotalGuerison::type()
 QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_TotalGuerison::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+            << AbstractAction::CheckPokemonAttached;
 }
 
 void ActionTrainer_TotalGuerison::action()
 {
-    if(pokemonAttacking() != nullptr)
+    if(pokemonAttached() != nullptr)
     {
-        pokemonAttacking()->setStatus(CardPokemon::Status_Normal);
+        pokemonAttached()->setStatus(CardPokemon::Status_Normal);
     }
 }
