@@ -171,6 +171,7 @@ CardPokemon* Database::newCardPokemon(const QString& infoCsv)
                 attack.action = ActionCreationFactory::createAction(static_cast<AbstractAction::Enum_typeOfAction>(idAction),
                                                                     QVariant::fromValue(arguments[offset+InfoAtt_ActionArgument1]),
                                                                     QVariant::fromValue(arguments[offset+InfoAtt_ActionArgument2]));
+                attack.numberOfTurnAttackStillBlocks = 0;
                 listAttacks.append(attack);
             }
             offset += InfoAtt_COUNT;

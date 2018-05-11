@@ -39,6 +39,7 @@ public:
         Action_DamageOfHalfEnemyLifeLeft = 205,
         Action_HurtHimself = 206,                           //Quantity of damage
         Action_MoreDamageOrHurtHimSelf  = 207,              //Quantity of damage on head - quantity of damage on tail
+        Action_MoreDamageByEnergyOnEnemy = 208,             //Quantity of damage per energy
 
         //ENERGIES
         Action_RemoveEnergyAttached = 300,                  //Number of energy - type of energy

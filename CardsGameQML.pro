@@ -79,7 +79,10 @@ SOURCES += \
     src_Actions/attacks/actionchangeweaknessofenemy.cpp \
     src_Actions/attacks/actionchangeresistanceofhimself.cpp \
     src_Actions/attacks/actionattackonlyifenemyissleeping.cpp \
-    src_Actions/attacks/actionreplicatelastdamagetoenemy.cpp
+    src_Actions/attacks/actionreplicatelastdamagetoenemy.cpp \
+    src_Actions/attacks/actionuniqueattack_random.cpp \
+    src_Actions/attacks/actionblockoneenemyattackforoneturn.cpp \
+    src_Actions/attacks/actionenemycanattackonnextturn_random.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -156,7 +159,10 @@ HEADERS += \
     src_Actions/attacks/actionchangeweaknessofenemy.h \
     src_Actions/attacks/actionchangeresistanceofhimself.h \
     src_Actions/attacks/actionattackonlyifenemyissleeping.h \
-    src_Actions/attacks/actionreplicatelastdamagetoenemy.h
+    src_Actions/attacks/actionreplicatelastdamagetoenemy.h \
+    src_Actions/attacks/actionuniqueattack_random.h \
+    src_Actions/attacks/actionblockoneenemyattackforoneturn.h \
+    src_Actions/attacks/actionenemycanattackonnextturn_random.h
 
 FORMS += \
     dlgselectcards.ui

@@ -330,12 +330,48 @@ bool CardPokemon::replaceOneAttack(int index, AttackData data)
         currentData.damage = data.damage;
         currentData.description = data.description;
         currentData.name = data.name;
+        currentData.numberOfTurnAttackStillBlocks = 0;
+
         m_listAttacks.replace(index, currentData);
     }
     else
         statusBack = false;
     
     return statusBack;
+}
+
+unsigned short CardPokemon::numberOfTurnAttackStillBlocks(int indexAttack)
+{
+    unsigned short result = 0;
+
+    if((indexAttack >= 0) && (indexAttack < listAttacks().count()))
+        result = listAttacks()[indexAttack].numberOfTurnAttackStillBlocks;
+
+    return result;
+}
+
+void CardPokemon::decrementNumberOfTurnAttackStillBlocks()
+{
+    for(int indexAttack=0;indexAttack<listAttacks().count();++indexAttack)
+    {
+        AttackData data = listAttacks()[indexAttack];
+
+        if(data.numberOfTurnAttackStillBlocks > 0)
+            data.numberOfTurnAttackStillBlocks -= 1;
+
+        m_listAttacks.replace(indexAttack, data);
+    }
+}
+
+void CardPokemon::setNumberOfTurnAttackStillBlocks(int indexAttack, unsigned short value)
+{
+    if((indexAttack >= 0) && (indexAttack < listAttacks().count()))
+    {
+        AttackData data = listAttacks()[indexAttack];
+        data.numberOfTurnAttackStillBlocks = value;
+
+        m_listAttacks.replace(indexAttack, data);
+    }
 }
 
 #ifdef TESTS_UNITAIRES
@@ -380,60 +416,59 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
 	
     if ((0 <= indexAttack) && (listAttacks().count() > indexAttack))
     {
-        if (true == hasEnoughEnergies(indexAttack))
+        if (listAttacks()[indexAttack].numberOfTurnAttackStillBlocks == 0)
         {
-            if (true == canAttackFromStatus())
+            if (true == hasEnoughEnergies(indexAttack))
             {
-                //Sauvegarde des données actuelles
-                m_lastAttackUsed = listAttacks()[indexAttack];
-
-                //Calcul de la faiblesse ou résistance
-                unsigned short damage = m_lastAttackUsed.damage;
-                unsigned short newDamage = damage;
-
-                if(element() == enemy->weaknessElement())
+                if (true == canAttackFromStatus())
                 {
-                    if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
-                        newDamage = damage * 2;
-                    else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
-                        newDamage = damage + 30;
+                    //Sauvegarde des données actuelles
+                    m_lastAttackUsed = listAttacks()[indexAttack];
+
+                    //Calcul de la faiblesse ou résistance
+                    unsigned short damage = m_lastAttackUsed.damage;
+                    unsigned short newDamage = damage;
+
+                    if(element() == enemy->weaknessElement())
+                    {
+                        if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
+                            newDamage = damage * 2;
+                        else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
+                            newDamage = damage + 30;
+                    }
+                    else if(element() == enemy->resistanceElement())
+                    {
+                        if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
+                            newDamage = damage / 2;
+                        else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
+                            newDamage = damage - 30;
+                    }
+
+                    if(newDamage % 10 == 5)
+                        newDamage += 5;
+
+                    //On attaque
+                    enemy->takeDamage(newDamage);
+
+                    //On exécute l'action s'il y a
+                    if(m_lastAttackUsed.action != nullptr)
+                        m_lastAttackUsed.action->executeAction(this, indexAttack);
+
+                    //On réinitialise les états valables un seul tour
+                    enemy->setInvincibleForTheNextTurn(false);
+                    statusBack = Attack_OK;
                 }
-                else if(element() == enemy->resistanceElement())
-                {
-                    if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
-                        newDamage = damage / 2;
-                    else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
-                        newDamage = damage - 30;
-                }
-
-                if(newDamage % 10 == 5)
-                    newDamage += 5;
-
-                //On attaque
-                enemy->takeDamage(newDamage);
-
-                //On exécute l'action s'il y a
-                if(m_lastAttackUsed.action != nullptr)
-                    m_lastAttackUsed.action->executeAction(this, indexAttack);
-
-                //On réinitialise les états valables un seul tour
-                enemy->setInvincibleForTheNextTurn(false);
-                statusBack = Attack_OK;
+                else
+                    statusBack = Attack_WrongStatus;
             }
             else
-            {
-                statusBack = Attack_WrongStatus;
-            }
+                statusBack = Attack_NotEnoughEnergies;
         }
         else
-        {
-            statusBack = Attack_NotEnoughEnergies;
-        }
+            statusBack = Attack_AttackBlocked;
     }
     else
-    {
         statusBack = Attack_IndexNOK;
-    }
 	
 	return statusBack;
 }
@@ -677,6 +712,7 @@ QString CardPokemon::statusToString(Enum_statusOfPokemon status)
     case Status_Paralyzed:  return "Paralysé";
     case Status_Poisoned:   return "Empoisonné";
     case Status_Slept:      return "Endormi";
+    default: return "Erreur de conversion de status";
     }
 
     return "Erreur de conversion de status";

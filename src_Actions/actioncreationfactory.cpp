@@ -2,21 +2,38 @@
 
 #include <QVariant>
 
-#include "src_Actions/actionchangeenemystatus.h"
-#include "src_Actions/actionchangeenemystatusrandom.h"
-#include "src_Actions/actioncompleteprotectionbypayingoneenergy.h"
-#include "src_Actions/actiondamagemultipliedbyheadortail.h"
-#include "src_Actions/actionenemypoisoned.h"
-#include "src_Actions/actionhealing.h"
-#include "src_Actions/actionhurteverypokemononownbench.h"
-#include "src_Actions/actionhurthimself.h"
-#include "src_Actions/actionmoredamagebyenemydamage.h"
+#include "src_Actions/attacks/actionchangeweaknessofenemy.h"
+#include "src_Actions/attacks/actionchangeresistanceofhimself.h"
+
+#include "src_Actions/actionreplicateoneattackfromenemy.h"
+#include "src_Actions/attacks/actionreplicatelastdamagetoenemy.h"
+#include "src_Actions/attacks/actionuniqueattack_random.h"
+#include "src_Actions/attacks/actionattackonlyifenemyissleeping.h"
+#include "src_Actions/attacks/actionblockoneenemyattackforoneturn.h"
+#include "src_Actions/attacks/actionenemycanattackonnextturn_random.h"
+
 #include "src_Actions/actionmoredamagebyenergy.h"
+#include "src_Actions/actiondamagemultipliedbyheadortail.h"
+#include "src_Actions/actionmoredamagebyenemydamage.h"
+#include "src_Actions/actionhurthimself.h"
 #include "src_Actions/actionmoredamageorhurthimself.h"
+
+#include "src_Actions/actionremoveenergyattached.h"
+#include "src_Actions/actionremoveoneenergyonenemy.h"
+
+#include "src_Actions/actionhealing.h"
+
 #include "src_Actions/actionprotectedagainstdamage.h"
 #include "src_Actions/actionprotectedagainstdamagerandom.h"
-#include "src_Actions/actionremoveenergyattached.h"
-#include "src_Actions/actionreplicateoneattackfromenemy.h"
+#include "src_Actions/actioncompleteprotectionbypayingoneenergy.h"
+#include "src_Actions/actionnodamageonthreshold.h"
+
+#include "src_Actions/actionchangeenemystatus.h"
+#include "src_Actions/actionchangeenemystatusrandom.h"
+#include "src_Actions/actionenemypoisoned.h"
+
+#include "src_Actions/actionhurteverypokemononownbench.h"
+#include "src_Actions/actiondieandhurteverypokemononeachbench.h"
 #include "src_Actions/actionswappokemonbetweenfigthandbench.h"
 
 #include "src_Actions/actiontrainer_fakeprofessorchen.h"
@@ -43,6 +60,20 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
     //GENERAL
     case AbstractAction::Action_None:
         break;
+    case AbstractAction::Action_ChangeWeaknessOfEnemy:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionChangeWeaknessOfEnemy(static_cast<AbstractCard::Enum_element>(argInt1));
+        }
+        break;
+    case AbstractAction::Action_ChangeResistanceOfHimself:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionChangeResistanceOfHimself(static_cast<AbstractCard::Enum_element>(argInt1));
+        }
+        break;
 
 
     //ATTAQUES
@@ -51,6 +82,36 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
             actionToReturn = createActionReplicateOneAttackFromEnemy();
         }
         break;
+    case AbstractAction::Action_ReplicateLastDamageToEnemy:
+        {
+            actionToReturn = createActionReplicateLastDamageToEnemy();
+        }
+        break;
+    case AbstractAction::Action_UniqueAttack_Random:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionUniqueAttack_Random(argInt1);
+        }
+        break;
+    case AbstractAction::Action_AttackOnlyIfEnemyIsSleeping:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionUniqueAttack_Random(argInt1);
+        }
+        break;
+    case AbstractAction::Action_BlockOneEnemyAttackForOneTurn:
+        {
+            actionToReturn = createActionBlockOneEnemyAttackForOneTurn();
+        }
+        break;
+    case AbstractAction::Action_EnemyCanAttackOnNextTurn_Random:
+        {
+            actionToReturn = createActionEnemyCanAttackOnNextTurn_Random();
+        }
+        break;
+
 
     //GESTION DES DEGATS
     case AbstractAction::Action_MoreDamageByEnergy:
@@ -105,6 +166,15 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 actionToReturn = createActionRemoveEnergyAttached(argInt1, static_cast<AbstractCard::Enum_element>(argInt2));
         }
         break;
+    case AbstractAction::Action_RemoveOneEnergyOnEnemy:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionRemoveEnergyAttached(argInt1, static_cast<AbstractCard::Enum_element>(argInt2));
+        }
+        break;
 
     //SOIN
     case AbstractAction::Action_Healing:
@@ -131,6 +201,13 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
     case AbstractAction::Action_CompleteProtectionByPayingOneEnergy:
         {
             actionToReturn = createActionCompleteProtectionByPayingOneEnergy();
+        }
+        break;
+    case AbstractAction::Action_NoDamageOnThreshold:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionNoDamageOnThreshold(argInt1);
         }
         break;
 
@@ -167,6 +244,13 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 actionToReturn = createActionHurtEveryPokemonOnOwnBench(argInt1);
         }
         break;
+    case AbstractAction::Action_DieAndHurtEveryPokemonOnEachBench:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionDieAndHurtEveryPokemonOnEachBench(argInt1);
+        }
+        break;
     case AbstractAction::Action_SwapPokemonBetweenFigthAndBench:
         {
             actionToReturn = createActionSwapPokemonBetweenFigthAndBench();
@@ -201,11 +285,45 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
 }
 
 //GENERAL
+ActionChangeWeaknessOfEnemy* ActionCreationFactory::createActionChangeWeaknessOfEnemy(AbstractCard::Enum_element element)
+{
+    return new ActionChangeWeaknessOfEnemy(element);
+}
+
+ActionChangeResistanceOfHimself* ActionCreationFactory::createActionChangeResistanceOfHimself(AbstractCard::Enum_element element)
+{
+    return new ActionChangeResistanceOfHimself(element);
+}
 
 //ATTAQUES
 ActionReplicateOneAttackFromEnemy* ActionCreationFactory::createActionReplicateOneAttackFromEnemy()
 {
     return new ActionReplicateOneAttackFromEnemy();
+}
+
+ActionReplicateLastDamageToEnemy* ActionCreationFactory::createActionReplicateLastDamageToEnemy()
+{
+    return new ActionReplicateLastDamageToEnemy();
+}
+
+ActionUniqueAttack_Random* ActionCreationFactory::createActionUniqueAttack_Random(unsigned short index)
+{
+    return new ActionUniqueAttack_Random(index);
+}
+
+ActionAttackOnlyIfEnemyIsSleeping* ActionCreationFactory::createActionAttackOnlyIfEnemyIsSleeping(unsigned short damage)
+{
+    return new ActionAttackOnlyIfEnemyIsSleeping(damage);
+}
+
+ActionBlockOneEnemyAttackForOneTurn* ActionCreationFactory::createActionBlockOneEnemyAttackForOneTurn()
+{
+    return new ActionBlockOneEnemyAttackForOneTurn();
+}
+
+ActionEnemyCanAttackOnNextTurn_Random* ActionCreationFactory::createActionEnemyCanAttackOnNextTurn_Random()
+{
+    return new ActionEnemyCanAttackOnNextTurn_Random();
 }
 
 //GESTION DES DEGATS
@@ -240,6 +358,11 @@ ActionRemoveEnergyAttached* ActionCreationFactory::createActionRemoveEnergyAttac
     return new ActionRemoveEnergyAttached(numberOfEnergies, elementToRemove);
 }
 
+ActionRemoveOneEnergyOnEnemy* ActionCreationFactory::createActionRemoveOneEnergyOnEnemy(unsigned short numberOfEnergies, AbstractCard::Enum_element elementToRemove)
+{
+    return new ActionRemoveOneEnergyOnEnemy(numberOfEnergies, elementToRemove);
+}
+
 //SOIN
 ActionHealing* ActionCreationFactory::createActionHealing(unsigned short pv, AbstractCard::Enum_element energyToPay)
 {
@@ -262,6 +385,11 @@ ActionCompleteProtectionByPayingOneEnergy* ActionCreationFactory::createActionCo
     return new ActionCompleteProtectionByPayingOneEnergy();
 }
 
+ActionNoDamageOnThreshold* ActionCreationFactory::createActionNoDamageOnThreshold(unsigned short damage)
+{
+    return new ActionNoDamageOnThreshold(damage);
+}
+
 //STATUS
 ActionChangeEnemyStatus* ActionCreationFactory::createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status)
 {
@@ -282,6 +410,11 @@ ActionEnemyPoisoned* ActionCreationFactory::createActionEnemyPoisoned(unsigned s
 ActionHurtEveryPokemonOnOwnBench* ActionCreationFactory::createActionHurtEveryPokemonOnOwnBench(unsigned short damage)
 {
     return new ActionHurtEveryPokemonOnOwnBench(damage);
+}
+
+ActionDieAndHurtEveryPokemonOnEachBench* ActionCreationFactory::createActionDieAndHurtEveryPokemonOnEachBench(unsigned short damage)
+{
+    return new ActionDieAndHurtEveryPokemonOnEachBench(damage);
 }
 
 ActionSwapPokemonBetweenFigthAndBench* ActionCreationFactory::createActionSwapPokemonBetweenFigthAndBench()

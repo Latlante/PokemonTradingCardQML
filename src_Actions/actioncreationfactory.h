@@ -4,21 +4,38 @@
 #include "src_Actions/abstractaction.h"
 #include "src_Cards/cardpokemon.h"
 
-class ActionChangeEnemyStatus;
-class ActionChangeEnemyStatusRandom;
-class ActionCompleteProtectionByPayingOneEnergy;
-class ActionDamageMultipliedByHeadOrTail;
-class ActionEnemyPoisoned;
-class ActionHealing;
-class ActionHurtEveryPokemonOnOwnBench;
-class ActionHurtHimself;
-class ActionMoreDamageByEnemyDamage;
+class ActionChangeWeaknessOfEnemy;
+class ActionChangeResistanceOfHimself;
+
+class ActionReplicateOneAttackFromEnemy;
+class ActionReplicateLastDamageToEnemy;
+class ActionUniqueAttack_Random;
+class ActionAttackOnlyIfEnemyIsSleeping;
+class ActionBlockOneEnemyAttackForOneTurn;
+class ActionEnemyCanAttackOnNextTurn_Random;
+
 class ActionMoreDamageByEnergy;
+class ActionDamageMultipliedByHeadOrTail;
+class ActionMoreDamageByEnemyDamage;
+class ActionHurtHimself;
 class ActionMoreDamageOrHurtHimSelf;
+
+class ActionRemoveEnergyAttached;
+class ActionRemoveOneEnergyOnEnemy;
+
+class ActionHealing;
+
 class ActionProtectedAgainstDamage;
 class ActionProtectedAgainstDamageRandom;
-class ActionRemoveEnergyAttached;
-class ActionReplicateOneAttackFromEnemy;
+class ActionCompleteProtectionByPayingOneEnergy;
+class ActionNoDamageOnThreshold;
+
+class ActionChangeEnemyStatus;
+class ActionChangeEnemyStatusRandom;
+class ActionEnemyPoisoned;
+
+class ActionHurtEveryPokemonOnOwnBench;
+class ActionDieAndHurtEveryPokemonOnEachBench;
 class ActionSwapPokemonBetweenFigthAndBench;
 
 class ActionTrainer_FakeProfessorChen;
@@ -36,9 +53,17 @@ public:
     static AbstractAction* createAction(AbstractAction::Enum_typeOfAction idAction, QVariant arg1 = QVariant(), QVariant arg2 = QVariant());
 
     //GENERAL
+    static ActionChangeWeaknessOfEnemy* createActionChangeWeaknessOfEnemy(AbstractCard::Enum_element element);
+    static ActionChangeResistanceOfHimself* createActionChangeResistanceOfHimself(AbstractCard::Enum_element element);
 
     //ATTAQUES
     static ActionReplicateOneAttackFromEnemy* createActionReplicateOneAttackFromEnemy();
+    static ActionReplicateLastDamageToEnemy* createActionReplicateLastDamageToEnemy();
+    static ActionUniqueAttack_Random* createActionUniqueAttack_Random(unsigned short index);
+    static ActionAttackOnlyIfEnemyIsSleeping* createActionAttackOnlyIfEnemyIsSleeping(unsigned short damage);
+    static ActionBlockOneEnemyAttackForOneTurn* createActionBlockOneEnemyAttackForOneTurn();
+    static ActionEnemyCanAttackOnNextTurn_Random* createActionEnemyCanAttackOnNextTurn_Random();
+
 
     //GESTION DES DEGATS
     static ActionMoreDamageByEnergy* createActionMoreDamageByEnergy(unsigned short damagePerEnergy, unsigned short indexOfAttack);
@@ -49,6 +74,7 @@ public:
 
     //ENERGIES
     static ActionRemoveEnergyAttached* createActionRemoveEnergyAttached(unsigned short numberOfEnergies, AbstractCard::Enum_element elementToRemove);
+    static ActionRemoveOneEnergyOnEnemy* createActionRemoveOneEnergyOnEnemy(unsigned short numberOfEnergies, AbstractCard::Enum_element elementToRemove);
 
     //SOIN
     static ActionHealing* createActionHealing(unsigned short pv, AbstractCard::Enum_element energyToPay);
@@ -57,6 +83,7 @@ public:
     static ActionProtectedAgainstDamage* createActionProtectedAgainstDamage();
     static ActionProtectedAgainstDamageRandom* createActionProtectedAgainstDamageRandom();
     static ActionCompleteProtectionByPayingOneEnergy* createActionCompleteProtectionByPayingOneEnergy();
+    static ActionNoDamageOnThreshold* createActionNoDamageOnThreshold(unsigned short damage);
 
     //STATUS
     static ActionChangeEnemyStatus* createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status);
@@ -65,6 +92,7 @@ public:
 
     //BANC
     static ActionHurtEveryPokemonOnOwnBench* createActionHurtEveryPokemonOnOwnBench(unsigned short damage);
+    static ActionDieAndHurtEveryPokemonOnEachBench* createActionDieAndHurtEveryPokemonOnEachBench(unsigned short damage);
     static ActionSwapPokemonBetweenFigthAndBench* createActionSwapPokemonBetweenFigthAndBench();
 
     //ACTIONS TRAINERS

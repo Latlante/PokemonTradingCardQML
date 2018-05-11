@@ -261,6 +261,9 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
 
 void GameManager::endOfTurn()
 {
+    //On débloque des attaques si besoin
+    checkAttacksBlocked();
+
     //Application du poison s'il y a
     checkPokemonPoisoned();
 
@@ -561,4 +564,23 @@ void GameManager::checkStatusPokemonForNewRound()
             }
         }
     }
+}
+
+void GameManager::checkAttacksBlocked()
+{
+    /*foreach (Player* play, m_listPlayers)
+    {
+        for(int index=0;index<play->fight()->countCard();index++)
+            play->fight()->pokemonFighting(index)->decrementNumberOfTurnAttackStillBlocks();
+
+        for(int index=0;index<play->bench()->countCard();index++)
+            play->bench()->cardPok(index)->decrementNumberOfTurnAttackStillBlocks();
+    }*/
+
+    //On décrémente uniquement le joueur actuel
+    for(int index=0;index<currentPlayer()->fight()->countCard();index++)
+        currentPlayer()->fight()->pokemonFighting(index)->decrementNumberOfTurnAttackStillBlocks();
+
+    for(int index=0;index<currentPlayer()->bench()->countCard();index++)
+        currentPlayer()->bench()->cardPok(index)->decrementNumberOfTurnAttackStillBlocks();
 }
