@@ -13,5 +13,6 @@
         <file>PopupPokemonSelectingAttack.qml</file>
         <file>PopupSelectCardsInPacket.qml</file>
         <file>PopupSelectEnergiesInPokemon.qml</file>
+        <file>PopupMessage.qml</file>
     </qresource>
 </RCC>

@@ -232,6 +232,37 @@ void CtrlPopups::selectionCardsFinished()
     emit selectionFinished();
 }
 
+//**************************************
+//              MESSAGE
+//**************************************
+bool CtrlPopups::messageVisible()
+{
+    return m_messageVisible;
+}
+
+void CtrlPopups::setMessageVisible(bool visible)
+{
+    if(m_messageVisible != visible)
+    {
+        m_messageVisible = visible;
+        emit messageVisibleChanged();
+    }
+}
+
+QString CtrlPopups::messageContent()
+{
+    return m_messageContent;
+}
+
+void CtrlPopups::setMessageContent(QString message)
+{
+    if(m_messageContent != message)
+    {
+        m_messageContent = message;
+        emit messageContentChanged();
+    }
+}
+
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/

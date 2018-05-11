@@ -27,6 +27,9 @@ class CtrlPopups : public QObject
 
     Q_PROPERTY(bool selectEnergiesInPokemonVisible READ selectEnergiesInPokemonVisible WRITE setSelectEnergiesInPokemonVisible NOTIFY selectEnergiesInPokemonVisibleChanged)
 
+    Q_PROPERTY(bool messageVisible READ messageVisible WRITE setMessageVisible NOTIFY messageVisibleChanged)
+    Q_PROPERTY(QString messageContent READ messageContent WRITE setMessageContent NOTIFY messageContentChanged)
+
 public:
     explicit CtrlPopups(QObject *parent = nullptr);
     ~CtrlPopups();
@@ -59,6 +62,12 @@ public:
     bool selectEnergiesInPokemonVisible();
     void setSelectEnergiesInPokemonVisible(bool state);
 
+    //MESSAGE
+    bool messageVisible();
+    void setMessageVisible(bool visible);
+    QString messageContent();
+    void setMessageContent(QString message);
+
 
     Q_INVOKABLE void selectionCardsFinished();
 
@@ -71,6 +80,9 @@ signals:
     void popupSelectingAttacks_AuthorizeRetreatChanged();
 
     void selectEnergiesInPokemonVisibleChanged();
+
+    void messageVisibleChanged();
+    void messageContentChanged();
 
     void selectionFinished();
 
@@ -85,6 +97,9 @@ private:
 
     ModelPopupSelectEnergyInPokemon* m_modelSelectEnergyInPokemon;
     bool m_selectEnergiesInPokemonVisible;
+
+    bool m_messageVisible;
+    QString m_messageContent;
 
     QList<int> displayAbstractPacket(AbstractPacket* packet);
 };

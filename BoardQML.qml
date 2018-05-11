@@ -92,6 +92,12 @@ Item {
             anchors.fill: parent
             visible: ctrlPopups.selectEnergiesInPokemonVisible
         }
+
+        PopupMessage {
+            id: popupMessage1
+            anchors.fill: parent
+            visible: ctrlPopups.messageVisible
+        }
     }
 }
 
