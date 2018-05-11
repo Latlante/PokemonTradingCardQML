@@ -13,6 +13,10 @@ CardPokemon::CardPokemon(unsigned short id,
                          AbstractCard::Enum_element element,
                          unsigned short lifeTotal,
                          QList<AttackData> listAttacks,
+                         CardPokemon::Enum_element weaknessElement,
+                         CardPokemon::Enum_CoefWeaknessResistance weaknessCoef,
+                         CardPokemon::Enum_element resistanceElement,
+                         CardPokemon::Enum_CoefWeaknessResistance resistanceCoef,
                          short evolutionFrom,
                          unsigned short costRetreat) :
     AbstractCard(id, name),
@@ -24,10 +28,15 @@ CardPokemon::CardPokemon(unsigned short id,
     m_protectedAgainstEffectForTheNextTurn(false),
 	m_listAttacks(listAttacks),
     m_modelListEnergies(new ModelListEnergies()),
+    m_weaknessElement(weaknessElement),
+    m_weaknessCoef(weaknessCoef),
+    m_resistanceElement(resistanceElement),
+    m_resistanceCoef(resistanceCoef),
     m_cardEvolution(nullptr),
     m_evolutionFrom(evolutionFrom),
     m_costRetreat(costRetreat),
-    m_damageOfPoisonPerRound(DAMAGE_POISON)
+    m_damageOfPoisonPerRound(DAMAGE_POISON),
+    m_lastDamageReceived(0)
 {
 	
 }
@@ -201,6 +210,62 @@ void CardPokemon::setInvincibleForTheNextTurn(bool status)
     setProtectedAgainstEffectForTheNextTurn(status);
 }
 
+CardPokemon::Enum_element CardPokemon::weaknessElement()
+{
+    CardPokemon::Enum_element elementToReturn = m_weaknessElement;
+
+    if(m_cardEvolution != nullptr)
+        elementToReturn = m_cardEvolution->weaknessElement();
+
+    return elementToReturn;
+}
+
+void CardPokemon::setWeaknessElement(CardPokemon::Enum_element element)
+{
+    if(m_cardEvolution != nullptr)
+        m_cardEvolution->setWeaknessElement(element);
+    else
+        m_weaknessElement = element;
+}
+
+CardPokemon::Enum_CoefWeaknessResistance CardPokemon::weaknessCoef()
+{
+    return m_weaknessCoef;
+}
+
+void CardPokemon::setWeaknessCoef(CardPokemon::Enum_CoefWeaknessResistance coef)
+{
+    m_weaknessCoef = coef;
+}
+
+CardPokemon::Enum_element CardPokemon::resistanceElement()
+{
+    CardPokemon::Enum_element elementToReturn = m_resistanceElement;
+
+    if(m_cardEvolution != nullptr)
+        elementToReturn = m_cardEvolution->resistanceElement();
+
+    return elementToReturn;
+}
+
+void CardPokemon::setResistanceElement(CardPokemon::Enum_element element)
+{
+    if(m_cardEvolution != nullptr)
+        m_cardEvolution->setResistanceElement(element);
+    else
+        m_resistanceElement = element;
+}
+
+CardPokemon::Enum_CoefWeaknessResistance CardPokemon::resistanceCoef()
+{
+    return m_resistanceCoef;
+}
+
+void CardPokemon::setResistanceCoef(CardPokemon::Enum_CoefWeaknessResistance coef)
+{
+    m_resistanceCoef = coef;
+}
+
 QList<AttackData> CardPokemon::listAttacks()
 {
     if(m_cardEvolution != nullptr)
@@ -251,15 +316,21 @@ bool CardPokemon::replaceOneAttack(int index, AttackData data)
     if((index >= 0) && (index < listAttacks().count()))
     {
         //Nettoyage de l'ancienne action
-        AttackData oldData = listAttacks()[index];
-        if(oldData.action != nullptr)
+        AttackData currentData = listAttacks()[index];
+        if(currentData.action != nullptr)
         {
-            delete oldData.action;
-            oldData.action = nullptr;
+            delete currentData.action;
+            currentData.action = nullptr;
         }
 
         //Copie
-        m_listAttacks.replace(index, data);
+        currentData.action = data.action;
+        //On ne copie volontairement pas le coût en énergie
+        //currentData.costEnergies = data.costEnergies;
+        currentData.damage = data.damage;
+        currentData.description = data.description;
+        currentData.name = data.name;
+        m_listAttacks.replace(index, currentData);
     }
     else
         statusBack = false;
@@ -313,12 +384,39 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
         {
             if (true == canAttackFromStatus())
             {
+                //Sauvegarde des données actuelles
                 m_lastAttackUsed = listAttacks()[indexAttack];
-                enemy->takeDamage(m_lastAttackUsed.damage);
 
+                //Calcul de la faiblesse ou résistance
+                unsigned short damage = m_lastAttackUsed.damage;
+                unsigned short newDamage = damage;
+
+                if(element() == enemy->weaknessElement())
+                {
+                    if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
+                        newDamage = damage * 2;
+                    else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
+                        newDamage = damage + 30;
+                }
+                else if(element() == enemy->resistanceElement())
+                {
+                    if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
+                        newDamage = damage / 2;
+                    else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
+                        newDamage = damage - 30;
+                }
+
+                if(newDamage % 10 == 5)
+                    newDamage += 5;
+
+                //On attaque
+                enemy->takeDamage(newDamage);
+
+                //On exécute l'action s'il y a
                 if(m_lastAttackUsed.action != nullptr)
                     m_lastAttackUsed.action->executeAction(this, indexAttack);
 
+                //On réinitialise les états valables un seul tour
                 enemy->setInvincibleForTheNextTurn(false);
                 statusBack = Attack_OK;
             }
@@ -352,6 +450,7 @@ void CardPokemon::takeDamage(unsigned short damage)
             damageRecalculated = damage - protectedAgainstDamageForTheNextTurnThreshold();
     }
 
+    m_lastDamageReceived = damageRecalculated;
     setDamage(currentDamage() + damageRecalculated);
 }
 
@@ -483,6 +582,11 @@ int CardPokemon::lastIndexOfAttackUsed()
     return m_listAttacks.indexOf(m_lastAttackUsed);
 }
 
+unsigned short CardPokemon::lastDamageReceived()
+{
+    return m_lastDamageReceived;
+}
+
 unsigned short CardPokemon::costRetreat()
 {
     unsigned short cost;
@@ -513,8 +617,14 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     m_cardEvolution = source.m_cardEvolution;
     m_evolutionFrom = source.m_evolutionFrom;
     m_costRetreat = source.m_costRetreat;
+    m_weaknessElement = source.m_weaknessElement;
+    m_weaknessCoef = source.m_weaknessCoef;
+    m_resistanceElement = source.m_resistanceElement;
+    m_resistanceCoef = source.m_resistanceCoef;
+
     m_damageOfPoisonPerRound = source.m_damageOfPoisonPerRound;
     m_lastAttackUsed = source.m_lastAttackUsed;
+
 
     return *this;
 }

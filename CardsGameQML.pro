@@ -75,7 +75,11 @@ SOURCES += \
     src_Actions/actionprotectedagainstdamagerandom.cpp \
     src_Actions/actionremoveoneenergyonenemy.cpp \
     src_Actions/actiondieandhurteverypokemononeachbench.cpp \
-    src_Actions/actionnodamageonthreshold.cpp
+    src_Actions/actionnodamageonthreshold.cpp \
+    src_Actions/attacks/actionchangeweaknessofenemy.cpp \
+    src_Actions/attacks/actionchangeresistanceofhimself.cpp \
+    src_Actions/attacks/actionattackonlyifenemyissleeping.cpp \
+    src_Actions/attacks/actionreplicatelastdamagetoenemy.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -148,7 +152,11 @@ HEADERS += \
     src_Actions/actionprotectedagainstdamagerandom.h \
     src_Actions/actionremoveoneenergyonenemy.h \
     src_Actions/actiondieandhurteverypokemononeachbench.h \
-    src_Actions/actionnodamageonthreshold.h
+    src_Actions/actionnodamageonthreshold.h \
+    src_Actions/attacks/actionchangeweaknessofenemy.h \
+    src_Actions/attacks/actionchangeresistanceofhimself.h \
+    src_Actions/attacks/actionattackonlyifenemyissleeping.h \
+    src_Actions/attacks/actionreplicatelastdamagetoenemy.h
 
 FORMS += \
     dlgselectcards.ui

@@ -58,6 +58,10 @@ void TestsUnitaireGeneral::checkStructCardPokemonByCreatingACustomOne()
                                                  pokemonElement,
                                                  pokemonLife,
                                                  listAttacks,
+                                                 CardPokemon::Element_None,
+                                                 CardPokemon::WeaknessResistance_NoCoef,
+                                                 CardPokemon::Element_None,
+                                                 CardPokemon::WeaknessResistance_NoCoef,
                                                  -1,
                                                  costRetreat);
 

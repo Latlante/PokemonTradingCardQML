@@ -66,11 +66,22 @@ public:
         Attack_WrongStatus
     };
 
+    enum Enum_CoefWeaknessResistance
+    {
+        WeaknessResistance_NoCoef = -1,
+        WeaknessResistance_Coef2 = 0,
+        WeaknessResistance_Difference30
+    };
+
     CardPokemon(unsigned short id, 
 				const QString& name, 
 				AbstractCard::Enum_element element,
 				unsigned short lifeTotal,
 				QList<AttackData> listAttacks,
+                CardPokemon::Enum_element weaknessElement,
+                CardPokemon::Enum_CoefWeaknessResistance weaknessCoef,
+                CardPokemon::Enum_element resistanceElement,
+                CardPokemon::Enum_CoefWeaknessResistance resistanceCoef,
                 short evolutionFrom = -1,
                 unsigned short costRetreat = 0);
     CardPokemon(const CardPokemon& card);
@@ -92,6 +103,7 @@ public:
     Enum_statusOfPokemon status();
     Q_INVOKABLE QString statusFormatString();
     void setStatus(Enum_statusOfPokemon status);
+
     bool isProtectedAgainstDamageForTheNextTurn();
     unsigned short protectedAgainstDamageForTheNextTurnThreshold();
     void setProtectedAgainstDamageForTheNextTurn(bool status);
@@ -99,6 +111,16 @@ public:
     bool isProtectedAgainstEffectForTheNextTurn();
     void setProtectedAgainstEffectForTheNextTurn(bool status);
     void setInvincibleForTheNextTurn(bool status);
+
+    CardPokemon::Enum_element weaknessElement();
+    void setWeaknessElement(CardPokemon::Enum_element element);
+    CardPokemon::Enum_CoefWeaknessResistance weaknessCoef();
+    void setWeaknessCoef(CardPokemon::Enum_CoefWeaknessResistance coef);
+    CardPokemon::Enum_element resistanceElement();
+    void setResistanceElement(CardPokemon::Enum_element element);
+    CardPokemon::Enum_CoefWeaknessResistance resistanceCoef();
+    void setResistanceCoef(CardPokemon::Enum_CoefWeaknessResistance coef);
+
 
     Q_INVOKABLE QList<AttackData> listAttacks();
     Q_INVOKABLE int attacksCount();
@@ -131,9 +153,9 @@ public:
     void applyDamageIfPoisoned();
     unsigned short damagePoisonPerRound();
     void setDamagePoisonPerRound(unsigned short damage);
-
     AttackData lastAttackUsed();
     int lastIndexOfAttackUsed();
+    unsigned short lastDamageReceived();
 
     unsigned short costRetreat();
     bool canRetreat();
@@ -157,12 +179,17 @@ private:
     bool m_protectedAgainstEffectForTheNextTurn;
     QList<AttackData> m_listAttacks;
     ModelListEnergies* m_modelListEnergies;
+    CardPokemon::Enum_element m_weaknessElement;
+    CardPokemon::Enum_CoefWeaknessResistance m_weaknessCoef;
+    CardPokemon::Enum_element m_resistanceElement;
+    CardPokemon::Enum_CoefWeaknessResistance m_resistanceCoef;
     CardPokemon* m_cardEvolution;
 	short m_evolutionFrom;
     unsigned short m_costRetreat;
 
     unsigned short m_damageOfPoisonPerRound;
     AttackData m_lastAttackUsed;
+    unsigned short m_lastDamageReceived;
 	
     unsigned short currentDamage();
     void setDamage(unsigned short damage);

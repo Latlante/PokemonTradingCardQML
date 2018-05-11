@@ -606,10 +606,14 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacking()
     //Création du pokémon attaquant
     QList<AttackData> listAttacks = QList<AttackData>() << newAttackPokemonAttacking();
     cardPokemonToReturn = new CardPokemon(pokemonId,
-                                         m_pokAttacking_Name,
-                                         m_pokAttacking_Element,
-                                         m_pokAttacking_MaxLife,
-                                         listAttacks);
+                                          m_pokAttacking_Name,
+                                          m_pokAttacking_Element,
+                                          m_pokAttacking_MaxLife,
+                                          listAttacks,
+                                          CardPokemon::Element_None,
+                                          0,
+                                          CardPokemon::Element_None,
+                                          0);
 
     cardPokemonToReturn->takeDamage(m_pokAttacking_MaxLife-m_pokAttacking_Life);
 
@@ -689,10 +693,14 @@ CardPokemon* TestsUnitaireActions::createCustomPokemonAttacked()
     listAttacks.append(attack1);
 
     cardPokemonToReturn = new CardPokemon(pokemonId,
-                                         pokemonName,
-                                         pokemonElement,
-                                         m_pokAttacked_Life,
-                                         listAttacks);
+                                          pokemonName,
+                                          pokemonElement,
+                                          m_pokAttacked_Life,
+                                          listAttacks,
+                                          CardPokemon::Element_None,
+                                          0,
+                                          CardPokemon::Element_None,
+                                          0);
 
     return cardPokemonToReturn;
 }

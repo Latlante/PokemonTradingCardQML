@@ -27,7 +27,7 @@ public:
         Action_UniqueAttack_Random = 102,                   //Index of attack
         Action_AttackOnlyIfEnemyIsSleeping = 103,           //Quantity of damage
         Action_BlockOneEnemyAttackForOneTurn = 104,
-        Action_CanAttack_Random = 105,                      //Quantity of damage
+        //Action_CanAttack_Random = 105,                      //Quantity of damage
         Action_EnemyCanAttackOnNextTurn_Random = 106,
 
         //GESTION DES DEGATS

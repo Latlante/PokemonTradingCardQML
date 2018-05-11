@@ -181,6 +181,10 @@ CardPokemon* Database::newCardPokemon(const QString& infoCsv)
                                               static_cast<AbstractCard::Enum_element>(arguments[InfoDbPok_Element].toInt()),
                                               arguments[InfoDbPok_Life].toUShort(),
                                               listAttacks,
+                                              static_cast<CardPokemon::Enum_element>(arguments[InfoDbPok_Weakness].toUShort()),
+                                              static_cast<CardPokemon::Enum_CoefWeaknessResistance>(arguments[InfoDbPok_WeaknessCoef].toUShort()),
+                                              static_cast<CardPokemon::Enum_element>(arguments[InfoDbPok_Resistance].toUShort()),
+                                              static_cast<CardPokemon::Enum_CoefWeaknessResistance>(arguments[InfoDbPok_ResistanceCoef].toUShort()),
                                               arguments[InfoDbPok_IdSubevolution] == "" ? -1 : arguments[InfoDbPok_IdSubevolution].toShort(),
                                               arguments[InfoDbPok_CostRetreat].toUShort());
     }
