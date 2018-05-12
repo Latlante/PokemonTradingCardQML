@@ -17,6 +17,14 @@ CONFIG(compilation_test)
     #DEFINES += TESTS_UNITAIRES
 }
 
+
+Debug:OBJECTS_DIR = debug/obj/
+Debug:MOC_DIR = debug/moc/
+
+Release:OBJECTS_DIR = release/obj/
+Release:MOC_DIR = release/moc/
+
+
 SOURCES += \
         main.cpp \
     common/database.cpp \
