@@ -19,6 +19,7 @@ class PacketTrash;
 class Player : public QObject
 {
 	Q_OBJECT
+    Q_PROPERTY(bool initReady READ initReady WRITE setInitReady NOTIFY initReadyChanged)
 	
 public:
 	Player(QString name, QList<AbstractCard*> listCards, QObject *parent = NULL);
@@ -40,7 +41,11 @@ public:
     bool isPlaying();
 	void drawOneCard();
     void drawOneReward();
-	bool isWinner();
+    bool isLoser();
+
+    bool initReady();
+    void setInitReady(bool ready);
+    Q_INVOKABLE void checkIfInitReady();
 
     bool moveCardFromDeckToHand();
     bool moveCardFromDeckToReward();
@@ -60,6 +65,7 @@ public:
 signals:
     void endOfTurn();
     void canPlayChanged();
+    void initReadyChanged();
 
 private:
 	QString m_name;
@@ -72,6 +78,7 @@ private:
     PacketTrash* m_trash;
 
     //For the round
+    bool m_initReady;
     bool m_canPlay;
     bool m_energyPlayedForThisRound;
 

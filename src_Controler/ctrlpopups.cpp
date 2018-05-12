@@ -235,6 +235,21 @@ void CtrlPopups::selectionCardsFinished()
 //**************************************
 //              MESSAGE
 //**************************************
+void CtrlPopups::displayMessage(QString message)
+{
+    //Initialisation
+    setMessageContent(message);
+    setMessageVisible(true);
+
+    //En attente
+    QEventLoop loop;
+    connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    //Configuration de fin
+    setMessageVisible(false);
+}
+
 bool CtrlPopups::messageVisible()
 {
     return m_messageVisible;

@@ -6,6 +6,7 @@
 
 #include "common/constantesqml.h"
 #include "src_Cards/abstractcard.h"
+#include "src_Cards/cardpokemon.h"
 
 class CtrlPopups;
 
@@ -38,8 +39,9 @@ public:
     Player* addNewPlayer(QString name, QList<AbstractCard*> listCards);
     void startGame();
     void selectFirstPlayer();
+    void setInitReady();
 	void nextPlayer();
-    void attack(CardPokemon* pokemonAttacking, unsigned short index);
+    CardPokemon::Enum_StatusOfAttack attack(CardPokemon* pokemonAttacking, unsigned short index);
     bool retreat(CardPokemon *pokemonToRetreat);
 	void endOfTurn();
     Player *gameIsFinished();
@@ -47,6 +49,7 @@ public:
     QList<int> displayBench(BenchArea* bench);
     QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     int displayAttacks(CardPokemon* card, bool blockRetreat = false);
+    void displayMessage(QString message);
 
 #ifdef TESTS_UNITAIRES
     void setForcedValueHeadOrTail(bool forced, unsigned short value = 0);

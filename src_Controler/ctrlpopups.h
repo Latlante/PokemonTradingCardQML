@@ -63,6 +63,7 @@ public:
     void setSelectEnergiesInPokemonVisible(bool state);
 
     //MESSAGE
+    void displayMessage(QString message);
     bool messageVisible();
     void setMessageVisible(bool visible);
     QString messageContent();

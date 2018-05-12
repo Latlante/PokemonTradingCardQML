@@ -130,9 +130,7 @@ void CtrlGameBoard::onClicked_ButtonOk_SelectCards()
 
 void CtrlGameBoard::onClicked_ButtonReadyPreparation()
 {
-
-
-    m_gameManager->setGameStatus(ConstantesQML::StepGameInProgress);
+    m_gameManager->setInitReady();
 }
 
 void CtrlGameBoard::actionAttack(CardPokemon *card)
@@ -145,8 +143,30 @@ void CtrlGameBoard::actionAttack(CardPokemon *card)
     if(indexAttack < 4)         //Correspond à une attaque
     {
         //Le pokémon attaquant attaque
-        m_gameManager->attack(card, indexAttack);
-        m_gameManager->endOfTurn();
+        CardPokemon::Enum_StatusOfAttack statusOfAttack = m_gameManager->attack(card, indexAttack);
+
+        switch(statusOfAttack)
+        {
+        case CardPokemon::Attack_OK:
+            m_gameManager->endOfTurn();
+            break;
+        case CardPokemon::Attack_AttackBlocked:
+            m_gameManager->displayMessage("Impossible d'utiliser cette attaque pendant ce tour");
+            break;
+        case CardPokemon::Attack_NotEnoughEnergies:
+            m_gameManager->displayMessage("Vous n'avez pas assez d'énergies");
+            break;
+        case CardPokemon::Attack_WrongStatus:
+            m_gameManager->displayMessage("Vous ne pouvez pas attaquer pendant que vous êtes " + card->statusFormatString());
+            break;
+        case CardPokemon::Attack_IndexNOK:
+            qCritical() << __PRETTY_FUNCTION__ << "Erreur d'index";
+            break;
+        case CardPokemon::Attack_UnknownError:
+            qCritical() << __PRETTY_FUNCTION__ << "Erreur inconnue";
+            break;
+        }
+
     }
     else if(indexAttack == 4)   //Correspond à la retraite
     {
@@ -159,8 +179,11 @@ void CtrlGameBoard::actionAttack(CardPokemon *card)
     {
         qCritical() << __PRETTY_FUNCTION__ << "erreur de indexAttack=" << indexAttack;
     }
+}
 
-
+void CtrlGameBoard::actionFinishYourTurn()
+{
+    m_gameManager->endOfTurn();
 }
 
 /************************************************************
@@ -178,5 +201,7 @@ void CtrlGameBoard::onListsComplete_CtrlSelectingCards()
 
     m_gameManager->initGame();
     m_factoryMainPageLoader->displayBoard();
+    m_gameManager->displayMessage("Préparez votre jeu");
+
 }
 

@@ -21,6 +21,7 @@ Player::Player(QString name, QList<AbstractCard*> listCards, QObject *parent) :
     m_hand(new PacketHand()),
     m_rewards(new PacketRewards()),
     m_trash(new PacketTrash()),
+    m_initReady(false),
     m_canPlay(true),
     m_energyPlayedForThisRound(false)
 {
@@ -118,7 +119,7 @@ void Player::drawOneReward()
     moveCardFromRewardToHand();
 }
 
-bool Player::isWinner()
+bool Player::isLoser()
 {
     //Conditions de victoire:
     //  -> Plus de récompense à piocher
@@ -131,6 +132,25 @@ bool Player::isWinner()
     hasAWinner |= bench()->isEmpty() && fight()->isEmpty();
 
     return hasAWinner;
+}
+
+bool Player::initReady()
+{
+    return m_initReady;
+}
+
+void Player::setInitReady(bool ready)
+{
+    if(m_initReady != ready)
+    {
+        m_initReady = ready;
+        emit initReadyChanged();
+    }
+}
+
+void Player::checkIfInitReady()
+{
+    setInitReady(fight()->countCard() > 0);
 }
 
 bool Player::moveCardFromDeckToHand()

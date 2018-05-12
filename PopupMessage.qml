@@ -18,6 +18,7 @@ Item {
             anchors.margins: 0.25 * parent.width
             font.pixelSize: 30
             wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             text: ctrlPopups.messageContent
         }
@@ -25,7 +26,7 @@ Item {
         MouseArea {
             id: mouseAreaClosing
             anchors.fill: parent
-            onClicked: ctrlPopups.messageVisible = false
+            onClicked: ctrlPopups.selectionCardsFinished()
         }
     }
 

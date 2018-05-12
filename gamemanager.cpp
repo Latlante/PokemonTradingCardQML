@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include "src_Controler/ctrlpopups.h"
-#include "src_Cards/cardpokemon.h"
 #include "src_Models/modellistenergies.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
@@ -176,6 +175,17 @@ void GameManager::selectFirstPlayer()
 #endif
 }
 
+void GameManager::setInitReady()
+{
+    bool everyoneIsReady = true;
+
+    foreach(Player* playerReady, m_listPlayers)
+        everyoneIsReady &= playerReady->initReady();
+
+    if(everyoneIsReady == true)
+        setGameStatus(ConstantesQML::StepGameInProgress);
+}
+
 void GameManager::nextPlayer()
 {	
     /*m_indexCurrentPlayer++;
@@ -189,7 +199,7 @@ void GameManager::nextPlayer()
     currentPlayer()->drawOneCard();
 }
 
-void GameManager::attack(CardPokemon *pokemonAttacking, unsigned short index)
+CardPokemon::Enum_StatusOfAttack GameManager::attack(CardPokemon *pokemonAttacking, unsigned short index)
 {
     CardPokemon::Enum_StatusOfAttack statusOfAttack = CardPokemon::Attack_UnknownError;
 
@@ -213,6 +223,8 @@ void GameManager::attack(CardPokemon *pokemonAttacking, unsigned short index)
     }
     else
         qCritical() << __PRETTY_FUNCTION__ << "pokemonAttacking is null";
+
+    return statusOfAttack;
 }
 
 bool GameManager::retreat(CardPokemon *pokemonToRetreat)
@@ -294,8 +306,8 @@ Player* GameManager::gameIsFinished()
 #ifndef TESTS_UNITAIRES
 	foreach(Player* play, m_listPlayers)
 	{
-        if(play->isWinner())
-            playWinner = play;
+        if(play->isLoser())
+            playWinner = enemyOf(play);
 	}
 #endif
 	
@@ -337,6 +349,11 @@ int GameManager::displayAttacks(CardPokemon* card, bool blockRetreat)
 #endif
 }
 
+void GameManager::displayMessage(QString message)
+{
+    m_ctrlPopups.displayMessage(message);
+}
+
 #ifdef TESTS_UNITAIRES
 void GameManager::setForcedValueHeadOrTail(bool forced, unsigned short value)
 {
@@ -371,7 +388,7 @@ void GameManager::onEndOfTurn_Player()
     bool hasAWinner = false;
 
     foreach(Player* play, m_listPlayers)
-        hasAWinner |= play->isWinner();
+        hasAWinner |= play->isLoser();
 
     //S'il n'y a pas encore de vainqueur, on laisse le prochain joueur jouer
     if(hasAWinner == false)
@@ -382,7 +399,7 @@ void GameManager::onEndOfTurn_Player()
     {
         foreach(Player* play, m_listPlayers)
         {
-            if(play->isWinner())
+            if(play->isLoser())
             {
                 qDebug() << "VICTOIRE DE " << play->name();
             }

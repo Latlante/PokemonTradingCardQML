@@ -249,15 +249,19 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                visible: ctrlGameBoard.gameStatus === ConstantesQML.StepPreparation
+                visible: ((player.initReady === false) &&
+                          (ctrlGameBoard.gameStatus === ConstantesQML.StepPreparation))
 
                 text: "Prêt"
 
-                onClicked: ctrlGameBoard.onClicked_ButtonReadyPreparation()
+                onClicked: {
+                    player.checkIfInitReady()
+                    ctrlGameBoard.onClicked_ButtonReadyPreparation()
+                }
             }
 
-            Text {
-                id: textYourTurn
+            Button {
+                id: buttonFinishYourTurn
                 height: 30
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -265,8 +269,11 @@ Item {
                 visible: (cardPok !== undefined) && (player === currentPlayer) &&
                          (ctrlGameBoard.gameStatus === ConstantesQML.StepGameInProgress)
 
-                text: "A vous de jouer"
+                text: "Terminer votre tour"
+
+                onClicked: ctrlGameBoard.actionFinishYourTurn()
             }
+
         }
 
 
