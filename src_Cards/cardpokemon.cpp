@@ -1,6 +1,7 @@
 #include "cardpokemon.h"
 
 #include <QDebug>
+#include <QQmlEngine>
 #include <QtQml/qqml.h>
 #include <QUrl>
 #include "utils.h"
@@ -406,6 +407,7 @@ unsigned short CardPokemon::countEnergies(Enum_element element)
 
 ModelListEnergies* CardPokemon::modelListOfEnergies()
 {
+    QQmlEngine::setObjectOwnership(m_modelListEnergies, QQmlEngine::CppOwnership);
     return m_modelListEnergies;
 }
 

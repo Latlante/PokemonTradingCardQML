@@ -110,21 +110,19 @@ Item {
                 id: mouseAreaCardFighter
                 anchors.fill: parent
                 onClicked: {
-                    if(cardPok !== undefined)
-                    {
-                        popupCardDetailsComplete1.card = cardPok;
-                        popupCardDetailsComplete1.visible = true;
-                    }
-                }
-
-                onPressAndHold: {
                     if((cardPok !== undefined) &&
                             (player === currentPlayer) &&
                             (ctrlGameBoard.gameStatus === ConstantesQML.StepGameInProgress))
                     {
-                        //popupPokemonSelectingAttack1.card = cardPok;
-                        //popupPokemonSelectingAttack1.visible = true;
                         ctrlGameBoard.actionAttack(cardPok);
+                    }
+                }
+
+                onPressAndHold: {
+                    if(cardPok !== undefined)
+                    {
+                        popupCardDetailsComplete1.card = cardPok;
+                        popupCardDetailsComplete1.visible = true;
                     }
                 }
             }
