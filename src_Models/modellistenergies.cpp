@@ -29,7 +29,7 @@ void ModelListEnergies::addEnergy(CardEnergy *energy)
 {
     if(energy != nullptr)
     {
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        beginInsertRows(QModelIndex(), rowCount(), rowCount()+(energy->quantity()-1));
         m_listEnergies.append(energy);
         endInsertRows();
     }
@@ -41,7 +41,7 @@ CardEnergy* ModelListEnergies::takeEnergy(int index)
 
     if((index >= 0) && (index < rowCount()))
     {
-        beginRemoveRows(QModelIndex(), index, index);
+        beginRemoveRows(QModelIndex(), index, index+(energyToReturn->quantity()-1));
         energyToReturn = m_listEnergies.takeAt(index);
         endRemoveRows();
     }
@@ -73,7 +73,7 @@ QList<CardEnergy*> ModelListEnergies::takeAllEnergies()
 
 unsigned short ModelListEnergies::countEnergies()
 {
-    int count = 0;
+    unsigned short count = 0;
 
     foreach (CardEnergy* energy, m_listEnergies)
     {
@@ -158,9 +158,17 @@ QVariant ModelListEnergies::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    int indexRow = 0;
+    int quantityOfEnergies = 0;
+    while((indexRow < m_listEnergies.count()) && (iRow >= quantityOfEnergies))
+    {
+        quantityOfEnergies += m_listEnergies[indexRow]->quantity();
+        indexRow++;
+    }
+
     switch(role)
     {
-    case ListEnergiesRole_Icon:         return "energies/icones/" + QString::number(static_cast<int>(m_listEnergies[iRow]->element())) + ".png";
+    case ListEnergiesRole_Icon:         return "energies/icones/" + QString::number(static_cast<int>(m_listEnergies[indexRow-1]->element())) + ".png";
     }
 
     return QVariant();
@@ -168,7 +176,16 @@ QVariant ModelListEnergies::data(const QModelIndex &index, int role) const
 
 int ModelListEnergies::rowCount(const QModelIndex &) const
 {
-    return m_listEnergies.count();
+    int count = 0;
+
+    foreach (CardEnergy* energy, m_listEnergies)
+    {
+        count += energy->quantity();
+    }
+
+    qDebug() << __PRETTY_FUNCTION__ << count;
+
+    return count;
 }
 
 /************************************************************
