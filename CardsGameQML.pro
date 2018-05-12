@@ -82,7 +82,11 @@ SOURCES += \
     src_Actions/attacks/actionreplicatelastdamagetoenemy.cpp \
     src_Actions/attacks/actionuniqueattack_random.cpp \
     src_Actions/attacks/actionblockoneenemyattackforoneturn.cpp \
-    src_Actions/attacks/actionenemycanattackonnextturn_random.cpp
+    src_Actions/attacks/actionenemycanattackonnextturn_random.cpp \
+    src_Actions/attacks/actionmoredamagebyowndamage.cpp \
+    src_Actions/attacks/actionattacklessdamageonhimself.cpp \
+    src_Actions/attacks/actiondamageofhalfenemylifeleft.cpp \
+    src_Actions/attacks/actionmoredamagebyenergyonenemy.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -162,7 +166,11 @@ HEADERS += \
     src_Actions/attacks/actionreplicatelastdamagetoenemy.h \
     src_Actions/attacks/actionuniqueattack_random.h \
     src_Actions/attacks/actionblockoneenemyattackforoneturn.h \
-    src_Actions/attacks/actionenemycanattackonnextturn_random.h
+    src_Actions/attacks/actionenemycanattackonnextturn_random.h \
+    src_Actions/attacks/actionmoredamagebyowndamage.h \
+    src_Actions/attacks/actionattacklessdamageonhimself.h \
+    src_Actions/attacks/actiondamageofhalfenemylifeleft.h \
+    src_Actions/attacks/actionmoredamagebyenergyonenemy.h
 
 FORMS += \
     dlgselectcards.ui
