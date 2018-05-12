@@ -15,8 +15,12 @@
 #include "src_Actions/actionmoredamagebyenergy.h"
 #include "src_Actions/actiondamagemultipliedbyheadortail.h"
 #include "src_Actions/actionmoredamagebyenemydamage.h"
+#include "src_Actions/attacks/actionmoredamagebyowndamage.h"
+#include "src_Actions/attacks/actionattacklessdamageonhimself.h"
+#include "src_Actions/attacks/actiondamageofhalfenemylifeleft.h"
 #include "src_Actions/actionhurthimself.h"
 #include "src_Actions/actionmoredamageorhurthimself.h"
+#include "src_Actions/attacks/actionmoredamagebyenergyonenemy.h"
 
 #include "src_Actions/actionremoveenergyattached.h"
 #include "src_Actions/actionremoveoneenergyonenemy.h"
@@ -132,11 +136,32 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 actionToReturn = createActionDamageMultipliedByHeadOrTail(argInt1, argInt2);
         }
         break;
+    case AbstractAction::Action_MoreDamageByOwnDamage:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionMoreDamageByOwnDamage(argInt1);
+        }
+        break;
+    case AbstractAction::Action_AttackLessDamageOnHimself:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                argInt2 = arg2.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionAttackLessDamageOnHimself(argInt1, argInt2);
+        }
+        break;
     case AbstractAction::Action_MoreDamageByEnemyDamage:
         {
             argInt1 = arg1.toInt(&ok);
             if(ok)
                 actionToReturn = createActionMoreDamageByEnemyDamage(argInt1);
+        }
+        break;
+    case AbstractAction::Action_DamageOfHalfEnemyLifeLeft:
+        {
+            actionToReturn = createActionDamageOfHalfEnemyLifeLeft();
         }
         break;
     case AbstractAction::Action_HurtHimself:
@@ -153,6 +178,13 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 argInt2 = arg2.toInt(&ok);
             if(ok)
                 actionToReturn = createActionMoreDamageOrHurtHimSelf(argInt1, argInt2);
+        }
+        break;
+    case AbstractAction::Action_MoreDamageByEnergyOnEnemy:
+        {
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionMoreDamageByEnergyOnEnemy(argInt1);
         }
         break;
 
@@ -342,6 +374,21 @@ ActionMoreDamageByEnemyDamage* ActionCreationFactory::createActionMoreDamageByEn
     return new ActionMoreDamageByEnemyDamage(damagePerMarquer);
 }
 
+ActionMoreDamageByOwnDamage* ActionCreationFactory::createActionMoreDamageByOwnDamage(unsigned short damage)
+{
+    return new ActionMoreDamageByOwnDamage(damage);
+}
+
+ActionAttackLessDamageOnHimself* ActionCreationFactory::createActionAttackLessDamageOnHimself(unsigned short originalDamage, unsigned short damagePerMarquer)
+{
+    return new ActionAttackLessDamageOnHimself(originalDamage, damagePerMarquer);
+}
+
+ActionDamageOfHalfEnemyLifeLeft* ActionCreationFactory::createActionDamageOfHalfEnemyLifeLeft()
+{
+    return new ActionDamageOfHalfEnemyLifeLeft();
+}
+
 ActionHurtHimself* ActionCreationFactory::createActionHurtHimself(unsigned short damage)
 {
     return new ActionHurtHimself(damage);
@@ -350,6 +397,11 @@ ActionHurtHimself* ActionCreationFactory::createActionHurtHimself(unsigned short
 ActionMoreDamageOrHurtHimSelf* ActionCreationFactory::createActionMoreDamageOrHurtHimSelf(unsigned short damageOnHead, unsigned short damageOnTail)
 {
     return new ActionMoreDamageOrHurtHimSelf(damageOnHead, damageOnTail);
+}
+
+ActionMoreDamageByEnergyOnEnemy* ActionCreationFactory::createActionMoreDamageByEnergyOnEnemy(unsigned short damagePerEnergy)
+{
+    return new ActionMoreDamageByEnergyOnEnemy(damagePerEnergy);
 }
 
 //ENERGIES

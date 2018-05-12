@@ -17,8 +17,12 @@ class ActionEnemyCanAttackOnNextTurn_Random;
 class ActionMoreDamageByEnergy;
 class ActionDamageMultipliedByHeadOrTail;
 class ActionMoreDamageByEnemyDamage;
+class ActionMoreDamageByOwnDamage;
+class ActionAttackLessDamageOnHimself;
+class ActionDamageOfHalfEnemyLifeLeft;
 class ActionHurtHimself;
 class ActionMoreDamageOrHurtHimSelf;
+class ActionMoreDamageByEnergyOnEnemy;
 
 class ActionRemoveEnergyAttached;
 class ActionRemoveOneEnergyOnEnemy;
@@ -69,8 +73,12 @@ public:
     static ActionMoreDamageByEnergy* createActionMoreDamageByEnergy(unsigned short damagePerEnergy, unsigned short indexOfAttack);
     static ActionDamageMultipliedByHeadOrTail* createActionDamageMultipliedByHeadOrTail(unsigned short damagePerHead, unsigned short numberOfCoins);
     static ActionMoreDamageByEnemyDamage* createActionMoreDamageByEnemyDamage(unsigned short damagePerMarquer);
+    static ActionMoreDamageByOwnDamage* createActionMoreDamageByOwnDamage(unsigned short damage);
+    static ActionAttackLessDamageOnHimself* createActionAttackLessDamageOnHimself(unsigned short originalDamage, unsigned short damagePerMarquer);
+    static ActionDamageOfHalfEnemyLifeLeft* createActionDamageOfHalfEnemyLifeLeft();
     static ActionHurtHimself* createActionHurtHimself(unsigned short damage);
     static ActionMoreDamageOrHurtHimSelf* createActionMoreDamageOrHurtHimSelf(unsigned short damageOnHead, unsigned short damageOnTail);
+    static ActionMoreDamageByEnergyOnEnemy* createActionMoreDamageByEnergyOnEnemy(unsigned short damagePerEnergy);
 
     //ENERGIES
     static ActionRemoveEnergyAttached* createActionRemoveEnergyAttached(unsigned short numberOfEnergies, AbstractCard::Enum_element elementToRemove);
