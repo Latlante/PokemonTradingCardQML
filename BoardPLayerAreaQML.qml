@@ -9,6 +9,9 @@ Item {
 
     property Player player
 
+    enabled: player.canPlay
+
+
     // |-----------------|
     // |***** Infos *****|
     // |-----------------|
@@ -25,8 +28,7 @@ Item {
         anchors.leftMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.rightMargin: 0
-        border.width: 4
+        anchors.rightMargin: 0        
 
         Text {
             id: textNamePlayer
@@ -141,6 +143,14 @@ Item {
         }
     }
 
+    Image {
+        id: imageHorizontalLineBetweenInfoAndBench
+        width: parent.width
+        height: 4
+        anchors.top: rectangleInfosPackets.bottom
+        source: "textures/horizontalLine.png"
+    }
+
     // |-----------------|
     // |      Infos      |
     // |-----------------|
@@ -151,22 +161,22 @@ Item {
     ListView {
         id: listViewPacketBench
         objectName: "listViewPacketBench"
-        anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.top: imageHorizontalLineBetweenInfoAndBench.bottom
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
         anchors.bottom: listViewPacketHand.top
-        anchors.bottomMargin: 0
-        anchors.top: rectangleInfosPackets.bottom
-        anchors.topMargin: 0
+        anchors.bottomMargin: 10
         orientation: ListView.Horizontal
         preferredHighlightBegin: width/2 - widthComponent/2
         preferredHighlightEnd: width/2 + widthComponent/2
         //highlightRangeMode: ListView.StrictlyEnforceRange
 
         property int dragItemIndex: -1
-        property int widthComponent: 80
-        property int heightComponent: 140
+        property int widthComponent: 0.6 * height
+        property int heightComponent: height
 
         spacing: 10
         model: player.bench()
@@ -193,139 +203,6 @@ Item {
                 }
             }
         }
-            /*MouseArea {
-                id: mouseAreaTestCardBench
-                anchors.fill: parent
-                drag.target: loaderListViewPacketBench
-
-                drag.onActiveChanged: {
-                    if (mouseAreaTestCardBench.drag.active)
-                    {
-                        listViewPacketBench.dragItemIndex = index;
-                    }
-                    loaderListViewPacketBench.Drag.drop();
-                }
-
-                //onReleased: rectangleCardInBench.Drag.drop();
-
-                onPressAndHold: {
-                    popupCardDetailsComplete1.card = modelCard;
-                    popupCardDetailsComplete1.visible = true;
-                }
-            }
-
-            states: [
-                State {
-                    when: loaderListViewPacketBench.Drag.active
-                    ParentChange {
-                        target: loaderListViewPacketBench
-                        parent: boardPlayerArea1
-                    }
-
-                    AnchorChanges {
-                        target: loaderListViewPacketBench
-                        //anchors.horizontalCenter: undefined
-                        //anchors.verticalCenter: undefined
-                        anchors.top: undefined
-                        anchors.left: undefined
-                        anchors.right: undefined
-                        anchors.bottom: undefined
-                    }
-                }
-            ]
-
-            Drag.active: mouseAreaTestCardBench.drag.active
-            Drag.hotSpot.x: loaderListViewPacketBench.width / 2
-            Drag.hotSpot.y: loaderListViewPacketBench.height / 2
-        }*/
-                  /*Item {
-                      id: itemTestDelegatePacketBench
-                      x: 5
-                      width: 100
-                      height: 140
-
-                      Image {
-                          id: imageTestPacketBench
-                          objectName: "imageTestPacketBench"
-                          anchors.top: parent.top
-                          anchors.left: parent.left
-                          anchors.right: parent.right
-                          anchors.bottom: rectangleEmptyBarCardEmptyBench.top
-                          source: model.imageCard
-                          fillMode: Image.PreserveAspectFit
-
-                          MouseArea {
-                              id: mouseAreaTestCardBench
-                              anchors.fill: parent
-                              drag.target: imageTestPacketBench
-
-                              drag.onActiveChanged: {
-                                  if (mouseAreaTestCardBench.drag.active)
-                                  {
-                                      listViewPacketBench.dragItemIndex = index;
-                                  }
-                                  imageTestPacketBench.Drag.drop();
-                              }
-
-                              //onReleased: rectangleCardInBench.Drag.drop();
-
-                              onPressAndHold: {
-                                  popupCardDetailsComplete1.card = modelCard;
-                                  popupCardDetailsComplete1.visible = true;
-                              }
-                          }
-
-                          states: [
-                              State {
-                                  when: imageTestPacketBench.Drag.active
-                                  ParentChange {
-                                      target: imageTestPacketBench
-                                      parent: boardPlayerArea1
-                                  }
-
-                                  AnchorChanges {
-                                      target: imageTestPacketBench
-                                      //anchors.horizontalCenter: undefined
-                                      //anchors.verticalCenter: undefined
-                                      anchors.top: undefined
-                                      anchors.left: undefined
-                                      anchors.right: undefined
-                                      anchors.bottom: undefined
-                                  }
-                              }
-                          ]
-
-                          Drag.active: mouseAreaTestCardBench.drag.active
-                          Drag.hotSpot.x: imageTestPacketBench.width / 2
-                          Drag.hotSpot.y: imageTestPacketBench.height / 2
-                      }
-
-                      Rectangle {
-                          id: rectangleEmptyBarCardEmptyBench
-                          height: 25
-                          anchors.left: parent.left
-                          anchors.right: parent.right
-                          anchors.bottom: parent.bottom
-                          //color: "green"
-                          color: "transparent"
-                      }
-
-                      DropArea {
-                          id: dropAreaBenchEmptyCard
-                          anchors.fill: parent
-                          onEntered: console.log("dropAreaBenchEmptyCard entered");
-                          onExited: console.log("dropAreaBenchEmptyCard exited");
-                          onDropped: {
-                              console.log("onDropped dropAreaBenchEmptyCard");
-                              if(drag.source.objectName === "imageCardInHand")
-                              {
-                                  player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, modelIndex);
-                                  listViewPacketHand.dragItemIndex = -1;
-                              }
-                          }
-                      }
-                  }*/
-
 
         Component{
             id: componentDelegateCardBench
@@ -342,7 +219,7 @@ Item {
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.bottom: listViewEnergiesByCard.top
+                    anchors.bottom: textLifePokemon.top
 
                     source: modelImageCard
                     fillMode: Image.PreserveAspectFit
@@ -411,6 +288,16 @@ Item {
                     }
                 }
 
+                Text {
+                    id: textLifePokemon
+                    height: 25
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: listViewEnergiesByCard.top
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: height
+                    text: modelCard.lifeLeft + "/" + modelCard.lifeTotal + " PV"
+                }
 
 
                 ListView {
@@ -460,7 +347,7 @@ Item {
 
                 Rectangle {
                     id: rectangleEmptyBarCardEmptyBench
-                    height: 25
+                    height: 50
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom

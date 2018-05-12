@@ -42,18 +42,39 @@ Item {
 
     onPokemonStatusChanged: {
         console.log("boardFightingInfo1 onPokemonStatusChanged");
-        textStatusPokemon.text = cardPok.statusFormatString();
+        //textStatusPokemon.text = cardPok.statusFormatString();
+
+        switch(pokemonStatus)
+        {
+        case CardPokemon.Status_Confused:
+            imageStatusPokemon.source = "status/confused.png";
+            break;
+        case CardPokemon.Status_Paralyzed:
+            imageStatusPokemon.source = "status/paralyzed.png";
+            break;
+        case CardPokemon.Status_Poisoned:
+            imageStatusPokemon.source = "status/poison.png";
+            break;
+        case CardPokemon.Status_Slept:
+            imageStatusPokemon.source = "status/sleep.png";
+            break;
+        default:
+            imageStatusPokemon.source = "";
+            break;
+        }
+
+
     }
 
-    onCardPokChanged: {
+    /*onCardPokChanged: {
         console.log("boardFightingInfo1 onCardPokChanged");
-        if(cardPok !== undefined)
+        if(cardPok !== null)
         {
             console.log("boardFightingInfo1 onPlayerChanged: player not null");
 
             //pokemonFighting.source = cardPok.image;
-            textNamePokemon.text = cardPok.name;
-            textStatusPokemon.text = cardPok.statusFormatString();
+            //textNamePokemon.text = cardPok.name;
+            //textStatusPokemon.text = cardPok.statusFormatString();
             //pokemonLifeLeft = cardPok.lifeLeft
             gridViewEnergies.model = cardPok.modelListOfEnergies();
         }
@@ -62,7 +83,7 @@ Item {
             console.log("boardFightingInfo1 onPlayerChanged: player is null");
             pokemonFighting.source = "back.png"
         }
-    }
+    }*/
 
 
 
@@ -70,19 +91,20 @@ Item {
         id: rectangleFightingArea
         anchors.fill: parent
         color: "#00000000"
-        border.color: "red"
-        border.width: 3
+        //border.color: "red"
+        //border.width: 3
 
         Image {
             id: pokemonFighting
             x: 295
             width: (2./5.) * parent.width
             anchors.top: parent.top
-            anchors.topMargin: 0
+            anchors.topMargin: 5
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
+            anchors.bottomMargin: 5
             fillMode: Image.PreserveAspectFit
+            source: "back.png"
 
             MouseArea {
                 id: mouseAreaCardFighter
@@ -160,8 +182,16 @@ Item {
             anchors.right: pokemonFighting.left
             anchors.bottom: parent.bottom
             color: "transparent"
-            border.color: "black"
-            border.width: 3
+            //border.color: "black"
+            //border.width: 3
+
+            Image {
+                id: imageStatusPokemon
+                width: 20
+                height: width
+                anchors.top: parent.top
+                anchors.right: parent.right
+            }
 
             Text {
                 id: textNamePokemon
@@ -191,23 +221,10 @@ Item {
                 font.family: "Times New Roman"
             }
 
-            Text {
-                id: textStatusPokemon
-                height: rectangleContainerInformation.heightLines
-                anchors.top: textLifePokemon.bottom
-                anchors.topMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 8
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                font.pixelSize: rectangleContainerInformation.pixelSize
-                font.family: "Times New Roman"
-            }
-
             GridView {
                 id: gridViewEnergies
                 interactive: false
-                anchors.top: textStatusPokemon.bottom
+                anchors.top: textLifePokemon.bottom
                 anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -243,7 +260,7 @@ Item {
                 onClicked: ctrlGameBoard.onClicked_ButtonAttack(0)
             }*/
 
-            Button {
+            ButtonStyleGold {
                 id: buttonReadyPreparation
                 height: 30
                 anchors.left: parent.left
@@ -260,7 +277,7 @@ Item {
                 }
             }
 
-            Button {
+            ButtonStyleGold {
                 id: buttonFinishYourTurn
                 height: 30
                 anchors.left: parent.left

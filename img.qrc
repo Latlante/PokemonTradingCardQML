@@ -1,11 +1,16 @@
 <RCC>
     <qresource prefix="/textures">
-        <file alias="tapis.jpg">Images/Textures/tapis.jpg</file>
-    </qresource>
-    <qresource prefix="/cards">
-        <file alias="back.png">Images/cartes/back.png</file>
+        <file alias="background-fight-90.png">Images/Textures/background-fight-90.png</file>
+        <file alias="verticalLine.png">Images/Textures/verticalLine.png</file>
+        <file alias="horizontalLine.png">Images/Textures/horizontalLine.png</file>
     </qresource>
     <qresource prefix="/">
         <file>Images/logo.png</file>
+    </qresource>
+    <qresource prefix="/status">
+        <file alias="confused.png">Images/status/confused.png</file>
+        <file alias="paralyzed.png">Images/status/paralyzed.png</file>
+        <file alias="poison.png">Images/status/poison.png</file>
+        <file alias="sleep.png">Images/status/sleep.png</file>
     </qresource>
 </RCC>

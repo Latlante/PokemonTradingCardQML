@@ -120,7 +120,7 @@ Item {
 
         }
 
-        Button {
+        ButtonStyleGold {
             id: buttonRandom
             height: 40
             anchors.left: parent.left
@@ -134,7 +134,7 @@ Item {
             onClicked: ctrlSelectingCards.fillARandomList()
         }
 
-        Button {
+        ButtonStyleGold {
             id: buttonNext
             height: 40
             anchors.left: parent.left
@@ -149,7 +149,7 @@ Item {
             onClicked: ctrlSelectingCards.onClickedListFinished()
         }
 
-        Button {
+        ButtonStyleGold {
             id: buttonOk
             height: 40
             anchors.left: parent.left

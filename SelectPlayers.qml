@@ -136,10 +136,9 @@ Item {
             onClicked: listView.model.removeOnePlayer()
         }*/
 
-        Button {
+        ButtonStyleGold {
             id: buttonValidate
-            x: 20
-            y: 420
+            height: 40
             text: qsTr("Valider")
             anchors.right: parent.right
             anchors.rightMargin: 10

@@ -172,5 +172,5 @@ HEADERS += \
     src_Actions/attacks/actiondamageofhalfenemylifeleft.h \
     src_Actions/attacks/actionmoredamagebyenergyonenemy.h
 
-FORMS += \
-    dlgselectcards.ui
+FORMS +=
+

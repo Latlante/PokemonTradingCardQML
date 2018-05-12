@@ -120,6 +120,11 @@ void GameManager::setGameStatus(ConstantesQML::StepGame step)
         m_gameStatus = step;
         emit gameStatusChanged();
     }
+
+    if(m_gameStatus == ConstantesQML::StepGameInProgress)
+    {
+        startGame();
+    }
 }
 
 //PREPARATION DE LA PARTIE
@@ -158,13 +163,6 @@ Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
     return newPlayer;
 }
 
-
-void GameManager::startGame()
-{
-    onEndOfTurn_Player();
-}
-
-
 void GameManager::selectFirstPlayer()
 {
 #ifdef TESTS_UNITAIRES
@@ -186,6 +184,13 @@ void GameManager::setInitReady()
         setGameStatus(ConstantesQML::StepGameInProgress);
 }
 
+//PHASE DE COMBAT
+void GameManager::startGame()
+{
+    displayMessage(currentPlayer()->name() + " commence à jouer");
+    currentPlayer()->newTurn();
+}
+
 void GameManager::nextPlayer()
 {	
     /*m_indexCurrentPlayer++;
@@ -193,6 +198,8 @@ void GameManager::nextPlayer()
 		m_indexCurrentPlayer = 0;
 		
     m_listPlayers[m_indexCurrentPlayer]->newTurn();*/
+    currentPlayer()->blockPlayer();
+
     setIndexCurrentPlayer(m_indexCurrentPlayer+1);
     checkStatusPokemonForNewRound();
     currentPlayer()->newTurn();
@@ -286,7 +293,10 @@ void GameManager::endOfTurn()
     Player* playerWinner = gameIsFinished();
     if(playerWinner != nullptr)
     {
-        qDebug() << "VICTOIRE DE " << playerWinner->name();
+        foreach(Player* play, m_listPlayers)
+            play->blockPlayer();
+
+        displayMessage("VICTOIRE DE " + playerWinner->name());
     }
     else
     {
@@ -295,6 +305,7 @@ void GameManager::endOfTurn()
     }
 }
 
+//FIN DE LA GAME
 Player* GameManager::gameIsFinished()
 {
     //Conditions de victoire:

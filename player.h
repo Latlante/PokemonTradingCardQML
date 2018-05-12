@@ -20,6 +20,7 @@ class Player : public QObject
 {
 	Q_OBJECT
     Q_PROPERTY(bool initReady READ initReady WRITE setInitReady NOTIFY initReadyChanged)
+    Q_PROPERTY(bool canPlay READ canPlay WRITE setCanPlay NOTIFY canPlayChanged)
 	
 public:
 	Player(QString name, QList<AbstractCard*> listCards, QObject *parent = NULL);
@@ -46,6 +47,9 @@ public:
     bool initReady();
     void setInitReady(bool ready);
     Q_INVOKABLE void checkIfInitReady();
+
+    bool canPlay();
+    void setCanPlay(bool status);
 
     bool moveCardFromDeckToHand();
     bool moveCardFromDeckToReward();
@@ -82,8 +86,6 @@ private:
     bool m_canPlay;
     bool m_energyPlayedForThisRound;
 
-
-    void setCanPlay(bool status);
     bool moveCardFromPacketToAnother(AbstractPacket* source, AbstractPacket* destination, int index);
 
 };

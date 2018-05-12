@@ -37,13 +37,17 @@ public:
     //Preparation de la partie
     void initGame();
     Player* addNewPlayer(QString name, QList<AbstractCard*> listCards);
-    void startGame();
     void selectFirstPlayer();
     void setInitReady();
+
+    //Phase de combat
+    void startGame();
 	void nextPlayer();
     CardPokemon::Enum_StatusOfAttack attack(CardPokemon* pokemonAttacking, unsigned short index);
     bool retreat(CardPokemon *pokemonToRetreat);
 	void endOfTurn();
+
+    //Fin de la game
     Player *gameIsFinished();
 
     QList<int> displayBench(BenchArea* bench);

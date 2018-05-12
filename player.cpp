@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include <QDebug>
+#include <QQmlEngine>
 #include "src_Cards/abstractcard.h"
 #include "src_Cards/cardaction.h"
 #include "src_Cards/cardenergy.h"
@@ -57,31 +58,37 @@ const QString Player::name()
 
 BenchArea* Player::bench()
 {
+    QQmlEngine::setObjectOwnership(m_bench, QQmlEngine::CppOwnership);
     return m_bench;
 }
 
 PacketDeck* Player::deck()
 {
+    QQmlEngine::setObjectOwnership(m_deck, QQmlEngine::CppOwnership);
 	return m_deck;
 }
 
 FightArea* Player::fight()
 {
+    QQmlEngine::setObjectOwnership(m_fight, QQmlEngine::CppOwnership);
     return m_fight;
 }
 
 PacketHand* Player::hand()
 {
+    QQmlEngine::setObjectOwnership(m_hand, QQmlEngine::CppOwnership);
 	return m_hand;
 }
 
 PacketRewards* Player::rewards()
 {
+    QQmlEngine::setObjectOwnership(m_rewards, QQmlEngine::CppOwnership);
     return m_rewards;
 }
 
 PacketTrash* Player::trash()
 {
+    QQmlEngine::setObjectOwnership(m_trash, QQmlEngine::CppOwnership);
     return m_trash;
 }
 
@@ -150,7 +157,25 @@ void Player::setInitReady(bool ready)
 
 void Player::checkIfInitReady()
 {
-    setInitReady(fight()->countCard() > 0);
+    if(fight()->countCard() > 0)
+    {
+        setInitReady(true);
+        setCanPlay(false);
+    }
+}
+
+bool Player::canPlay()
+{
+    return m_canPlay;
+}
+
+void Player::setCanPlay(bool status)
+{
+    if(status != m_canPlay)
+    {
+        m_canPlay = status;
+        emit canPlayChanged();
+    }
 }
 
 bool Player::moveCardFromDeckToHand()
@@ -213,7 +238,7 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
         }
         else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
         {
-            if((m_energyPlayedForThisRound == false))
+            if((m_energyPlayedForThisRound == false) && (m_initReady == true))
             {
                 CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
 
@@ -311,7 +336,7 @@ bool Player::moveCardFromHandToFight(int indexHand)
         }
         else if (cardToMove->type() == AbstractCard::TypeOfCard_Energy)
         {
-            if(m_energyPlayedForThisRound == false)
+            if((m_energyPlayedForThisRound == false) && (m_initReady == true))
             {
                 CardEnergy* cardEn = static_cast<CardEnergy*>(cardToMove);
 
@@ -468,15 +493,6 @@ bool Player::swapCardsBetweenBenchAndFight(int indexBench)
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/
-void Player::setCanPlay(bool status)
-{
-    if(status != m_canPlay)
-    {
-        m_canPlay = status;
-        emit canPlayChanged();
-    }
-}
-
 bool Player::moveCardFromPacketToAnother(AbstractPacket *source, AbstractPacket *destination, int index)
 {
     bool moveSuccess = false;

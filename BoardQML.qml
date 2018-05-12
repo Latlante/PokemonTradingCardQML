@@ -26,18 +26,6 @@ Item {
         anchors.fill: parent
         color: "#2b95ff"
 
-        //ZONE DE JOUEUR 2
-        BoardPLayerAreaQML {
-            id: boardPlayer2
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: boardFightingArea1.top
-            rotation: 180
-
-            player: player2
-        }
-
         //ZONE DE COMBAT CENTRALE
         BoardFightingArea {
             id: boardFightingArea1
@@ -49,6 +37,18 @@ Item {
             play1: board1.player1
             play2: board1.player2
             currentPlayer: board1.currentPlayer
+        }
+
+        //ZONE DE JOUEUR 2
+        BoardPLayerAreaQML {
+            id: boardPlayer2
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: boardFightingArea1.top
+            rotation: 180
+
+            player: player2
         }
 
         //ZONE DE JOUEUR 1

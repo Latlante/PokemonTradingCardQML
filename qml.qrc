@@ -14,5 +14,6 @@
         <file>PopupSelectCardsInPacket.qml</file>
         <file>PopupSelectEnergiesInPokemon.qml</file>
         <file>PopupMessage.qml</file>
+        <file>ButtonStyleGold.qml</file>
     </qresource>
 </RCC>

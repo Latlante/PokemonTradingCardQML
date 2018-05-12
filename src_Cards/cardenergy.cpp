@@ -10,7 +10,8 @@ CardEnergy::CardEnergy(unsigned short id, const QString& name, AbstractCard::Enu
 	
 }
 
-CardEnergy::CardEnergy(const CardEnergy &card)
+CardEnergy::CardEnergy(const CardEnergy &card) :
+    AbstractCard()
 {
     *this = card;
 }
