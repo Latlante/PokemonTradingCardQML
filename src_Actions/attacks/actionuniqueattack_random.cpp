@@ -23,5 +23,10 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionUniqueAttack_Random::elementTo
 void ActionUniqueAttack_Random::action()
 {
     if(pokemonAttacking() != nullptr)
-        pokemonAttacking()->setNumberOfTurnAttackStillBlocks(indexAttack(), 0xFFFF);
+    {
+        unsigned short coin = headOrTail();
+
+        if(coin == 0)
+            pokemonAttacking()->setNumberOfTurnAttackStillBlocks(indexAttack(), 0xFFFF);
+    }
 }
