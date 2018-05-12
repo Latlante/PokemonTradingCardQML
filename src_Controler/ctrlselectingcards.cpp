@@ -94,6 +94,7 @@ QMap<QString, QList<AbstractCard *> > CtrlSelectingCards::listCardsByPlayer()
 
 ModelSelectingCards* CtrlSelectingCards::model()
 {
+    QQmlEngine::setObjectOwnership(m_modelSelectingCards, QQmlEngine::CppOwnership);
     return m_modelSelectingCards;
 }
 
