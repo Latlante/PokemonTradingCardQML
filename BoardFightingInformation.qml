@@ -66,24 +66,19 @@ Item {
 
     }
 
-    /*onCardPokChanged: {
-        console.log("boardFightingInfo1 onCardPokChanged");
+    onCardPokChanged: {
+        //console.log("boardFightingInfo1 onCardPokChanged");
         if(cardPok !== null)
         {
-            console.log("boardFightingInfo1 onPlayerChanged: player not null");
-
-            //pokemonFighting.source = cardPok.image;
-            //textNamePokemon.text = cardPok.name;
-            //textStatusPokemon.text = cardPok.statusFormatString();
-            //pokemonLifeLeft = cardPok.lifeLeft
+            //console.log("boardFightingInfo1 onPlayerChanged: player not null");
             gridViewEnergies.model = cardPok.modelListOfEnergies();
         }
         else
         {
-            console.log("boardFightingInfo1 onPlayerChanged: player is null");
+            //console.log("boardFightingInfo1 onPlayerChanged: player is null");
             pokemonFighting.source = "back.png"
         }
-    }*/
+    }
 
 
 
@@ -109,13 +104,25 @@ Item {
             MouseArea {
                 id: mouseAreaCardFighter
                 anchors.fill: parent
+                propagateComposedEvents: true
                 onClicked: {
-                    if((cardPok !== undefined) &&
-                            (player === currentPlayer) &&
-                            (ctrlGameBoard.gameStatus === ConstantesQML.StepGameInProgress))
+                    console.log("mouseAreaCardFighter clicked")
+
+                    if(ctrlPopups.popupSelectingAttacks_Visible === false)
                     {
-                        ctrlGameBoard.actionAttack(cardPok);
+                        if((cardPok !== undefined) &&
+                                (player === currentPlayer) &&
+                                (ctrlGameBoard.gameStatus === ConstantesQML.StepGameInProgress))
+                        {
+
+                            ctrlGameBoard.actionAttack(cardPok);
+                        }
+
+                        mouse.accepted = true
                     }
+                    else
+                        mouse.accepted = false
+
                 }
 
                 onPressAndHold: {

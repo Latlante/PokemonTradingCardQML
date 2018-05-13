@@ -187,9 +187,9 @@ void ModelSelectingCards::setLastPlayer(bool lastPlayer)
 
 void ModelSelectingCards::changeQuantityCard(int id, int quantity)
 {
-    if((id >= 0) && (id < m_listCardsFiltered.count()))
+    if((id >= 0) && (id < m_listCardsSelected.count()))
     {
-        InfoCard* info = m_listCardsFiltered[id];
+        InfoCard* info = m_listCardsSelected[id];
         int delta = quantity - info->quantity;
 
         if((info->quantity != quantity) &&
@@ -197,7 +197,7 @@ void ModelSelectingCards::changeQuantityCard(int id, int quantity)
             (canAcceptXNewCards(delta) == true))
         {
             info->quantity = quantity;
-            m_listCardsFiltered.replace(id, info);
+            m_listCardsSelected.replace(id, info);
 
             emit countTotalQuantityChanged();
             emit dataChanged(index(id, 0), index(id, 0));

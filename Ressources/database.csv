@@ -31,7 +31,7 @@
 31;0;Nidoqueen;;;;;0;;0;;30;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 32;1;Nidoran mâle;40;8;;12;0;;0;1;;Chanc' Korne;Lancez une pièce. Si c'est pile, cette attaque est sans effet.;0;30;;;;;;;;;1;;;;;;;207;30;0;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 33;1;Nidorino;60;8;;12;0;;0;1;32;Double Pied;Lancez 2 pièces. Cette attaque inflige 30 dégâts multipliés par le nombre de faces.;0;30x;;;;;;;;;1;;2;;;;;201;30;2;Empal Korne;;50;50;;;;;;;;;2;;2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-34;1;Nidoking;90;8;;12;0;;0;3;33;Mania;"Lancez une pièce. Si c'est face, cette attaque inflige 30 dégâts plus 10 dégâts supplémentaires ; si c'est pile, cette attaque inflige 30 dégâts et Nidoking s'inflige 10 dégâts.";30;30+;;;;;;;;;1;;2;;;;;207;10;10;Toxik;Le Pokémon Défenseur est maintenant Empoisonné. Il subit maintenant 20 dégâts Poison au lieu de 10 après le tour de chaque joueur (même s'il était déjà empoisonné).;20;20;;;;;;;;;3;;;;;;;602;20;;;;;;;;;;;;;;;;;;;;;;;;
+34;1;Nidoking;90;8;;12;0;;0;3;33;Mania;"Lancez une pièce. Si c'est face, cette attaque inflige 30 dégâts plus 10 dégâts supplémentaires , si c'est pile, cette attaque inflige 30 dégâts et Nidoking s'inflige 10 dégâts.";30;30+;;;;;;;;;1;;2;;;;;207;10;10;Toxik;Le Pokémon Défenseur est maintenant Empoisonné. Il subit maintenant 20 dégâts Poison au lieu de 10 après le tour de chaque joueur (même s'il était déjà empoisonné).;20;20;;;;;;;;;3;;;;;;;602;20;;;;;;;;;;;;;;;;;;;;;;;;
 35;1;Melofee;35;10;;6;0;12;1;1;;Berceuse;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Endormi.;0;0;;;;;;;;;;;1;;;;;601;4;-1;Métronome;Choisissez 1 des attaques du Pokémon Défenseur. Métronome copie cette attaque à l'exception de son coût d'Énergie et de toute autre action requise pour utiliser cette attaque, comme par exemple, défausser des cartes Énergie. (Quel que soit le type du Pokémon Défenseur, Mélofée demeure de type Incolore.);0;0;;;;;;;;;;;3;;;;;100;;;;;;;;;;;;;;;;;;;;;;;;;
 36;0;Mélodelfe;;;;;0;;0;;35;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 37;1;Goupix;50;5;;14;0;;0;1;;Onde folie;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Confus.;10;10;;;;;;2;;;;;;;;;;601;0;-1;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -106,7 +106,7 @@
 106;0;Kiklee;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 107;1;Tygnon;70;4;;12;0;;0;2;;Taquet;;20;20;;;;;1;;;;;;;;;;;;;;Punch spécial;;40;40;;;;;2;;;;;;1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 108;0;Excelangue;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-109;1;Smogo;50;8;;12;0;;0;1;;Gaz infect;"Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Empoisonné ; si c'est pile, il est maintenant Confus.";10;10;;;;;;;;;2;;;;;;;601;3;0;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+109;1;Smogo;50;8;;12;0;;0;1;;Gaz infect;"Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Empoisonné , si c'est pile, il est maintenant Confus.";10;10;;;;;;;;;2;;;;;;;601;3;0;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 110;0;Smogogo;;;;;0;;0;;109;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 111;0;Rhinocorne;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 112;0;Rhinoféros;;;;;0;;0;;111;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -122,7 +122,7 @@
 122;0;M. Mime;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 123;0;Insécateur;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 124;1;Lippoutou;70;12;;12;0;;0;2;;Torgnoles;Lancez 2 pièces. Cette attaque inflige 10 dégâts multipliés par le nombre de faces.;0;10x;;;;;;;;;;;;;1;;;201;10;2;Yoga;Inflige 20 dégâts plus 10 dégâts supplémentaires pour chaque marqueur de dégâts sur le Pokémon Défenseur.;20;20+;;;;;;;;;;;1;;2;;;202;10;;;;;;;;;;;;;;;;;;;;;;;;
-125;1;Elektek;70;3;;4;0;;0;2;;Eclair;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;10;10;;;;1;;;;;;;;;;;;601;2;-1;Poing-éclair;"Lancez une pièce. Si c'est face, cette attaque inflige 30 dégâts plus 10 dégâts supplémentaires ; si c'est pile, cette attaque inflige 30 dégâts et Élektek s'inflige 10 dégâts.";30;30+;;;;1;;;;;;;1;;;;;207;10;10;;;;;;;;;;;;;;;;;;;;;;;
+125;1;Elektek;70;3;;4;0;;0;2;;Eclair;Lancez une pièce. Si c'est face, le Pokémon Défenseur est maintenant Paralysé.;10;10;;;;1;;;;;;;;;;;;601;2;-1;Poing-éclair;"Lancez une pièce. Si c'est face, cette attaque inflige 30 dégâts plus 10 dégâts supplémentaires , si c'est pile, cette attaque inflige 30 dégâts et Élektek s'inflige 10 dégâts.";30;30+;;;;1;;;;;;;1;;;;;207;10;10;;;;;;;;;;;;;;;;;;;;;;;
 126;1;Magmar;50;5;;14;0;;0;2;;Poing de Feu;;30;30;;;;;;2;;;;;;;;;;;;;Lance-flamme;Défaussez 1 carte Énergie feu attachée à Magmar pour pouvoir utiliser cette attaque.;50;50;;;;;;2;;;;;1;;;;;300;1;4;;;;;;;;;;;;;;;;;;;;;;;
 127;0;Scarabrute;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 128;0;Tauros;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

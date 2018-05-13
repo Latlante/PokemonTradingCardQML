@@ -161,12 +161,14 @@ Item {
     ListView {
         id: listViewPacketBench
         objectName: "listViewPacketBench"
+        width: (0.6 * height) * count
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: imageHorizontalLineBetweenInfoAndBench.bottom
         anchors.topMargin: 0
-        anchors.left: parent.left
+        /*anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.rightMargin: 0*/
         anchors.bottom: listViewPacketHand.top
         anchors.bottomMargin: 10
         orientation: ListView.Horizontal
