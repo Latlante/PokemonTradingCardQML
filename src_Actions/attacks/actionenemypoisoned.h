@@ -1,7 +1,7 @@
 #ifndef ACTIONENEMYPOISONED_H
 #define ACTIONENEMYPOISONED_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionEnemyPoisoned : public AbstractAction
 {

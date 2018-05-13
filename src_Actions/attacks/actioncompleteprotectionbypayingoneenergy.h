@@ -1,7 +1,7 @@
 #ifndef ACTIONCOMPLETEPROTECTIONBYPAYINGONEENERGY_H
 #define ACTIONCOMPLETEPROTECTIONBYPAYINGONEENERGY_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionCompleteProtectionByPayingOneEnergy : public AbstractAction
 {

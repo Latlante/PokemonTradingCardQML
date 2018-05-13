@@ -1,7 +1,7 @@
 #ifndef ACTIONTRAINER_LEO_H
 #define ACTIONTRAINER_LEO_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionTrainer_Leo : public AbstractAction
 {

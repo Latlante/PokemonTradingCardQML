@@ -27,74 +27,75 @@ Release:MOC_DIR = release/moc/
 
 SOURCES += \
         main.cpp \
+    common/constantesqml.cpp \
     common/database.cpp \
-    src_Actions/abstractaction.cpp \
-    src_Actions/actionchangeenemystatus.cpp \
-    src_Actions/actionchangeenemystatusrandom.cpp \
-    src_Actions/actioncreationfactory.cpp \
-    src_Actions/actionhealing.cpp \
-    src_Actions/actionmoredamagebyenergy.cpp \
-    src_Actions/actionprotectedagainstdamage.cpp \
-    src_Actions/actionremoveenergyattached.cpp \
+    src_Controler/ctrlgameboard.cpp \
+    src_Controler/ctrlpopups.cpp \
+    src_Controler/ctrlselectingcards.cpp \
     src_Cards/abstractcard.cpp \
     src_Cards/cardaction.cpp \
     src_Cards/cardenergy.cpp \
     src_Cards/cardpokemon.cpp \
+    src_Models/factorymainpageloader.cpp \
+    src_Models/listplayers.cpp \
+    src_Models/modellistenergies.cpp \
+    src_Models/modelpopupselectcardinpacket.cpp \
+    src_Models/modelpopupselectenergyinpokemon.cpp \
+    src_Models/modelselectingcards.cpp \
     src_Packets/abstractpacket.cpp \
+    src_Packets/abstractpacketstatic.cpp \
+    src_Packets/abstractpacketdynamic.cpp \
     src_Packets/bencharea.cpp \
     src_Packets/fightarea.cpp \
     src_Packets/packetdeck.cpp \
     src_Packets/packethand.cpp \
     src_Packets/packetrewards.cpp \
     src_Packets/packettrash.cpp \
-    src_Controler/ctrlgameboard.cpp \
+    src_Tests/testsunitaires.cpp \
+    src_Tests/testsunitaireactions.cpp \
+    src_Tests/testsunitairegeneral.cpp \
     gamemanager.cpp \
     player.cpp \
     utils.cpp \
-    src_Models/listplayers.cpp \
-    src_Models/factorymainpageloader.cpp \
-    src_Controler/ctrlselectingcards.cpp \
-    src_Models/modelselectingcards.cpp \
-    src_Models/modellistenergies.cpp \
-    src_Packets/abstractpacketstatic.cpp \
-    src_Packets/abstractpacketdynamic.cpp \
-    src_Tests/testsunitaires.cpp \
-    src_Actions/actionreplicateoneattackfromenemy.cpp \
-    common/constantesqml.cpp \
-    src_Models/modelpopupselectcardinpacket.cpp \
-    src_Controler/ctrlpopups.cpp \
-    src_Tests/testsunitairegeneral.cpp \
-    src_Tests/testsunitaireactions.cpp \
-    src_Actions/actiontrainer_fakeprofessorchen.cpp \
-    src_Actions/actiontrainer_totalguerison.cpp \
-    src_Actions/actiontrainer_professorchen.cpp \
-    src_Actions/actiontrainer_superpotion.cpp \
-    src_Actions/actiontrainer_leo.cpp \
-    src_Actions/actiontrainer_potion.cpp \
-    src_Actions/actionhurteverypokemononownbench.cpp \
-    src_Actions/actionswappokemonbetweenfigthandbench.cpp \
-    src_Models/modelpopupselectenergyinpokemon.cpp \
-    src_Actions/actionmoredamagebyenemydamage.cpp \
-    src_Actions/actionhurthimself.cpp \
-    src_Actions/actioncompleteprotectionbypayingoneenergy.cpp \
-    src_Actions/actiondamagemultipliedbyheadortail.cpp \
-    src_Actions/actionmoredamageorhurthimself.cpp \
-    src_Actions/actionenemypoisoned.cpp \
-    src_Actions/actionprotectedagainstdamagerandom.cpp \
-    src_Actions/actionremoveoneenergyonenemy.cpp \
-    src_Actions/actiondieandhurteverypokemononeachbench.cpp \
-    src_Actions/actionnodamageonthreshold.cpp \
-    src_Actions/attacks/actionchangeweaknessofenemy.cpp \
-    src_Actions/attacks/actionchangeresistanceofhimself.cpp \
-    src_Actions/attacks/actionattackonlyifenemyissleeping.cpp \
-    src_Actions/attacks/actionreplicatelastdamagetoenemy.cpp \
-    src_Actions/attacks/actionuniqueattack_random.cpp \
-    src_Actions/attacks/actionblockoneenemyattackforoneturn.cpp \
-    src_Actions/attacks/actionenemycanattackonnextturn_random.cpp \
-    src_Actions/attacks/actionmoredamagebyowndamage.cpp \
+    src_Actions/abstractaction.cpp \
+    src_Actions/actioncreationfactory.cpp \
     src_Actions/attacks/actionattacklessdamageonhimself.cpp \
+    src_Actions/attacks/actionattackonlyifenemyissleeping.cpp \
+    src_Actions/attacks/actionblockoneenemyattackforoneturn.cpp \
+    src_Actions/attacks/actionchangeenemystatus.cpp \
+    src_Actions/attacks/actionchangeenemystatusrandom.cpp \
+    src_Actions/attacks/actionchangeresistanceofhimself.cpp \
+    src_Actions/attacks/actionchangeweaknessofenemy.cpp \
+    src_Actions/attacks/actioncompleteprotectionbypayingoneenergy.cpp \
+    src_Actions/attacks/actiondamagemultipliedbyheadortail.cpp \
     src_Actions/attacks/actiondamageofhalfenemylifeleft.cpp \
-    src_Actions/attacks/actionmoredamagebyenergyonenemy.cpp
+    src_Actions/attacks/actiondieandhurteverypokemononeachbench.cpp \
+    src_Actions/attacks/actionenemycanattackonnextturn_random.cpp \
+    src_Actions/attacks/actionenemypoisoned.cpp \
+    src_Actions/attacks/actionhealing.cpp \
+    src_Actions/attacks/actionhurteverypokemononownbench.cpp \
+    src_Actions/attacks/actionhurthimself.cpp \
+    src_Actions/attacks/actionmoredamagebyenemydamage.cpp \
+    src_Actions/attacks/actionmoredamagebyenergy.cpp \
+    src_Actions/attacks/actionmoredamagebyenergyonenemy.cpp \
+    src_Actions/attacks/actionmoredamagebyowndamage.cpp \
+    src_Actions/attacks/actionmoredamageorhurthimself.cpp \
+    src_Actions/attacks/actionnodamageonthreshold.cpp \
+    src_Actions/attacks/actionprotectedagainstdamage.cpp \
+    src_Actions/attacks/actionprotectedagainstdamagerandom.cpp \
+    src_Actions/attacks/actionremoveenergyattached.cpp \
+    src_Actions/attacks/actionremoveoneenergyonenemy.cpp \
+    src_Actions/attacks/actionreplicatelastdamagetoenemy.cpp \
+    src_Actions/attacks/actionreplicateoneattackfromenemy.cpp \
+    src_Actions/attacks/actionswappokemonbetweenfigthandbench.cpp \
+    src_Actions/attacks/actionuniqueattack_random.cpp \
+    src_Actions/trainers/actiontrainer_fakeprofessorchen.cpp \
+    src_Actions/trainers/actiontrainer_leo.cpp \
+    src_Actions/trainers/actiontrainer_potion.cpp \
+    src_Actions/trainers/actiontrainer_professorchen.cpp \
+    src_Actions/trainers/actiontrainer_superpotion.cpp \
+    src_Actions/trainers/actiontrainer_totalguerison.cpp
+
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -112,14 +113,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     common/database.h \
-    src_Actions/abstractaction.h \
-    src_Actions/actionchangeenemystatus.h \
-    src_Actions/actionchangeenemystatusrandom.h \
-    src_Actions/actioncreationfactory.h \
-    src_Actions/actionhealing.h \
-    src_Actions/actionmoredamagebyenergy.h \
-    src_Actions/actionprotectedagainstdamage.h \
-    src_Actions/actionremoveenergyattached.h \
     src_Cards/abstractcard.h \
     src_Cards/cardaction.h \
     src_Cards/cardenergy.h \
@@ -143,42 +136,50 @@ HEADERS += \
     src_Packets/abstractpacketstatic.h \
     src_Packets/abstractpacketdynamic.h \
     src_Tests/testsunitaires.h \
-    src_Actions/actionreplicateoneattackfromenemy.h \
     common/constantesqml.h \
     src_Models/modelpopupselectcardinpacket.h \
     src_Controler/ctrlpopups.h \
     src_Tests/testsunitairegeneral.h \
     src_Tests/testsunitaireactions.h \
-    src_Actions/actiontrainer_fakeprofessorchen.h \
-    src_Actions/actiontrainer_totalguerison.h \
-    src_Actions/actiontrainer_professorchen.h \
-    src_Actions/actiontrainer_superpotion.h \
-    src_Actions/actiontrainer_leo.h \
-    src_Actions/actiontrainer_potion.h \
-    src_Actions/actionhurteverypokemononownbench.h \
-    src_Actions/actionswappokemonbetweenfigthandbench.h \
     src_Models/modelpopupselectenergyinpokemon.h \
-    src_Actions/actionmoredamagebyenemydamage.h \
-    src_Actions/actionhurthimself.h \
-    src_Actions/actioncompleteprotectionbypayingoneenergy.h \
-    src_Actions/actiondamagemultipliedbyheadortail.h \
-    src_Actions/actionmoredamageorhurthimself.h \
-    src_Actions/actionenemypoisoned.h \
-    src_Actions/actionprotectedagainstdamagerandom.h \
-    src_Actions/actionremoveoneenergyonenemy.h \
-    src_Actions/actiondieandhurteverypokemononeachbench.h \
-    src_Actions/actionnodamageonthreshold.h \
-    src_Actions/attacks/actionchangeweaknessofenemy.h \
-    src_Actions/attacks/actionchangeresistanceofhimself.h \
-    src_Actions/attacks/actionattackonlyifenemyissleeping.h \
-    src_Actions/attacks/actionreplicatelastdamagetoenemy.h \
-    src_Actions/attacks/actionuniqueattack_random.h \
-    src_Actions/attacks/actionblockoneenemyattackforoneturn.h \
-    src_Actions/attacks/actionenemycanattackonnextturn_random.h \
-    src_Actions/attacks/actionmoredamagebyowndamage.h \
+    src_Actions/abstractaction.h \
+    src_Actions/actioncreationfactory.h \
     src_Actions/attacks/actionattacklessdamageonhimself.h \
+    src_Actions/attacks/actionattackonlyifenemyissleeping.h \
+    src_Actions/attacks/actionblockoneenemyattackforoneturn.h \
+    src_Actions/attacks/actionchangeenemystatus.h \
+    src_Actions/attacks/actionchangeenemystatusrandom.h \
+    src_Actions/attacks/actionchangeresistanceofhimself.h \
+    src_Actions/attacks/actionchangeweaknessofenemy.h \
+    src_Actions/attacks/actioncompleteprotectionbypayingoneenergy.h \
+    src_Actions/attacks/actiondamagemultipliedbyheadortail.h \
     src_Actions/attacks/actiondamageofhalfenemylifeleft.h \
-    src_Actions/attacks/actionmoredamagebyenergyonenemy.h
+    src_Actions/attacks/actiondieandhurteverypokemononeachbench.h \
+    src_Actions/attacks/actionenemycanattackonnextturn_random.h \
+    src_Actions/attacks/actionenemypoisoned.h \
+    src_Actions/attacks/actionhealing.h \
+    src_Actions/attacks/actionhurteverypokemononownbench.h \
+    src_Actions/attacks/actionhurthimself.h \
+    src_Actions/attacks/actionmoredamagebyenemydamage.h \
+    src_Actions/attacks/actionmoredamagebyenergy.h \
+    src_Actions/attacks/actionmoredamagebyenergyonenemy.h \
+    src_Actions/attacks/actionmoredamagebyowndamage.h \
+    src_Actions/attacks/actionmoredamageorhurthimself.h \
+    src_Actions/attacks/actionnodamageonthreshold.h \
+    src_Actions/attacks/actionprotectedagainstdamage.h \
+    src_Actions/attacks/actionprotectedagainstdamagerandom.h \
+    src_Actions/attacks/actionremoveenergyattached.h \
+    src_Actions/attacks/actionremoveoneenergyonenemy.h \
+    src_Actions/attacks/actionreplicatelastdamagetoenemy.h \
+    src_Actions/attacks/actionreplicateoneattackfromenemy.h \
+    src_Actions/attacks/actionswappokemonbetweenfigthandbench.h \
+    src_Actions/attacks/actionuniqueattack_random.h \
+    src_Actions/trainers/actiontrainer_fakeprofessorchen.h \
+    src_Actions/trainers/actiontrainer_leo.h \
+    src_Actions/trainers/actiontrainer_potion.h \
+    src_Actions/trainers/actiontrainer_professorchen.h \
+    src_Actions/trainers/actiontrainer_superpotion.h \
+    src_Actions/trainers/actiontrainer_totalguerison.h
 
 FORMS +=
 

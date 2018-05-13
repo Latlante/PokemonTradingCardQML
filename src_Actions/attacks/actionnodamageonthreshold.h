@@ -1,7 +1,7 @@
 #ifndef ACTIONNODAMAGEONTHRESHOLD_H
 #define ACTIONNODAMAGEONTHRESHOLD_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionNoDamageOnThreshold : public AbstractAction
 {

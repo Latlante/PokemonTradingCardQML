@@ -1,7 +1,7 @@
 #ifndef ACTIONPROTECTEDAGAINSTDAMAGE_H
 #define ACTIONPROTECTEDAGAINSTDAMAGE_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionProtectedAgainstDamage : public AbstractAction
 {

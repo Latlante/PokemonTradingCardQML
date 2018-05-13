@@ -1,7 +1,7 @@
 #ifndef ACTIONREMOVEENERGYATTACHED_H
 #define ACTIONREMOVEENERGYATTACHED_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionRemoveEnergyAttached : public AbstractAction
 {

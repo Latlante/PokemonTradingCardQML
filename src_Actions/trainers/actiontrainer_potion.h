@@ -1,7 +1,7 @@
 #ifndef ACTIONTRAINER_POTION_H
 #define ACTIONTRAINER_POTION_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionTrainer_Potion : public AbstractAction
 {

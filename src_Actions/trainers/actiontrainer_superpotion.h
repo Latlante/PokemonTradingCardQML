@@ -1,7 +1,7 @@
 #ifndef ACTIONTRAINER_SUPERPOTION_H
 #define ACTIONTRAINER_SUPERPOTION_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionTrainer_SuperPotion : public AbstractAction
 {

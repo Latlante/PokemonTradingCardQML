@@ -1,7 +1,7 @@
 #ifndef ACTIONMOREDAMAGEBYENERGY_H
 #define ACTIONMOREDAMAGEBYENERGY_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionMoreDamageByEnergy : public AbstractAction
 {

@@ -1,7 +1,7 @@
 #ifndef ACTIONREMOVEONEENERGYONENEMY_H
 #define ACTIONREMOVEONEENERGYONENEMY_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionRemoveOneEnergyOnEnemy : public AbstractAction
 {

@@ -1,7 +1,7 @@
 #ifndef ACTIONDAMAGEMULTIPLIEDBYHEADORTAIL_H
 #define ACTIONDAMAGEMULTIPLIEDBYHEADORTAIL_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionDamageMultipliedByHeadOrTail : public AbstractAction
 {

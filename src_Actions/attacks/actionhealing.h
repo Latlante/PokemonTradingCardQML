@@ -1,7 +1,7 @@
 #ifndef ACTIONHEALING_H
 #define ACTIONHEALING_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionHealing : public AbstractAction
 {

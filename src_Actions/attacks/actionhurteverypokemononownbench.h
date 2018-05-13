@@ -1,7 +1,7 @@
 #ifndef ACTIONHURTEVERYPOKEMONONOWNBENCH_H
 #define ACTIONHURTEVERYPOKEMONONOWNBENCH_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionHurtEveryPokemonOnOwnBench : public AbstractAction
 {

@@ -1,7 +1,7 @@
 #ifndef ACTIONSWAPPOKEMONBETWEENFIGTHANDBENCH_H
 #define ACTIONSWAPPOKEMONBETWEENFIGTHANDBENCH_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionSwapPokemonBetweenFigthAndBench : public AbstractAction
 {

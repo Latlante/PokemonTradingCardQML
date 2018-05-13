@@ -1,7 +1,7 @@
 #ifndef ACTIONCHANGEENEMYSTATUS_H
 #define ACTIONCHANGEENEMYSTATUS_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionChangeEnemyStatus : public AbstractAction
 {

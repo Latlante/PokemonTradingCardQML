@@ -1,7 +1,7 @@
 #ifndef ACTIONREPLICATEONEATTACKFROMENEMY_H
 #define ACTIONREPLICATEONEATTACKFROMENEMY_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionReplicateOneAttackFromEnemy : public AbstractAction
 {

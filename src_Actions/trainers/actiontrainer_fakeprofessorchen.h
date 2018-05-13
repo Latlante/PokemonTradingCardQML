@@ -1,7 +1,7 @@
 #ifndef ACTIONTRAINER_FAKEPROFESSORCHEN_H
 #define ACTIONTRAINER_FAKEPROFESSORCHEN_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionTrainer_FakeProfessorChen : public AbstractAction
 {

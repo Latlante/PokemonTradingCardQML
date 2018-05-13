@@ -1,7 +1,7 @@
 #ifndef ACTIONHURTHIMSELF_H
 #define ACTIONHURTHIMSELF_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionHurtHimself : public AbstractAction
 {

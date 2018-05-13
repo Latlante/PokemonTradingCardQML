@@ -1,7 +1,7 @@
 #ifndef ACTIONTRAINER_TOTALGUERISON_H
 #define ACTIONTRAINER_TOTALGUERISON_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionTrainer_TotalGuerison : public AbstractAction
 {

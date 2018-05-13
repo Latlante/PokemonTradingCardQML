@@ -1,7 +1,7 @@
 #ifndef ACTIONCHANGEENEMYSTATUSRANDOM_H
 #define ACTIONCHANGEENEMYSTATUSRANDOM_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionChangeEnemyStatusRandom : public AbstractAction
 {

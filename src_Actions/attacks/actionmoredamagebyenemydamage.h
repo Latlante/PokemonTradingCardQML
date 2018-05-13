@@ -1,7 +1,7 @@
 #ifndef ACTIONMOREDAMAGEBYENEMYDAMAGE_H
 #define ACTIONMOREDAMAGEBYENEMYDAMAGE_H
 
-#include "abstractaction.h"
+#include "../abstractaction.h"
 
 class ActionMoreDamageByEnemyDamage : public AbstractAction
 {
