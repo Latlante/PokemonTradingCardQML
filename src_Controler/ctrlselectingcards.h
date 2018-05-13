@@ -29,6 +29,9 @@ public:
     Q_INVOKABLE void fillARandomList();
     Q_INVOKABLE void onClickedListFinished();
 
+    Q_INVOKABLE void savePacket();
+    Q_INVOKABLE void loadPacket();
+
     void selectCards(const QStringList& listOfPlayers);
 
 signals:

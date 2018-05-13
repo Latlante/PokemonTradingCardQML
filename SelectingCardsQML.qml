@@ -16,6 +16,37 @@ Item {
         anchors.fill: parent
         color: "#2b95ff"
 
+        Image {
+            id: imageSave
+            width: namePlayer.height
+            height: namePlayer.height
+            anchors.top: parent.top
+            anchors.right: parent.right
+            source: "textures/save.png"
+
+            MouseArea {
+                id: mouseAreaSave
+                anchors.fill: parent
+                onClicked: ctrlSelectingCards.savePacket()
+            }
+        }
+
+        Image {
+            id: imageLoad
+            width: namePlayer.height
+            height: namePlayer.height
+            anchors.top: parent.top
+            anchors.right: imageSave.left
+            anchors.rightMargin: 10
+            source: "textures/open.png"
+
+            MouseArea {
+                id: mouseAreaLoad
+                anchors.fill: parent
+                onClicked: ctrlSelectingCards.loadPacket()
+            }
+        }
+
         Text {
             id: namePlayer
             height: 40

@@ -3,6 +3,8 @@
         <file alias="background-fight-90.png">Images/Textures/background-fight-90.png</file>
         <file alias="verticalLine.png">Images/Textures/verticalLine.png</file>
         <file alias="horizontalLine.png">Images/Textures/horizontalLine.png</file>
+        <file alias="open.png">Images/Textures/open.png</file>
+        <file alias="save.png">Images/Textures/save.png</file>
     </qresource>
     <qresource prefix="/">
         <file>Images/logo.png</file>

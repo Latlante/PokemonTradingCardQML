@@ -1,8 +1,9 @@
 #include "ctrlselectingcards.h"
 
+#include <QDebug>
+#include <QFile>
 #include <QQmlEngine>
 #include <QQmlApplicationEngine>
-#include <QDebug>
 #include <QQmlContext>
 #include <QtQml/qqml.h>
 
@@ -158,6 +159,39 @@ void CtrlSelectingCards::onClickedListFinished()
     else
     {
         emit listsComplete();
+    }
+}
+
+void CtrlSelectingCards::savePacket()
+{
+    QList<InfoCard*> listCardsSelected = m_modelSelectingCards->listCardsSelected();
+    QString container = "";
+
+    for(int i=0;i<listCardsSelected.count();++i)
+        container += QString::number(i) + "##" + QString::number(listCardsSelected[i]->quantity) + "\n";
+
+    QFile fichier("save/" + m_modelSelectingCards->name() + ".ptc");
+    fichier.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
+    fichier.write(container.toLatin1());
+    fichier.close();
+}
+
+void CtrlSelectingCards::loadPacket()
+{
+    QFile fichier("save/" + m_modelSelectingCards->name() + ".ptc");
+    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString container = fichier.readAll();
+    fichier.close();
+
+    QStringList containerSplit = container.split("\n");
+    m_modelSelectingCards->clear();
+    foreach(QString line, containerSplit)
+    {
+        int id = line.section("##", 0, 0).toInt();
+        int quantity = line.section("##", 1, 1).toInt();
+
+
+        m_modelSelectingCards->changeQuantityCard(id, quantity);
     }
 }
 
