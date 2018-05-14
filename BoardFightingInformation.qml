@@ -41,8 +41,7 @@ Item {
     }
 
     onPokemonStatusChanged: {
-        console.log("boardFightingInfo1 onPokemonStatusChanged");
-        //textStatusPokemon.text = cardPok.statusFormatString();
+        console.log("boardFightingInfo1 onPokemonStatusChanged = " + pokemonStatus);
 
         switch(pokemonStatus)
         {
@@ -62,8 +61,6 @@ Item {
             imageStatusPokemon.source = "";
             break;
         }
-
-
     }
 
     onCardPokChanged: {
@@ -196,6 +193,8 @@ Item {
                 height: width
                 anchors.top: parent.top
                 anchors.right: parent.right
+                //anchors.fill: parent
+                source: "status/confused.png"
             }
 
             Text {
