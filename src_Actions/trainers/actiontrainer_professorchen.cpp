@@ -1,5 +1,7 @@
 #include "actiontrainer_professorchen.h"
 
+#include "src_Packets/packethand.h"
+
 ActionTrainer_ProfessorChen::ActionTrainer_ProfessorChen()
 {
 
@@ -23,9 +25,12 @@ void ActionTrainer_ProfessorChen::action()
 {
     if(playerAttacking() != nullptr)
     {
+        //On nettoie la main
+        while(playerAttacking()->hand()->countCard() > 0)
+            playerAttacking()->moveCardFromHandToTrash(0);
+
+        //Et on pioche les cartes
         for(int i=0;i<7;++i)
-        {
             playerAttacking()->drawOneCard();
-        }
     }
 }

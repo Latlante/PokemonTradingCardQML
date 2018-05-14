@@ -1,5 +1,7 @@
 #include "actiontrainer_fakeprofessorchen.h"
 
+#include "src_Packets/packethand.h"
+
 ActionTrainer_FakeProfessorChen::ActionTrainer_FakeProfessorChen() :
     AbstractAction()
 {
@@ -24,9 +26,11 @@ void ActionTrainer_FakeProfessorChen::action()
 {
     if(playerAttacked() != nullptr)
     {
+        //On nettoie la main
+        while(playerAttacked()->hand()->countCard() > 0)
+            playerAttacked()->moveCardFromHandToTrash(0);
+
         for(int i=0;i<7;++i)
-        {
             playerAttacked()->drawOneCard();
-        }
     }
 }

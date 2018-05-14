@@ -7,7 +7,8 @@
 ModelPopupSelectEnergyInPokemon::ModelPopupSelectEnergyInPokemon(QObject *parent) :
     QAbstractListModel(parent),
     m_listEnergies(QList<SelectionCards>()),
-    m_numberOfEnergiesToSelect(1)
+    m_numberOfEnergiesToSelect(1),
+    m_elementFilter(AbstractCard::Element_Whatever)
 {
 
 }
@@ -23,6 +24,11 @@ void ModelPopupSelectEnergyInPokemon::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
+void ModelPopupSelectEnergyInPokemon::setElementFilter(AbstractCard::Enum_element element)
+{
+    m_elementFilter = element;
+}
+
 void ModelPopupSelectEnergyInPokemon::addListEnergyFromPokemon(CardPokemon *pokemon)
 {
     if((pokemon != nullptr) && (pokemon->modelListOfEnergies() != nullptr))
@@ -30,15 +36,20 @@ void ModelPopupSelectEnergyInPokemon::addListEnergyFromPokemon(CardPokemon *poke
         cleanPacket();
         ModelListEnergies* modelEnergies = pokemon->modelListOfEnergies();
 
-        for(int i=0;i<modelEnergies->rowCount();++i)
+        for(int i=0;i<modelEnergies->countCard();++i)
         {
-            SelectionCards selection;
-            selection.card = modelEnergies->energy(i);
-            selection.selected = false;
+            CardEnergy* cardEn = modelEnergies->energy(i);
 
-            beginInsertRows(QModelIndex(), rowCount(), rowCount());
-            m_listEnergies.append(selection);
-            endInsertRows();
+            if((cardEn->element() == m_elementFilter) || (m_elementFilter == AbstractCard::Element_Whatever))
+            {
+                SelectionCards selection;
+                selection.card = cardEn;
+                selection.selected = false;
+
+                beginInsertRows(QModelIndex(), rowCount(), rowCount());
+                m_listEnergies.append(selection);
+                endInsertRows();
+            }
         }
     }
 }

@@ -176,6 +176,7 @@ Item {
             anchors.bottomMargin: 10
             visible: lastPlayer === false
             text: "Joueur suivant"
+            enabled: viewCards.model.countTotalQuantity === viewCards.model.maxCards()
 
             onClicked: ctrlSelectingCards.onClickedListFinished()
         }
@@ -191,6 +192,7 @@ Item {
             anchors.bottomMargin: 10
             visible: lastPlayer === true
             text: "OK"
+            enabled: viewCards.model.countTotalQuantity === viewCards.model.maxCards()
 
             onClicked: ctrlGameBoard.onClicked_ButtonOk_SelectCards()
         }

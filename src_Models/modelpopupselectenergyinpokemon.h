@@ -2,6 +2,7 @@
 #define MODELPOPUPSELECTENERGYINPOKEMON_H
 
 #include <QAbstractListModel>
+#include "src_Cards/abstractcard.h"
 
 class CardEnergy;
 class CardPokemon;
@@ -29,6 +30,8 @@ public:
 
     static void declareQML();
 
+    void setElementFilter(AbstractCard::Enum_element element);
+
     void addListEnergyFromPokemon(CardPokemon* pokemon);
 
     Q_INVOKABLE unsigned short numberOfEnergiesToSelect();
@@ -52,6 +55,7 @@ protected:
 private:
     QList<SelectionCards> m_listEnergies;
     unsigned short m_numberOfEnergiesToSelect;
+    AbstractCard::Enum_element m_elementFilter;
 
     void cleanPacket();
 };

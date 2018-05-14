@@ -78,7 +78,16 @@ CardEnergy* ModelListEnergies::energy(int index)
 void ModelListEnergies::removeEnergy(CardEnergy *energy)
 {
     if(energy != nullptr)
-        m_listEnergies.removeOne(energy);
+    {
+        int index = m_listEnergies.indexOf(energy);
+
+        if(index >= 0)
+        {
+            beginRemoveRows(QModelIndex(), index, index+(energy->quantity()-1));
+            m_listEnergies.removeOne(energy);
+            endRemoveRows();
+        }
+    }
 }
 
 QList<CardEnergy*> ModelListEnergies::takeAllEnergies()
@@ -185,6 +194,11 @@ bool ModelListEnergies::hasEnoughEnergies(QMap<AbstractCard::Enum_element, unsig
     }
 
     return statusBack;
+}
+
+int ModelListEnergies::countCard()
+{
+    return m_listEnergies.count();
 }
 
 QVariant ModelListEnergies::data(const QModelIndex &index, int role) const

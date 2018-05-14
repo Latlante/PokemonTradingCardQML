@@ -36,7 +36,7 @@ void ActionRemoveEnergyAttached::action()
         //Si on a plus d'énergies que demandé, on choisit lesquels on veut enlever
         if(pokemonAttacking()->countEnergies() > m_numberOfEnergiesToRemoved)
         {
-            QList<int> listIndex = gameManager()->displayEnergiesForAPokemon(pokemonAttacking(), calculOfNumberOfEnergyToRemoved, CardPokemon::Element_Whatever);
+            QList<int> listIndex = gameManager()->displayEnergiesForAPokemon(pokemonAttacking(), m_numberOfEnergiesToRemoved, m_elementToRemove);
             pokemonAttacking()->moveEnergiesInTrash(listIndex);
         }
         //Sinon on enléve tout

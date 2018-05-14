@@ -8,6 +8,7 @@
 #include "src_Actions/abstractaction.h"
 #include "src_Cards/cardenergy.h"
 #include "src_Models/modellistenergies.h"
+#include "src_Packets/packettrash.h"
 
 CardPokemon::CardPokemon(unsigned short id,
                          const QString& name,
@@ -501,16 +502,20 @@ void CardPokemon::decrementNumberOfTurnAttackStillBlocks()
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 
-    qDebug() << __PRETTY_FUNCTION__ << listAttacks().count();
-    for(int indexAttack=0;indexAttack<listAttacks().count();++indexAttack)
+    if(m_cardEvolution != nullptr)
+        m_cardEvolution->decrementNumberOfTurnAttackStillBlocks();
+    else
     {
-        qDebug() << __PRETTY_FUNCTION__ << indexAttack;
-        AttackData data = listAttacks()[indexAttack];
+        for(int indexAttack=0;indexAttack<listAttacks().count();++indexAttack)
+        {
+            qDebug() << __PRETTY_FUNCTION__ << indexAttack;
+            AttackData data = listAttacks()[indexAttack];
 
-        if(data.numberOfTurnAttackStillBlocks > 0)
-            data.numberOfTurnAttackStillBlocks -= 1;
+            if(data.numberOfTurnAttackStillBlocks > 0)
+                data.numberOfTurnAttackStillBlocks -= 1;
 
-        replaceOneAttack(indexAttack, data);
+            m_listAttacks.replace(indexAttack, data);
+        }
     }
 }
 
@@ -580,7 +585,7 @@ void CardPokemon::moveEnergiesInTrash(QList<int> listIndex)
     }
 
     //Maintenant on peut les supprimer
-    foreach(CardEnergy energy, listEnergies)
+    foreach(CardEnergy* energy, listEnergies)
         m_modelListEnergies->removeEnergy(energy);
 
     //Maintenant on peut les placer dans la défausse

@@ -43,7 +43,7 @@ AbstractCard* AbstractPacketStatic::takeACard(int indexCard)
     {
         card = m_listCards.takeAt(indexCard);
 
-        emit dataChanged(index(indexCard, 0), index(indexCard, 0));
+        emit dataChanged(index(indexCard, 0), index(countCard(), 0));
         emit countChanged();
     }
 
@@ -61,7 +61,7 @@ bool AbstractPacketStatic::removeFromPacketWithoutDelete(AbstractCard *card)
 
         //On ne delete pas la carte volontairement
 
-        emit dataChanged(index(countCard()-1, 0), index(countCard(), 0));
+        emit dataChanged(index(indexCard, 0), index(countCard(), 0));
         emit countChanged();
     }
 
