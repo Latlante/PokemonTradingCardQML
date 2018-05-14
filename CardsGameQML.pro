@@ -17,6 +17,8 @@ CONFIG(compilation_test)
     #DEFINES += TESTS_UNITAIRES
 }
 
+DEFINES += TRACAGE_PRECIS
+
 
 Debug:OBJECTS_DIR = debug/obj/
 Debug:MOC_DIR = debug/moc/
@@ -94,7 +96,8 @@ SOURCES += \
     src_Actions/trainers/actiontrainer_potion.cpp \
     src_Actions/trainers/actiontrainer_professorchen.cpp \
     src_Actions/trainers/actiontrainer_superpotion.cpp \
-    src_Actions/trainers/actiontrainer_totalguerison.cpp
+    src_Actions/trainers/actiontrainer_totalguerison.cpp \
+    src_Actions/trainers/actiontrainer_informaticsearch.cpp
 
 
 RESOURCES += qml.qrc \
@@ -179,7 +182,8 @@ HEADERS += \
     src_Actions/trainers/actiontrainer_potion.h \
     src_Actions/trainers/actiontrainer_professorchen.h \
     src_Actions/trainers/actiontrainer_superpotion.h \
-    src_Actions/trainers/actiontrainer_totalguerison.h
+    src_Actions/trainers/actiontrainer_totalguerison.h \
+    src_Actions/trainers/actiontrainer_informaticsearch.h
 
 FORMS +=
 

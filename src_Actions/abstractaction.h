@@ -65,6 +65,7 @@ public:
         Action_SwapPokemonBetweenFigthAndBench = 702,
 
         //CARTES DRESSEUR
+        ActionTrainer_InformaticSearch = 2001,
         ActionTrainer_FakeProfessorChen = 2003,
         ActionTrainer_TotalGuerison = 2012,
         ActionTrainer_ProfessorChen = 2018,
