@@ -98,6 +98,12 @@ Item {
             anchors.fill: parent
             visible: ctrlPopups.messageVisible
         }
+
+        PopupCoinHeadOrTail {
+            id: popupCoinHeadOrTail1
+            anchors.fill: parent
+            visible: ctrlPopups.headOrTailVisible
+        }
     }
 }
 

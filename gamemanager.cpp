@@ -193,15 +193,8 @@ void GameManager::startGame()
 
 void GameManager::nextPlayer()
 {	
-    /*m_indexCurrentPlayer++;
-	if (m_listPlayers.count() <= m_indexCurrentPlayer)
-		m_indexCurrentPlayer = 0;
-		
-    m_listPlayers[m_indexCurrentPlayer]->newTurn();*/
-    currentPlayer()->blockPlayer();
-
     setIndexCurrentPlayer(m_indexCurrentPlayer+1);
-    checkStatusPokemonForNewRound();
+
     currentPlayer()->newTurn();
     currentPlayer()->drawOneCard();
 }
@@ -283,8 +276,8 @@ void GameManager::endOfTurn()
     //On débloque des attaques si besoin
     checkAttacksBlocked();
 
-    //Application du poison s'il y a
-    checkPokemonPoisoned();
+    //Vérification des status
+    checkStatusPokemonForNewRound();
 
     //Si le pokémon attaqué est mort, le joueur pioche sa récompense
     checkPokemonDead();
@@ -301,6 +294,7 @@ void GameManager::endOfTurn()
     else
     {
         //On passe au prochain tour
+        currentPlayer()->blockPlayer();
         nextPlayer();
     }
 }
@@ -333,6 +327,16 @@ QList<int> GameManager::displayBench(BenchArea *bench)
 #else
     return m_ctrlPopups.displayBench(bench);
 #endif
+}
+
+QList<int> GameManager::displayDeck(PacketDeck *deck, unsigned short quantity)
+{
+    return m_ctrlPopups.displayDeck(deck, quantity);
+}
+
+QList<int> GameManager::displayHand(PacketHand *hand, unsigned short quantity)
+{
+    return m_ctrlPopups.displayHand(hand, quantity);
 }
 
 QList<int> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
@@ -382,7 +386,10 @@ unsigned short GameManager::headOrTail()
 #else
 unsigned short GameManager::headOrTail()
 {
-    return Utils::headOrTail();
+    unsigned short coin = Utils::headOrTail();
+    qDebug() << __PRETTY_FUNCTION__ << "coin=" << coin;
+    m_ctrlPopups.displayHeadOrTail(coin);
+    return coin;
 }
 #endif
 
@@ -502,29 +509,6 @@ void GameManager::drawFirstCards(Player* play)
     }
 }
 
-void GameManager::checkPokemonPoisoned()
-{
-    foreach (Player* play, m_listPlayers)
-    {
-        //fight area
-        CardPokemon* pokemonFighter = play->fight()->pokemonFighter();
-        if(pokemonFighter != nullptr)
-        {
-            pokemonFighter->applyDamageIfPoisoned();
-        }
-
-        //bench
-        for(int i=0;i<play->bench()->countCard();++i)
-        {
-            CardPokemon* pokemonBench = play->bench()->cardPok(i);
-            if(pokemonBench != nullptr)
-            {
-                pokemonBench->applyDamageIfPoisoned();
-            }
-        }
-    }
-}
-
 void GameManager::checkPokemonDead()
 {
     foreach (Player* play, m_listPlayers)
@@ -570,25 +554,53 @@ void GameManager::checkPokemonDead()
 
 void GameManager::checkStatusPokemonForNewRound()
 {
+    //Status Confus
+    //Rien à faire ici, sera appliqué au moment de l'attaque
+
+    //Status Paralysé
+    //A supprimer uniquement à la fin du tour du joueur concerné
     Player* playerAttacking = currentPlayer();
     if(playerAttacking != nullptr)
     {
         CardPokemon* pokemonAttacking = playerAttacking->fight()->pokemonFighter();
 
-        if(pokemonAttacking != nullptr)
+        if((pokemonAttacking != nullptr) && (pokemonAttacking->status() == CardPokemon::Status_Paralyzed))
         {
-            switch(pokemonAttacking->status())
+            pokemonAttacking->setStatus(CardPokemon::Status_Normal);
+        }
+    }
+
+    //Status Endormi
+    //Possibilité de se réveiller entre chaque tour
+    foreach (Player* play, m_listPlayers)
+    {
+        //fight area
+        CardPokemon* pokemonFighter = play->fight()->pokemonFighter();
+        if((pokemonFighter != nullptr) && (pokemonFighter->status() == CardPokemon::Status_Slept))
+        {
+            if(headOrTail() == 1)
+                pokemonFighter->setStatus(CardPokemon::Status_Normal);
+        }
+    }
+
+    //Status Empoisonné
+    //Perd un marqueur de dégat entre chaque tour
+    foreach (Player* play, m_listPlayers)
+    {
+        //fight area
+        CardPokemon* pokemonFighter = play->fight()->pokemonFighter();
+        if(pokemonFighter != nullptr)
+        {
+            pokemonFighter->applyDamageIfPoisoned();
+        }
+
+        //bench
+        for(int i=0;i<play->bench()->countCard();++i)
+        {
+            CardPokemon* pokemonBench = play->bench()->cardPok(i);
+            if(pokemonBench != nullptr)
             {
-            case CardPokemon::Status_Paralyzed:
-                pokemonAttacking->setStatus(CardPokemon::Status_Normal);
-                break;
-            case CardPokemon::Status_Slept:
-                if(Utils::headOrTail() == 1)
-                    pokemonAttacking->setStatus(CardPokemon::Status_Normal);
-                break;
-            default:
-                //On n'a rien besoin de faire pour le reste
-                break;
+                pokemonBench->applyDamageIfPoisoned();
             }
         }
     }

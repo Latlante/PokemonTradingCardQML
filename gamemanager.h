@@ -51,6 +51,9 @@ public:
     Player *gameIsFinished();
 
     QList<int> displayBench(BenchArea* bench);
+    QList<int> displayDeck(PacketDeck* deck, unsigned short quantity);
+    QList<int> displayHand(PacketHand* hand, unsigned short quantity);
+
     QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     int displayAttacks(CardPokemon* card, bool blockRetreat = false);
     void displayMessage(QString message);
@@ -93,7 +96,6 @@ private:
 
     bool checkHandOfEachPlayer();
     void drawFirstCards(Player *play);
-    void checkPokemonPoisoned();
     void checkPokemonDead();
     void checkStatusPokemonForNewRound();
     void checkAttacksBlocked();

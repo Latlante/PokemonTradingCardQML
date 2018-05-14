@@ -460,6 +460,11 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
                     enemy->setInvincibleForTheNextTurn(false);
                     statusBack = Attack_OK;
                 }
+                //Le pokémon est confus et la pièce a donné pile/tail
+                else if(status() == Status_Confused)
+                {
+                    takeDamage(DAMAGE_WHEN_CONFUSED);
+                }
                 else
                     statusBack = Attack_WrongStatus;
             }
@@ -506,8 +511,8 @@ bool CardPokemon::canAttackFromStatus()
     switch(status())
     {
     case Status_Confused:
-        if(Utils::headOrTail() == 0)    //Si pile
-            takeDamage(DAMAGE_WHEN_CONFUSED);
+        if(GameManager::instance()->headOrTail() == 0)    //Si pile
+            canAttack = false;
         break;
     case Status_Normal:
     case Status_Poisoned:

@@ -24,7 +24,11 @@ CtrlPopups::CtrlPopups(QObject *parent) :
     m_popupSelectingAttacks_IndexAttack(-1),
     m_popupSelectingAttacks_AuthorizeRetreat(false),
     m_modelSelectEnergyInPokemon(new ModelPopupSelectEnergyInPokemon()),
-    m_selectEnergiesInPokemonVisible(false)
+    m_selectEnergiesInPokemonVisible(false),
+    m_messageVisible(false),
+    m_messageContent(""),
+    m_headOrTailVisible(false),
+    m_headOrTailValue(0)
 {
 
 }
@@ -78,19 +82,19 @@ ModelPopupSelectCardInPacket* CtrlPopups::modelSelectCardInPacket()
     return m_modelSelectCardInPacket;
 }
 
-QList<int> CtrlPopups::displayBench(BenchArea *packet)
+QList<int> CtrlPopups::displayBench(BenchArea *packet, unsigned short quantity)
 {
-    return displayAbstractPacket(packet);
+    return displayAbstractPacket(packet, quantity);
 }
 
-QList<int> CtrlPopups::displayDeck(PacketDeck *packet)
+QList<int> CtrlPopups::displayDeck(PacketDeck *packet, unsigned short quantity)
 {
-    return displayAbstractPacket(packet);
+    return displayAbstractPacket(packet, quantity);
 }
 
-QList<int> CtrlPopups::displayHand(PacketHand *packet)
+QList<int> CtrlPopups::displayHand(PacketHand *packet, unsigned short quantity)
 {
-    return displayAbstractPacket(packet);
+    return displayAbstractPacket(packet, quantity);
 }
 
 bool CtrlPopups::selectCardInPacketVisible()
@@ -118,10 +122,14 @@ int CtrlPopups::displayAttacks(CardPokemon* card, bool authorizeRetreat)
     setPopupSelectingAttacks_Card(card);
     setPopupSelectingAttacks_Visible(true);
 
+    qDebug() << __PRETTY_FUNCTION__ << "En attente";
+
     //En attente
     QEventLoop loop;
     connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
     loop.exec();
+
+    qDebug() << __PRETTY_FUNCTION__ << "Passé";
 
     //Configuration de fin
     setPopupSelectingAttacks_Visible(false);
@@ -278,13 +286,60 @@ void CtrlPopups::setMessageContent(QString message)
     }
 }
 
+//**************************************
+//          COIN HEAD OR TAIL
+//**************************************
+void CtrlPopups::displayHeadOrTail(int value)
+{
+    //Initialisation
+    setHeadOrTailValue(value);
+    setHeadOrTailVisible(true);
+
+    //En attente
+    QEventLoop loop;
+    connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    //Configuration de fin
+    setHeadOrTailVisible(false);
+}
+
+bool CtrlPopups::headOrTailVisible()
+{
+    return m_headOrTailVisible;
+}
+
+void CtrlPopups::setHeadOrTailVisible(bool visible)
+{
+    if(m_headOrTailVisible != visible)
+    {
+        m_headOrTailVisible = visible;
+        emit headOrTailVisibleChanged();
+    }
+}
+
+int CtrlPopups::headOrTailValue()
+{
+    return m_headOrTailValue;
+}
+
+void CtrlPopups::setHeadOrTailValue(int value)
+{
+    if(m_headOrTailValue != value)
+    {
+        m_headOrTailValue = value;
+        emit headOrTailValueChanged();
+    }
+}
+
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/
-QList<int> CtrlPopups::displayAbstractPacket(AbstractPacket *packet)
+QList<int> CtrlPopups::displayAbstractPacket(AbstractPacket *packet, unsigned short quantity)
 {
     //Initialisation
     m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
+    m_modelSelectCardInPacket->setNumberOfCardsToSelect(quantity);
     setSelectCardInPacketVisible(true);
 
     //En attente
