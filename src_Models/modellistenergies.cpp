@@ -27,6 +27,11 @@ void ModelListEnergies::declareQML()
 ************************************************************/
 void ModelListEnergies::addEnergy(CardEnergy *energy)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    //qDebug() << __PRETTY_FUNCTION__ << rowCount() << energy->quantity() << energy->element();
     if(energy != nullptr)
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount()+(energy->quantity()-1));
@@ -37,12 +42,17 @@ void ModelListEnergies::addEnergy(CardEnergy *energy)
 
 CardEnergy* ModelListEnergies::takeEnergy(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     CardEnergy* energyToReturn = nullptr;
 
     if((index >= 0) && (index < rowCount()))
     {
+        energyToReturn = energy(index);
         beginRemoveRows(QModelIndex(), index, index+(energyToReturn->quantity()-1));
-        energyToReturn = m_listEnergies.takeAt(index);
+        m_listEnergies.removeOne(energyToReturn);
         endRemoveRows();
     }
 
@@ -51,6 +61,10 @@ CardEnergy* ModelListEnergies::takeEnergy(int index)
 
 CardEnergy* ModelListEnergies::energy(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     CardEnergy* energyToReturn = nullptr;
 
     if((index >= 0) && (index < rowCount()))
@@ -63,6 +77,10 @@ CardEnergy* ModelListEnergies::energy(int index)
 
 QList<CardEnergy*> ModelListEnergies::takeAllEnergies()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QList<CardEnergy*> listToReturn;
 
     for(int i=0;i<rowCount();++i)
@@ -73,6 +91,10 @@ QList<CardEnergy*> ModelListEnergies::takeAllEnergies()
 
 unsigned short ModelListEnergies::countEnergies()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     unsigned short count = 0;
 
     foreach (CardEnergy* energy, m_listEnergies)
@@ -85,6 +107,10 @@ unsigned short ModelListEnergies::countEnergies()
 
 unsigned short ModelListEnergies::countEnergies(AbstractCard::Enum_element element)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     int count = 0;
 
     foreach (CardEnergy* energy, m_listEnergies)
@@ -98,6 +124,10 @@ unsigned short ModelListEnergies::countEnergies(AbstractCard::Enum_element eleme
 
 bool ModelListEnergies::hasEnoughEnergies(QMap<AbstractCard::Enum_element, unsigned short> cost)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     bool statusBack = true;
 
     if (cost.count() > 0)
@@ -150,6 +180,10 @@ bool ModelListEnergies::hasEnoughEnergies(QMap<AbstractCard::Enum_element, unsig
 
 QVariant ModelListEnergies::data(const QModelIndex &index, int role) const
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //qDebug() << __PRETTY_FUNCTION__ << index << role;
     int iRow = index.row();
     if ((iRow < 0) || (iRow >= rowCount()))
@@ -176,6 +210,10 @@ QVariant ModelListEnergies::data(const QModelIndex &index, int role) const
 
 int ModelListEnergies::rowCount(const QModelIndex &) const
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     int count = 0;
 
     foreach (CardEnergy* energy, m_listEnergies)
@@ -183,7 +221,7 @@ int ModelListEnergies::rowCount(const QModelIndex &) const
         count += energy->quantity();
     }
 
-    qDebug() << __PRETTY_FUNCTION__ << count;
+    //qDebug() << __PRETTY_FUNCTION__ << count;
 
     return count;
 }
@@ -193,6 +231,10 @@ int ModelListEnergies::rowCount(const QModelIndex &) const
 ************************************************************/
 QHash<int, QByteArray> ModelListEnergies::roleNames() const
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QHash<int, QByteArray> roles;
     roles[ListEnergiesRole_Icon] = "icon";
 

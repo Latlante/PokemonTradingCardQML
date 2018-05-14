@@ -72,6 +72,10 @@ void CardPokemon::declareQML()
 ************************************************************/
 int CardPokemon::id()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     int idCard = -1;
 
     if(m_cardEvolution != nullptr)
@@ -84,6 +88,10 @@ int CardPokemon::id()
 
 const QString CardPokemon::name()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QString nameCard = "";
 
     if(m_cardEvolution != nullptr)
@@ -96,11 +104,19 @@ const QString CardPokemon::name()
 
 AbstractCard::Enum_typeOfCard CardPokemon::type()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return AbstractCard::TypeOfCard_Pokemon;
 }
 
 QUrl CardPokemon::image()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QUrl path;
 
     //qDebug() << __PRETTY_FUNCTION__ << this << m_id << m_name << m_cardEvolution;
@@ -115,11 +131,19 @@ QUrl CardPokemon::image()
 
 AbstractCard* CardPokemon::clone()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return new CardPokemon(*this);
 }
 
 AbstractCard::Enum_element CardPokemon::element()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //Element ne change pas entre les évolutions (pour le set de base)
     /*if(m_cardEvolution != nullptr)
         return m_cardEvolution->element();*/
@@ -129,11 +153,19 @@ AbstractCard::Enum_element CardPokemon::element()
 
 QString CardPokemon::elementFormatString()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return elementToString(element());
 }
 
 unsigned short CardPokemon::lifeTotal()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if(m_cardEvolution != nullptr)
         return m_cardEvolution->lifeTotal();
 
@@ -142,31 +174,55 @@ unsigned short CardPokemon::lifeTotal()
 
 bool CardPokemon::isDied()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return lifeLeft() <= 0;
 }
 
 unsigned short CardPokemon::lifeLeft()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return lifeTotal() - currentDamage();
 }
 
 unsigned short CardPokemon::damageMarker()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return currentDamage() / DAMAGE_MARQUER_VALUE;
 }
 
 CardPokemon::Enum_statusOfPokemon CardPokemon::status()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
 	return m_status;
 }
 
 QString CardPokemon::statusFormatString()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return statusToString(status());
 }
 
 void CardPokemon::setStatus(Enum_statusOfPokemon status)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if((m_status != status) && (!isProtectedAgainstEffectForTheNextTurn()) && (status != Status_None))
     {
         m_status = status;
@@ -177,42 +233,74 @@ void CardPokemon::setStatus(Enum_statusOfPokemon status)
 
 bool CardPokemon::isProtectedAgainstDamageForTheNextTurn()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_protectedAgainstDamageForTheNextTurnThreshold != 0;
 }
 
 unsigned short CardPokemon::protectedAgainstDamageForTheNextTurnThreshold()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_protectedAgainstDamageForTheNextTurnThreshold;
 }
 
 void CardPokemon::setProtectedAgainstDamageForTheNextTurn(bool status)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_protectedAgainstDamageForTheNextTurnThreshold = status == true ? 0xFFFF : 0;
 }
 
 void CardPokemon::setProtectedAgainstDamageForTheNextTurn(unsigned short threshold)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_protectedAgainstDamageForTheNextTurnThreshold = threshold;
 }
 
 bool CardPokemon::isProtectedAgainstEffectForTheNextTurn()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_protectedAgainstEffectForTheNextTurn;
 }
 
 void CardPokemon::setProtectedAgainstEffectForTheNextTurn(bool status)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_protectedAgainstEffectForTheNextTurn = status;
 }
 
 void CardPokemon::setInvincibleForTheNextTurn(bool status)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     setProtectedAgainstDamageForTheNextTurn(status);
     setProtectedAgainstEffectForTheNextTurn(status);
 }
 
 CardPokemon::Enum_element CardPokemon::weaknessElement()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     CardPokemon::Enum_element elementToReturn = m_weaknessElement;
 
     if(m_cardEvolution != nullptr)
@@ -223,6 +311,10 @@ CardPokemon::Enum_element CardPokemon::weaknessElement()
 
 void CardPokemon::setWeaknessElement(CardPokemon::Enum_element element)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if(m_cardEvolution != nullptr)
         m_cardEvolution->setWeaknessElement(element);
     else
@@ -231,16 +323,28 @@ void CardPokemon::setWeaknessElement(CardPokemon::Enum_element element)
 
 CardPokemon::Enum_CoefWeaknessResistance CardPokemon::weaknessCoef()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_weaknessCoef;
 }
 
 void CardPokemon::setWeaknessCoef(CardPokemon::Enum_CoefWeaknessResistance coef)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_weaknessCoef = coef;
 }
 
 CardPokemon::Enum_element CardPokemon::resistanceElement()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     CardPokemon::Enum_element elementToReturn = m_resistanceElement;
 
     if(m_cardEvolution != nullptr)
@@ -251,6 +355,10 @@ CardPokemon::Enum_element CardPokemon::resistanceElement()
 
 void CardPokemon::setResistanceElement(CardPokemon::Enum_element element)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if(m_cardEvolution != nullptr)
         m_cardEvolution->setResistanceElement(element);
     else
@@ -259,16 +367,28 @@ void CardPokemon::setResistanceElement(CardPokemon::Enum_element element)
 
 CardPokemon::Enum_CoefWeaknessResistance CardPokemon::resistanceCoef()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_resistanceCoef;
 }
 
 void CardPokemon::setResistanceCoef(CardPokemon::Enum_CoefWeaknessResistance coef)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_resistanceCoef = coef;
 }
 
 QList<AttackData> CardPokemon::listAttacks()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if(m_cardEvolution != nullptr)
         return m_cardEvolution->listAttacks();
 
@@ -277,11 +397,19 @@ QList<AttackData> CardPokemon::listAttacks()
 
 int CardPokemon::attacksCount()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return listAttacks().count();
 }
 
 QString CardPokemon::attackName(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QString nameToReturn = "";
 
     if((index >= 0) && (index < attacksCount()))
@@ -292,6 +420,10 @@ QString CardPokemon::attackName(int index)
 
 QString CardPokemon::attackDescription(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QString descriptionToReturn = "";
 
     if((index >= 0) && (index < attacksCount()))
@@ -302,6 +434,10 @@ QString CardPokemon::attackDescription(int index)
 
 unsigned short CardPokemon::attackDamage(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     unsigned short damageToReturn = 0;
 
     if((index >= 0) && (index < attacksCount()))
@@ -312,37 +448,50 @@ unsigned short CardPokemon::attackDamage(int index)
 
 bool CardPokemon::replaceOneAttack(int index, AttackData data)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     bool statusBack = true;
 
-    if((index >= 0) && (index < listAttacks().count()))
-    {
-        //Nettoyage de l'ancienne action
-        AttackData currentData = listAttacks()[index];
-        if(currentData.action != nullptr)
-        {
-            delete currentData.action;
-            currentData.action = nullptr;
-        }
-
-        //Copie
-        currentData.action = data.action;
-        //On ne copie volontairement pas le coût en énergie
-        //currentData.costEnergies = data.costEnergies;
-        currentData.damage = data.damage;
-        currentData.description = data.description;
-        currentData.name = data.name;
-        currentData.numberOfTurnAttackStillBlocks = 0;
-
-        m_listAttacks.replace(index, currentData);
-    }
+    if(m_cardEvolution != nullptr)
+        statusBack = m_cardEvolution->replaceOneAttack(index, data);
     else
-        statusBack = false;
-    
+    {
+        if((index >= 0) && (index < listAttacks().count()))
+        {
+            //Nettoyage de l'ancienne action
+            AttackData currentData = listAttacks()[index];
+            if(currentData.action != nullptr)
+            {
+                delete currentData.action;
+                currentData.action = nullptr;
+            }
+
+            //Copie
+            currentData.action = data.action;
+            //On ne copie volontairement pas le coût en énergie
+            //currentData.costEnergies = data.costEnergies;
+            currentData.damage = data.damage;
+            currentData.description = data.description;
+            currentData.name = data.name;
+            currentData.numberOfTurnAttackStillBlocks = 0;
+
+            m_listAttacks.replace(index, currentData);
+        }
+        else
+            statusBack = false;
+    }
+
     return statusBack;
 }
 
 unsigned short CardPokemon::numberOfTurnAttackStillBlocks(int indexAttack)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     unsigned short result = 0;
 
     if((indexAttack >= 0) && (indexAttack < listAttacks().count()))
@@ -353,19 +502,29 @@ unsigned short CardPokemon::numberOfTurnAttackStillBlocks(int indexAttack)
 
 void CardPokemon::decrementNumberOfTurnAttackStillBlocks()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    qDebug() << __PRETTY_FUNCTION__ << listAttacks().count();
     for(int indexAttack=0;indexAttack<listAttacks().count();++indexAttack)
     {
+        qDebug() << __PRETTY_FUNCTION__ << indexAttack;
         AttackData data = listAttacks()[indexAttack];
 
         if(data.numberOfTurnAttackStillBlocks > 0)
             data.numberOfTurnAttackStillBlocks -= 1;
 
-        m_listAttacks.replace(indexAttack, data);
+        replaceOneAttack(indexAttack, data);
     }
 }
 
 void CardPokemon::setNumberOfTurnAttackStillBlocks(int indexAttack, unsigned short value)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if((indexAttack >= 0) && (indexAttack < listAttacks().count()))
     {
         AttackData data = listAttacks()[indexAttack];
@@ -387,32 +546,56 @@ void CardPokemon::setAttacks(int index, AttackData data)
 
 void CardPokemon::addEnergy(CardEnergy *energy)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_modelListEnergies->addEnergy(energy);
 }
 
 CardEnergy* CardPokemon::takeEnergy(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_modelListEnergies->takeEnergy(index);
 }
 
 unsigned short CardPokemon::countEnergies()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_modelListEnergies->countEnergies();
 }
 
 unsigned short CardPokemon::countEnergies(Enum_element element)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_modelListEnergies->countEnergies(element);
 }
 
 ModelListEnergies* CardPokemon::modelListOfEnergies()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QQmlEngine::setObjectOwnership(m_modelListEnergies, QQmlEngine::CppOwnership);
     return m_modelListEnergies;
 }
 
 CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardPokemon* enemy)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //bool statusBack = false;
     Enum_StatusOfAttack statusBack = Attack_UnknownError;
 	
@@ -427,34 +610,15 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
                     //Sauvegarde des données actuelles
                     m_lastAttackUsed = listAttacks()[indexAttack];
 
-                    //Calcul de la faiblesse ou résistance
-                    unsigned short damage = m_lastAttackUsed.damage;
-                    unsigned short newDamage = damage;
-
-                    if(element() == enemy->weaknessElement())
-                    {
-                        if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
-                            newDamage = damage * 2;
-                        else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
-                            newDamage = damage + 30;
-                    }
-                    else if(element() == enemy->resistanceElement())
-                    {
-                        if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
-                            newDamage = damage / 2;
-                        else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
-                            newDamage = damage - 30;
-                    }
-
-                    if(newDamage % 10 == 5)
-                        newDamage += 5;
-
-                    //On attaque
-                    enemy->takeDamage(newDamage);
-
                     //On exécute l'action s'il y a
                     if(m_lastAttackUsed.action != nullptr)
                         m_lastAttackUsed.action->executeAction(this, indexAttack);
+
+                    //Calcul de la faiblesse ou résistance
+                    unsigned short newDamage = calculOfNewDamageDependOfWeaknessAndResistance(enemy, m_lastAttackUsed.damage);
+
+                    //On attaque
+                    enemy->takeDamage(newDamage);    
 
                     //On réinitialise les états valables un seul tour
                     enemy->setInvincibleForTheNextTurn(false);
@@ -464,6 +628,7 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
                 else if(status() == Status_Confused)
                 {
                     takeDamage(DAMAGE_WHEN_CONFUSED);
+                    statusBack = Attack_OK;
                 }
                 else
                     statusBack = Attack_WrongStatus;
@@ -482,6 +647,10 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
 
 void CardPokemon::takeDamage(unsigned short damage)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     unsigned short damageRecalculated = damage;
 
     if(isProtectedAgainstDamageForTheNextTurn())
@@ -498,6 +667,10 @@ void CardPokemon::takeDamage(unsigned short damage)
 
 void CardPokemon::restoreLife(unsigned short life)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if(life > currentDamage())
         setDamage(0);
     else
@@ -506,6 +679,10 @@ void CardPokemon::restoreLife(unsigned short life)
 
 bool CardPokemon::canAttackFromStatus()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     bool canAttack = true;
 
     switch(status())
@@ -526,11 +703,19 @@ bool CardPokemon::canAttackFromStatus()
 
 bool CardPokemon::hasEnoughEnergies(AttackData attack)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_modelListEnergies->hasEnoughEnergies(attack.costEnergies);
 }
 
 bool CardPokemon::hasEnoughEnergies(int indexAttack)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
 	bool statusBack = false;
 	
     if ((0 <= indexAttack) && (listAttacks().count() > indexAttack))
@@ -543,6 +728,10 @@ bool CardPokemon::hasEnoughEnergies(int indexAttack)
 
 bool CardPokemon::evolve(CardPokemon *evolution)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     bool evolutionOk = false;
 
     //Il y a déjà une évolution
@@ -585,52 +774,92 @@ bool CardPokemon::evolve(CardPokemon *evolution)
 
 bool CardPokemon::isBase()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
 	return -1 == m_evolutionFrom;
 }
 
 bool CardPokemon::isSubEvolutionOf(CardPokemon* evolution)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_id == evolution->m_evolutionFrom;
 }
 
 bool CardPokemon::isEvolutionOf(CardPokemon* subEvolution)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_evolutionFrom == subEvolution->m_id;
 }
 
 void CardPokemon::applyDamageIfPoisoned()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if(status() == CardPokemon::Status_Poisoned)
         takeDamage(damagePoisonPerRound());
 }
 
 unsigned short CardPokemon::damagePoisonPerRound()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_damageOfPoisonPerRound;
 }
 
 void CardPokemon::setDamagePoisonPerRound(unsigned short damage)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_damageOfPoisonPerRound = damage;
 }
 
 AttackData CardPokemon::lastAttackUsed()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_lastAttackUsed;
 }
 
 int CardPokemon::lastIndexOfAttackUsed()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_listAttacks.indexOf(m_lastAttackUsed);
 }
 
 unsigned short CardPokemon::lastDamageReceived()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_lastDamageReceived;
 }
 
 unsigned short CardPokemon::costRetreat()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     unsigned short cost;
 
     if(m_cardEvolution != nullptr)
@@ -643,6 +872,10 @@ unsigned short CardPokemon::costRetreat()
 
 bool CardPokemon::canRetreat()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return countEnergies() >= m_costRetreat;
 }
 
@@ -673,6 +906,10 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
 
 QList<AbstractCard*> CardPokemon::purge()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QList<AbstractCard*> listPurge;
 
     if(m_cardEvolution != nullptr)
@@ -694,11 +931,19 @@ QList<AbstractCard*> CardPokemon::purge()
 ************************************************************/
 unsigned short CardPokemon::currentDamage()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_damage;
 }
 
 void CardPokemon::setDamage(unsigned short damage)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     if(damage > lifeTotal())
         damage = lifeTotal();
 
@@ -712,6 +957,10 @@ void CardPokemon::setDamage(unsigned short damage)
 
 QString CardPokemon::statusToString(Enum_statusOfPokemon status)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     switch(status)
     {
     case Status_Confused:   return "Confus";
@@ -723,4 +972,33 @@ QString CardPokemon::statusToString(Enum_statusOfPokemon status)
     }
 
     return "Erreur de conversion de status";
+}
+
+unsigned short CardPokemon::calculOfNewDamageDependOfWeaknessAndResistance(CardPokemon *enemy, unsigned short originalDamage)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    unsigned short newDamage = originalDamage;
+
+    if(element() == enemy->weaknessElement())
+    {
+        if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
+            newDamage = originalDamage * 2;
+        else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
+            newDamage = originalDamage + 30;
+    }
+    else if(element() == enemy->resistanceElement())
+    {
+        if(weaknessCoef() == CardPokemon::WeaknessResistance_Coef2)
+            newDamage = originalDamage / 2;
+        else if(weaknessCoef() == CardPokemon::WeaknessResistance_Difference30)
+            newDamage = originalDamage - 30;
+    }
+
+    if(newDamage % 10 == 5)
+        newDamage += 5;
+
+    return newDamage;
 }

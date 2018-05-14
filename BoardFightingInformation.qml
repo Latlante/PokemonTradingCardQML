@@ -189,12 +189,11 @@ Item {
 
             Image {
                 id: imageStatusPokemon
-                width: 20
+                width: 50
                 height: width
                 anchors.top: parent.top
+                anchors.topMargin: 5
                 anchors.right: parent.right
-                //anchors.fill: parent
-                source: "status/confused.png"
             }
 
             Text {

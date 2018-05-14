@@ -70,6 +70,8 @@ int main(int argc, char *argv[])
     PacketRewards::declareQML();
     PacketTrash::declareQML();
 
+    Utils::initRandomValues();
+
     QQmlApplicationEngine engine;
     CtrlSelectingCards ctrlSC;
     CtrlPopups ctrlPopups;

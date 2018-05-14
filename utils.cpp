@@ -1,9 +1,16 @@
 #include "utils.h"
+
+#include <QDateTime>
 #include "common/database.h"
 
 Utils::Utils(QObject *parent) : QObject(parent)
 {
 
+}
+
+void Utils::initRandomValues()
+{
+    qsrand(QDateTime::currentDateTime().toTime_t());
 }
 
 unsigned short Utils::headOrTail()

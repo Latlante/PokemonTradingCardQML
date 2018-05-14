@@ -33,11 +33,19 @@ int FightArea::maxCards() const
 
 CardPokemon* FightArea::pokemonFighter()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return pokemonFighting(0);
 }
 
 CardPokemon* FightArea::pokemonFighting(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     CardPokemon* pokemon = NULL;
 
     AbstractCard* abCard = card(index);

@@ -10,7 +10,7 @@
 #include "src_Packets/packettrash.h"
 #include "utils.h"
 
-const int GameManager::m_NUMBER_FIRST_CARDS = 10;
+const int GameManager::m_NUMBER_FIRST_CARDS = 7;
 const int GameManager::m_NUMBER_REWARDS = 6;
 GameManager* GameManager::m_instance = nullptr;
 
@@ -84,16 +84,25 @@ GameManager* GameManager::instance()
 //ACCESSEURS
 Player* GameManager::currentPlayer()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     return m_playerAttacking;
 }
 
 Player* GameManager::playerAttacked()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     return m_playerAttacked;
 }
 
 Player* GameManager::playerAt(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     Player* play = NULL;
 
     if((index >= 0) && (index < m_listPlayers.count()))
@@ -110,11 +119,17 @@ Player* GameManager::playerAt(int index)
 
 ConstantesQML::StepGame GameManager::gameStatus()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     return m_gameStatus;
 }
 
 void GameManager::setGameStatus(ConstantesQML::StepGame step)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     if(m_gameStatus != step)
     {
         m_gameStatus = step;
@@ -130,6 +145,9 @@ void GameManager::setGameStatus(ConstantesQML::StepGame step)
 //PREPARATION DE LA PARTIE
 void GameManager::initGame()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     //Mise en place des récompenses
     foreach(Player *play, m_listPlayers)
     {
@@ -154,6 +172,9 @@ void GameManager::initGame()
 
 Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
 	Player* newPlayer = new Player(name, listCards);
 
     connect(newPlayer, &Player::endOfTurn, this, &GameManager::onEndOfTurn_Player);
@@ -165,6 +186,9 @@ Player *GameManager::addNewPlayer(QString name, QList<AbstractCard*> listCards)
 
 void GameManager::selectFirstPlayer()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
 #ifdef TESTS_UNITAIRES
     setIndexCurrentPlayer(0);
 #else
@@ -175,6 +199,9 @@ void GameManager::selectFirstPlayer()
 
 void GameManager::setInitReady()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     bool everyoneIsReady = true;
 
     foreach(Player* playerReady, m_listPlayers)
@@ -187,12 +214,19 @@ void GameManager::setInitReady()
 //PHASE DE COMBAT
 void GameManager::startGame()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     displayMessage(currentPlayer()->name() + " commence à jouer");
     currentPlayer()->newTurn();
+    currentPlayer()->drawOneCard();
 }
 
 void GameManager::nextPlayer()
 {	
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     setIndexCurrentPlayer(m_indexCurrentPlayer+1);
 
     currentPlayer()->newTurn();
@@ -201,6 +235,9 @@ void GameManager::nextPlayer()
 
 CardPokemon::Enum_StatusOfAttack GameManager::attack(CardPokemon *pokemonAttacking, unsigned short index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     CardPokemon::Enum_StatusOfAttack statusOfAttack = CardPokemon::Attack_UnknownError;
 
     if(pokemonAttacking != nullptr)
@@ -229,6 +266,9 @@ CardPokemon::Enum_StatusOfAttack GameManager::attack(CardPokemon *pokemonAttacki
 
 bool GameManager::retreat(CardPokemon *pokemonToRetreat)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     bool success = false;
     QList<int> listIndexBench;
 
@@ -273,14 +313,18 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
 
 void GameManager::endOfTurn()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    //Si le pokémon attaqué est mort, le joueur pioche sa récompense
+    checkPokemonDead();
+
     //On débloque des attaques si besoin
     checkAttacksBlocked();
 
     //Vérification des status
     checkStatusPokemonForNewRound();
-
-    //Si le pokémon attaqué est mort, le joueur pioche sa récompense
-    checkPokemonDead();
 
     //On vérifie les conditions de victoires
     Player* playerWinner = gameIsFinished();
@@ -302,6 +346,10 @@ void GameManager::endOfTurn()
 //FIN DE LA GAME
 Player* GameManager::gameIsFinished()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //Conditions de victoire:
     //  -> Plus de récompense à piocher
     //  -> Plus de carte dans le deck
@@ -321,6 +369,10 @@ Player* GameManager::gameIsFinished()
 
 QList<int> GameManager::displayBench(BenchArea *bench)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
 #ifdef TESTS_UNITAIRES
     Q_UNUSED(card)
     return QList<int>() << 0;
@@ -331,6 +383,10 @@ QList<int> GameManager::displayBench(BenchArea *bench)
 
 QList<int> GameManager::displayDeck(PacketDeck *deck, unsigned short quantity)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     return m_ctrlPopups.displayDeck(deck, quantity);
 }
 
@@ -341,6 +397,10 @@ QList<int> GameManager::displayHand(PacketHand *hand, unsigned short quantity)
 
 QList<int> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
 #ifdef TESTS_UNITAIRES
     Q_UNUSED(card)
     return QList<int>() << 0;
@@ -351,6 +411,10 @@ QList<int> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigne
 
 int GameManager::displayAttacks(CardPokemon* card, bool blockRetreat)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
 #ifdef TESTS_UNITAIRES
     Q_UNUSED(card)
     return 0;
@@ -366,6 +430,10 @@ int GameManager::displayAttacks(CardPokemon* card, bool blockRetreat)
 
 void GameManager::displayMessage(QString message)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     m_ctrlPopups.displayMessage(message);
 }
 
@@ -386,6 +454,10 @@ unsigned short GameManager::headOrTail()
 #else
 unsigned short GameManager::headOrTail()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     unsigned short coin = Utils::headOrTail();
     qDebug() << __PRETTY_FUNCTION__ << "coin=" << coin;
     m_ctrlPopups.displayHeadOrTail(coin);
@@ -398,6 +470,10 @@ unsigned short GameManager::headOrTail()
 ************************************************************/
 void GameManager::onEndOfTurn_Player()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //On bloque tous les joueurs
     foreach(Player* play, m_listPlayers)
         play->blockPlayer();
@@ -431,6 +507,10 @@ void GameManager::onEndOfTurn_Player()
 ************************************************************/
 void GameManager::setIndexCurrentPlayer(int index)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //Sécurité pour ne pas dépasser l'index
     index = index % m_listPlayers.count();
 
@@ -449,6 +529,10 @@ void GameManager::setIndexCurrentPlayer(int index)
 
 Player* GameManager::enemyOf(Player *play)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     Player* playerEnnemy = nullptr;
 
     //A REVOIR
@@ -466,6 +550,10 @@ Player* GameManager::enemyOf(Player *play)
 
 bool GameManager::checkHandOfEachPlayer()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     foreach(Player* play, m_listPlayers)
     {
         unsigned short bonusCards = 0;
@@ -503,6 +591,10 @@ bool GameManager::checkHandOfEachPlayer()
 
 void GameManager::drawFirstCards(Player* play)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     for(int i=0;i<m_NUMBER_FIRST_CARDS;++i)
     {
         play->drawOneCard();
@@ -511,6 +603,10 @@ void GameManager::drawFirstCards(Player* play)
 
 void GameManager::checkPokemonDead()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     foreach (Player* play, m_listPlayers)
     {
         //fight area
@@ -520,7 +616,7 @@ void GameManager::checkPokemonDead()
             play->moveCardFromFightToTrash(0);      //On jette le pokemon mort
             //play->moveCardFromBenchToFight(0);      //On remplace par un pokemon sur le banc s'il y a
 
-            if(play->rewards()->countCard() > 0)
+            if(enemyOf(play)->rewards()->countCard() > 0)
                 enemyOf(play)->drawOneReward();        //Le joueur adverse pioche une récompense
         }
 
@@ -554,6 +650,10 @@ void GameManager::checkPokemonDead()
 
 void GameManager::checkStatusPokemonForNewRound()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //Status Confus
     //Rien à faire ici, sera appliqué au moment de l'attaque
 
@@ -608,6 +708,10 @@ void GameManager::checkStatusPokemonForNewRound()
 
 void GameManager::checkAttacksBlocked()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     /*foreach (Player* play, m_listPlayers)
     {
         for(int index=0;index<play->fight()->countCard();index++)
@@ -617,10 +721,34 @@ void GameManager::checkAttacksBlocked()
             play->bench()->cardPok(index)->decrementNumberOfTurnAttackStillBlocks();
     }*/
 
+    qDebug() << __PRETTY_FUNCTION__ << "Début";
+
     //On décrémente uniquement le joueur actuel
     for(int index=0;index<currentPlayer()->fight()->countCard();index++)
-        currentPlayer()->fight()->pokemonFighting(index)->decrementNumberOfTurnAttackStillBlocks();
+    {
+        qDebug() << __PRETTY_FUNCTION__ << "fighting" << currentPlayer()->name() << index;
+
+        if(currentPlayer()->fight()->pokemonFighting(index) != nullptr)
+        {
+            qDebug() << __PRETTY_FUNCTION__ << "fighting" << currentPlayer()->name() << currentPlayer()->fight()->pokemonFighting(index)->name();
+            currentPlayer()->fight()->pokemonFighting(index)->decrementNumberOfTurnAttackStillBlocks();
+        }
+        else
+            qCritical() << __PRETTY_FUNCTION__ << "pokemonFighting" << index << " is nullptr";
+    }
 
     for(int index=0;index<currentPlayer()->bench()->countCard();index++)
-        currentPlayer()->bench()->cardPok(index)->decrementNumberOfTurnAttackStillBlocks();
+    {
+        qDebug() << __PRETTY_FUNCTION__ << "bench" << currentPlayer()->name() << index;
+
+        if(currentPlayer()->bench()->cardPok(index) != nullptr)
+        {
+            qDebug() << __PRETTY_FUNCTION__ << "bench" << currentPlayer()->name() << currentPlayer()->bench()->cardPok(index)->name();
+            currentPlayer()->bench()->cardPok(index)->decrementNumberOfTurnAttackStillBlocks();
+        }
+        else
+            qCritical() << __PRETTY_FUNCTION__ << "pokemonBench" << index << " is nullptr";
+    }
+
+    qDebug() << __PRETTY_FUNCTION__ << "Fin";
 }

@@ -191,6 +191,7 @@ private:
     unsigned short currentDamage();
     void setDamage(unsigned short damage);
     QString statusToString(Enum_statusOfPokemon status);
+    unsigned short calculOfNewDamageDependOfWeaknessAndResistance(CardPokemon *enemy, unsigned short originalDamage);
 };
 
 #endif // CARDPOKEMON_H
