@@ -32,23 +32,16 @@ void ActionRemoveOneEnergyOnEnemy::action()
 {
     if(pokemonAttacked() != nullptr)
     {
-        Player* playerAttacked = pokemonAttacked()->owner();
-
-        if(playerAttacked != nullptr)
+        //Si on a plus d'énergies que demandé, on choisit lesquels on veut enlever
+        if(pokemonAttacked()->countEnergies() > m_numberOfEnergiesToRemoved)
         {
-            PacketTrash* trash = playerAttacked->trash();
-
-            if(trash != nullptr)
-            {
-                int numberOfEnergyRemoved = 0;
-
-                while((numberOfEnergyRemoved < m_numberOfEnergiesToRemoved) && (pokemonAttacked()->countEnergies() > 0))
-                {
-                    CardEnergy* energy = pokemonAttacked()->takeEnergy(0);
-                    trash->addNewCard(energy);
-                    numberOfEnergyRemoved++;
-                }
-            }
+            QList<int> listIndex = gameManager()->displayEnergiesForAPokemon(pokemonAttacked(), calculOfNumberOfEnergyToRemoved, CardPokemon::Element_Whatever);
+            pokemonAttacked()->moveEnergiesInTrash(listIndex);
+        }
+        //Sinon on enléve tout
+        else
+        {
+            pokemonAttacked()->moveAllEnergiesInTrash();
         }
     }
 }

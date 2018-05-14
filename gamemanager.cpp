@@ -282,20 +282,9 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
             {
                 //On sélectionne les énergies à mettre dans la pile de défausse
                 QList<int> listIndexEnergies = displayEnergiesForAPokemon(pokemonToRetreat, pokemonToRetreat->costRetreat(), AbstractCard::Element_Whatever);
-                QList<CardEnergy*> listEnergies;
-                ModelListEnergies* modelEnergies = pokemonToRetreat->modelListOfEnergies();
 
-                //On les récupére sans les supprimer du modèle pour ne pas décaler l'index
-                foreach(int index, listIndexEnergies)
-                    listEnergies.append(modelEnergies->energy(index));
-
-                //Maintenant on peut les supprimer
-                foreach(int index, listIndexEnergies)
-                    modelEnergies->takeEnergy(index);
-
-                //Maintenant on peut les placer dans la défausse
-                foreach(CardEnergy* energy, listEnergies)
-                    playerAttacking->trash()->addNewCard(energy);
+                //On les met dans la défausse
+                pokemonToRetreat->moveEnergiesInTrash(listIndexEnergies);
             }
 
             listIndexBench = displayBench(playerAttacking->bench());

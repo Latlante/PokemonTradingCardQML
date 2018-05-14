@@ -21,6 +21,7 @@ public:
     void addEnergy(CardEnergy *energy);
     CardEnergy* takeEnergy(int index);
     CardEnergy* energy(int index);
+    void removeEnergy(CardEnergy* energy);
 
     QList<CardEnergy*> takeAllEnergies();
     unsigned short countEnergies();

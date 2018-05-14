@@ -75,6 +75,12 @@ CardEnergy* ModelListEnergies::energy(int index)
     return energyToReturn;
 }
 
+void ModelListEnergies::removeEnergy(CardEnergy *energy)
+{
+    if(energy != nullptr)
+        m_listEnergies.removeOne(energy);
+}
+
 QList<CardEnergy*> ModelListEnergies::takeAllEnergies()
 {
 #ifdef TRACAGE_PRECIS
@@ -83,8 +89,11 @@ QList<CardEnergy*> ModelListEnergies::takeAllEnergies()
 
     QList<CardEnergy*> listToReturn;
 
-    for(int i=0;i<rowCount();++i)
-        listToReturn.append(takeEnergy(i));
+    /*for(int i=0;i<rowCount();++i)
+        listToReturn.append(takeEnergy(i));*/
+
+    while(m_listEnergies.count() > 0)
+        listToReturn.append(takeEnergy(0));
 
     return listToReturn;
 }

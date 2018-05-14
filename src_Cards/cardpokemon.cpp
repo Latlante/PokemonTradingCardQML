@@ -454,34 +454,29 @@ bool CardPokemon::replaceOneAttack(int index, AttackData data)
 
     bool statusBack = true;
 
-    if(m_cardEvolution != nullptr)
-        statusBack = m_cardEvolution->replaceOneAttack(index, data);
-    else
+    if((index >= 0) && (index < listAttacks().count()))
     {
-        if((index >= 0) && (index < listAttacks().count()))
+        //Nettoyage de l'ancienne action
+        AttackData currentData = listAttacks()[index];
+        if(currentData.action != nullptr)
         {
-            //Nettoyage de l'ancienne action
-            AttackData currentData = listAttacks()[index];
-            if(currentData.action != nullptr)
-            {
-                delete currentData.action;
-                currentData.action = nullptr;
-            }
-
-            //Copie
-            currentData.action = data.action;
-            //On ne copie volontairement pas le coût en énergie
-            //currentData.costEnergies = data.costEnergies;
-            currentData.damage = data.damage;
-            currentData.description = data.description;
-            currentData.name = data.name;
-            currentData.numberOfTurnAttackStillBlocks = 0;
-
-            m_listAttacks.replace(index, currentData);
+            delete currentData.action;
+            currentData.action = nullptr;
         }
-        else
-            statusBack = false;
+
+        //Copie
+        currentData.action = data.action;
+        //On ne copie volontairement pas le coût en énergie
+        //currentData.costEnergies = data.costEnergies;
+        currentData.damage = data.damage;
+        currentData.description = data.description;
+        currentData.name = data.name;
+        currentData.numberOfTurnAttackStillBlocks = 0;
+
+        m_listAttacks.replace(index, currentData);
     }
+    else
+        statusBack = false;
 
     return statusBack;
 }
@@ -525,12 +520,17 @@ void CardPokemon::setNumberOfTurnAttackStillBlocks(int indexAttack, unsigned sho
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 
-    if((indexAttack >= 0) && (indexAttack < listAttacks().count()))
+    if(m_cardEvolution != nullptr)
+        m_cardEvolution->setNumberOfTurnAttackStillBlocks(indexAttack, value);
+    else
     {
-        AttackData data = listAttacks()[indexAttack];
-        data.numberOfTurnAttackStillBlocks = value;
+        if((indexAttack >= 0) && (indexAttack < listAttacks().count()))
+        {
+            AttackData data = listAttacks()[indexAttack];
+            data.numberOfTurnAttackStillBlocks = value;
 
-        m_listAttacks.replace(indexAttack, data);
+            m_listAttacks.replace(indexAttack, data);
+        }
     }
 }
 
@@ -560,6 +560,46 @@ CardEnergy* CardPokemon::takeEnergy(int index)
 #endif
 
     return m_modelListEnergies->takeEnergy(index);
+}
+
+void CardPokemon::moveEnergiesInTrash(QList<int> listIndex)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    QList<CardEnergy*> listEnergies;
+
+    //On les récupére sans les supprimer du modèle pour ne pas décaler l'index
+    foreach(int index, listIndex)
+    {
+        CardEnergy* cardEn = m_modelListEnergies->energy(index);
+
+        if(cardEn != nullptr)
+            listEnergies.append(cardEn);
+    }
+
+    //Maintenant on peut les supprimer
+    foreach(CardEnergy energy, listEnergies)
+        m_modelListEnergies->removeEnergy(energy);
+
+    //Maintenant on peut les placer dans la défausse
+    foreach(CardEnergy* energy, listEnergies)
+        m_owner->trash()->addNewCard(energy);
+}
+
+void CardPokemon::moveAllEnergiesInTrash()
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    //On récupére les énergies
+    QList<CardEnergy*> listEnergies = m_modelListEnergies->takeAllEnergies();
+
+    //Maintenant on peut les placer dans la défausse
+    foreach(CardEnergy* energy, listEnergies)
+        m_owner->trash()->addNewCard(energy);
 }
 
 unsigned short CardPokemon::countEnergies()

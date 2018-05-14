@@ -131,6 +131,8 @@ public:
 	
     void addEnergy(CardEnergy* energy);
     CardEnergy* takeEnergy(int index);
+    void moveEnergiesInTrash(QList<int> listIndex);
+    void moveAllEnergiesInTrash();
 	unsigned short countEnergies();
 	unsigned short countEnergies(Enum_element element);
     Q_INVOKABLE ModelListEnergies* modelListOfEnergies();

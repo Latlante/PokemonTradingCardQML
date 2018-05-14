@@ -25,6 +25,7 @@ AbstractAction::Enum_typeOfAction ActionRemoveEnergyAttached::type()
 QList<AbstractAction::Enum_ElementsToCheck> ActionRemoveEnergyAttached::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckGameManager
             << AbstractAction::CheckPokemonAttacking;
 }
 
@@ -32,23 +33,16 @@ void ActionRemoveEnergyAttached::action()
 {
     if(pokemonAttacking() != nullptr)
     {
-        Player* playerAttacking = pokemonAttacking()->owner();
-
-        if(playerAttacking != nullptr)
+        //Si on a plus d'énergies que demandé, on choisit lesquels on veut enlever
+        if(pokemonAttacking()->countEnergies() > m_numberOfEnergiesToRemoved)
         {
-            PacketTrash* trash = playerAttacking->trash();
-
-            if(trash != nullptr)
-            {
-                int numberOfEnergyRemoved = 0;
-
-                while((numberOfEnergyRemoved < m_numberOfEnergiesToRemoved) && (pokemonAttacking()->countEnergies() > 0))
-                {
-                    CardEnergy* energy = pokemonAttacking()->takeEnergy(0);
-                    trash->addNewCard(energy);
-                    numberOfEnergyRemoved++;
-                }
-            }
+            QList<int> listIndex = gameManager()->displayEnergiesForAPokemon(pokemonAttacking(), calculOfNumberOfEnergyToRemoved, CardPokemon::Element_Whatever);
+            pokemonAttacking()->moveEnergiesInTrash(listIndex);
+        }
+        //Sinon on enléve tout
+        else
+        {
+            pokemonAttacking()->moveAllEnergiesInTrash();
         }
     }
 }
