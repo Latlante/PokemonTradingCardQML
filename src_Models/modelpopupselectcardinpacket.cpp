@@ -35,6 +35,7 @@ void ModelPopupSelectCardInPacket::addPacketFromAbstractPacket(AbstractPacket *p
             SelectionCards selection;
             selection.card = packet->card(i);
             selection.selected = false;
+            selection.flipped = false;
 
             beginInsertRows(QModelIndex(), rowCount(), rowCount());
             m_listCards.append(selection);
@@ -54,6 +55,7 @@ void ModelPopupSelectCardInPacket::addPacketFromModelListEnergies(ModelListEnerg
             SelectionCards selection;
             selection.card = model->energy(i);
             selection.selected = false;
+            selection.flipped = false;
 
             beginInsertRows(QModelIndex(), rowCount(), rowCount());
             m_listCards.append(selection);
@@ -104,9 +106,26 @@ QList<int> ModelPopupSelectCardInPacket::listIndexCardsSelected()
     return listIndex;
 }
 
+void ModelPopupSelectCardInPacket::flipIfSelected()
+{
+    for(int i=0;i<m_listCards.count();++i)
+    {
+        SelectionCards selection = m_listCards[i];
+
+        if(selection.selected == true)
+        {
+            selection.flipped = true;
+            m_listCards.replace(i, selection);
+
+            //QVector<int> listRoles = QVector<int>() << SelectCardsRole_Flip;
+            emit dataChanged(index(i, 0), index(i, 0), {SelectCardsRole_Flip});
+        }
+    }
+}
+
 QVariant ModelPopupSelectCardInPacket::data(const QModelIndex &index, int role) const
 {
-    //qDebug() << __PRETTY_FUNCTION__ << index << role;
+    qDebug() << __PRETTY_FUNCTION__ << index << role;
     int iRow = index.row();
     if ((iRow < 0) || (iRow >= rowCount()))
     {
@@ -118,6 +137,7 @@ QVariant ModelPopupSelectCardInPacket::data(const QModelIndex &index, int role) 
     {
     case SelectCardsRole_ImageCard:     return m_listCards[iRow].card->image();
     case SelectCardsRole_Selected:      return m_listCards[iRow].selected;
+    case SelectCardsRole_Flip:          return m_listCards[iRow].flipped;
     }
 
     return QVariant();
@@ -159,6 +179,10 @@ bool ModelPopupSelectCardInPacket::setData(const QModelIndex &index, const QVari
 
 int ModelPopupSelectCardInPacket::rowCount(const QModelIndex &) const
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__ << m_listCards.count();
+#endif
+
     return m_listCards.count();
 }
 
@@ -170,6 +194,7 @@ QHash<int, QByteArray> ModelPopupSelectCardInPacket::roleNames() const
     QHash<int, QByteArray> roles;
     roles[SelectCardsRole_ImageCard] = "imageCard";
     roles[SelectCardsRole_Selected] = "selected";
+    roles[SelectCardsRole_Flip] = "flip";
 
     return roles;
 }

@@ -41,7 +41,7 @@ public:
 	void blockPlayer();
     bool isPlaying();
 	void drawOneCard();
-    void drawOneReward();
+    void drawOneReward(int indexReward);
     bool isLoser();
 
     bool initReady();
@@ -60,7 +60,7 @@ public:
     Q_INVOKABLE bool moveCardFromBenchToFight(int indexBench);
     bool moveCardFromBenchToTrash(int index);
     bool moveCardFromFightToTrash(int index);
-    bool moveCardFromRewardToHand();
+    bool moveCardFromRewardToHand(int indexReward);
     bool moveAllCardFromHandToDeck();
 
     bool swapCardsBetweenBenchAndFight(int indexBench);

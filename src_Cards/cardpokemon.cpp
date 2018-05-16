@@ -567,24 +567,13 @@ CardEnergy* CardPokemon::takeEnergy(int index)
     return m_modelListEnergies->takeEnergy(index);
 }
 
-void CardPokemon::moveEnergiesInTrash(QList<int> listIndex)
+void CardPokemon::moveEnergiesInTrash(QList<CardEnergy*> listEnergies)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 
-    QList<CardEnergy*> listEnergies;
-
-    //On les récupére sans les supprimer du modèle pour ne pas décaler l'index
-    foreach(int index, listIndex)
-    {
-        CardEnergy* cardEn = m_modelListEnergies->energy(index);
-
-        if(cardEn != nullptr)
-            listEnergies.append(cardEn);
-    }
-
-    //Maintenant on peut les supprimer
+    //On les supprime
     foreach(CardEnergy* energy, listEnergies)
         m_modelListEnergies->removeEnergy(energy);
 

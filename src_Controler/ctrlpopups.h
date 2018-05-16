@@ -5,11 +5,13 @@
 
 #include "src_Cards/abstractcard.h"
 
+class CardEnergy;
 class CardPokemon;
 class AbstractPacket;
 class BenchArea;
 class PacketDeck;
 class PacketHand;
+class PacketRewards;
 class ModelPopupSelectCardInPacket;
 class ModelPopupSelectEnergyInPokemon;
 class QQmlEngine;
@@ -20,6 +22,9 @@ class CtrlPopups : public QObject
     Q_OBJECT
     //SELECT CARD IN PACKET
     Q_PROPERTY(bool selectCardInPacketVisible READ selectCardInPacketVisible WRITE setSelectCardInPacketVisible NOTIFY selectCardInPacketVisibleChanged)
+
+    //SELECT HIDDEN CARD
+    Q_PROPERTY(bool selectHiddenCardVisible READ selectHiddenCardVisible WRITE setSelectHiddenCardVisible NOTIFY selectHiddenCardVisibleChanged)
 
     //SELECT ATTACK
     Q_PROPERTY(bool popupSelectingAttacks_Visible READ popupSelectingAttacks_Visible WRITE setPopupSelectingAttacks_Visible NOTIFY popupSelectingAttacks_VisibleChanged)
@@ -53,6 +58,11 @@ public:
     bool selectCardInPacketVisible();
     void setSelectCardInPacketVisible(bool state);
 
+    //SELECT HIDDEN CARD
+    QList<int> displaySelectHiddenCard(PacketRewards *rewards);
+    bool selectHiddenCardVisible();
+    void setSelectHiddenCardVisible(bool state);
+
     //SELECT ATTACK
     int displayAttacks(CardPokemon* card, bool authorizeRetreat);
     bool popupSelectingAttacks_Visible();
@@ -66,7 +76,7 @@ public:
 
     //SELECT ENERGY IN POKEMON
     Q_INVOKABLE ModelPopupSelectEnergyInPokemon* modelSelectEnergyInPokemon();
-    QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
+    QList<CardEnergy *> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     bool selectEnergiesInPokemonVisible();
     void setSelectEnergiesInPokemonVisible(bool state);
 
@@ -89,6 +99,9 @@ public:
 signals:
     //SELECT CARD IN PACKET
     void selectCardInPacketVisibleChanged();
+
+    //SELECT HIDDEN CARD
+    void selectHiddenCardVisibleChanged();
 
     //SELECT ATTACK
     void popupSelectingAttacks_VisibleChanged();
@@ -113,6 +126,9 @@ private:
     //SELECT CARD IN PACKET
     ModelPopupSelectCardInPacket* m_modelSelectCardInPacket;
     bool m_selectCardInPacketVisible;
+
+    //SELECT HIDDEN CARD
+    bool m_selectHiddenCardVisible;
 
     //SELECT ATTACK
     bool m_popupSelectingAttacks_Visible;

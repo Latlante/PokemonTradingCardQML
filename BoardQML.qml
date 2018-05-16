@@ -87,6 +87,12 @@ Item {
             visible: ctrlPopups.selectCardInPacketVisible
         }
 
+        PopupSelectHiddenCard {
+            id: popupSelectHiddenCard1
+            anchors.fill: parent
+            visible: ctrlPopups.selectHiddenCardVisible
+        }
+
         PopupSelectEnergiesInPokemon {
             id: popupSelectEnergiesInPokemon1
             anchors.fill: parent

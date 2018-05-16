@@ -3,7 +3,7 @@ import QtQuick.Controls 2.2
 import model 1.0
 
 Item {
-    id: popupSelectCardsInPacket1
+    id: popupSelectHiddenCard1
     width: 500
     height: 900
 
@@ -29,7 +29,6 @@ Item {
             anchors.right: parent.right
             font.pixelSize: 35
             text: "Sélection (" + viewCards.model.numberOfCardsSelected + "/" + viewCards.model.numberOfCardsToSelect() + ")"
-            //text: "Sélection (" + viewCards.model.numberOfCardsSelected
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
         }
@@ -61,12 +60,11 @@ Item {
 
                     color: model.selected ? "#2b95ff" : "transparent"
 
-                    Image {
-                        id: imageCard
+                    HiddenCard {
                         anchors.fill: parent
                         anchors.margins: 3
-                        fillMode: Image.PreserveAspectFit
-                        source: model.imageCard
+                        imagePokemon: model.imageCard
+                        flipped: model.flip
 
                         MouseArea {
                             id: mouseAreaCard
@@ -76,7 +74,15 @@ Item {
                             }
                         }
                     }
+
                 }
+
+                function displayTest()
+                {
+                    console.log("Test" + index);
+                }
+
+
             }
         }
 
@@ -89,10 +95,27 @@ Item {
             anchors.rightMargin: 10
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
-            enabled: viewCards.model.isMaximumCardsSelected === true
+            //enabled: viewCards.model.isMaximumCardsSelected === true
             text: "OK"
 
-            onClicked: ctrlPopups.selectionCardsFinished()
+            onClicked: {
+                //On bloque l'affiche pour que l'utilisateur ne clique pas partout
+                popupSelectHiddenCard1.enabled = false
+
+                //On lance l'animation pour retourner la carte
+                viewCards.model.flipIfSelected()
+
+                //On lance le timer avant que la page se ferme
+                timerBeforeClosing.start()
+            }
+        }
+
+        Timer {
+            id: timerBeforeClosing
+            interval: 3000;
+            running: false;
+            repeat: false
+            onTriggered: ctrlPopups.selectionCardsFinished()
         }
     }
 }

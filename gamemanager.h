@@ -53,8 +53,9 @@ public:
     QList<int> displayBench(BenchArea* bench);
     QList<int> displayDeck(PacketDeck* deck, unsigned short quantity);
     QList<int> displayHand(PacketHand* hand, unsigned short quantity);
+    QList<int> displaySelectHiddenCard(PacketRewards *rewards);
 
-    QList<int> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
+    QList<CardEnergy *> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     int displayAttacks(CardPokemon* card, bool blockRetreat = false);
     void displayMessage(QString message);
 

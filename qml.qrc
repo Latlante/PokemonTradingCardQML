@@ -16,5 +16,7 @@
         <file>PopupMessage.qml</file>
         <file>ButtonStyleGold.qml</file>
         <file>PopupCoinHeadOrTail.qml</file>
+        <file>PopupSelectHiddenCard.qml</file>
+        <file>HiddenCard.qml</file>
     </qresource>
 </RCC>

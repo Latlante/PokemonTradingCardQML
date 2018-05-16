@@ -281,10 +281,10 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
             if(pokemonToRetreat->costRetreat() > 0)
             {
                 //On sélectionne les énergies à mettre dans la pile de défausse
-                QList<int> listIndexEnergies = displayEnergiesForAPokemon(pokemonToRetreat, pokemonToRetreat->costRetreat(), AbstractCard::Element_Whatever);
+                QList<CardEnergy*> listEnergies = displayEnergiesForAPokemon(pokemonToRetreat, pokemonToRetreat->costRetreat(), AbstractCard::Element_Whatever);
 
                 //On les met dans la défausse
-                pokemonToRetreat->moveEnergiesInTrash(listIndexEnergies);
+                pokemonToRetreat->moveEnergiesInTrash(listEnergies);
             }
 
             listIndexBench = displayBench(playerAttacking->bench());
@@ -384,7 +384,12 @@ QList<int> GameManager::displayHand(PacketHand *hand, unsigned short quantity)
     return m_ctrlPopups.displayHand(hand, quantity);
 }
 
-QList<int> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
+QList<int> GameManager::displaySelectHiddenCard(PacketRewards *rewards)
+{
+    return m_ctrlPopups.displaySelectHiddenCard(rewards);
+}
+
+QList<CardEnergy*> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
@@ -606,7 +611,10 @@ void GameManager::checkPokemonDead()
             //play->moveCardFromBenchToFight(0);      //On remplace par un pokemon sur le banc s'il y a
 
             if(enemyOf(play)->rewards()->countCard() > 0)
-                enemyOf(play)->drawOneReward();        //Le joueur adverse pioche une récompense
+            {
+                QList<int> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
+                enemyOf(play)->drawOneReward(listRewards.first());        //Le joueur adverse pioche une récompense
+            }
         }
 
         //bench
@@ -618,7 +626,10 @@ void GameManager::checkPokemonDead()
                 play->moveCardFromBenchToTrash(i);
 
                 if(play->rewards()->countCard() > 0)
-                    play->drawOneReward();
+                {
+                    QList<int> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
+                    enemyOf(play)->drawOneReward(listRewards.first());        //Le joueur adverse pioche une récompense
+                }
 
                 i--;
             }

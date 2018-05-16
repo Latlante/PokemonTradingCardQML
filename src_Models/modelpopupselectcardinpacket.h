@@ -18,12 +18,14 @@ public:
     {
         AbstractCard* card;
         bool selected;
+        bool flipped;
     };
 
     enum SelectCardsRoles
     {
         SelectCardsRole_ImageCard = Qt::UserRole,
-        SelectCardsRole_Selected
+        SelectCardsRole_Selected,
+        SelectCardsRole_Flip
     };
 
     explicit ModelPopupSelectCardInPacket(QObject *parent = nullptr);
@@ -39,6 +41,8 @@ public:
     bool isMaximumCardsSelected();
 
     QList<int> listIndexCardsSelected();
+
+    Q_INVOKABLE void flipIfSelected();
 
     virtual QVariant data(const QModelIndex &index, int role) const override;
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;

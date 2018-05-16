@@ -14,11 +14,13 @@
 #include "src_Packets/bencharea.h"
 #include "src_Packets/packetdeck.h"
 #include "src_Packets/packethand.h"
+#include "src_Packets/packetrewards.h"
 
 CtrlPopups::CtrlPopups(QObject *parent) :
     QObject(parent),
     m_modelSelectCardInPacket(new ModelPopupSelectCardInPacket()),
     m_selectCardInPacketVisible(false),
+    m_selectHiddenCardVisible(false),
     m_popupSelectingAttacks_Visible(false),
     m_popupSelectingAttacks_Card(nullptr),
     m_popupSelectingAttacks_IndexAttack(-1),
@@ -112,7 +114,41 @@ void CtrlPopups::setSelectCardInPacketVisible(bool state)
 }
 
 //**************************************
-//      SELECT ATTACK
+//          SELECT HIDDEN CARD
+//**************************************
+QList<int> CtrlPopups::displaySelectHiddenCard(PacketRewards* rewards)
+{
+    //Initialisation
+    m_modelSelectCardInPacket->addPacketFromAbstractPacket(rewards);
+    setSelectHiddenCardVisible(true);
+
+    //En attente
+    QEventLoop loop;
+    connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    //Configuration de fin
+    setSelectHiddenCardVisible(false);
+
+    return m_modelSelectCardInPacket->listIndexCardsSelected();
+}
+
+bool CtrlPopups::selectHiddenCardVisible()
+{
+    return m_selectHiddenCardVisible;
+}
+
+void CtrlPopups::setSelectHiddenCardVisible(bool state)
+{
+    if(m_selectHiddenCardVisible != state)
+    {
+        m_selectHiddenCardVisible = state;
+        emit selectHiddenCardVisibleChanged();
+    }
+}
+
+//**************************************
+//            SELECT ATTACK
 //**************************************
 int CtrlPopups::displayAttacks(CardPokemon* card, bool authorizeRetreat)
 {
@@ -202,9 +238,10 @@ ModelPopupSelectEnergyInPokemon* CtrlPopups::modelSelectEnergyInPokemon()
     return m_modelSelectEnergyInPokemon;
 }
 
-QList<int> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon, unsigned short quantity, AbstractCard::Enum_element element)
+QList<CardEnergy*> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon, unsigned short quantity, AbstractCard::Enum_element element)
 {
     //Initialisation
+    m_modelSelectEnergyInPokemon->setElementFilter(element);
     m_modelSelectEnergyInPokemon->addListEnergyFromPokemon(pokemon);
     m_modelSelectEnergyInPokemon->setNumberOfEnergiesToSelect(quantity);
     setSelectEnergiesInPokemonVisible(true);

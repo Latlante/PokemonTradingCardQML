@@ -121,9 +121,9 @@ void Player::drawOneCard()
     moveCardFromDeckToHand();
 }
 
-void Player::drawOneReward()
+void Player::drawOneReward(int indexReward)
 {
-    moveCardFromRewardToHand();
+    moveCardFromRewardToHand(indexReward);
 }
 
 bool Player::isLoser()
@@ -450,9 +450,9 @@ bool Player::moveCardFromFightToTrash(int index)
     return moveCardFromPacketToAnother(fight(), trash(), index);
 }
 
-bool Player::moveCardFromRewardToHand()
+bool Player::moveCardFromRewardToHand(int indexReward)
 {
-    return moveCardFromPacketToAnother(rewards(), hand(), 0);
+    return moveCardFromPacketToAnother(rewards(), hand(), indexReward);
 }
 
 bool Player::moveAllCardFromHandToDeck()
