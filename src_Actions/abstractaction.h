@@ -67,10 +67,15 @@ public:
         //CARTES DRESSEUR
         ActionTrainer_InformaticSearch = 2001,
         ActionTrainer_FakeProfessorChen = 2003,
+        ActionTrainer_Restored = 2004,
+        ActionTrainer_LittleGirl = 2005,
+        ActionTrainer_SaveEnergies = 2011,
         ActionTrainer_TotalGuerison = 2012,
+        ActionTrainer_PokemonCenter = 2015,
         ActionTrainer_ProfessorChen = 2018,
         ActionTrainer_SuperPotion = 2020,
         ActionTrainer_Leo = 2021,
+        ActionTrainer_RemoveEnergy = 2022,
         ActionTrainer_Potion = 2024
     };
 

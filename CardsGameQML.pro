@@ -17,7 +17,7 @@ CONFIG(compilation_test)
     #DEFINES += TESTS_UNITAIRES
 }
 
-DEFINES += TRACAGE_PRECIS
+#DEFINES += TRACAGE_PRECIS
 
 
 Debug:OBJECTS_DIR = debug/obj/
@@ -97,7 +97,12 @@ SOURCES += \
     src_Actions/trainers/actiontrainer_professorchen.cpp \
     src_Actions/trainers/actiontrainer_superpotion.cpp \
     src_Actions/trainers/actiontrainer_totalguerison.cpp \
-    src_Actions/trainers/actiontrainer_informaticsearch.cpp
+    src_Actions/trainers/actiontrainer_informaticsearch.cpp \
+    src_Actions/trainers/actiontrainer_restored.cpp \
+    src_Actions/trainers/actiontrainer_littlegirl.cpp \
+    src_Actions/trainers/actiontrainer_saveenergies.cpp \
+    src_Actions/trainers/actiontrainer_pokemoncenter.cpp \
+    src_Actions/trainers/actiontrainer_removeenergy.cpp
 
 
 RESOURCES += qml.qrc \
@@ -183,7 +188,12 @@ HEADERS += \
     src_Actions/trainers/actiontrainer_professorchen.h \
     src_Actions/trainers/actiontrainer_superpotion.h \
     src_Actions/trainers/actiontrainer_totalguerison.h \
-    src_Actions/trainers/actiontrainer_informaticsearch.h
+    src_Actions/trainers/actiontrainer_informaticsearch.h \
+    src_Actions/trainers/actiontrainer_restored.h \
+    src_Actions/trainers/actiontrainer_littlegirl.h \
+    src_Actions/trainers/actiontrainer_saveenergies.h \
+    src_Actions/trainers/actiontrainer_pokemoncenter.h \
+    src_Actions/trainers/actiontrainer_removeenergy.h
 
 FORMS +=
 

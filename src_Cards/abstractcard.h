@@ -15,7 +15,8 @@ public:
 	{
 		TypeOfCard_Pokemon = 0,
 		TypeOfCard_Energy,
-		TypeOfCard_Action
+        TypeOfCard_Action,
+        TypeOfCard_Whatever
 	};
     Q_ENUMS(Enum_typeOfCard)
 	
