@@ -6,11 +6,14 @@
 class ActionCompleteProtectionByPayingOneEnergy : public AbstractAction
 {
 public:
-    ActionCompleteProtectionByPayingOneEnergy();
+    ActionCompleteProtectionByPayingOneEnergy(AbstractCard::Enum_element element);
 
     AbstractAction::Enum_typeOfAction type() override;
     QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
     void action() override;
+
+private:
+    AbstractCard::Enum_element m_element;
 };
 
 #endif // ACTIONCOMPLETEPROTECTIONBYPAYINGONEENERGY_H

@@ -102,7 +102,8 @@ SOURCES += \
     src_Actions/trainers/actiontrainer_littlegirl.cpp \
     src_Actions/trainers/actiontrainer_saveenergies.cpp \
     src_Actions/trainers/actiontrainer_pokemoncenter.cpp \
-    src_Actions/trainers/actiontrainer_removeenergy.cpp
+    src_Actions/trainers/actiontrainer_removeenergy.cpp \
+    src_Actions/attacks/actioncompleteprotectionrandom.cpp
 
 
 RESOURCES += qml.qrc \
@@ -193,7 +194,8 @@ HEADERS += \
     src_Actions/trainers/actiontrainer_littlegirl.h \
     src_Actions/trainers/actiontrainer_saveenergies.h \
     src_Actions/trainers/actiontrainer_pokemoncenter.h \
-    src_Actions/trainers/actiontrainer_removeenergy.h
+    src_Actions/trainers/actiontrainer_removeenergy.h \
+    src_Actions/attacks/actioncompleteprotectionrandom.h
 
 FORMS +=
 

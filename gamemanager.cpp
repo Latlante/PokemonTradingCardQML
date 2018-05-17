@@ -270,7 +270,7 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
     qDebug() << __PRETTY_FUNCTION__;
 #endif
     bool success = false;
-    QList<int> listIndexBench;
+    QList<AbstractCard *> listCardsBench;
 
     //On revérifie qu'on peut
     if(pokemonToRetreat->canRetreat() == true)
@@ -287,8 +287,12 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
                 pokemonToRetreat->moveEnergiesInTrash(listEnergies);
             }
 
-            listIndexBench = displayBench(playerAttacking->bench());
-            success = playerAttacking->swapCardsBetweenBenchAndFight(listIndexBench.first());
+            listCardsBench = displayBench(playerAttacking->bench(), 1);
+
+            if(listCardsBench.first()->type() == AbstractCard::TypeOfCard_Pokemon)
+                success = playerAttacking->swapCardsBetweenBenchAndFight(static_cast<CardPokemon*>(listCardsBench.first()));
+            else
+                success = false;
         }
         else
             qCritical() << __PRETTY_FUNCTION__ << "pokemonToRetreat->owner() is null";
@@ -356,7 +360,7 @@ Player* GameManager::gameIsFinished()
     return playWinner;
 }
 
-QList<int> GameManager::displayBench(BenchArea *bench)
+QList<AbstractCard *> GameManager::displayBench(BenchArea *bench, unsigned short quantity)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
@@ -366,11 +370,11 @@ QList<int> GameManager::displayBench(BenchArea *bench)
     Q_UNUSED(card)
     return QList<int>() << 0;
 #else
-    return m_ctrlPopups.displayBench(bench);
+    return m_ctrlPopups.displayBench(bench, quantity);
 #endif
 }
 
-QList<int> GameManager::displayDeck(PacketDeck *deck, unsigned short quantity)
+QList<AbstractCard *> GameManager::displayDeck(PacketDeck *deck, unsigned short quantity)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
@@ -379,14 +383,19 @@ QList<int> GameManager::displayDeck(PacketDeck *deck, unsigned short quantity)
     return m_ctrlPopups.displayDeck(deck, quantity);
 }
 
-QList<int> GameManager::displayHand(PacketHand *hand, unsigned short quantity)
+QList<AbstractCard *> GameManager::displayHand(PacketHand *hand, unsigned short quantity)
 {
     return m_ctrlPopups.displayHand(hand, quantity);
 }
 
-QList<int> GameManager::displaySelectHiddenCard(PacketRewards *rewards)
+QList<AbstractCard *> GameManager::displayTrash(PacketTrash *trash, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
 {
-    return m_ctrlPopups.displaySelectHiddenCard(rewards);
+    return m_ctrlPopups.displayTrash(trash, quantity, typeOfCard);
+}
+
+QList<AbstractCard *> GameManager::displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity)
+{
+    return m_ctrlPopups.displaySelectHiddenCard(rewards, quantity);
 }
 
 QList<CardEnergy*> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
@@ -612,7 +621,7 @@ void GameManager::checkPokemonDead()
 
             if(enemyOf(play)->rewards()->countCard() > 0)
             {
-                QList<int> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
+                QList<AbstractCard*> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
                 enemyOf(play)->drawOneReward(listRewards.first());        //Le joueur adverse pioche une récompense
             }
         }
@@ -627,7 +636,7 @@ void GameManager::checkPokemonDead()
 
                 if(play->rewards()->countCard() > 0)
                 {
-                    QList<int> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
+                    QList<AbstractCard*> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
                     enemyOf(play)->drawOneReward(listRewards.first());        //Le joueur adverse pioche une récompense
                 }
 
@@ -640,9 +649,12 @@ void GameManager::checkPokemonDead()
 #ifdef TESTS_UNITAIRES
             play->moveCardFromBenchToFight(0);
 #else
-            QList<int> listIndexPokemonToReplace = m_ctrlPopups.displayBench(play->bench());
-            play->moveCardFromBenchToFight(listIndexPokemonToReplace.first());
-            //emit replacePokemonFighter(play);
+            QList<AbstractCard*> listPokemonToReplace = m_ctrlPopups.displayBench(play->bench());
+
+            if(listPokemonToReplace.first()->type() == AbstractCard::TypeOfCard_Pokemon)
+                play->moveCardFromBenchToFight(static_cast<CardPokemon*>(listPokemonToReplace.first()));
+            else
+                qCritical() << __PRETTY_FUNCTION__ << "Card non pokemon sur le banc";
 #endif
         }
     }

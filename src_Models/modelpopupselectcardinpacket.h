@@ -3,7 +3,8 @@
 
 #include <QAbstractListModel>
 
-class AbstractCard;
+#include "src_Cards/abstractcard.h"
+
 class AbstractPacket;
 class ModelListEnergies;
 
@@ -32,6 +33,8 @@ public:
 
     static void declareQML();
 
+    void setTypeOfCardFilter(AbstractCard::Enum_typeOfCard typeOfCard);
+
     void addPacketFromAbstractPacket(AbstractPacket* packet);
     void addPacketFromModelListEnergies(ModelListEnergies* model);
 
@@ -40,7 +43,7 @@ public:
     unsigned short numberOfCardsSelected();
     bool isMaximumCardsSelected();
 
-    QList<int> listIndexCardsSelected();
+    QList<AbstractCard*> listCardsSelected();
 
     Q_INVOKABLE void flipIfSelected();
 
@@ -58,6 +61,7 @@ protected:
 private:
     QList<SelectionCards> m_listCards;
     unsigned short m_numberOfCardsToSelect;
+    AbstractCard::Enum_typeOfCard m_typeOfCardFilter;
 
     void cleanPacket();
 

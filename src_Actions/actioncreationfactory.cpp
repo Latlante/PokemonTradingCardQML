@@ -232,7 +232,9 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
         break;
     case AbstractAction::Action_CompleteProtectionByPayingOneEnergy:
         {
-            actionToReturn = createActionCompleteProtectionByPayingOneEnergy();
+            argInt1 = arg1.toInt(&ok);
+            if(ok)
+                actionToReturn = createActionCompleteProtectionByPayingOneEnergy(static_cast<AbstractCard::Enum_element>(argInt1));
         }
         break;
     case AbstractAction::Action_NoDamageOnThreshold:
@@ -432,9 +434,9 @@ ActionProtectedAgainstDamageRandom* ActionCreationFactory::createActionProtected
     return new ActionProtectedAgainstDamageRandom();
 }
 
-ActionCompleteProtectionByPayingOneEnergy* ActionCreationFactory::createActionCompleteProtectionByPayingOneEnergy()
+ActionCompleteProtectionByPayingOneEnergy* ActionCreationFactory::createActionCompleteProtectionByPayingOneEnergy(AbstractCard::Enum_element elementToRemove)
 {
-    return new ActionCompleteProtectionByPayingOneEnergy();
+    return new ActionCompleteProtectionByPayingOneEnergy(elementToRemove);
 }
 
 ActionNoDamageOnThreshold* ActionCreationFactory::createActionNoDamageOnThreshold(unsigned short damage)

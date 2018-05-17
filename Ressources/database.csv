@@ -23,7 +23,7 @@
 23;0;Abo;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 24;0;Arbox;;;;;0;;0;;23;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 25;1;Pikachu;40;3;;4;0;;0;1;;Rogne;;10;10;;;;;;;;;;;1;;;;;;;;Secousse Tonnerre;Lancez une pièce. Si c'est pile, Pikachu s'inflige 10 dégâts.;30;30;;;;1;;;;;;;1;;;;;207;0;10;;;;;;;;;;;;;;;;;;;;;;;
-26;1;Raichu;80;3;;6;0;;0;1;25;Hâte;Lancez une pièce. Si c'est face, pendant le prochain tour de votre adversaire, prévenez tous les effets ou attaques, y compris les dégâts, infligés à Raichu.;0;0;;;;1;;;;;;;2;;;;;502;0;;Fatal-Foudre;Lancez une pièce. Si c'est pile, Raichu s'inflige 30 dégâts.;60;60;;;;3;;;;;;;1;;;;;207;0;30;;;;;;;;;;;;;;;;;;;;;;;
+26;1;Raichu;80;3;;6;0;;0;1;25;Hâte;Lancez une pièce. Si c'est face, pendant le prochain tour de votre adversaire, prévenez tous les effets ou attaques, y compris les dégâts, infligés à Raichu.;20;20;;;;1;;;;;;;2;;;;;504;;;Fatal-Foudre;Lancez une pièce. Si c'est pile, Raichu s'inflige 30 dégâts.;60;60;;;;3;;;;;;;1;;;;;207;0;30;;;;;;;;;;;;;;;;;;;;;;;
 27;1;Sabelette;40;3;;8;0;3;1;1;;Jet de Sable;Si le Pokémon Défenseur essaie d'attaquer pendant le prochain tour de votre adversaire, votre adversaire doit lancer une pièce. Si c'est pile, l'attaque reste sans effet.;10;10;;;;;1;;;;;;;;;;;106;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 28;0;Sablaireau;;;;;0;;0;;27;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 29;0;Nidoran femelle;;;;;0;;0;;;;;;0;;;;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -165,28 +165,28 @@
 1013;0;Rock;13;1
 1014;1;Water;14;1
 2000;0;Peluche Mélofée;Jouez Peluche Mélofée comme Pokémon de Base. Lorsqu'il est en jeu, Peluche Mélofée compte comme un Pokémon (au lieu d'une carte Dresseur). Peluche Mélofée n'a pas d'attaque, ne peut pas battre en retraite, et ne peut pas être Endormi, Confus, Paralysé ou Empoisonné. Si Peluche Mélofée est mis K.O., il ne compte pas comme un Pokémon mis K.O. À tout moment pendant votre tour et avant votre attaque, vous pouvez défausserPeluche Mélofée.;2000;
-2001;0;Recherche informatique;Défaussez 2 des autres cartes de votre main pour chercher n'importe quelle carte dans votre deck et la placer dans votre main. Ensuite, mélangez votre deck.;2001;
+2001;1;Recherche informatique;Défaussez 2 des autres cartes de votre main pour chercher n'importe quelle carte dans votre deck et la placer dans votre main. Ensuite, mélangez votre deck.;2001;
 2002;0;Vaporisateur rétrograde;Choississez 1 de votre propres Pokémon en jeu et un Niveau d'évolution. Défaussez toutes les cartes Evolution de ce stade ou supérieur attachée(s) à ce Pokémon. Ce Pokémon n'est plus Endormi, Confus, Paralysé, Empoisonné ou tout autre effet résultant d'une attaque (comme si vous veniez juste de le faire évoluer).;2002;
 2003;1;Faux Profresseur Chen;Votre adversaire mélange sa main avec son deck, puis pioche 7 cartes.;2003;
-2004;0;Récupérateur;Défaussez 2 des autres cartes de votre main pour placer une carte Dresseur de votre pile de Défausse dans votre main.;2004;
+2004;1;Récupérateur;Défaussez 2 des autres cartes de votre main pour placer une carte Dresseur de votre pile de Défausse dans votre main.;2004;
 2005;0;Fillette;Vous révélez votre main ainsi que votre adversaire, puis mélangez toutes les cartes Dresseur de vos main dans vos decks respectifs.;2005;
 2006;0;Eleveur de Pokemon;Placez une carte Evolution de niveau 2 de votre main sur le Pokémon de base correspondant. Vous ne pouvez jouer cette carte que quand il vous sera possiblede faire évoluer ce Pokémon de toute façon.;2006;
 2007;0;Marchand de Pokémon;Echangez 1 carte Pokémon de base ou Evolution de votre main contre 1 carte Pokémon de base ou Evolution de votre deck. Montrer les deux cartes à votre adversaire. Ensuite, mélangez votre deck.;2007;
 2008;0;Rappel;Défaussez 1 de vos Pokémon en jeu et reprenez sa carte Pokémon de base dans votre main.;2008;
 2009;0;Double suppression d'énergie;Défaussez 1 carte Energie attachée à 1 de vos propres Pokémon et choississez 1 Pokémon de votre adversaire et jusqu'à 2 carte Energie attachées à ce Pokémon. Défaussez ces cartes Energie.;2009;
 2010;0;Defender;Attachez Defender à 1 de vos Pokémon. À la fin de votre tour de votre adversaire, défaussezDefender. Les dégâts infligés à ce Pokémon par des attaques sont réduits de 20 (après application de la Faiblesse et de la Résistance).;2010;
-2011;0;Sauvegarde d'Energie;Échangez 1 des autres cartes de votre main contre 1 ou 2 cartes Énergie de Base de votre pile de défausse.;2011;
+2011;1;Sauvegarde d'Energie;Échangez 1 des autres cartes de votre main contre 1 ou 2 cartes Énergie de Base de votre pile de défausse.;2011;
 2012;1;Guérison totale;Votre Pokémon actif n'est plus Endormi, Confus, Paralysé ou Empoisonné.;2012;
 2013;0;Entretien;Mélangez 2 des autres cartes de votre main avec votre deck pour piocher une carte.;2013;
 2014;0;PlusPower;Attachez PlusPower à votre Pokémon actif. À la fin de votre tour, défaussezPlusPower. Si l'attaque de ce Pokémon inflige des dégâts au Pokémon Défenseur (après application de la Faiblesse et de la Résistance), l'attaque inflige 10 dégâts supplémentaires au Pokémon Défenseur.;2014;
-2015;0;Centre Pokémon;Retirez tous les marqueurs de dégâts de tous vos propres Pokémon ayant des marqueurs de dégâts sur eux, puis défaussez toutes les cartes Énergie attachées à ces Pokémon.;2015;
+2015;1;Centre Pokémon;Retirez tous les marqueurs de dégâts de tous vos propres Pokémon ayant des marqueurs de dégâts sur eux, puis défaussez toutes les cartes Énergie attachées à ces Pokémon.;2015;
 2016;0;Flûte Pokémon;Choisissez 1 carte Pokémon de base dans la pile de défausse de votre adversaire et placez-la sur son Banc. (Vous ne pouvez pas jouer Flûte Pokémon si le Banc de votre adversaire est plein).;2016;
 2017;0;Pokédex;Regardez jusqu'à 5 des 5 premières cartes du dessus de votre deck et triez-les comme bon vous semble.;2017;
 2018;1;Professeur Chen;Défaussez-vous de votre main, puis piochez 7 cartes.;2018;
 2019;0;Réanimation;Placez 1 carte Pokémon de base de votre pile de défausse vers votre Banc. Placez sur lui un nombre de marqueurs de dégâts égal à la moitié de ses PV (arrondis à la dizaine inférieure la plus proche. (Vous ne pouvez pas jouer Réanimation si votre Banc est plein.);2019;
 2020;1;Super Potion;Défaussez 1 carte Énergie attachée à 1 de vos propres Pokémon afin de retirer jusqu'à 4 marqueurs de dégâts de ce Pokémon.;2020;
 2021;1;Léo;Piochez 2 cartes.;2021;
-2022;0;Suppression d'énergie;Choisissez 1 carte Énergie attachée à 1 des Pokémon de votre adversaire et défaussez-là.;2022;
+2022;1;Suppression d'énergie;Choisissez 1 carte Énergie attachée à 1 des Pokémon de votre adversaire et défaussez-là.;2022;
 2023;0;Rafale de vent;Choisissez 1 Pokémon du Banc votre adversaire et échangez-le avec son Pokémon actif.;2023;
 2024;1;Potion;Retirez jusqu'à 2 marqueurs de dégâts d'1 de vos Pokémon.;2024;
 2025;0;Transfert;Échangez 1 Pokémon de votre Banc avec votre Pokémon actif.;2025;

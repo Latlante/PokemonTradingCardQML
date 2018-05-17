@@ -3,6 +3,7 @@
 ActionUniqueAttack_Random::ActionUniqueAttack_Random(unsigned short index) :
     AbstractAction()
 {
+    Q_UNUSED(index)
 
 }
 

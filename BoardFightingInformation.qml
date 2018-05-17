@@ -105,7 +105,8 @@ Item {
                 onClicked: {
                     console.log("mouseAreaCardFighter clicked")
 
-                    if(ctrlPopups.popupSelectingAttacks_Visible === false)
+                    if((ctrlPopups.popupSelectingAttacks_Visible === false) &&
+                            (ctrlPopups.selectHiddenCardVisible === false))
                     {
                         if((cardPok !== undefined) &&
                                 (player === currentPlayer) &&

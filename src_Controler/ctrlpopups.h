@@ -12,6 +12,7 @@ class BenchArea;
 class PacketDeck;
 class PacketHand;
 class PacketRewards;
+class PacketTrash;
 class ModelPopupSelectCardInPacket;
 class ModelPopupSelectEnergyInPokemon;
 class QQmlEngine;
@@ -52,14 +53,17 @@ public:
 
     //SELECT CARD IN PACKET
     Q_INVOKABLE ModelPopupSelectCardInPacket* modelSelectCardInPacket();
-    Q_INVOKABLE QList<int> displayBench(BenchArea* packet, unsigned short quantity = 1);
-    Q_INVOKABLE QList<int> displayDeck(PacketDeck* packet, unsigned short quantity = 1);
-    Q_INVOKABLE QList<int> displayHand(PacketHand* packet, unsigned short quantity = 1);
+    QList<AbstractCard *> displayBench(BenchArea* packet, unsigned short quantity = 1);
+    QList<AbstractCard *> displayDeck(PacketDeck* packet, unsigned short quantity = 1);
+    QList<AbstractCard *> displayHand(PacketHand* packet, unsigned short quantity = 1);
+    QList<AbstractCard *> displayTrash(PacketTrash* packet, unsigned short quantity = 1, AbstractCard::Enum_typeOfCard typeOfCard = AbstractCard::TypeOfCard_Whatever);
+
+
     bool selectCardInPacketVisible();
     void setSelectCardInPacketVisible(bool state);
 
     //SELECT HIDDEN CARD
-    QList<int> displaySelectHiddenCard(PacketRewards *rewards);
+    QList<AbstractCard *> displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity);
     bool selectHiddenCardVisible();
     void setSelectHiddenCardVisible(bool state);
 
@@ -149,7 +153,7 @@ private:
     int m_headOrTailValue;
 
 
-    QList<int> displayAbstractPacket(AbstractPacket* packet, unsigned short quantity);
+    QList<AbstractCard *> displayAbstractPacket(AbstractPacket* packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard);
 };
 
 #endif // CTRLPOPUPS_H

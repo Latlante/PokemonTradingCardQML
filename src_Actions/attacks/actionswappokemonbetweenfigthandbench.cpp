@@ -27,10 +27,10 @@ void ActionSwapPokemonBetweenFigthAndBench::action()
     {
         if(benchPlayerAttacked()->countCard() > 0)
         {
-            QList<int> listIndexPokemonChoose = gameManager()->displayBench(benchPlayerAttacked());
+            QList<AbstractCard*> listPokemonChoose = gameManager()->displayBench(benchPlayerAttacked());
 
-            if(listIndexPokemonChoose.count() >= 1)
-                playerAttacked()->swapCardsBetweenBenchAndFight(listIndexPokemonChoose.first());
+            if((listPokemonChoose.count() >= 1) && (listPokemonChoose.first()->type() == AbstractCard::TypeOfCard_Pokemon))
+                playerAttacked()->swapCardsBetweenBenchAndFight(static_cast<CardPokemon*>(listPokemonChoose.first()));
         }
     }
 }

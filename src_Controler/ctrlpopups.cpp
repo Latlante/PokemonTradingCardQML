@@ -15,6 +15,7 @@
 #include "src_Packets/packetdeck.h"
 #include "src_Packets/packethand.h"
 #include "src_Packets/packetrewards.h"
+#include "src_Packets/packettrash.h"
 
 CtrlPopups::CtrlPopups(QObject *parent) :
     QObject(parent),
@@ -84,19 +85,24 @@ ModelPopupSelectCardInPacket* CtrlPopups::modelSelectCardInPacket()
     return m_modelSelectCardInPacket;
 }
 
-QList<int> CtrlPopups::displayBench(BenchArea *packet, unsigned short quantity)
+QList<AbstractCard *> CtrlPopups::displayBench(BenchArea *packet, unsigned short quantity)
 {
-    return displayAbstractPacket(packet, quantity);
+    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
 }
 
-QList<int> CtrlPopups::displayDeck(PacketDeck *packet, unsigned short quantity)
+QList<AbstractCard *> CtrlPopups::displayDeck(PacketDeck *packet, unsigned short quantity)
 {
-    return displayAbstractPacket(packet, quantity);
+    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
 }
 
-QList<int> CtrlPopups::displayHand(PacketHand *packet, unsigned short quantity)
+QList<AbstractCard *> CtrlPopups::displayHand(PacketHand *packet, unsigned short quantity)
 {
-    return displayAbstractPacket(packet, quantity);
+    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
+}
+
+QList<AbstractCard *> CtrlPopups::displayTrash(PacketTrash *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
+{
+    return displayAbstractPacket(packet, quantity, typeOfCard);
 }
 
 bool CtrlPopups::selectCardInPacketVisible()
@@ -116,9 +122,10 @@ void CtrlPopups::setSelectCardInPacketVisible(bool state)
 //**************************************
 //          SELECT HIDDEN CARD
 //**************************************
-QList<int> CtrlPopups::displaySelectHiddenCard(PacketRewards* rewards)
+QList<AbstractCard *> CtrlPopups::displaySelectHiddenCard(PacketRewards* rewards, unsigned short quantity)
 {
     //Initialisation
+    m_modelSelectCardInPacket->setNumberOfCardsToSelect(quantity);
     m_modelSelectCardInPacket->addPacketFromAbstractPacket(rewards);
     setSelectHiddenCardVisible(true);
 
@@ -130,7 +137,7 @@ QList<int> CtrlPopups::displaySelectHiddenCard(PacketRewards* rewards)
     //Configuration de fin
     setSelectHiddenCardVisible(false);
 
-    return m_modelSelectCardInPacket->listIndexCardsSelected();
+    return m_modelSelectCardInPacket->listCardsSelected();
 }
 
 bool CtrlPopups::selectHiddenCardVisible()
@@ -372,11 +379,12 @@ void CtrlPopups::setHeadOrTailValue(int value)
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/
-QList<int> CtrlPopups::displayAbstractPacket(AbstractPacket *packet, unsigned short quantity)
+QList<AbstractCard*> CtrlPopups::displayAbstractPacket(AbstractPacket *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
 {
     //Initialisation
-    m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
+    m_modelSelectCardInPacket->setTypeOfCardFilter(typeOfCard);
     m_modelSelectCardInPacket->setNumberOfCardsToSelect(quantity);
+    m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
     setSelectCardInPacketVisible(true);
 
     //En attente
@@ -388,5 +396,5 @@ QList<int> CtrlPopups::displayAbstractPacket(AbstractPacket *packet, unsigned sh
     setSelectCardInPacketVisible(false);
 
     //Renvoi de l'information
-    return m_modelSelectCardInPacket->listIndexCardsSelected();
+    return m_modelSelectCardInPacket->listCardsSelected();
 }

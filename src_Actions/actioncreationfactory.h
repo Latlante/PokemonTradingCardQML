@@ -90,7 +90,7 @@ public:
     //PROTECTION
     static ActionProtectedAgainstDamage* createActionProtectedAgainstDamage();
     static ActionProtectedAgainstDamageRandom* createActionProtectedAgainstDamageRandom();
-    static ActionCompleteProtectionByPayingOneEnergy* createActionCompleteProtectionByPayingOneEnergy();
+    static ActionCompleteProtectionByPayingOneEnergy* createActionCompleteProtectionByPayingOneEnergy(AbstractCard::Enum_element elementToRemove);
     static ActionNoDamageOnThreshold* createActionNoDamageOnThreshold(unsigned short damage);
 
     //STATUS

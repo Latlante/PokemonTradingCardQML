@@ -53,6 +53,7 @@ public:
         Action_ProtectedAgainstDamageRandom = 501,
         Action_CompleteProtectionByPayingOneEnergy = 502,	//Type of energy
         Action_NoDamageOnThreshold = 503,                   //Limit of damage
+        Action_CompleteProtectionRandom = 504,
 
         //STATUS
         Action_ChangeEnemyStatus = 600,                     //Status to apply

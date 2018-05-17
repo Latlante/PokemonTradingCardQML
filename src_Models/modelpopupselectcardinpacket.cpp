@@ -1,14 +1,14 @@
 #include "modelpopupselectcardinpacket.h"
 #include <QtQml/qqml.h>
 
-#include "src_Cards/abstractcard.h"
 #include "src_Models/modellistenergies.h"
 #include "src_Packets/abstractpacket.h"
 
 ModelPopupSelectCardInPacket::ModelPopupSelectCardInPacket(QObject *parent) :
     QAbstractListModel(parent),
     m_listCards(QList<SelectionCards>()),
-    m_numberOfCardsToSelect(1)
+    m_numberOfCardsToSelect(1),
+    m_typeOfCardFilter(AbstractCard::TypeOfCard_Whatever)
 {
 
 }
@@ -24,6 +24,11 @@ void ModelPopupSelectCardInPacket::declareQML()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
+void ModelPopupSelectCardInPacket::setTypeOfCardFilter(AbstractCard::Enum_typeOfCard typeOfCard)
+{
+    m_typeOfCardFilter = typeOfCard;
+}
+
 void ModelPopupSelectCardInPacket::addPacketFromAbstractPacket(AbstractPacket *packet)
 {
     if(packet != nullptr)
@@ -32,14 +37,18 @@ void ModelPopupSelectCardInPacket::addPacketFromAbstractPacket(AbstractPacket *p
 
         for(int i=0;i<packet->countCard();++i)
         {
-            SelectionCards selection;
-            selection.card = packet->card(i);
-            selection.selected = false;
-            selection.flipped = false;
+            AbstractCard *abCard = packet->card(i);
+            if((abCard->type() == m_typeOfCardFilter) || (m_typeOfCardFilter == AbstractCard::TypeOfCard_Whatever))
+            {
+                SelectionCards selection;
+                selection.card = packet->card(i);
+                selection.selected = false;
+                selection.flipped = false;
 
-            beginInsertRows(QModelIndex(), rowCount(), rowCount());
-            m_listCards.append(selection);
-            endInsertRows();
+                beginInsertRows(QModelIndex(), rowCount(), rowCount());
+                m_listCards.append(selection);
+                endInsertRows();
+            }
         }
     }
 }
@@ -91,19 +100,19 @@ bool ModelPopupSelectCardInPacket::isMaximumCardsSelected()
     return numberOfCardsSelected() >= numberOfCardsToSelect();
 }
 
-QList<int> ModelPopupSelectCardInPacket::listIndexCardsSelected()
+QList<AbstractCard *> ModelPopupSelectCardInPacket::listCardsSelected()
 {
-    QList<int> listIndex;
+    QList<AbstractCard*> listCards;
 
     for(int i=0;i<m_listCards.count();++i)
     {
         if(m_listCards.at(i).selected == true)
         {
-            listIndex.append(i);
+            listCards.append(m_listCards.at(i).card);
         }
     }
 
-    return listIndex;
+    return listCards;
 }
 
 void ModelPopupSelectCardInPacket::flipIfSelected()
