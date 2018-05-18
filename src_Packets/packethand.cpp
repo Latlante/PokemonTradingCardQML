@@ -4,8 +4,8 @@
 #include "src_Cards/abstractcard.h"
 #include "src_Cards/cardpokemon.h"
 
-PacketHand::PacketHand(QList<AbstractCard*> listCards) :
-    AbstractPacketDynamic(listCards)
+PacketHand::PacketHand(const QString &namePacket, QList<AbstractCard*> listCards) :
+    AbstractPacketDynamic(namePacket, listCards)
 {
 	
 }

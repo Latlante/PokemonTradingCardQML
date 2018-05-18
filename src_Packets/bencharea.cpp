@@ -7,8 +7,8 @@
 #include "src_Cards/cardpokemon.h"
 #include "src_Models/modellistenergies.h"
 
-BenchArea::BenchArea(QList<AbstractCard*> listCards) :
-    AbstractPacketStatic(listCards)
+BenchArea::BenchArea(const QString &namePacket, QList<AbstractCard*> listCards) :
+    AbstractPacketStatic(namePacket, listCards)
 {
 	
 }

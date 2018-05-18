@@ -11,7 +11,7 @@ class BenchArea : public AbstractPacketStatic
     Q_OBJECT
 
 public:
-    BenchArea(QList<AbstractCard*> listCards = QList<AbstractCard*>());
+    BenchArea(const QString& namePacket, QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~BenchArea();
 
     static void declareQML();

@@ -19,6 +19,7 @@
 
 CtrlPopups::CtrlPopups(QObject *parent) :
     QObject(parent),
+    m_onePopupIsDisplayed(false),
     m_modelSelectCardInPacket(new ModelPopupSelectCardInPacket()),
     m_selectCardInPacketVisible(false),
     m_selectHiddenCardVisible(false),
@@ -77,6 +78,20 @@ bool CtrlPopups::install(QQmlApplicationEngine *pEngine)
     return bInstalled;
 }
 
+bool CtrlPopups::onePopupIsDisplayed()
+{
+    return m_onePopupIsDisplayed;
+}
+
+void CtrlPopups::setOnePopupIsDisplayed(bool visible)
+{
+    if(m_onePopupIsDisplayed != visible)
+    {
+        m_onePopupIsDisplayed = visible;
+        emit onePopupIsDisplayedChanged();
+    }
+}
+
 //**************************************
 //      SELECT CARD IN PACKET
 //**************************************
@@ -114,6 +129,7 @@ void CtrlPopups::setSelectCardInPacketVisible(bool state)
 {
     if(m_selectCardInPacketVisible != state)
     {
+        setOnePopupIsDisplayed(state);
         m_selectCardInPacketVisible = state;
         emit selectCardInPacketVisibleChanged();
     }
@@ -149,6 +165,7 @@ void CtrlPopups::setSelectHiddenCardVisible(bool state)
 {
     if(m_selectHiddenCardVisible != state)
     {
+        setOnePopupIsDisplayed(state);
         m_selectHiddenCardVisible = state;
         emit selectHiddenCardVisibleChanged();
     }
@@ -190,6 +207,7 @@ void CtrlPopups::setPopupSelectingAttacks_Visible(bool state)
 {
     if(m_popupSelectingAttacks_Visible != state)
     {
+        setOnePopupIsDisplayed(state);
         m_popupSelectingAttacks_Visible = state;
         emit popupSelectingAttacks_VisibleChanged();
     }
@@ -274,6 +292,7 @@ void CtrlPopups::setSelectEnergiesInPokemonVisible(bool state)
 {
     if(m_selectEnergiesInPokemonVisible != state)
     {
+        setOnePopupIsDisplayed(state);
         m_selectEnergiesInPokemonVisible = state;
         emit selectEnergiesInPokemonVisibleChanged();
     }
@@ -311,6 +330,7 @@ void CtrlPopups::setMessageVisible(bool visible)
 {
     if(m_messageVisible != visible)
     {
+        setOnePopupIsDisplayed(visible);
         m_messageVisible = visible;
         emit messageVisibleChanged();
     }
@@ -357,6 +377,7 @@ void CtrlPopups::setHeadOrTailVisible(bool visible)
 {
     if(m_headOrTailVisible != visible)
     {
+        setOnePopupIsDisplayed(visible);
         m_headOrTailVisible = visible;
         emit headOrTailVisibleChanged();
     }

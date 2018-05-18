@@ -21,10 +21,12 @@ public:
         Role_Attack3_Name,
 	};
 
-    AbstractPacket(QList<AbstractCard*> listCards = QList<AbstractCard*>());
+    AbstractPacket(const QString& namePacket, QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~AbstractPacket();
 	
     static void declareQML();
+
+    QString name();
 	
     virtual int maxCards() const = 0;
     virtual int countCard() const = 0;
@@ -48,6 +50,9 @@ protected:
 
 protected slots:
     void updateAllData();
+
+private:
+    QString m_name;
 
 };
 

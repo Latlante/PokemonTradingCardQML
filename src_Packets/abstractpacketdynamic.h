@@ -15,7 +15,7 @@ public:
         PacDynamicRole_ImageCard
     };
 
-    explicit AbstractPacketDynamic(QList<AbstractCard*> listCards = QList<AbstractCard*>());
+    explicit AbstractPacketDynamic(const QString& namePacket, QList<AbstractCard*> listCards = QList<AbstractCard*>());
 
     //virtual int maxCards() const = 0;
     virtual int countCard() const override;

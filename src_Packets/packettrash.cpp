@@ -1,7 +1,7 @@
 #include "packettrash.h"
 
-PacketTrash::PacketTrash(QList<AbstractCard*> listCards) :
-    AbstractPacketDynamic(listCards)
+PacketTrash::PacketTrash(const QString &namePacket, QList<AbstractCard*> listCards) :
+    AbstractPacketDynamic(namePacket, listCards)
 {
 	
 }

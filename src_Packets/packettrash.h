@@ -8,7 +8,7 @@ class PacketTrash : public AbstractPacketDynamic
     Q_OBJECT
 
 public:
-    PacketTrash(QList<AbstractCard*> listCards = QList<AbstractCard*>());
+    PacketTrash(const QString& namePacket, QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~PacketTrash();
 
     static void declareQML();

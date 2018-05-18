@@ -4,8 +4,8 @@
 #include "src_Cards/cardpokemon.h"
 #include "utils.h"
 
-FightArea::FightArea(QList<AbstractCard*> listCards) :
-    AbstractPacketStatic(listCards)
+FightArea::FightArea(const QString &namePacket, QList<AbstractCard*> listCards) :
+    AbstractPacketStatic(namePacket, listCards)
 {
     connect(this, &FightArea::countChanged, this, &FightArea::onCountChanged);
 }

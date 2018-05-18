@@ -2,8 +2,8 @@
 
 #include "src_Cards/abstractcard.h"
 
-PacketDeck::PacketDeck(QList<AbstractCard*> listCards) :
-    AbstractPacketDynamic(listCards)
+PacketDeck::PacketDeck(const QString &namePacket, QList<AbstractCard*> listCards) :
+    AbstractPacketDynamic(namePacket, listCards)
 {
 #ifndef TESTS_UNITAIRES
     mixCards();

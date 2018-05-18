@@ -1,7 +1,7 @@
 #include "packetrewards.h"
 
-PacketRewards::PacketRewards(QList<AbstractCard*> listCards) :
-    AbstractPacketDynamic(listCards)
+PacketRewards::PacketRewards(const QString &namePacket, QList<AbstractCard*> listCards) :
+    AbstractPacketDynamic(namePacket, listCards)
 {
 	
 }

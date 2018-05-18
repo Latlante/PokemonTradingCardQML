@@ -3,9 +3,10 @@
 #include <QDebug>
 #include "src_Cards/abstractcard.h"
 
-AbstractPacket::AbstractPacket(QList<AbstractCard*> listCards) :
+AbstractPacket::AbstractPacket(const QString &namePacket, QList<AbstractCard*> listCards) :
     QAbstractListModel(NULL),
-	m_listCards(listCards)
+    m_listCards(listCards),
+    m_name(namePacket)
 {
 }
 
@@ -24,6 +25,11 @@ AbstractPacket::~AbstractPacket()
 void AbstractPacket::declareQML()
 {
     qmlRegisterUncreatableType<AbstractPacket>("model", 1, 0, "AbstractPacket", "AbstractPacket cannot be created.");
+}
+
+QString AbstractPacket::name()
+{
+    return m_name;
 }
 
 bool AbstractPacket::isFull()

@@ -8,7 +8,7 @@ class PacketRewards : public AbstractPacketDynamic
     Q_OBJECT
 
 public:
-    PacketRewards(QList<AbstractCard*> listCards = QList<AbstractCard*>());
+    PacketRewards(const QString& namePacket, QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~PacketRewards();
 
     static void declareQML();

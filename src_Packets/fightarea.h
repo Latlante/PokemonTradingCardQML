@@ -11,7 +11,7 @@ class FightArea : public AbstractPacketStatic
     Q_PROPERTY(CardPokemon* pokemonFighter READ pokemonFighter NOTIFY pokemonFighterChanged)
 
 public:
-    FightArea(QList<AbstractCard*> listCards = QList<AbstractCard*>());
+    FightArea(const QString& namePacket, QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~FightArea();
 
     static void declareQML();

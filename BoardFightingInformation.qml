@@ -105,8 +105,7 @@ Item {
                 onClicked: {
                     console.log("mouseAreaCardFighter clicked")
 
-                    if((ctrlPopups.popupSelectingAttacks_Visible === false) &&
-                            (ctrlPopups.selectHiddenCardVisible === false))
+                    if(ctrlPopups.onePopupIsDisplayed === false)
                     {
                         if((cardPok !== undefined) &&
                                 (player === currentPlayer) &&
@@ -276,6 +275,7 @@ Item {
                 text: "Prêt"
 
                 onClicked: {
+                    console.log("buttonReadyPreparation clicked")
                     player.checkIfInitReady()
                     ctrlGameBoard.onClicked_ButtonReadyPreparation()
                 }
@@ -292,7 +292,10 @@ Item {
 
                 text: "Terminer votre tour"
 
-                onClicked: ctrlGameBoard.actionFinishYourTurn()
+                onClicked: {
+                    console.log("buttonFinishYourTurn clicked")
+                    ctrlGameBoard.actionFinishYourTurn()
+                }
             }
 
         }

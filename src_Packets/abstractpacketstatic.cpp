@@ -3,8 +3,8 @@
 
 #include "src_Cards/cardpokemon.h"
 
-AbstractPacketStatic::AbstractPacketStatic(QList<AbstractCard *> listCards) :
-    AbstractPacket(listCards)
+AbstractPacketStatic::AbstractPacketStatic(const QString &namePacket, QList<AbstractCard *> listCards) :
+    AbstractPacket(namePacket, listCards)
 {
 
 }

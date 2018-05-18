@@ -28,7 +28,7 @@ void ActionTrainer_FakeProfessorChen::action()
     {
         //On nettoie la main
         while(playerAttacked()->hand()->countCard() > 0)
-            playerAttacked()->moveCardFromHandToTrash(0);
+            playerAttacked()->moveCardFromHandToTrash(playerAttacked()->hand()->card(0));
 
         for(int i=0;i<7;++i)
             playerAttacked()->drawOneCard();

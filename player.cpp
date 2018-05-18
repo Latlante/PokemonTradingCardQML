@@ -16,12 +16,12 @@
 Player::Player(QString name, QList<AbstractCard*> listCards, QObject *parent) :
 	QObject(parent),
     m_name(name),
-    m_bench(new BenchArea()),
-    m_deck(new PacketDeck(listCards)),
-    m_fight(new FightArea()),
-    m_hand(new PacketHand()),
-    m_rewards(new PacketRewards()),
-    m_trash(new PacketTrash()),
+    m_bench(new BenchArea("Bench")),
+    m_deck(new PacketDeck("Deck", listCards)),
+    m_fight(new FightArea("Fight")),
+    m_hand(new PacketHand("Hand")),
+    m_rewards(new PacketRewards("Rewards")),
+    m_trash(new PacketTrash("Trash")),
     m_initReady(false),
     m_canPlay(true),
     m_energyPlayedForThisRound(false)
@@ -277,8 +277,10 @@ bool Player::moveCardFromHandToBench(int indexHand, int indexBench)
 
             if(cardTrainer != nullptr)
             {
-                cardTrainer->executeAction(bench()->cardPok(indexBench));
                 moveSuccess = moveCardFromHandToTrash(cardTrainer);
+
+                if(moveSuccess == true)
+                    cardTrainer->executeAction(bench()->cardPok(indexBench));
             }
         }
         else
@@ -376,8 +378,10 @@ bool Player::moveCardFromHandToFight(int indexHand)
 
             if(cardTrainer != nullptr)
             {
-                cardTrainer->executeAction(fight()->pokemonFighting(0));
                 moveSuccess = moveCardFromHandToTrash(cardTrainer);
+
+                if(moveSuccess == true)
+                    cardTrainer->executeAction(fight()->pokemonFighting(0));
             }
         }
         else
@@ -531,7 +535,23 @@ bool Player::moveCardFromPacketToAnother(AbstractPacket *source, AbstractPacket 
     }
     else
     {
-        qCritical() << __PRETTY_FUNCTION__ << "source, desetination or/and Card is/are nullptr";
+        QString messageError = "Element(s) is/are nullptr:\n";
+        if(source == nullptr)
+            messageError += "  - err: source is nullptr";
+        else
+            messageError += "  - source is " + source->name();
+
+        if(destination == nullptr)
+            messageError += "  - err: destination is nullptr";
+        else
+            messageError += "  - destination is " + destination->name();
+
+        if(cardToMove == nullptr)
+            messageError += "  - err: cardToMove is nullptr";
+        else
+            messageError += "  - source is " + cardToMove->name();
+
+        qCritical() << __PRETTY_FUNCTION__ << messageError;
 
     }
 

@@ -27,7 +27,7 @@ void ActionTrainer_ProfessorChen::action()
     {
         //On nettoie la main
         while(playerAttacking()->hand()->countCard() > 0)
-            playerAttacking()->moveCardFromHandToTrash(0);
+            playerAttacking()->moveCardFromHandToTrash(playerAttacking()->hand()->card(0));
 
         //Et on pioche les cartes
         for(int i=0;i<7;++i)

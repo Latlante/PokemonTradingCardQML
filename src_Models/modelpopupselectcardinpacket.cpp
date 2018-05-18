@@ -134,7 +134,7 @@ void ModelPopupSelectCardInPacket::flipIfSelected()
 
 QVariant ModelPopupSelectCardInPacket::data(const QModelIndex &index, int role) const
 {
-    qDebug() << __PRETTY_FUNCTION__ << index << role;
+    //qDebug() << __PRETTY_FUNCTION__ << index << role;
     int iRow = index.row();
     if ((iRow < 0) || (iRow >= rowCount()))
     {

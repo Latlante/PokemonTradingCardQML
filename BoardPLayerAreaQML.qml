@@ -140,6 +140,24 @@ Item {
             font.pixelSize: 30
             fontSizeMode: Text.HorizontalFit
             renderType: Text.NativeRendering
+
+            MouseArea {
+                anchors.fill: parent
+                propagateComposedEvents: true
+                onClicked: {
+                    console.log("clicked textRewards")
+                    if(ctrlPopups.onePopupIsDisplayed === false)
+                    {
+                        //popupSelectHiddenCard1.visible = true
+                        ctrlGameBoard.actionClickOnRewards(player)
+                        //popupSelectHiddenCard1.visible = false
+
+                        mouse.accepted = true
+                    }
+                    else
+                        mouse.accepted = false
+                }
+            }
         }
     }
 
@@ -175,6 +193,7 @@ Item {
         preferredHighlightBegin: width/2 - widthComponent/2
         preferredHighlightEnd: width/2 + widthComponent/2
         //highlightRangeMode: ListView.StrictlyEnforceRange
+        interactive: false
 
         property int dragItemIndex: -1
         property int widthComponent: 0.6 * height
@@ -241,7 +260,10 @@ Item {
 
                         //onReleased: rectangleCardInBench.Drag.drop();
 
+                        onClicked: console.log("componentDelegateCardBench clicked")
+
                         onPressAndHold: {
+                            console.log("componentDelegateCardBench onPressAndHold")
                             popupCardDetailsComplete1.card = modelCard;
                             popupCardDetailsComplete1.visible = true;
                             //player.moveCardFromBenchToFight(modelIndex)
@@ -371,18 +393,16 @@ Item {
                         }
                     }
                 }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("componentDelegateCardEmptyBench clicked")
+                        ctrlGameBoard.actionDClickOnBench(player)
+                    }
+                }
             }
         }
-
-        /*DropArea {
-            id: dropAreaBench
-            anchors.fill: parent
-            onDropped: {
-                console.log("onDropped");
-                player.moveCardFromHandToBench(listViewPacketHand.dragItemIndex, 0);
-                listViewPacketHand.dragItemIndex = -1;
-            }
-        }*/
     }
 
     // |-----------------|

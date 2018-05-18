@@ -10,7 +10,7 @@ class PacketDeck : public AbstractPacketDynamic
     Q_OBJECT
 
 public:
-    PacketDeck(QList<AbstractCard*> listCards = QList<AbstractCard*>());
+    PacketDeck(const QString& namePacket, QList<AbstractCard*> listCards = QList<AbstractCard*>());
     virtual ~PacketDeck();
 
     static void declareQML();

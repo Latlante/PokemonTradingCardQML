@@ -21,6 +21,11 @@ Item {
         anchors.fill: parent
         color: "#AAAAAAAA"
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: console.log("popupSelectHiddenCard1 clicked back")
+        }
+
         Text {
             id: title
             height: 40
@@ -76,13 +81,6 @@ Item {
                     }
 
                 }
-
-                function displayTest()
-                {
-                    console.log("Test" + index);
-                }
-
-
             }
         }
 
@@ -95,7 +93,7 @@ Item {
             anchors.rightMargin: 10
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
-            //enabled: viewCards.model.isMaximumCardsSelected === true
+            enabled: viewCards.model.isMaximumCardsSelected === true
             text: "OK"
 
             onClicked: {
@@ -115,7 +113,10 @@ Item {
             interval: 3000;
             running: false;
             repeat: false
-            onTriggered: ctrlPopups.selectionCardsFinished()
+            onTriggered: {
+                ctrlPopups.selectionCardsFinished()
+                popupSelectHiddenCard1.enabled = true
+            }
         }
     }
 }

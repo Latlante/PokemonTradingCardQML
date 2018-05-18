@@ -2,8 +2,8 @@
 
 #include "src_Cards/abstractcard.h"
 
-AbstractPacketDynamic::AbstractPacketDynamic(QList<AbstractCard *> listCards) :
-    AbstractPacket(listCards)
+AbstractPacketDynamic::AbstractPacketDynamic(const QString &namePacket, QList<AbstractCard *> listCards) :
+    AbstractPacket(namePacket, listCards)
 {
 
 }

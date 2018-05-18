@@ -617,7 +617,6 @@ void GameManager::checkPokemonDead()
         if((pokemonFighter != nullptr) && (pokemonFighter->isDied() == true))
         {
             play->moveCardFromFightToTrash(0);      //On jette le pokemon mort
-            //play->moveCardFromBenchToFight(0);      //On remplace par un pokemon sur le banc s'il y a
 
             if(enemyOf(play)->rewards()->countCard() > 0)
             {

@@ -8,7 +8,7 @@ class PacketHand : public AbstractPacketDynamic
     Q_OBJECT
 
 public:
-    PacketHand(QList<AbstractCard *> listCards = QList<AbstractCard*>());
+    PacketHand(const QString& namePacket, QList<AbstractCard *> listCards = QList<AbstractCard*>());
     virtual ~PacketHand();
 
     static void declareQML();

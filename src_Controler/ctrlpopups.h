@@ -21,6 +21,8 @@ class QQmlApplicationEngine;
 class CtrlPopups : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool onePopupIsDisplayed READ onePopupIsDisplayed NOTIFY onePopupIsDisplayedChanged)
+
     //SELECT CARD IN PACKET
     Q_PROPERTY(bool selectCardInPacketVisible READ selectCardInPacketVisible WRITE setSelectCardInPacketVisible NOTIFY selectCardInPacketVisibleChanged)
 
@@ -50,6 +52,9 @@ public:
 
     static void declareQML();
     bool install(QQmlApplicationEngine *pEngine);
+
+    bool onePopupIsDisplayed();
+    void setOnePopupIsDisplayed(bool visible);
 
     //SELECT CARD IN PACKET
     Q_INVOKABLE ModelPopupSelectCardInPacket* modelSelectCardInPacket();
@@ -101,6 +106,8 @@ public:
     Q_INVOKABLE void selectionCardsFinished();
 
 signals:
+    void onePopupIsDisplayedChanged();
+
     //SELECT CARD IN PACKET
     void selectCardInPacketVisibleChanged();
 
@@ -127,6 +134,8 @@ signals:
     void selectionFinished();
 
 private:
+    bool m_onePopupIsDisplayed;
+
     //SELECT CARD IN PACKET
     ModelPopupSelectCardInPacket* m_modelSelectCardInPacket;
     bool m_selectCardInPacketVisible;
