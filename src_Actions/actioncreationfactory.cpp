@@ -31,6 +31,7 @@
 #include "src_Actions/attacks/actionprotectedagainstdamagerandom.h"
 #include "src_Actions/attacks/actioncompleteprotectionbypayingoneenergy.h"
 #include "src_Actions/attacks/actionnodamageonthreshold.h"
+#include "src_Actions/attacks/actioncompleteprotectionrandom.h"
 
 #include "src_Actions/attacks/actionchangeenemystatus.h"
 #include "src_Actions/attacks/actionchangeenemystatusrandom.h"
@@ -40,12 +41,17 @@
 #include "src_Actions/attacks/actiondieandhurteverypokemononeachbench.h"
 #include "src_Actions/attacks/actionswappokemonbetweenfigthandbench.h"
 
+#include "src_Actions/trainers/actiontrainer_informaticsearch.h"
 #include "src_Actions/trainers/actiontrainer_fakeprofessorchen.h"
-#include "src_Actions/trainers/actiontrainer_leo.h"
-#include "src_Actions/trainers/actiontrainer_potion.h"
+#include "src_Actions/trainers/actiontrainer_restored.h"
+#include "src_Actions/trainers/actiontrainer_saveenergies.h"
+#include "src_Actions/trainers/actiontrainer_totalguerison.h"
+#include "src_Actions/trainers/actiontrainer_pokemoncenter.h"
 #include "src_Actions/trainers/actiontrainer_professorchen.h"
 #include "src_Actions/trainers/actiontrainer_superpotion.h"
-#include "src_Actions/trainers/actiontrainer_totalguerison.h"
+#include "src_Actions/trainers/actiontrainer_leo.h"
+#include "src_Actions/trainers/actiontrainer_removeenergy.h"
+#include "src_Actions/trainers/actiontrainer_potion.h"
 
 ActionCreationFactory::ActionCreationFactory()
 {
@@ -244,6 +250,11 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
                 actionToReturn = createActionNoDamageOnThreshold(argInt1);
         }
         break;
+    case AbstractAction::Action_CompleteProtectionRandom:
+        {
+            actionToReturn = createActionCompleteProtectionRandom();
+        }
+        break;
 
     //STATUS
     case AbstractAction::Action_ChangeEnemyStatus:
@@ -292,14 +303,23 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
         break;
 
     //ACTIONS TRAINERS
+    case AbstractAction::ActionTrainer_InformaticSearch:
+        actionToReturn = createActionTrainer_InformaticSearch();
+        break;
     case AbstractAction::ActionTrainer_FakeProfessorChen:
         actionToReturn = createActionTrainer_FakeProfessorChen();
         break;
-    case AbstractAction::ActionTrainer_Leo:
-        actionToReturn = createActionTrainer_Leo();
+    case AbstractAction::ActionTrainer_Restored:
+        actionToReturn = createActionTrainer_Restored();
         break;
-    case AbstractAction::ActionTrainer_Potion:
-        actionToReturn = createActionTrainer_Potion();
+    case AbstractAction::ActionTrainer_SaveEnergies:
+        actionToReturn = createActionTrainer_SaveEnergies();
+        break;
+    case AbstractAction::ActionTrainer_TotalGuerison:
+        actionToReturn = createActionTrainer_TotalGuerison();
+        break;
+    case AbstractAction::ActionTrainer_PokemonCenter:
+        actionToReturn = createActionTrainer_PokemonCenter();
         break;
     case AbstractAction::ActionTrainer_ProfessorChen:
         actionToReturn = createActionTrainer_ProfessorChen();
@@ -307,8 +327,14 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
     case AbstractAction::ActionTrainer_SuperPotion:
         actionToReturn = createActionTrainer_SuperPotion();
         break;
-    case AbstractAction::ActionTrainer_TotalGuerison:
-        actionToReturn = createActionTrainer_TotalGuerison();
+    case AbstractAction::ActionTrainer_Leo:
+        actionToReturn = createActionTrainer_Leo();
+        break;
+    case AbstractAction::ActionTrainer_RemoveEnergy:
+        actionToReturn = createActionTrainer_RemoveEnergy();
+        break;
+    case AbstractAction::ActionTrainer_Potion:
+        actionToReturn = createActionTrainer_Potion();
         break;
     default:
         qWarning() << __PRETTY_FUNCTION__ << idAction << " is not ready yet";
@@ -444,6 +470,11 @@ ActionNoDamageOnThreshold* ActionCreationFactory::createActionNoDamageOnThreshol
     return new ActionNoDamageOnThreshold(damage);
 }
 
+ActionCompleteProtectionRandom* ActionCreationFactory::createActionCompleteProtectionRandom()
+{
+    return new ActionCompleteProtectionRandom();
+}
+
 //STATUS
 ActionChangeEnemyStatus* ActionCreationFactory::createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status)
 {
@@ -478,19 +509,34 @@ ActionSwapPokemonBetweenFigthAndBench* ActionCreationFactory::createActionSwapPo
 
 
 //ACTIONS TRAINERS
+ActionTrainer_InformaticSearch* ActionCreationFactory::createActionTrainer_InformaticSearch()
+{
+    return new ActionTrainer_InformaticSearch();
+}
+
 ActionTrainer_FakeProfessorChen* ActionCreationFactory::createActionTrainer_FakeProfessorChen()
 {
     return new ActionTrainer_FakeProfessorChen();
 }
 
-ActionTrainer_Leo* ActionCreationFactory::createActionTrainer_Leo()
+ActionTrainer_Restored* ActionCreationFactory::createActionTrainer_Restored()
 {
-    return new ActionTrainer_Leo();
+    return new ActionTrainer_Restored();
 }
 
-ActionTrainer_Potion* ActionCreationFactory::createActionTrainer_Potion()
+ActionTrainer_SaveEnergies* ActionCreationFactory::createActionTrainer_SaveEnergies()
 {
-    return new ActionTrainer_Potion();
+    return new ActionTrainer_SaveEnergies();
+}
+
+ActionTrainer_TotalGuerison* ActionCreationFactory::createActionTrainer_TotalGuerison()
+{
+    return new ActionTrainer_TotalGuerison();
+}
+
+ActionTrainer_PokemonCenter* ActionCreationFactory::createActionTrainer_PokemonCenter()
+{
+    return new ActionTrainer_PokemonCenter();
 }
 
 ActionTrainer_ProfessorChen* ActionCreationFactory::createActionTrainer_ProfessorChen()
@@ -503,7 +549,17 @@ ActionTrainer_SuperPotion* ActionCreationFactory::createActionTrainer_SuperPotio
     return new ActionTrainer_SuperPotion();
 }
 
-ActionTrainer_TotalGuerison* ActionCreationFactory::createActionTrainer_TotalGuerison()
+ActionTrainer_Leo* ActionCreationFactory::createActionTrainer_Leo()
 {
-    return new ActionTrainer_TotalGuerison();
+    return new ActionTrainer_Leo();
+}
+
+ActionTrainer_RemoveEnergy* ActionCreationFactory::createActionTrainer_RemoveEnergy()
+{
+    return new ActionTrainer_RemoveEnergy();
+}
+
+ActionTrainer_Potion* ActionCreationFactory::createActionTrainer_Potion()
+{
+    return new ActionTrainer_Potion();
 }

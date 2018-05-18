@@ -33,6 +33,7 @@ class ActionProtectedAgainstDamage;
 class ActionProtectedAgainstDamageRandom;
 class ActionCompleteProtectionByPayingOneEnergy;
 class ActionNoDamageOnThreshold;
+class ActionCompleteProtectionRandom;
 
 class ActionChangeEnemyStatus;
 class ActionChangeEnemyStatusRandom;
@@ -42,12 +43,17 @@ class ActionHurtEveryPokemonOnOwnBench;
 class ActionDieAndHurtEveryPokemonOnEachBench;
 class ActionSwapPokemonBetweenFigthAndBench;
 
+class ActionTrainer_InformaticSearch;
 class ActionTrainer_FakeProfessorChen;
-class ActionTrainer_Leo;
-class ActionTrainer_Potion;
+class ActionTrainer_Restored;
+class ActionTrainer_SaveEnergies;
+class ActionTrainer_TotalGuerison;
+class ActionTrainer_PokemonCenter;
 class ActionTrainer_ProfessorChen;
 class ActionTrainer_SuperPotion;
-class ActionTrainer_TotalGuerison;
+class ActionTrainer_Leo;
+class ActionTrainer_RemoveEnergy;
+class ActionTrainer_Potion;
 
 class ActionCreationFactory
 {
@@ -92,6 +98,7 @@ public:
     static ActionProtectedAgainstDamageRandom* createActionProtectedAgainstDamageRandom();
     static ActionCompleteProtectionByPayingOneEnergy* createActionCompleteProtectionByPayingOneEnergy(AbstractCard::Enum_element elementToRemove);
     static ActionNoDamageOnThreshold* createActionNoDamageOnThreshold(unsigned short damage);
+    static ActionCompleteProtectionRandom* createActionCompleteProtectionRandom();
 
     //STATUS
     static ActionChangeEnemyStatus* createActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status);
@@ -104,12 +111,17 @@ public:
     static ActionSwapPokemonBetweenFigthAndBench* createActionSwapPokemonBetweenFigthAndBench();
 
     //ACTIONS TRAINERS
+    static ActionTrainer_InformaticSearch* createActionTrainer_InformaticSearch();
     static ActionTrainer_FakeProfessorChen* createActionTrainer_FakeProfessorChen();
-    static ActionTrainer_Leo* createActionTrainer_Leo();
-    static ActionTrainer_Potion* createActionTrainer_Potion();
+    static ActionTrainer_Restored* createActionTrainer_Restored();
+    static ActionTrainer_SaveEnergies* createActionTrainer_SaveEnergies();
+    static ActionTrainer_TotalGuerison* createActionTrainer_TotalGuerison();
+    static ActionTrainer_PokemonCenter* createActionTrainer_PokemonCenter();
     static ActionTrainer_ProfessorChen* createActionTrainer_ProfessorChen();
     static ActionTrainer_SuperPotion* createActionTrainer_SuperPotion();
-    static ActionTrainer_TotalGuerison* createActionTrainer_TotalGuerison();
+    static ActionTrainer_Leo* createActionTrainer_Leo();
+    static ActionTrainer_RemoveEnergy* createActionTrainer_RemoveEnergy();
+    static ActionTrainer_Potion* createActionTrainer_Potion();
 };
 
 #endif // ACTIONCREATIONFACTORY_H
