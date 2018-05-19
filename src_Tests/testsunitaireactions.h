@@ -34,18 +34,37 @@ private:
 
 #ifdef TESTS_UNITAIRES
     //TESTS UNITAIRES
+        //GENENRAL
+    void checkActionChangeWeaknessOfEnemy();
+    void checkActionChangeResistanceOfHimself();
+    void checkActionEnemyDieIfYouDieInNextTurn();
+
+        //ATTAQUES
+    void checkActionReplicateOneAttackFromEnemy();
+    void checkActionReplicateLastDamageToEnemy();
+
+        //GESTION DES DEGATS
+    void checkActionMoreDamageByEnergy();
+    void checkActionDamageMultipliedByHeadOrTail();
+    void checkActionMoreDamageOrHurtHimSelf();
+
+
+        //ENERGIES
+    void checkActionRemoveOneEnergyAttached();
+
+
+        //SOIN
+    void checkActionHealing();
+
+
+        //PROTECTION
+    void checkActionProtectedAgainstDamage();
+
+        //STATUS
     void checkActionChangeEnemyStatus();
     void checkActionChangeEnemyStatusRandom();
-    void checkActionRemoveOneEnergyAttached();
-    void checkActionHealing();
-    void checkActionProtectedAgainstDamage();
-    void checkActionMoreDamageByEnergy();
-    void checkActionReplicateOneAttackFromEnemy();
-    void checkActionMoreDamageOnEnemyOrHimSelf();
-    void checkActionPoisonedCustom();
-    void checkActionRandomDamageToHimself();
-    void checkActionDamageMultipliedByDoubleHeadOrTail();
-    void checkActionDamageMultipliedByTripleHeadOrTail();
+    void checkActionEnemyPoisoned();
+
     void checkActionHurtEveryPokemonOnOwnBench();
     void checkActionSwapPokemonBetweenFigthAndBench();
     void checkActionDestruction();
@@ -55,7 +74,6 @@ private:
     void checkActionCompleteProtectionByPayingOneEnergy();
     void checkActionRemoveAllEnergiesAttached();
     void checkActionRemoveOneEnergyOnEnemy();
-    void checkActionReplicateLastAttackToEnemy();
     void checkActionHurtHimself();
     void checkActionUniqueAttack();
     void checkActionAttackIfEnemyIsSleeping();
@@ -63,12 +81,9 @@ private:
     void checkActionAttackLessDamageOnHimself();
     void checkActionMoreDamageByOwnDamage();
     void checkActionBlockOneEnemyAttackForOneTurn();
-    void checkActionChangeWeaknessOfEnemy();
-    void checkActionChangeResistanceOfHimself();
     void checkActionDamageOfHalfEnemyLifeLeft();
     void checkActionDamageOnlyIfEnemyIsSpleeping();
     void checkActionProtectedAgainstDamageRandom();
-    void checkActionEnemyDieIfYouDieInNextTurn();
     void checkActionChangeEnemyStatusOnHeadOrEnemyIsConfused();
     void checkActionCanAttack_Random();
     void checkActionNoDamageOnThreshold();
@@ -77,7 +92,7 @@ private:
     //CREATION DE LA ZONE DE COMBAT
     void createGameManager();
     CardPokemon *createCustomPokemonAttacking();
-    void setActionOnPokemonAttacking(AbstractAction::Enum_typeOfAction action, QVariant arg = QVariant());
+    void setActionOnPokemonAttacking(AbstractAction::Enum_typeOfAction action, QVariant arg1 = QVariant(), QVariant arg2 = QVariant());
     AttackData newAttackPokemonAttacking();
     CardPokemon *createCustomPokemonAttacked();
     void resetPokemons();
