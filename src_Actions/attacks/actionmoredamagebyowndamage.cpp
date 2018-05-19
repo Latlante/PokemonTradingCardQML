@@ -22,7 +22,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByOwnDamage::element
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionMoreDamageByOwnDamage::action()
+void ActionMoreDamageByOwnDamage::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
     {

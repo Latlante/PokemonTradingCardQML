@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionNoDamageOnThreshold::elementTo
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionNoDamageOnThreshold::action()
+void ActionNoDamageOnThreshold::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->setProtectedAgainstDamageForTheNextTurn(m_threshold);

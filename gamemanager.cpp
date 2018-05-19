@@ -5,6 +5,7 @@
 #include "src_Models/modellistenergies.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/fightarea.h"
+#include "src_Packets/packetdeck.h"
 #include "src_Packets/packethand.h"
 #include "src_Packets/packetrewards.h"
 #include "src_Packets/packettrash.h"
@@ -287,7 +288,7 @@ bool GameManager::retreat(CardPokemon *pokemonToRetreat)
                 pokemonToRetreat->moveEnergiesInTrash(listEnergies);
             }
 
-            listCardsBench = displayBench(playerAttacking->bench(), 1);
+            listCardsBench = displayPacket(playerAttacking->bench(), 1);
 
             if(listCardsBench.first()->type() == AbstractCard::TypeOfCard_Pokemon)
                 success = playerAttacking->swapCardsBetweenBenchAndFight(static_cast<CardPokemon*>(listCardsBench.first()));
@@ -360,42 +361,36 @@ Player* GameManager::gameIsFinished()
     return playWinner;
 }
 
-QList<AbstractCard *> GameManager::displayBench(BenchArea *bench, unsigned short quantity)
+QList<AbstractCard *> GameManager::displayPacket(AbstractPacket *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 
 #ifdef TESTS_UNITAIRES
-    Q_UNUSED(card)
-    return QList<int>() << 0;
+    Q_UNUSED(quantity)
+    Q_UNUSED(typeOfCard)
+
+    return {packet->card(0)};
 #else
-    return m_ctrlPopups.displayBench(bench, quantity);
+    return m_ctrlPopups.displayPacket(bench, quantity, typeOfCard);
 #endif
 }
 
-QList<AbstractCard *> GameManager::displayDeck(PacketDeck *deck, unsigned short quantity)
+QList<AbstractCard *> GameManager::displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 
-    return m_ctrlPopups.displayDeck(deck, quantity);
-}
+#ifdef TESTS_UNITAIRES
+    Q_UNUSED(quantity)
 
-QList<AbstractCard *> GameManager::displayHand(PacketHand *hand, unsigned short quantity)
-{
-    return m_ctrlPopups.displayHand(hand, quantity);
-}
-
-QList<AbstractCard *> GameManager::displayTrash(PacketTrash *trash, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
-{
-    return m_ctrlPopups.displayTrash(trash, quantity, typeOfCard);
-}
-
-QList<AbstractCard *> GameManager::displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity)
-{
+    return {rewards->card(0)};
+#else
     return m_ctrlPopups.displaySelectHiddenCard(rewards, quantity);
+#endif
+
 }
 
 QList<CardEnergy*> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
@@ -405,8 +400,9 @@ QList<CardEnergy*> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon,
 #endif
 
 #ifdef TESTS_UNITAIRES
-    Q_UNUSED(card)
-    return QList<int>() << 0;
+    Q_UNUSED(quantity)
+    Q_UNUSED(element)
+    return {pokemon->modelListOfEnergies()->energy(0)};
 #else
     return m_ctrlPopups.displayEnergiesForAPokemon(pokemon, quantity, element);
 #endif
@@ -420,6 +416,8 @@ int GameManager::displayAttacks(CardPokemon* card, bool blockRetreat)
 
 #ifdef TESTS_UNITAIRES
     Q_UNUSED(card)
+    Q_UNUSED(blockRetreat)
+
     return 0;
 #else
     bool authorizeRetreat = false;
@@ -437,7 +435,11 @@ void GameManager::displayMessage(QString message)
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 
+#ifdef TESTS_UNITAIRES
+    Q_UNUSED(message)
+#else
     m_ctrlPopups.displayMessage(message);
+#endif
 }
 
 #ifdef TESTS_UNITAIRES

@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionAttackOnlyIfEnemyIsSleeping::e
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionAttackOnlyIfEnemyIsSleeping::action()
+void ActionAttackOnlyIfEnemyIsSleeping::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->takeDamage(m_damage);

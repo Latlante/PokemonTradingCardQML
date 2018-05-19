@@ -20,7 +20,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionCompleteProtectionRandom::elem
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionCompleteProtectionRandom::action()
+void ActionCompleteProtectionRandom::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
     {

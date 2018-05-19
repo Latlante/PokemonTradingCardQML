@@ -10,7 +10,7 @@ public:
 
     AbstractAction::Enum_typeOfAction type() override;
     QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
-    void action() override;
+    void actionAfterAttack() override;
 
 private:
     unsigned short m_damageByEnergy;

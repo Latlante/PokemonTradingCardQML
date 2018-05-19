@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionDamageOfHalfEnemyLifeLeft::ele
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionDamageOfHalfEnemyLifeLeft::action()
+void ActionDamageOfHalfEnemyLifeLeft::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
     {

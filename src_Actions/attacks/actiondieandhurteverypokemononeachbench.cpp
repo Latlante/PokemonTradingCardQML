@@ -23,7 +23,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionDieAndHurtEveryPokemonOnEachBe
             << AbstractAction::CheckBenchPlayerAttacked;
 }
 
-void ActionDieAndHurtEveryPokemonOnEachBench::action()
+void ActionDieAndHurtEveryPokemonOnEachBench::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->takeDamage(pokemonAttacking()->lifeTotal());

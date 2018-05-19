@@ -20,7 +20,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_SuperPotion::elementTo
             << AbstractAction::CheckPokemonAttached;
 }
 
-void ActionTrainer_SuperPotion::action()
+void ActionTrainer_SuperPotion::actionAfterAttack()
 {
     if(pokemonAttached() != nullptr)
     {

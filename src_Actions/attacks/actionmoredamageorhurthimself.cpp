@@ -23,7 +23,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageOrHurtHimSelf::eleme
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionMoreDamageOrHurtHimSelf::action()
+void ActionMoreDamageOrHurtHimSelf::actionAfterAttack()
 {
     unsigned short coin = headOrTail();
 

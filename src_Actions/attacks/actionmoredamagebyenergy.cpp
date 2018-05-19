@@ -25,7 +25,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByEnergy::elementToC
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionMoreDamageByEnergy::action()
+void ActionMoreDamageByEnergy::actionAfterAttack()
 {
     bool status = false;
     unsigned short countEnergies = 0;

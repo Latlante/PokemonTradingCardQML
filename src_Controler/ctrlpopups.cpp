@@ -100,6 +100,11 @@ ModelPopupSelectCardInPacket* CtrlPopups::modelSelectCardInPacket()
     return m_modelSelectCardInPacket;
 }
 
+QList<AbstractCard *> CtrlPopups::displayPacket(AbstractPacket *packet, unsigned short quantity)
+{
+    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
+}
+
 QList<AbstractCard *> CtrlPopups::displayBench(BenchArea *packet, unsigned short quantity)
 {
     return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);

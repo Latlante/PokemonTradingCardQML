@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionEnemyCanAttackOnNextTurn_Rando
             << AbstractAction::CheckPokemonAttacked;
 }
 
-void ActionEnemyCanAttackOnNextTurn_Random::action()
+void ActionEnemyCanAttackOnNextTurn_Random::actionAfterAttack()
 {
     unsigned short coin = headOrTail();
 

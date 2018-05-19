@@ -22,7 +22,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionChangeResistanceOfHimself::ele
 }
 
 
-void ActionChangeResistanceOfHimself::action()
+void ActionChangeResistanceOfHimself::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->setResistanceElement(m_element);

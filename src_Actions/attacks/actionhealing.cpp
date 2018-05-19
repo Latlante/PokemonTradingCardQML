@@ -22,8 +22,16 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionHealing::elementToCheck()
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionHealing::action()
+void ActionHealing::actionBeforeAttack()
 {
     if(pokemonAttacking() != nullptr)
+    {
+        if(m_energyToPay != AbstractCard::Element_None)
+        {
+
+
+        }
+
         pokemonAttacking()->restoreLife(m_pv);
+    }
 }

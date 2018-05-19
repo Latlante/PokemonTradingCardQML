@@ -20,7 +20,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_Leo::elementToCheck()
             << AbstractAction::CheckPlayerAttacking;
 }
 
-void ActionTrainer_Leo::action()
+void ActionTrainer_Leo::actionAfterAttack()
 {
     if(playerAttacking() != nullptr)
     {

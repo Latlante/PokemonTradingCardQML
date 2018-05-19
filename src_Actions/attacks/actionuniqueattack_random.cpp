@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionUniqueAttack_Random::elementTo
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionUniqueAttack_Random::action()
+void ActionUniqueAttack_Random::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
     {

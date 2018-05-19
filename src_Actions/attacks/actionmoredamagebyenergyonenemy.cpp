@@ -22,7 +22,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByEnergyOnEnemy::ele
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionMoreDamageByEnergyOnEnemy::action()
+void ActionMoreDamageByEnergyOnEnemy::actionAfterAttack()
 {
     if((pokemonAttacking() != nullptr) && (pokemonAttacked() != nullptr))
     {

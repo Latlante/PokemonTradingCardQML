@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionBlockOneEnemyAttackForOneTurn:
             << AbstractAction::CheckPokemonAttacked;
 }
 
-void ActionBlockOneEnemyAttackForOneTurn::action()
+void ActionBlockOneEnemyAttackForOneTurn::actionAfterAttack()
 {
     if((gameManager() != nullptr) && (pokemonAttacked() != nullptr))
     {

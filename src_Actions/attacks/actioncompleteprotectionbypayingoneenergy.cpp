@@ -22,7 +22,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionCompleteProtectionByPayingOneE
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionCompleteProtectionByPayingOneEnergy::action()
+void ActionCompleteProtectionByPayingOneEnergy::actionBeforeAttack()
 {
     if((gameManager() != nullptr) && (pokemonAttacking() != nullptr))
     {

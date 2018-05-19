@@ -644,15 +644,19 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
                     //Sauvegarde des données actuelles
                     m_lastAttackUsed = listAttacks()[indexAttack];
 
-                    //On exécute l'action s'il y a
+                    //On exécute l'action d'avant attaque s'il y a
                     if(m_lastAttackUsed.action != nullptr)
-                        m_lastAttackUsed.action->executeAction(this, indexAttack);
+                        m_lastAttackUsed.action->executeActionBeforeAttack(this, indexAttack);
 
                     //Calcul de la faiblesse ou résistance
                     unsigned short newDamage = calculOfNewDamageDependOfWeaknessAndResistance(enemy, m_lastAttackUsed.damage);
 
                     //On attaque
                     enemy->takeDamage(newDamage);    
+
+                    //On exécute l'action d'après attaque s'il y a
+                    if(m_lastAttackUsed.action != nullptr)
+                        m_lastAttackUsed.action->executeActionAfterAttack(this, indexAttack);
 
                     //On réinitialise les états valables un seul tour
                     enemy->setInvincibleForTheNextTurn(false);

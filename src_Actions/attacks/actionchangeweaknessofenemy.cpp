@@ -22,7 +22,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionChangeWeaknessOfEnemy::element
 }
 
 
-void ActionChangeWeaknessOfEnemy::action()
+void ActionChangeWeaknessOfEnemy::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
         pokemonAttacked()->setWeaknessElement(m_element);

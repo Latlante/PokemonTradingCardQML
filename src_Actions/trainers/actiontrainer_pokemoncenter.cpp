@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_PokemonCenter::element
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionTrainer_PokemonCenter::action()
+void ActionTrainer_PokemonCenter::actionAfterAttack()
 {
     if((benchPlayerAttacking() != nullptr) && (pokemonAttacking() != nullptr))
     {

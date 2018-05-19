@@ -23,7 +23,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionChangeEnemyStatusRandom::eleme
 }
 
 
-void ActionChangeEnemyStatusRandom::action()
+void ActionChangeEnemyStatusRandom::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
     {

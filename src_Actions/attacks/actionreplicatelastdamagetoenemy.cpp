@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionReplicateLastDamageToEnemy::el
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionReplicateLastDamageToEnemy::action()
+void ActionReplicateLastDamageToEnemy::actionAfterAttack()
 {
     if((pokemonAttacked() != nullptr) && (pokemonAttacking()))
         pokemonAttacked()->takeDamage(pokemonAttacking()->lastDamageReceived());

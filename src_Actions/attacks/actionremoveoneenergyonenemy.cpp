@@ -28,7 +28,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionRemoveOneEnergyOnEnemy::elemen
             << AbstractAction::CheckPokemonAttacked;
 }
 
-void ActionRemoveOneEnergyOnEnemy::action()
+void ActionRemoveOneEnergyOnEnemy::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
     {

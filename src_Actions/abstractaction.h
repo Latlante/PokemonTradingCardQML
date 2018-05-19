@@ -97,7 +97,8 @@ public:
 	
     virtual Enum_typeOfAction type() = 0;
     virtual QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() = 0;
-    void executeAction(CardPokemon* pokemonAttached = nullptr, short index = -1);
+    void executeActionBeforeAttack(CardPokemon* pokemonAttached = nullptr, short index = -1);
+    void executeActionAfterAttack(CardPokemon* pokemonAttached = nullptr, short index = -1);
 
 #ifdef TESTS_UNITAIRES
     QList<unsigned short> listCoins();
@@ -105,7 +106,8 @@ public:
 
 
 protected:
-    virtual void action() = 0;
+    virtual void actionBeforeAttack();
+    virtual void actionAfterAttack();
 
     unsigned short headOrTail();
 

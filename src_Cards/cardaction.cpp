@@ -65,7 +65,7 @@ AbstractAction* CardAction::action()
 void CardAction::executeAction(CardPokemon *pokemonAttached)
 {
     if(action() != nullptr)
-        action()->executeAction(pokemonAttached);
+        action()->executeActionAfterAttack(pokemonAttached);
 }
 
 CardAction& CardAction::operator =(const CardAction& source)

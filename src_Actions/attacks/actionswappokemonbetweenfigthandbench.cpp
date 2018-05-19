@@ -21,13 +21,13 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionSwapPokemonBetweenFigthAndBenc
             << AbstractAction::CheckBenchPlayerAttacked;
 }
 
-void ActionSwapPokemonBetweenFigthAndBench::action()
+void ActionSwapPokemonBetweenFigthAndBench::actionAfterAttack()
 {
     if((pokemonAttacked() != nullptr) && (benchPlayerAttacked() != nullptr))
     {
         if(benchPlayerAttacked()->countCard() > 0)
         {
-            QList<AbstractCard*> listPokemonChoose = gameManager()->displayBench(benchPlayerAttacked());
+            QList<AbstractCard*> listPokemonChoose = gameManager()->displayPacket(benchPlayerAttacked());
 
             if((listPokemonChoose.count() >= 1) && (listPokemonChoose.first()->type() == AbstractCard::TypeOfCard_Pokemon))
                 playerAttacked()->swapCardsBetweenBenchAndFight(static_cast<CardPokemon*>(listPokemonChoose.first()));

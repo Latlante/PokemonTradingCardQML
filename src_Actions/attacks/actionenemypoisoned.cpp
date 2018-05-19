@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionEnemyPoisoned::elementToCheck(
             << AbstractAction::CheckPokemonAttacked;
 }
 
-void ActionEnemyPoisoned::action()
+void ActionEnemyPoisoned::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
     {

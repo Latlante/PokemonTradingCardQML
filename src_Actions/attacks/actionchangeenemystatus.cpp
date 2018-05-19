@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionChangeEnemyStatus::elementToCh
             << AbstractAction::CheckPokemonAttacked;
 }
 
-void ActionChangeEnemyStatus::action()
+void ActionChangeEnemyStatus::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
         pokemonAttacked()->setStatus(m_status);

@@ -20,7 +20,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionProtectedAgainstDamage::elemen
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionProtectedAgainstDamage::action()
+void ActionProtectedAgainstDamage::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->setProtectedAgainstDamageForTheNextTurn(true);

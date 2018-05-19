@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionHurtHimself::elementToCheck()
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionHurtHimself::action()
+void ActionHurtHimself::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->takeDamage(m_damage);

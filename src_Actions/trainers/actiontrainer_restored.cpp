@@ -1,5 +1,8 @@
 #include "actiontrainer_restored.h"
 
+#include "src_Packets/packethand.h"
+#include "src_Packets/packettrash.h"
+
 ActionTrainer_Restored::ActionTrainer_Restored()
 {
 
@@ -20,17 +23,17 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_Restored::elementToChe
             << AbstractAction::CheckPlayerAttacking;
 }
 
-void ActionTrainer_Restored::action()
+void ActionTrainer_Restored::actionAfterAttack()
 {
     if((gameManager() != nullptr) && (playerAttacking() != nullptr))
     {
         //On défausse 2 cartes de la main
-        QList<AbstractCard*> listCardsHand = gameManager()->displayHand(playerAttacking()->hand(), 2);
+        QList<AbstractCard*> listCardsHand = gameManager()->displayPacket(playerAttacking()->hand(), 2);
         foreach(AbstractCard* card, listCardsHand)
             playerAttacking()->moveCardFromHandToTrash(card);
 
         //On récupére une carte dresseur de la pile de défausse
-        QList<AbstractCard*> listCardsTrash = gameManager()->displayTrash(playerAttacking()->trash(), 1, AbstractCard::TypeOfCard_Action);
+        QList<AbstractCard*> listCardsTrash = gameManager()->displayPacket(playerAttacking()->trash(), 1, AbstractCard::TypeOfCard_Action);
         foreach(AbstractCard* card, listCardsTrash)
             playerAttacking()->moveCardFromTrashToHand(card);
     }

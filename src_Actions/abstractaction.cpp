@@ -25,7 +25,7 @@ AbstractAction::~AbstractAction()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
-void AbstractAction::executeAction(CardPokemon *pokemonAttached, short index)
+void AbstractAction::executeActionBeforeAttack(CardPokemon *pokemonAttached, short index)
 {
     m_pokemonAttached = pokemonAttached;
 
@@ -71,7 +71,61 @@ void AbstractAction::executeAction(CardPokemon *pokemonAttached, short index)
     //Execution
     if(statusCanBeExecuted == true)
     {
-        action();
+        actionBeforeAttack();
+    }
+    else
+    {
+        qCritical() << __PRETTY_FUNCTION__ << "L'action n'a pas pu être executée";
+    }
+}
+
+void AbstractAction::executeActionAfterAttack(CardPokemon *pokemonAttached, short index)
+{
+    m_pokemonAttached = pokemonAttached;
+
+    //Vérifications
+    //QList<AbstractAction::Enum_ElementsToCheck> listElementsToCheck = elementToCheck();
+    bool statusCanBeExecuted = true;
+    m_indexAttack = index;
+
+    /*foreach(AbstractAction::Enum_ElementsToCheck element, listElementsToCheck)
+    {
+        switch(element)
+        {
+        case AbstractAction::CheckGameManager:
+            statusCanBeExecuted &= checkGameManager();
+            break;
+        case AbstractAction::CheckPlayerAttacked:
+            statusCanBeExecuted &= checkPlayerAttacked();
+            break;
+        case AbstractAction::CheckPlayerAttacking:
+            statusCanBeExecuted &= checkPlayerAttacking();
+            break;
+        case AbstractAction::CheckPokemonAttached:
+            statusCanBeExecuted &= checkPokemonAttached();
+            break;
+        case AbstractAction::CheckPokemonAttacked:
+            statusCanBeExecuted &= checkPokemonAttacked();
+            break;
+        case AbstractAction::CheckPokemonAttacking:
+            statusCanBeExecuted &= checkPokemonAttacking();
+            break;
+        case AbstractAction::CheckBenchPlayerAttacked:
+            statusCanBeExecuted &= checkBenchPlayerAttacked();
+            break;
+        case AbstractAction::CheckBenchPlayerAttacking:
+            statusCanBeExecuted &= checkBenchPlayerAttacking();
+            break;
+        default:
+            qCritical() << __PRETTY_FUNCTION__ << "Erreur elementToCheck" << element;
+            statusCanBeExecuted = false;
+        }
+    }*/
+
+    //Execution
+    if(statusCanBeExecuted == true)
+    {
+        actionAfterAttack();
     }
     else
     {
@@ -89,6 +143,16 @@ QList<unsigned short> AbstractAction::listCoins()
 /************************************************************
 *****				FONCTIONS PROTEGEES					*****
 ************************************************************/
+void AbstractAction::actionBeforeAttack()
+{
+
+}
+
+void AbstractAction::actionAfterAttack()
+{
+
+}
+
 //Pourra être utile plus tard pour les tests
 unsigned short AbstractAction::headOrTail()
 {

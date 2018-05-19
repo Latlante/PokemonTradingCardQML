@@ -23,7 +23,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionDamageMultipliedByHeadOrTail::
             << AbstractAction::CheckPokemonAttacked;
 }
 
-void ActionDamageMultipliedByHeadOrTail::action()
+void ActionDamageMultipliedByHeadOrTail::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
     {

@@ -23,7 +23,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionAttackLessDamageOnHimself::ele
             << AbstractAction::CheckPokemonAttacking;
 }
 
-void ActionAttackLessDamageOnHimself::action()
+void ActionAttackLessDamageOnHimself::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
     {
