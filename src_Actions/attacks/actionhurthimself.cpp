@@ -1,8 +1,7 @@
 #include "actionhurthimself.h"
 
-ActionHurtHimself::ActionHurtHimself(unsigned short damage) :
-    AbstractAction(),
-    m_damage(damage)
+ActionHurtHimself::ActionHurtHimself(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,14 +14,26 @@ AbstractAction::Enum_typeOfAction ActionHurtHimself::type()
     return AbstractAction::Action_HurtHimself;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionHurtHimself::elementToCheck()
+bool ActionHurtHimself::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_damage = m_arg1.toInt(&ok);
+
+    return ok;
 }
 
 void ActionHurtHimself::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->takeDamage(m_damage);
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionHurtHimself::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }

@@ -14,11 +14,9 @@ AbstractAction::Enum_typeOfAction ActionDamageOfHalfEnemyLifeLeft::type()
     return AbstractAction::Action_DamageOfHalfEnemyLifeLeft;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionDamageOfHalfEnemyLifeLeft::elementToCheck()
+bool ActionDamageOfHalfEnemyLifeLeft::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    return true;
 }
 
 void ActionDamageOfHalfEnemyLifeLeft::actionAfterAttack()
@@ -33,4 +31,14 @@ void ActionDamageOfHalfEnemyLifeLeft::actionAfterAttack()
 
         pokemonAttacked()->takeDamage(damageToMake);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionDamageOfHalfEnemyLifeLeft::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
 }

@@ -1,8 +1,7 @@
 #include "actionchangeenemystatus.h"
 
-ActionChangeEnemyStatus::ActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status) :
-    AbstractAction(),
-    m_status(status)
+ActionChangeEnemyStatus::ActionChangeEnemyStatus(QVariant arg1) :
+    AbstractAction(arg1)
 {
 
 }
@@ -15,14 +14,26 @@ AbstractAction::Enum_typeOfAction ActionChangeEnemyStatus::type()
     return AbstractAction::Action_ChangeEnemyStatus;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionChangeEnemyStatus::elementToCheck()
+bool ActionChangeEnemyStatus::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked;
+    bool ok;
+
+    m_status = static_cast<CardPokemon::Enum_statusOfPokemon>(m_arg1.toInt(&ok));
+
+    return ok;
 }
 
 void ActionChangeEnemyStatus::actionAfterAttack()
 {
     if(pokemonAttacked() != nullptr)
         pokemonAttacked()->setStatus(m_status);
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionChangeEnemyStatus::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked;
 }

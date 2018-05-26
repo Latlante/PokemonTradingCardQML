@@ -1,8 +1,7 @@
 #include "actionmoredamagebyowndamage.h"
 
-ActionMoreDamageByOwnDamage::ActionMoreDamageByOwnDamage(unsigned short damage) :
-    AbstractAction(),
-    m_damage(damage)
+ActionMoreDamageByOwnDamage::ActionMoreDamageByOwnDamage(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,11 +14,13 @@ AbstractAction::Enum_typeOfAction ActionMoreDamageByOwnDamage::type()
     return AbstractAction::Action_MoreDamageByOwnDamage;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByOwnDamage::elementToCheck()
+bool ActionMoreDamageByOwnDamage::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_damage = m_arg1.toInt(&ok);
+
+    return ok;
 }
 
 void ActionMoreDamageByOwnDamage::actionAfterAttack()
@@ -29,4 +30,14 @@ void ActionMoreDamageByOwnDamage::actionAfterAttack()
         unsigned short damageMarquer = pokemonAttacking()->damageMarker();
         pokemonAttacked()->takeDamage(damageMarquer * m_damage);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByOwnDamage::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
 }

@@ -6,11 +6,14 @@
 class ActionHurtHimself : public AbstractAction
 {
 public:
-    ActionHurtHimself(unsigned short damage);
+    ActionHurtHimself(QVariant arg);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionAfterAttack() override;
+
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck();
 
 private:
     unsigned short m_damage;

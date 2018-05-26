@@ -6,11 +6,14 @@
 class ActionRemoveEnergyAttached : public AbstractAction
 {
 public:
-    ActionRemoveEnergyAttached(unsigned short numberOfEnergiesToRemoved, AbstractCard::Enum_element elementToRemove);
+    ActionRemoveEnergyAttached(QVariant arg1, QVariant arg2);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionBeforeAttack() override;
+
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
 
 private:
     unsigned short m_numberOfEnergiesToRemoved;

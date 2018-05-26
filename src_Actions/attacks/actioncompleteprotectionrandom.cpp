@@ -14,10 +14,9 @@ AbstractAction::Enum_typeOfAction ActionCompleteProtectionRandom::type()
     return AbstractAction::Action_CompleteProtectionRandom;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionCompleteProtectionRandom::elementToCheck()
+bool ActionCompleteProtectionRandom::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    return true;
 }
 
 void ActionCompleteProtectionRandom::actionAfterAttack()
@@ -29,4 +28,13 @@ void ActionCompleteProtectionRandom::actionAfterAttack()
         if(coin == 1)
             pokemonAttacking()->setInvincibleForTheNextTurn(true);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionCompleteProtectionRandom::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }

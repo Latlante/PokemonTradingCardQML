@@ -4,6 +4,10 @@
 #include "src_Actions/abstractaction.h"
 #include "src_Cards/cardpokemon.h"
 
+//#define CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(TYPE)   static TYPE* create##TYPE() { return new TYPE(); }
+//#define CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(TYPE)   static TYPE* create##TYPE(QVariant arg) { return new TYPE(arg); }
+//#define CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(TYPE)   static TYPE* create##TYPE(QVariant arg1, QVariant arg2) { return new TYPE(arg1, arg2); }
+
 class ActionChangeWeaknessOfEnemy;
 class ActionChangeResistanceOfHimself;
 
@@ -63,7 +67,70 @@ public:
     static AbstractAction* createAction(AbstractAction::Enum_typeOfAction idAction, QVariant arg1 = QVariant(), QVariant arg2 = QVariant());
 
     //GENERAL
-    static ActionChangeWeaknessOfEnemy* createActionChangeWeaknessOfEnemy(AbstractCard::Enum_element element);
+    /*CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionChangeWeaknessOfEnemy)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionChangeResistanceOfHimself)
+    //CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionEnemyDieIfYouDieInNextTurn)
+
+    //ATTAQUES
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionReplicateOneAttackFromEnemy)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionReplicateLastDamageToEnemy)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionUniqueAttack_Random)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionAttackOnlyIfEnemyIsSleeping)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionBlockOneEnemyAttackForOneTurn)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionEnemyCanAttackOnNextTurn_Random)
+
+    //GESTION DES DEGATS
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionMoreDamageByEnergy)
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionDamageMultipliedByHeadOrTail)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionMoreDamageByEnemyDamage)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionMoreDamageByOwnDamage)
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionAttackLessDamageOnHimself)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionDamageOfHalfEnemyLifeLeft)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionHurtHimself)
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionMoreDamageOrHurtHimSelf)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionMoreDamageByEnergyOnEnemy)
+
+    //ENERGIES
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionRemoveEnergyAttached)
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionRemoveOneEnergyOnEnemy)
+
+    //SOIN
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionHealing)
+
+    //PROTECTION
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionProtectedAgainstDamage)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionProtectedAgainstDamageRandom)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionCompleteProtectionByPayingOneEnergy)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionNoDamageOnThreshold)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionCompleteProtectionRandom)
+
+    //STATUS
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionChangeEnemyStatus)
+    CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(ActionChangeEnemyStatus_Random)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionEnemyPoisoned)
+
+    //BANC
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionHurtEveryPokemonOnOwnBench)
+    CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(ActionHurtEveryPokemonOnOwnBench)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionSwapPokemonBetweenFigthAndBench)
+
+    //ACTIONS TRAINERS
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_InformaticSearch)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_FakeProfessorChen)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_Restored)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_LittleGirl)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_SaveEnergies)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_TotalGuerison)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_PokemonCenter)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_ProfessorChen)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_SuperPotion)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_Leo)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_RemoveEnergy)
+    CREATE_ACTION_FROM_ENUM_WITH_NO_ARG(ActionTrainer_Potion)*/
+
+
+    //GENERAL
+    /*static ActionChangeWeaknessOfEnemy* createActionChangeWeaknessOfEnemy(AbstractCard::Enum_element element);
     static ActionChangeResistanceOfHimself* createActionChangeResistanceOfHimself(AbstractCard::Enum_element element);
 
     //ATTAQUES
@@ -121,7 +188,9 @@ public:
     static ActionTrainer_SuperPotion* createActionTrainer_SuperPotion();
     static ActionTrainer_Leo* createActionTrainer_Leo();
     static ActionTrainer_RemoveEnergy* createActionTrainer_RemoveEnergy();
-    static ActionTrainer_Potion* createActionTrainer_Potion();
+    static ActionTrainer_Potion* createActionTrainer_Potion();*/
+
+
 };
 
 #endif // ACTIONCREATIONFACTORY_H

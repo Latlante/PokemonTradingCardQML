@@ -1,10 +1,8 @@
 #include "actionuniqueattack_random.h"
 
-ActionUniqueAttack_Random::ActionUniqueAttack_Random(unsigned short index) :
+ActionUniqueAttack_Random::ActionUniqueAttack_Random() :
     AbstractAction()
 {
-    Q_UNUSED(index)
-
 }
 
 /************************************************************
@@ -15,10 +13,9 @@ AbstractAction::Enum_typeOfAction ActionUniqueAttack_Random::type()
     return AbstractAction::Action_UniqueAttack_Random;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionUniqueAttack_Random::elementToCheck()
+bool ActionUniqueAttack_Random::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    return true;
 }
 
 void ActionUniqueAttack_Random::actionAfterAttack()
@@ -28,6 +25,15 @@ void ActionUniqueAttack_Random::actionAfterAttack()
         unsigned short coin = headOrTail();
 
         if(coin == 0)
-            pokemonAttacking()->setNumberOfTurnAttackStillBlocks(indexAttack(), 0xFFFF);
+            pokemonAttacking()->setNumberOfTurnAttackStillBlocks(indexAttack(), -1);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionUniqueAttack_Random::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }

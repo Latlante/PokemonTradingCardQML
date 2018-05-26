@@ -1,8 +1,7 @@
 #include "actionhurteverypokemononownbench.h"
 
-ActionHurtEveryPokemonOnOwnBench::ActionHurtEveryPokemonOnOwnBench(unsigned short damage) :
-    AbstractAction(),
-    m_damage(damage)
+ActionHurtEveryPokemonOnOwnBench::ActionHurtEveryPokemonOnOwnBench(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,10 +14,13 @@ AbstractAction::Enum_typeOfAction ActionHurtEveryPokemonOnOwnBench::type()
     return AbstractAction::Action_HurtEveryPokemonOnOwnBench;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionHurtEveryPokemonOnOwnBench::elementToCheck()
+bool ActionHurtEveryPokemonOnOwnBench::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckBenchPlayerAttacking;
+    bool ok;
+
+    m_damage = m_arg1.toInt(&ok);
+
+    return ok;
 }
 
 void ActionHurtEveryPokemonOnOwnBench::actionAfterAttack()
@@ -40,4 +42,13 @@ void ActionHurtEveryPokemonOnOwnBench::actionAfterAttack()
             }
         }
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionHurtEveryPokemonOnOwnBench::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckBenchPlayerAttacking;
 }

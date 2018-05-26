@@ -1,8 +1,7 @@
 #include "actioncompleteprotectionbypayingoneenergy.h"
 
-ActionCompleteProtectionByPayingOneEnergy::ActionCompleteProtectionByPayingOneEnergy(AbstractCard::Enum_element element) :
-    AbstractAction(),
-    m_element(element)
+ActionCompleteProtectionByPayingOneEnergy::ActionCompleteProtectionByPayingOneEnergy(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,11 +14,13 @@ AbstractAction::Enum_typeOfAction ActionCompleteProtectionByPayingOneEnergy::typ
     return AbstractAction::Action_CompleteProtectionByPayingOneEnergy;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionCompleteProtectionByPayingOneEnergy::elementToCheck()
+bool ActionCompleteProtectionByPayingOneEnergy::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckGameManager
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_element = static_cast<AbstractCard::Enum_element>(m_arg1.toInt(&ok));
+
+    return ok;
 }
 
 void ActionCompleteProtectionByPayingOneEnergy::actionBeforeAttack()
@@ -34,4 +35,14 @@ void ActionCompleteProtectionByPayingOneEnergy::actionBeforeAttack()
             pokemonAttacking()->setInvincibleForTheNextTurn(true);
         }
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionCompleteProtectionByPayingOneEnergy::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckGameManager
+            << AbstractAction::CheckPokemonAttacking;
 }

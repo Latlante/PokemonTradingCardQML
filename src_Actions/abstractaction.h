@@ -93,10 +93,15 @@ public:
     };
 
     AbstractAction();
+    AbstractAction(QVariant arg1);
+    AbstractAction(QVariant arg1, QVariant arg2);
     virtual ~AbstractAction();
+
+    QVariant arg1();
+    QVariant arg2();
 	
     virtual Enum_typeOfAction type() = 0;
-    virtual QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() = 0;
+    virtual bool checkElements() { return true; }
     void executeActionBeforeAttack(CardPokemon* pokemonAttached = nullptr, short index = -1);
     void executeActionAfterAttack(CardPokemon* pokemonAttached = nullptr, short index = -1);
 
@@ -106,6 +111,9 @@ public:
 
 
 protected:
+    QVariant m_arg1, m_arg2;
+
+    virtual QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() = 0;
     virtual void actionBeforeAttack();
     virtual void actionAfterAttack();
 

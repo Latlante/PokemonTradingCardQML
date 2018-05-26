@@ -1,8 +1,7 @@
 #include "actionenemypoisoned.h"
 
-ActionEnemyPoisoned::ActionEnemyPoisoned(unsigned short damage) :
-    AbstractAction(),
-    m_damage(damage)
+ActionEnemyPoisoned::ActionEnemyPoisoned(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,10 +14,13 @@ AbstractAction::Enum_typeOfAction ActionEnemyPoisoned::type()
     return AbstractAction::Action_EnemyPoisoned;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionEnemyPoisoned::elementToCheck()
+bool ActionEnemyPoisoned::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked;
+    bool ok;
+
+    m_damage = m_arg1.toInt(&ok);
+
+    return ok;
 }
 
 void ActionEnemyPoisoned::actionAfterAttack()
@@ -28,4 +30,13 @@ void ActionEnemyPoisoned::actionAfterAttack()
         pokemonAttacked()->setDamagePoisonPerRound(m_damage);
         pokemonAttacked()->setStatus(CardPokemon::Status_Poisoned);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionEnemyPoisoned::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked;
 }

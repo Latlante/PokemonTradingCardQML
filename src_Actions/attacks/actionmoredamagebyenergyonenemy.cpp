@@ -1,8 +1,7 @@
 #include "actionmoredamagebyenergyonenemy.h"
 
-ActionMoreDamageByEnergyOnEnemy::ActionMoreDamageByEnergyOnEnemy(unsigned short damageByEnergy) :
-    AbstractAction(),
-    m_damageByEnergy(damageByEnergy)
+ActionMoreDamageByEnergyOnEnemy::ActionMoreDamageByEnergyOnEnemy(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,12 +14,15 @@ AbstractAction::Enum_typeOfAction ActionMoreDamageByEnergyOnEnemy::type()
     return AbstractAction::Action_MoreDamageByEnergyOnEnemy;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByEnergyOnEnemy::elementToCheck()
+bool ActionMoreDamageByEnergyOnEnemy::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_damageByEnergy = m_arg1.toInt(&ok);
+
+    return ok;
 }
+
 
 void ActionMoreDamageByEnergyOnEnemy::actionAfterAttack()
 {
@@ -29,4 +31,14 @@ void ActionMoreDamageByEnergyOnEnemy::actionAfterAttack()
         unsigned short countEnergies = pokemonAttacked()->countEnergies();
         pokemonAttacked()->takeDamage(m_damageByEnergy * countEnergies);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByEnergyOnEnemy::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
 }

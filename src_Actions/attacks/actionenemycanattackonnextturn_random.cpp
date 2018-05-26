@@ -14,11 +14,9 @@ AbstractAction::Enum_typeOfAction ActionEnemyCanAttackOnNextTurn_Random::type()
     return AbstractAction::Action_EnemyCanAttackOnNextTurn_Random;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionEnemyCanAttackOnNextTurn_Random::elementToCheck()
+bool ActionEnemyCanAttackOnNextTurn_Random::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckGameManager
-            << AbstractAction::CheckPokemonAttacked;
+    return true;
 }
 
 void ActionEnemyCanAttackOnNextTurn_Random::actionAfterAttack()
@@ -32,4 +30,14 @@ void ActionEnemyCanAttackOnNextTurn_Random::actionAfterAttack()
             pokemonAttacked()->setNumberOfTurnAttackStillBlocks(i, 1);
         }
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionEnemyCanAttackOnNextTurn_Random::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckGameManager
+            << AbstractAction::CheckPokemonAttacked;
 }

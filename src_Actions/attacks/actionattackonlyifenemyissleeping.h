@@ -7,11 +7,14 @@
 class ActionAttackOnlyIfEnemyIsSleeping : public AbstractAction
 {
 public:
-    ActionAttackOnlyIfEnemyIsSleeping(unsigned short damage);
+    ActionAttackOnlyIfEnemyIsSleeping(QVariant arg1);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionAfterAttack() override;
+
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
 
 private:
     unsigned short m_damage;

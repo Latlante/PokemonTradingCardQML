@@ -1,6 +1,8 @@
 #include "abstractaction.h"
 
 AbstractAction::AbstractAction() :
+    m_arg1(QVariant()),
+    m_arg2(QVariant()),
     m_gameManager(nullptr),
     m_playerAttacked(nullptr),
     m_playerAttacking(nullptr),
@@ -14,7 +16,43 @@ AbstractAction::AbstractAction() :
     , m_listCoins(QList<unsigned short>())
 #endif
 {
+}
 
+AbstractAction::AbstractAction(QVariant arg1) :
+    m_arg1(arg1),
+    m_arg2(QVariant()),
+    m_gameManager(nullptr),
+    m_playerAttacked(nullptr),
+    m_playerAttacking(nullptr),
+    m_pokemonAttached(nullptr),
+    m_pokemonAttacked(nullptr),
+    m_pokemonAttacking(nullptr),
+    m_benchPlayerAttacked(nullptr),
+    m_benchPlayerAttacking(nullptr),
+    m_indexAttack(-1)
+#ifdef TESTS_UNITAIRES
+    , m_listCoins(QList<unsigned short>())
+#endif
+{
+}
+
+
+AbstractAction::AbstractAction(QVariant arg1, QVariant arg2) :
+    m_arg1(arg1),
+    m_arg2(arg2),
+    m_gameManager(nullptr),
+    m_playerAttacked(nullptr),
+    m_playerAttacking(nullptr),
+    m_pokemonAttached(nullptr),
+    m_pokemonAttacked(nullptr),
+    m_pokemonAttacking(nullptr),
+    m_benchPlayerAttacked(nullptr),
+    m_benchPlayerAttacking(nullptr),
+    m_indexAttack(-1)
+#ifdef TESTS_UNITAIRES
+    , m_listCoins(QList<unsigned short>())
+#endif
+{
 }
 
 AbstractAction::~AbstractAction()
@@ -25,6 +63,16 @@ AbstractAction::~AbstractAction()
 /************************************************************
 *****				FONCTIONS PUBLIQUES					*****
 ************************************************************/
+QVariant AbstractAction::arg1()
+{
+    return m_arg1;
+}
+
+QVariant AbstractAction::arg2()
+{
+    return m_arg2;
+}
+
 void AbstractAction::executeActionBeforeAttack(CardPokemon *pokemonAttached, short index)
 {
     m_pokemonAttached = pokemonAttached;

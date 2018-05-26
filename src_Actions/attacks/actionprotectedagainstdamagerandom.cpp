@@ -14,10 +14,9 @@ AbstractAction::Enum_typeOfAction ActionProtectedAgainstDamageRandom::type()
     return AbstractAction::Action_ProtectedAgainstDamage;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionProtectedAgainstDamageRandom::elementToCheck()
+bool ActionProtectedAgainstDamageRandom::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    return true;
 }
 
 void ActionProtectedAgainstDamageRandom::actionAfterAttack()
@@ -27,4 +26,13 @@ void ActionProtectedAgainstDamageRandom::actionAfterAttack()
         if(headOrTail() == 1)
             pokemonAttacking()->setProtectedAgainstDamageForTheNextTurn(true);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionProtectedAgainstDamageRandom::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }

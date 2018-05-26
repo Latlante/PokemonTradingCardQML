@@ -1,8 +1,7 @@
 #include "actiondieandhurteverypokemononeachbench.h"
 
-ActionDieAndHurtEveryPokemonOnEachBench::ActionDieAndHurtEveryPokemonOnEachBench(unsigned short damage) :
-    AbstractAction(),
-    m_damage(damage)
+ActionDieAndHurtEveryPokemonOnEachBench::ActionDieAndHurtEveryPokemonOnEachBench(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,12 +14,13 @@ AbstractAction::Enum_typeOfAction ActionDieAndHurtEveryPokemonOnEachBench::type(
     return AbstractAction::Action_DieAndHurtEveryPokemonOnEachBench;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionDieAndHurtEveryPokemonOnEachBench::elementToCheck()
+bool ActionDieAndHurtEveryPokemonOnEachBench::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking
-            << AbstractAction::CheckBenchPlayerAttacking
-            << AbstractAction::CheckBenchPlayerAttacked;
+    bool ok;
+
+    m_damage = m_arg1.toInt(&ok);
+
+    return ok;
 }
 
 void ActionDieAndHurtEveryPokemonOnEachBench::actionAfterAttack()
@@ -63,4 +63,15 @@ void ActionDieAndHurtEveryPokemonOnEachBench::actionAfterAttack()
             }
         }
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionDieAndHurtEveryPokemonOnEachBench::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking
+            << AbstractAction::CheckBenchPlayerAttacking
+            << AbstractAction::CheckBenchPlayerAttacked;
 }

@@ -6,13 +6,14 @@
 class ActionChangeEnemyStatus : public AbstractAction
 {
 public:
-    explicit ActionChangeEnemyStatus(CardPokemon::Enum_statusOfPokemon status);
+    explicit ActionChangeEnemyStatus(QVariant arg1);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionAfterAttack() override;
 
-signals:
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
 
 private:
     CardPokemon::Enum_statusOfPokemon m_status;

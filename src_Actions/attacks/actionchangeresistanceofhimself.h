@@ -7,14 +7,15 @@
 class ActionChangeResistanceOfHimself : public AbstractAction
 {
 public:
-    ActionChangeResistanceOfHimself(AbstractCard::Enum_element element);
+    ActionChangeResistanceOfHimself();
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionAfterAttack() override;
 
-private:
-    AbstractCard::Enum_element m_element;
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+
 };
 
 #endif // ACTIONCHANGERESISTANCEOFHIMSELF_H

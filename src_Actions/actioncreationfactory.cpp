@@ -71,270 +71,148 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
     case AbstractAction::Action_None:
         break;
     case AbstractAction::Action_ChangeWeaknessOfEnemy:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionChangeWeaknessOfEnemy(static_cast<AbstractCard::Enum_element>(argInt1));
-        }
+        return new ActionChangeWeaknessOfEnemy();
         break;
     case AbstractAction::Action_ChangeResistanceOfHimself:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionChangeResistanceOfHimself(static_cast<AbstractCard::Enum_element>(argInt1));
-        }
+        return new ActionChangeResistanceOfHimself();
         break;
 
 
     //ATTAQUES
     case AbstractAction::Action_ReplicateOneAttackFromEnemy:
-        {
-            actionToReturn = createActionReplicateOneAttackFromEnemy();
-        }
+        return new ActionReplicateOneAttackFromEnemy();
         break;
     case AbstractAction::Action_ReplicateLastDamageToEnemy:
-        {
-            actionToReturn = createActionReplicateLastDamageToEnemy();
-        }
+        return new ActionReplicateLastDamageToEnemy();
         break;
     case AbstractAction::Action_UniqueAttack_Random:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionUniqueAttack_Random(argInt1);
-        }
+        return new ActionUniqueAttack_Random();
         break;
     case AbstractAction::Action_AttackOnlyIfEnemyIsSleeping:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionUniqueAttack_Random(argInt1);
-        }
+        return new ActionAttackOnlyIfEnemyIsSleeping(arg1);
         break;
     case AbstractAction::Action_BlockOneEnemyAttackForOneTurn:
-        {
-            actionToReturn = createActionBlockOneEnemyAttackForOneTurn();
-        }
+        return new ActionBlockOneEnemyAttackForOneTurn();
         break;
     case AbstractAction::Action_EnemyCanAttackOnNextTurn_Random:
-        {
-            actionToReturn = createActionEnemyCanAttackOnNextTurn_Random();
-        }
+        return new ActionEnemyCanAttackOnNextTurn_Random();
         break;
 
 
     //GESTION DES DEGATS
     case AbstractAction::Action_MoreDamageByEnergy:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionMoreDamageByEnergy(argInt1, argInt2);
-        }
+        return new ActionMoreDamageByEnergy(arg1, arg2);
         break;
     case AbstractAction::Action_DamageMultipliedByHeadOrTail:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionDamageMultipliedByHeadOrTail(argInt1, argInt2);
-        }
+        return new ActionDamageMultipliedByHeadOrTail(arg1, arg2);
         break;
     case AbstractAction::Action_MoreDamageByOwnDamage:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionMoreDamageByOwnDamage(argInt1);
-        }
+        return new ActionMoreDamageByOwnDamage(arg1);
         break;
     case AbstractAction::Action_AttackLessDamageOnHimself:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionAttackLessDamageOnHimself(argInt1, argInt2);
-        }
+        return new ActionAttackLessDamageOnHimself(arg1, arg2);
         break;
     case AbstractAction::Action_MoreDamageByEnemyDamage:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionMoreDamageByEnemyDamage(argInt1);
-        }
+        return new ActionMoreDamageByEnemyDamage(arg1);
         break;
     case AbstractAction::Action_DamageOfHalfEnemyLifeLeft:
-        {
-            actionToReturn = createActionDamageOfHalfEnemyLifeLeft();
-        }
+        return new ActionDamageOfHalfEnemyLifeLeft();
         break;
     case AbstractAction::Action_HurtHimself:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionHurtHimself(argInt1);
-        }
+        return new ActionHurtHimself(arg1);
         break;
     case AbstractAction::Action_MoreDamageOrHurtHimSelf:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionMoreDamageOrHurtHimSelf(argInt1, argInt2);
-        }
+        return new ActionMoreDamageOrHurtHimSelf(arg1, arg2);
         break;
     case AbstractAction::Action_MoreDamageByEnergyOnEnemy:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionMoreDamageByEnergyOnEnemy(argInt1);
-        }
+        return new ActionMoreDamageByEnergyOnEnemy(arg1);
         break;
 
     //ENERGIES
     case AbstractAction::Action_RemoveEnergyAttached:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionRemoveEnergyAttached(argInt1, static_cast<AbstractCard::Enum_element>(argInt2));
-        }
+        return new ActionRemoveEnergyAttached(arg1, arg2);
         break;
     case AbstractAction::Action_RemoveOneEnergyOnEnemy:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionRemoveEnergyAttached(argInt1, static_cast<AbstractCard::Enum_element>(argInt2));
-        }
+        return new ActionRemoveOneEnergyOnEnemy(arg1, arg2);
         break;
 
     //SOIN
     case AbstractAction::Action_Healing:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionHealing(argInt1, static_cast<AbstractCard::Enum_element>(argInt2));
-        }
+        return new ActionHealing(arg1, arg2);
         break;
 
     //PROTECTION
     case AbstractAction::Action_ProtectedAgainstDamage:
-        {
-            actionToReturn = createActionProtectedAgainstDamage();
-        }
+        actionToReturn = new ActionProtectedAgainstDamage();
         break;
     case AbstractAction::Action_ProtectedAgainstDamageRandom:
-        {
-            actionToReturn = createActionProtectedAgainstDamageRandom();
-        }
+        actionToReturn = new ActionProtectedAgainstDamageRandom();
         break;
     case AbstractAction::Action_CompleteProtectionByPayingOneEnergy:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionCompleteProtectionByPayingOneEnergy(static_cast<AbstractCard::Enum_element>(argInt1));
-        }
+        actionToReturn = new ActionCompleteProtectionByPayingOneEnergy(arg1);
         break;
     case AbstractAction::Action_NoDamageOnThreshold:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionNoDamageOnThreshold(argInt1);
-        }
+        actionToReturn = new ActionNoDamageOnThreshold(arg1);
         break;
     case AbstractAction::Action_CompleteProtectionRandom:
-        {
-            actionToReturn = createActionCompleteProtectionRandom();
-        }
+        actionToReturn = new ActionCompleteProtectionRandom();
         break;
 
     //STATUS
     case AbstractAction::Action_ChangeEnemyStatus:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionChangeEnemyStatus(static_cast<CardPokemon::Enum_statusOfPokemon>(argInt1));
-        }
+        actionToReturn = new ActionChangeEnemyStatus(arg1);
         break;
     case AbstractAction::Action_ChangeEnemyStatus_Random:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                argInt2 = arg2.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionChangeEnemyStatusRandom(static_cast<CardPokemon::Enum_statusOfPokemon>(argInt1), static_cast<CardPokemon::Enum_statusOfPokemon>(argInt2));
-        }
+        actionToReturn = new ActionChangeEnemyStatusRandom(arg1, arg2);
         break;
     case AbstractAction::Action_EnemyPoisoned:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionEnemyPoisoned(argInt1);
-        }
+        actionToReturn = new ActionEnemyPoisoned(arg1);
         break;
 
     //BANC
     case AbstractAction::Action_HurtEveryPokemonOnOwnBench:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionHurtEveryPokemonOnOwnBench(argInt1);
-        }
+        actionToReturn = new ActionHurtEveryPokemonOnOwnBench(arg1);
         break;
     case AbstractAction::Action_DieAndHurtEveryPokemonOnEachBench:
-        {
-            argInt1 = arg1.toInt(&ok);
-            if(ok)
-                actionToReturn = createActionDieAndHurtEveryPokemonOnEachBench(argInt1);
-        }
+        actionToReturn = new ActionDieAndHurtEveryPokemonOnEachBench(arg1);
         break;
     case AbstractAction::Action_SwapPokemonBetweenFigthAndBench:
-        {
-            actionToReturn = createActionSwapPokemonBetweenFigthAndBench();
-        }
+        actionToReturn = new ActionSwapPokemonBetweenFigthAndBench();
         break;
 
     //ACTIONS TRAINERS
     case AbstractAction::ActionTrainer_InformaticSearch:
-        actionToReturn = createActionTrainer_InformaticSearch();
+        actionToReturn = new ActionTrainer_InformaticSearch();
         break;
     case AbstractAction::ActionTrainer_FakeProfessorChen:
-        actionToReturn = createActionTrainer_FakeProfessorChen();
+        actionToReturn = new ActionTrainer_FakeProfessorChen();
         break;
     case AbstractAction::ActionTrainer_Restored:
-        actionToReturn = createActionTrainer_Restored();
+        actionToReturn = new ActionTrainer_Restored();
         break;
     case AbstractAction::ActionTrainer_SaveEnergies:
-        actionToReturn = createActionTrainer_SaveEnergies();
+        actionToReturn = new ActionTrainer_SaveEnergies();
         break;
     case AbstractAction::ActionTrainer_TotalGuerison:
-        actionToReturn = createActionTrainer_TotalGuerison();
+        actionToReturn = new ActionTrainer_TotalGuerison();
         break;
     case AbstractAction::ActionTrainer_PokemonCenter:
-        actionToReturn = createActionTrainer_PokemonCenter();
+        actionToReturn = new ActionTrainer_PokemonCenter();
         break;
     case AbstractAction::ActionTrainer_ProfessorChen:
-        actionToReturn = createActionTrainer_ProfessorChen();
+        actionToReturn = new ActionTrainer_ProfessorChen();
         break;
     case AbstractAction::ActionTrainer_SuperPotion:
-        actionToReturn = createActionTrainer_SuperPotion();
+        actionToReturn = new ActionTrainer_SuperPotion();
         break;
     case AbstractAction::ActionTrainer_Leo:
-        actionToReturn = createActionTrainer_Leo();
+        actionToReturn = new ActionTrainer_Leo();
         break;
     case AbstractAction::ActionTrainer_RemoveEnergy:
-        actionToReturn = createActionTrainer_RemoveEnergy();
+        actionToReturn = new ActionTrainer_RemoveEnergy();
         break;
     case AbstractAction::ActionTrainer_Potion:
-        actionToReturn = createActionTrainer_Potion();
+        actionToReturn = new ActionTrainer_Potion();
         break;
     default:
         qWarning() << __PRETTY_FUNCTION__ << idAction << " is not ready yet";
@@ -345,7 +223,7 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
 }
 
 //GENERAL
-ActionChangeWeaknessOfEnemy* ActionCreationFactory::createActionChangeWeaknessOfEnemy(AbstractCard::Enum_element element)
+/*ActionChangeWeaknessOfEnemy* ActionCreationFactory::createActionChangeWeaknessOfEnemy(AbstractCard::Enum_element element)
 {
     return new ActionChangeWeaknessOfEnemy(element);
 }
@@ -562,4 +440,4 @@ ActionTrainer_RemoveEnergy* ActionCreationFactory::createActionTrainer_RemoveEne
 ActionTrainer_Potion* ActionCreationFactory::createActionTrainer_Potion()
 {
     return new ActionTrainer_Potion();
-}
+}*/

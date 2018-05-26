@@ -1,9 +1,7 @@
 #include "actionmoredamageorhurthimself.h"
 
-ActionMoreDamageOrHurtHimSelf::ActionMoreDamageOrHurtHimSelf(unsigned short damageOnHead, unsigned short damageOnTail) :
-    AbstractAction(),
-    m_damageOnHead(damageOnHead),
-    m_damageOnTail(damageOnTail)
+ActionMoreDamageOrHurtHimSelf::ActionMoreDamageOrHurtHimSelf(QVariant arg1, QVariant arg2) :
+    AbstractAction(arg1, arg2)
 {
 
 }
@@ -16,11 +14,16 @@ AbstractAction::Enum_typeOfAction ActionMoreDamageOrHurtHimSelf::type()
     return AbstractAction::Action_MoreDamageOrHurtHimSelf;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageOrHurtHimSelf::elementToCheck()
+bool ActionMoreDamageOrHurtHimSelf::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_damageOnHead = m_arg1.toInt(&ok);
+
+    if(ok)
+        m_damageOnTail = m_arg2.toInt(&ok);
+
+    return ok;
 }
 
 void ActionMoreDamageOrHurtHimSelf::actionAfterAttack()
@@ -43,4 +46,14 @@ void ActionMoreDamageOrHurtHimSelf::actionAfterAttack()
             pokemonAttacking()->takeDamage(m_damageOnTail);
         }
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageOrHurtHimSelf::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
 }

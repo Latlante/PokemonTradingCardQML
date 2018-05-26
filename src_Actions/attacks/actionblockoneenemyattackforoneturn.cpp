@@ -14,11 +14,9 @@ AbstractAction::Enum_typeOfAction ActionBlockOneEnemyAttackForOneTurn::type()
     return AbstractAction::Action_BlockOneEnemyAttackForOneTurn;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionBlockOneEnemyAttackForOneTurn::elementToCheck()
+bool ActionBlockOneEnemyAttackForOneTurn::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckGameManager
-            << AbstractAction::CheckPokemonAttacked;
+    return true;
 }
 
 void ActionBlockOneEnemyAttackForOneTurn::actionAfterAttack()
@@ -28,4 +26,14 @@ void ActionBlockOneEnemyAttackForOneTurn::actionAfterAttack()
         unsigned short indexEnemy = gameManager()->displayAttacks(pokemonAttacked(), true);
         pokemonAttacked()->setNumberOfTurnAttackStillBlocks(indexEnemy, 1);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionBlockOneEnemyAttackForOneTurn::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckGameManager
+            << AbstractAction::CheckPokemonAttacked;
 }

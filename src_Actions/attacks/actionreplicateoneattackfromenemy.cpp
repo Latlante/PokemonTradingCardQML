@@ -14,12 +14,9 @@ AbstractAction::Enum_typeOfAction ActionReplicateOneAttackFromEnemy::type()
     return AbstractAction::Action_ReplicateOneAttackFromEnemy;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionReplicateOneAttackFromEnemy::elementToCheck()
+bool ActionReplicateOneAttackFromEnemy::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckGameManager
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    return true;
 }
 
 void ActionReplicateOneAttackFromEnemy::actionAfterAttack()
@@ -41,4 +38,15 @@ void ActionReplicateOneAttackFromEnemy::actionAfterAttack()
                         << ", indexLastAttack="
                         << indexLastAttack;
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionReplicateOneAttackFromEnemy::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckGameManager
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
 }

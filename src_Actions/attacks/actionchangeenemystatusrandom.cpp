@@ -1,9 +1,7 @@
 #include "actionchangeenemystatusrandom.h"
 
-ActionChangeEnemyStatusRandom::ActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon statusOnHead, CardPokemon::Enum_statusOfPokemon statusOnTail) :
-    AbstractAction(),
-    m_statusOnHead(statusOnHead),
-    m_statusOnTail(statusOnTail)
+ActionChangeEnemyStatusRandom::ActionChangeEnemyStatusRandom(QVariant arg1, QVariant arg2) :
+    AbstractAction(arg1, arg2)
 {
 
 }
@@ -16,12 +14,17 @@ AbstractAction::Enum_typeOfAction ActionChangeEnemyStatusRandom::type()
     return AbstractAction::Action_ChangeEnemyStatus_Random;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionChangeEnemyStatusRandom::elementToCheck()
+bool ActionChangeEnemyStatusRandom::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked;
-}
+    bool ok;
 
+    m_statusOnHead = static_cast<CardPokemon::Enum_statusOfPokemon>(m_arg1.toInt(&ok));
+
+    if(ok)
+        m_statusOnTail = static_cast<CardPokemon::Enum_statusOfPokemon>(m_arg2.toInt(&ok));
+
+    return ok;
+}
 
 void ActionChangeEnemyStatusRandom::actionAfterAttack()
 {
@@ -32,4 +35,13 @@ void ActionChangeEnemyStatusRandom::actionAfterAttack()
         else
             pokemonAttacked()->setStatus(m_statusOnTail);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionChangeEnemyStatusRandom::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked;
 }

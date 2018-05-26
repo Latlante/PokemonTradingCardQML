@@ -14,15 +14,23 @@ AbstractAction::Enum_typeOfAction ActionReplicateLastDamageToEnemy::type()
     return AbstractAction::Action_ReplicateLastDamageToEnemy;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionReplicateLastDamageToEnemy::elementToCheck()
+bool ActionReplicateLastDamageToEnemy::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    return true;
 }
 
 void ActionReplicateLastDamageToEnemy::actionAfterAttack()
 {
     if((pokemonAttacked() != nullptr) && (pokemonAttacking()))
         pokemonAttacked()->takeDamage(pokemonAttacking()->lastDamageReceived());
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionReplicateLastDamageToEnemy::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
 }

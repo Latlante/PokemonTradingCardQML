@@ -6,11 +6,14 @@
 class ActionHealing : public AbstractAction
 {
 public:
-    ActionHealing(unsigned short pv, AbstractCard::Enum_element energyToPay);
+    ActionHealing(QVariant arg1, QVariant arg2);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionBeforeAttack() override;
+
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
 
 private:
     unsigned short m_pv;

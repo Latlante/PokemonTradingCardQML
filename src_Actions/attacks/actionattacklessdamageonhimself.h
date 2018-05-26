@@ -6,11 +6,14 @@
 class ActionAttackLessDamageOnHimself : public AbstractAction
 {
 public:
-    ActionAttackLessDamageOnHimself(unsigned short originalDamage, unsigned short damagePerMarquer);
+    ActionAttackLessDamageOnHimself(QVariant arg1, QVariant arg2);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionAfterAttack() override;
+
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
 
 private:
     unsigned short m_originalDamage;

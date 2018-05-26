@@ -1,8 +1,7 @@
 #include "actionnodamageonthreshold.h"
 
-ActionNoDamageOnThreshold::ActionNoDamageOnThreshold(unsigned short threshold) :
-    AbstractAction(),
-    m_threshold(threshold)
+ActionNoDamageOnThreshold::ActionNoDamageOnThreshold(QVariant arg) :
+    AbstractAction(arg)
 {
 
 }
@@ -15,14 +14,26 @@ AbstractAction::Enum_typeOfAction ActionNoDamageOnThreshold::type()
     return AbstractAction::Action_NoDamageOnThreshold;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionNoDamageOnThreshold::elementToCheck()
+bool ActionNoDamageOnThreshold::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_threshold = m_arg1.toInt(&ok);
+
+    return ok;
 }
 
 void ActionNoDamageOnThreshold::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->setProtectedAgainstDamageForTheNextTurn(m_threshold);
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionNoDamageOnThreshold::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }

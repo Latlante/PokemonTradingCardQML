@@ -1,9 +1,7 @@
 #include "actionattacklessdamageonhimself.h"
 
-ActionAttackLessDamageOnHimself::ActionAttackLessDamageOnHimself(unsigned short originalDamage, unsigned short damagePerMarquer) :
-    AbstractAction(),
-    m_originalDamage(originalDamage),
-    m_damagePerMarquer(damagePerMarquer)
+ActionAttackLessDamageOnHimself::ActionAttackLessDamageOnHimself(QVariant arg1, QVariant arg2) :
+    AbstractAction(arg1, arg2)
 {
 
 }
@@ -16,11 +14,16 @@ AbstractAction::Enum_typeOfAction ActionAttackLessDamageOnHimself::type()
     return AbstractAction::Action_AttackLessDamageOnHimself;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionAttackLessDamageOnHimself::elementToCheck()
+bool ActionAttackLessDamageOnHimself::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_originalDamage = m_arg1.toInt(&ok);
+
+    if(ok)
+        m_damagePerMarquer = m_arg2.toInt(&ok);
+
+    return ok;
 }
 
 void ActionAttackLessDamageOnHimself::actionAfterAttack()
@@ -38,3 +41,12 @@ void ActionAttackLessDamageOnHimself::actionAfterAttack()
     }
 }
 
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionAttackLessDamageOnHimself::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
+}

@@ -14,11 +14,9 @@ AbstractAction::Enum_typeOfAction ActionSwapPokemonBetweenFigthAndBench::type()
     return AbstractAction::Action_SwapPokemonBetweenFigthAndBench;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionSwapPokemonBetweenFigthAndBench::elementToCheck()
+bool ActionSwapPokemonBetweenFigthAndBench::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPlayerAttacked
-            << AbstractAction::CheckBenchPlayerAttacked;
+    return true;
 }
 
 void ActionSwapPokemonBetweenFigthAndBench::actionAfterAttack()
@@ -43,4 +41,14 @@ void ActionSwapPokemonBetweenFigthAndBench::actionAfterAttack()
 
         qCritical() << __PRETTY_FUNCTION__ << messageError;
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionSwapPokemonBetweenFigthAndBench::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPlayerAttacked
+            << AbstractAction::CheckBenchPlayerAttacked;
 }

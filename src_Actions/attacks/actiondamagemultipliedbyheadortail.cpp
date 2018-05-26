@@ -1,10 +1,8 @@
 #include "actiondamagemultipliedbyheadortail.h"
 
 
-ActionDamageMultipliedByHeadOrTail::ActionDamageMultipliedByHeadOrTail(unsigned short damageByHead, unsigned short numberOfCoins) :
-    AbstractAction(),
-    m_damageByHead(damageByHead),
-    m_numberOfCoins(numberOfCoins)
+ActionDamageMultipliedByHeadOrTail::ActionDamageMultipliedByHeadOrTail(QVariant arg1, QVariant arg2) :
+    AbstractAction(arg1, arg2)
 {
 
 }
@@ -17,10 +15,16 @@ AbstractAction::Enum_typeOfAction ActionDamageMultipliedByHeadOrTail::type()
     return AbstractAction::Action_DamageMultipliedByHeadOrTail;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionDamageMultipliedByHeadOrTail::elementToCheck()
+bool ActionDamageMultipliedByHeadOrTail::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked;
+    bool ok;
+
+    m_damageByHead = m_arg1.toInt(&ok);
+
+    if(ok)
+        m_numberOfCoins = m_arg2.toInt(&ok);
+
+    return ok;
 }
 
 void ActionDamageMultipliedByHeadOrTail::actionAfterAttack()
@@ -38,4 +42,13 @@ void ActionDamageMultipliedByHeadOrTail::actionAfterAttack()
 
         pokemonAttacked()->takeDamage(totalDamage);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionDamageMultipliedByHeadOrTail::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked;
 }

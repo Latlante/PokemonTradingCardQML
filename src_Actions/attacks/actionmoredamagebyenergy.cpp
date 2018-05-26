@@ -3,10 +3,8 @@
 #include "src_Packets/fightarea.h"
 #include "src_Cards/cardpokemon.h"
 
-ActionMoreDamageByEnergy::ActionMoreDamageByEnergy(unsigned short damageByEnergy, unsigned short indexOfAttack) :
-    AbstractAction(),
-    m_damageByEnergy(damageByEnergy),
-    m_indexOfAttack(indexOfAttack)
+ActionMoreDamageByEnergy::ActionMoreDamageByEnergy(QVariant arg1, QVariant arg2) :
+    AbstractAction(arg1, arg2)
 {
 }
 
@@ -18,11 +16,16 @@ AbstractAction::Enum_typeOfAction ActionMoreDamageByEnergy::type()
     return AbstractAction::Action_MoreDamageByEnergy;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByEnergy::elementToCheck()
+bool ActionMoreDamageByEnergy::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_damageByEnergy = m_arg1.toInt(&ok);
+
+    if(ok)
+        m_indexOfAttack = m_arg2.toInt(&ok);
+
+    return ok;
 }
 
 void ActionMoreDamageByEnergy::actionAfterAttack()
@@ -46,4 +49,14 @@ void ActionMoreDamageByEnergy::actionAfterAttack()
         }
 
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionMoreDamageByEnergy::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked
+            << AbstractAction::CheckPokemonAttacking;
 }

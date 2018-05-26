@@ -6,13 +6,14 @@
 class ActionChangeEnemyStatusRandom : public AbstractAction
 {
 public:
-    explicit ActionChangeEnemyStatusRandom(CardPokemon::Enum_statusOfPokemon statusOnHead, CardPokemon::Enum_statusOfPokemon statusOnTail);
+    explicit ActionChangeEnemyStatusRandom(QVariant arg1, QVariant arg2);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionAfterAttack() override;
 
-signals:
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
 
 private:
     CardPokemon::Enum_statusOfPokemon m_statusOnHead;

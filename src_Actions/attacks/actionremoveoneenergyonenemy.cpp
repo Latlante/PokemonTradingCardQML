@@ -6,10 +6,8 @@
 #include "src_Cards/cardenergy.h"
 #include "src_Cards/cardpokemon.h"
 
-ActionRemoveOneEnergyOnEnemy::ActionRemoveOneEnergyOnEnemy(unsigned short numberOfEnergiesToRemoved, AbstractCard::Enum_element elementToRemove) :
-    AbstractAction(),
-    m_numberOfEnergiesToRemoved(numberOfEnergiesToRemoved),
-    m_elementToRemove(elementToRemove)
+ActionRemoveOneEnergyOnEnemy::ActionRemoveOneEnergyOnEnemy(QVariant arg1, QVariant arg2) :
+    AbstractAction(arg1, arg2)
 {
 
 }
@@ -22,10 +20,16 @@ AbstractAction::Enum_typeOfAction ActionRemoveOneEnergyOnEnemy::type()
     return AbstractAction::Action_RemoveOneEnergyOnEnemy;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionRemoveOneEnergyOnEnemy::elementToCheck()
+bool ActionRemoveOneEnergyOnEnemy::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacked;
+    bool ok;
+
+    m_numberOfEnergiesToRemoved = m_arg1.toInt(&ok);
+
+    if(ok)
+        m_elementToRemove = static_cast<AbstractCard::Enum_element>(m_arg2.toInt(&ok));
+
+    return ok;
 }
 
 void ActionRemoveOneEnergyOnEnemy::actionAfterAttack()
@@ -44,4 +48,13 @@ void ActionRemoveOneEnergyOnEnemy::actionAfterAttack()
             pokemonAttacked()->moveAllEnergiesInTrash();
         }
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionRemoveOneEnergyOnEnemy::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacked;
 }

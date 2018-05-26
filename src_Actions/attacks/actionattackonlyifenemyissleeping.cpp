@@ -1,8 +1,7 @@
 #include "actionattackonlyifenemyissleeping.h"
 
-ActionAttackOnlyIfEnemyIsSleeping::ActionAttackOnlyIfEnemyIsSleeping(unsigned short damage) :
-    AbstractAction(),
-    m_damage(damage)
+ActionAttackOnlyIfEnemyIsSleeping::ActionAttackOnlyIfEnemyIsSleeping(QVariant arg1) :
+    AbstractAction(arg1)
 {
 
 }
@@ -15,14 +14,26 @@ AbstractAction::Enum_typeOfAction ActionAttackOnlyIfEnemyIsSleeping::type()
     return AbstractAction::Action_AttackOnlyIfEnemyIsSleeping;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionAttackOnlyIfEnemyIsSleeping::elementToCheck()
+bool ActionAttackOnlyIfEnemyIsSleeping::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_damage = m_arg1.toInt(&ok);
+
+    return ok;
 }
 
 void ActionAttackOnlyIfEnemyIsSleeping::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->takeDamage(m_damage);
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionAttackOnlyIfEnemyIsSleeping::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }

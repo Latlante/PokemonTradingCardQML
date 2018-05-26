@@ -1,9 +1,7 @@
 #include "actionhealing.h"
 
-ActionHealing::ActionHealing(unsigned short pv, AbstractCard::Enum_element energyToPay) :
-    AbstractAction(),
-    m_pv(pv),
-    m_energyToPay(energyToPay)
+ActionHealing::ActionHealing(QVariant arg1, QVariant arg2) :
+    AbstractAction(arg1, arg2)
 {
 
 }
@@ -16,10 +14,16 @@ AbstractAction::Enum_typeOfAction ActionHealing::type()
     return AbstractAction::Action_Healing;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionHealing::elementToCheck()
+bool ActionHealing::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    bool ok;
+
+    m_pv = m_arg1.toInt(&ok);
+
+    if(ok)
+        m_energyToPay = static_cast<AbstractCard::Enum_element>(m_arg2.toInt(&ok));
+
+    return ok;
 }
 
 void ActionHealing::actionBeforeAttack()
@@ -34,4 +38,13 @@ void ActionHealing::actionBeforeAttack()
 
         pokemonAttacking()->restoreLife(m_pv);
     }
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionHealing::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }

@@ -6,11 +6,14 @@
 class ActionNoDamageOnThreshold : public AbstractAction
 {
 public:
-    ActionNoDamageOnThreshold(unsigned short threshold);
+    ActionNoDamageOnThreshold(QVariant arg);
 
     AbstractAction::Enum_typeOfAction type() override;
-    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
+    bool checkElements() override;
     void actionAfterAttack() override;
+
+protected:
+    QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
 
 private:
     unsigned short m_threshold;

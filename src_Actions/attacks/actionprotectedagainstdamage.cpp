@@ -14,14 +14,22 @@ AbstractAction::Enum_typeOfAction ActionProtectedAgainstDamage::type()
     return AbstractAction::Action_ProtectedAgainstDamage;
 }
 
-QList<AbstractAction::Enum_ElementsToCheck> ActionProtectedAgainstDamage::elementToCheck()
+bool ActionProtectedAgainstDamage::checkElements()
 {
-    return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+    return true;
 }
 
 void ActionProtectedAgainstDamage::actionAfterAttack()
 {
     if(pokemonAttacking() != nullptr)
         pokemonAttacking()->setProtectedAgainstDamageForTheNextTurn(true);
+}
+
+/************************************************************
+*****				FONCTIONS PROTEGEES					*****
+************************************************************/
+QList<AbstractAction::Enum_ElementsToCheck> ActionProtectedAgainstDamage::elementToCheck()
+{
+    return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckPokemonAttacking;
 }
