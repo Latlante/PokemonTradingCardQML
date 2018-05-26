@@ -58,13 +58,7 @@ public:
 
     //SELECT CARD IN PACKET
     Q_INVOKABLE ModelPopupSelectCardInPacket* modelSelectCardInPacket();
-    QList<AbstractCard *> displayPacket(AbstractPacket* packet, unsigned short quantity);
-    QList<AbstractCard *> displayBench(BenchArea* packet, unsigned short quantity = 1);
-    QList<AbstractCard *> displayDeck(PacketDeck* packet, unsigned short quantity = 1);
-    QList<AbstractCard *> displayHand(PacketHand* packet, unsigned short quantity = 1);
-    QList<AbstractCard *> displayTrash(PacketTrash* packet, unsigned short quantity = 1, AbstractCard::Enum_typeOfCard typeOfCard = AbstractCard::TypeOfCard_Whatever);
-
-
+    QList<AbstractCard *> displayPacket(AbstractPacket* packet, unsigned short quantity = 1, AbstractCard::Enum_typeOfCard typeOfCard = AbstractCard::TypeOfCard_Whatever);
     bool selectCardInPacketVisible();
     void setSelectCardInPacketVisible(bool state);
 

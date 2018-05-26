@@ -100,29 +100,24 @@ ModelPopupSelectCardInPacket* CtrlPopups::modelSelectCardInPacket()
     return m_modelSelectCardInPacket;
 }
 
-QList<AbstractCard *> CtrlPopups::displayPacket(AbstractPacket *packet, unsigned short quantity)
+QList<AbstractCard *> CtrlPopups::displayPacket(AbstractPacket *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
 {
-    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
-}
+    //Initialisation
+    m_modelSelectCardInPacket->setTypeOfCardFilter(typeOfCard);
+    m_modelSelectCardInPacket->setNumberOfCardsToSelect(quantity);
+    m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
+    setSelectCardInPacketVisible(true);
 
-QList<AbstractCard *> CtrlPopups::displayBench(BenchArea *packet, unsigned short quantity)
-{
-    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
-}
+    //En attente
+    QEventLoop loop;
+    connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
+    loop.exec();
 
-QList<AbstractCard *> CtrlPopups::displayDeck(PacketDeck *packet, unsigned short quantity)
-{
-    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
-}
+    //Configuration de fin
+    setSelectCardInPacketVisible(false);
 
-QList<AbstractCard *> CtrlPopups::displayHand(PacketHand *packet, unsigned short quantity)
-{
-    return displayAbstractPacket(packet, quantity, AbstractCard::TypeOfCard_Whatever);
-}
-
-QList<AbstractCard *> CtrlPopups::displayTrash(PacketTrash *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
-{
-    return displayAbstractPacket(packet, quantity, typeOfCard);
+    //Renvoi de l'information
+    return m_modelSelectCardInPacket->listCardsSelected();
 }
 
 bool CtrlPopups::selectCardInPacketVisible()
@@ -405,22 +400,4 @@ void CtrlPopups::setHeadOrTailValue(int value)
 /************************************************************
 *****				FONCTIONS PRIVEES					*****
 ************************************************************/
-QList<AbstractCard*> CtrlPopups::displayAbstractPacket(AbstractPacket *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
-{
-    //Initialisation
-    m_modelSelectCardInPacket->setTypeOfCardFilter(typeOfCard);
-    m_modelSelectCardInPacket->setNumberOfCardsToSelect(quantity);
-    m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
-    setSelectCardInPacketVisible(true);
 
-    //En attente
-    QEventLoop loop;
-    connect(this, &CtrlPopups::selectionFinished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    //Configuration de fin
-    setSelectCardInPacketVisible(false);
-
-    //Renvoi de l'information
-    return m_modelSelectCardInPacket->listCardsSelected();
-}
