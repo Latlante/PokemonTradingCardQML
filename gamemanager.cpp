@@ -228,10 +228,8 @@ void GameManager::nextPlayer()
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
 #endif
-    setIndexCurrentPlayer(m_indexCurrentPlayer+1);
 
-    currentPlayer()->newTurn();
-    currentPlayer()->drawOneCard();
+    setIndexCurrentPlayer(m_indexCurrentPlayer+1);
 }
 
 CardPokemon::Enum_StatusOfAttack GameManager::attack(CardPokemon *pokemonAttacking, unsigned short index)
@@ -325,15 +323,19 @@ void GameManager::endOfTurn()
     if(playerWinner != nullptr)
     {
         foreach(Player* play, m_listPlayers)
-            play->blockPlayer();
+            play->turnFinished();
 
         displayMessage("VICTOIRE DE " + playerWinner->name());
     }
     else
     {
         //On passe au prochain tour
-        currentPlayer()->blockPlayer();
+        currentPlayer()->turnFinished();
+
         nextPlayer();
+
+        currentPlayer()->newTurn();
+        currentPlayer()->drawOneCard();
     }
 }
 
@@ -373,7 +375,7 @@ QList<AbstractCard *> GameManager::displayPacket(AbstractPacket *packet, unsigne
 
     return {packet->card(0)};
 #else
-    return m_ctrlPopups.displayPacket(bench, quantity, typeOfCard);
+    return m_ctrlPopups.displayPacket(packet, quantity, typeOfCard);
 #endif
 }
 
@@ -481,7 +483,7 @@ void GameManager::onEndOfTurn_Player()
 
     //On bloque tous les joueurs
     foreach(Player* play, m_listPlayers)
-        play->blockPlayer();
+        play->turnFinished();
 
     //On vérifie si quelqu'un a gagné
     bool hasAWinner = false;
@@ -650,7 +652,7 @@ void GameManager::checkPokemonDead()
 #ifdef TESTS_UNITAIRES
             play->moveCardFromBenchToFight(0);
 #else
-            QList<AbstractCard*> listPokemonToReplace = m_ctrlPopups.displayBench(play->bench());
+            QList<AbstractCard*> listPokemonToReplace = m_ctrlPopups.displayPacket(play->bench());
 
             if(listPokemonToReplace.first()->type() == AbstractCard::TypeOfCard_Pokemon)
                 play->moveCardFromBenchToFight(static_cast<CardPokemon*>(listPokemonToReplace.first()));
@@ -734,16 +736,11 @@ void GameManager::checkAttacksBlocked()
             play->bench()->cardPok(index)->decrementNumberOfTurnAttackStillBlocks();
     }*/
 
-    qDebug() << __PRETTY_FUNCTION__ << "Début";
-
     //On décrémente uniquement le joueur actuel
     for(int index=0;index<currentPlayer()->fight()->countCard();index++)
     {
-        qDebug() << __PRETTY_FUNCTION__ << "fighting" << currentPlayer()->name() << index;
-
         if(currentPlayer()->fight()->pokemonFighting(index) != nullptr)
         {
-            qDebug() << __PRETTY_FUNCTION__ << "fighting" << currentPlayer()->name() << currentPlayer()->fight()->pokemonFighting(index)->name();
             currentPlayer()->fight()->pokemonFighting(index)->decrementNumberOfTurnAttackStillBlocks();
         }
         else
@@ -752,16 +749,11 @@ void GameManager::checkAttacksBlocked()
 
     for(int index=0;index<currentPlayer()->bench()->countCard();index++)
     {
-        qDebug() << __PRETTY_FUNCTION__ << "bench" << currentPlayer()->name() << index;
-
         if(currentPlayer()->bench()->cardPok(index) != nullptr)
         {
-            qDebug() << __PRETTY_FUNCTION__ << "bench" << currentPlayer()->name() << currentPlayer()->bench()->cardPok(index)->name();
             currentPlayer()->bench()->cardPok(index)->decrementNumberOfTurnAttackStillBlocks();
         }
         else
             qCritical() << __PRETTY_FUNCTION__ << "pokemonBench" << index << " is nullptr";
     }
-
-    qDebug() << __PRETTY_FUNCTION__ << "Fin";
 }

@@ -16,7 +16,7 @@ struct AttackData
 	unsigned short damage;
     QMap<AbstractCard::Enum_element, unsigned short> costEnergies;
     AbstractAction* action;
-    unsigned short numberOfTurnAttackStillBlocks;
+    short numberOfTurnAttackStillBlocks;
 
     bool operator ==(const AttackData& extData)
     {
@@ -122,9 +122,9 @@ public:
     Q_INVOKABLE QString attackDescription(int index);
     Q_INVOKABLE unsigned short attackDamage(int index);
     bool replaceOneAttack(int index, AttackData data);
-    unsigned short numberOfTurnAttackStillBlocks(int indexAttack);
+    short numberOfTurnAttackStillBlocks(int indexAttack);
     void decrementNumberOfTurnAttackStillBlocks();
-    void setNumberOfTurnAttackStillBlocks(int indexAttack, unsigned short value);
+    void setNumberOfTurnAttackStillBlocks(int indexAttack, short value);
 #ifdef TESTS_UNITAIRES
     void setAttacks(int index, AttackData data);
 #endif
@@ -155,6 +155,7 @@ public:
     AttackData lastAttackUsed();
     int lastIndexOfAttackUsed();
     unsigned short lastDamageReceived();
+    void resetLastDamageReceived();
 
     unsigned short costRetreat();
     bool canRetreat();

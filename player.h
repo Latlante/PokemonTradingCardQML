@@ -37,8 +37,7 @@ public:
     Q_INVOKABLE PacketTrash* trash();
 	
 	void newTurn();
-    void skipYourTurn();
-	void blockPlayer();
+    void turnFinished();
     bool isPlaying();
 	void drawOneCard();
     void drawOneReward(AbstractCard *cardReward);

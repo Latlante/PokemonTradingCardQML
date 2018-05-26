@@ -31,6 +31,7 @@ private:
     static const unsigned short m_pokAttacked_AttDamage;
     static const AbstractAction::Enum_typeOfAction m_pokAttacked_TypeOfAction;
     static const unsigned short m_pokAttacked_ActionDamage;
+    static const unsigned short m_pokAttacked_ActionNumberOfCoins;
 
 #ifdef TESTS_UNITAIRES
     //TESTS UNITAIRES
@@ -42,6 +43,7 @@ private:
         //ATTAQUES
     void checkActionReplicateOneAttackFromEnemy();
     void checkActionReplicateLastDamageToEnemy();
+    void checkActionUniqueAttack_Random();
 
         //GESTION DES DEGATS
     void checkActionMoreDamageByEnergy();
@@ -75,7 +77,6 @@ private:
     void checkActionRemoveAllEnergiesAttached();
     void checkActionRemoveOneEnergyOnEnemy();
     void checkActionHurtHimself();
-    void checkActionUniqueAttack();
     void checkActionAttackIfEnemyIsSleeping();
     void checkActionFullHealingByPayingOneEnergy();
     void checkActionAttackLessDamageOnHimself();

@@ -99,13 +99,20 @@ void Player::newTurn()
     //fight()->pokemonFighter()->setStatus(CardPokemon::Status_Normal);
 }
 
-void Player::skipYourTurn()
+void Player::turnFinished()
 {
-    emit endOfTurn();
-}
+    //On remet à 0 les historiques de dégats pour chaque pokémon
+    for(int i=0;i<fight()->countCard();++i)
+    {
+        fight()->pokemonFighting(i)->resetLastDamageReceived();
+    }
 
-void Player::blockPlayer()
-{
+    for(int i=0;i<bench()->countCard();++i)
+    {
+        bench()->cardPok(i)->resetLastDamageReceived();
+    }
+
+    //On bloque l'interface
     setCanPlay(false);
 }
 

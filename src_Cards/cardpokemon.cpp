@@ -6,6 +6,7 @@
 #include <QUrl>
 #include "utils.h"
 #include "src_Actions/abstractaction.h"
+#include "src_Actions/actioncreationfactory.h"
 #include "src_Cards/cardenergy.h"
 #include "src_Models/modellistenergies.h"
 #include "src_Packets/packettrash.h"
@@ -465,8 +466,13 @@ bool CardPokemon::replaceOneAttack(int index, AttackData data)
             currentData.action = nullptr;
         }
 
-        //Copie
-        currentData.action = data.action;
+        //Copie si action il y a
+        if(data.action != nullptr)
+        {
+            currentData.action = ActionCreationFactory::createAction(data.action->type(),
+                                                                     data.action->arg1(),
+                                                                     data.action->arg2());
+        }
         //On ne copie volontairement pas le coût en énergie
         //currentData.costEnergies = data.costEnergies;
         currentData.damage = data.damage;
@@ -482,7 +488,7 @@ bool CardPokemon::replaceOneAttack(int index, AttackData data)
     return statusBack;
 }
 
-unsigned short CardPokemon::numberOfTurnAttackStillBlocks(int indexAttack)
+short CardPokemon::numberOfTurnAttackStillBlocks(int indexAttack)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
@@ -519,7 +525,7 @@ void CardPokemon::decrementNumberOfTurnAttackStillBlocks()
     }
 }
 
-void CardPokemon::setNumberOfTurnAttackStillBlocks(int indexAttack, unsigned short value)
+void CardPokemon::setNumberOfTurnAttackStillBlocks(int indexAttack, short value)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
@@ -645,8 +651,10 @@ CardPokemon::Enum_StatusOfAttack CardPokemon::tryToAttack(int indexAttack, CardP
                     m_lastAttackUsed = listAttacks()[indexAttack];
 
                     //On exécute l'action d'avant attaque s'il y a
-                    if(m_lastAttackUsed.action != nullptr)
+                    if((m_lastAttackUsed.action != nullptr) && (m_lastAttackUsed.action->checkElements()))
+                    {
                         m_lastAttackUsed.action->executeActionBeforeAttack(this, indexAttack);
+                    }
 
                     //Calcul de la faiblesse ou résistance
                     unsigned short newDamage = calculOfNewDamageDependOfWeaknessAndResistance(enemy, m_lastAttackUsed.damage);
@@ -699,7 +707,7 @@ void CardPokemon::takeDamage(unsigned short damage)
             damageRecalculated = damage - protectedAgainstDamageForTheNextTurnThreshold();
     }
 
-    m_lastDamageReceived = damageRecalculated;
+    m_lastDamageReceived += damageRecalculated;
     setDamage(currentDamage() + damageRecalculated);
 }
 
@@ -890,6 +898,15 @@ unsigned short CardPokemon::lastDamageReceived()
 #endif
 
     return m_lastDamageReceived;
+}
+
+void CardPokemon::resetLastDamageReceived()
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    m_lastDamageReceived = 0;
 }
 
 unsigned short CardPokemon::costRetreat()
