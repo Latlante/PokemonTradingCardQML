@@ -10,7 +10,7 @@ public:
 
     AbstractAction::Enum_typeOfAction type() override;
     bool checkElements() override;
-    void actionAfterAttack() override;
+    void actionBeforeAttack() override;
 
 protected:
     QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;

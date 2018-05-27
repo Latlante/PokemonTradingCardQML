@@ -28,13 +28,13 @@ bool ActionAttackLessDamageOnHimself::checkElements()
 
 void ActionAttackLessDamageOnHimself::actionAfterAttack()
 {
-    if(pokemonAttacked() != nullptr)
+    if((pokemonAttacking() != nullptr) && (pokemonAttacked() != nullptr))
     {
         unsigned short damageMarquer = pokemonAttacking()->damageMarker();
         unsigned short damageToMake = 0;
         unsigned short ownDamage = damageMarquer * m_damagePerMarquer;
 
-        if(m_originalDamage < ownDamage)
+        if(m_originalDamage > ownDamage)
             damageToMake = m_originalDamage - ownDamage;
 
         pokemonAttacked()->takeDamage(damageToMake);

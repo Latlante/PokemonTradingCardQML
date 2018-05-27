@@ -23,7 +23,7 @@ bool ActionMoreDamageByEnemyDamage::checkElements()
     return ok;
 }
 
-void ActionMoreDamageByEnemyDamage::actionAfterAttack()
+void ActionMoreDamageByEnemyDamage::actionBeforeAttack()
 {
     if(pokemonAttacked() != nullptr)
     {

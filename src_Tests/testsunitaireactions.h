@@ -32,6 +32,8 @@ private:
     static const AbstractAction::Enum_typeOfAction m_pokAttacked_TypeOfAction;
     static const unsigned short m_pokAttacked_ActionDamage;
     static const unsigned short m_pokAttacked_ActionNumberOfCoins;
+    static const unsigned short m_pokAttacked_AttQuantityOfEnergies;
+    static const unsigned short m_pokAttacked_numberOfEnergiesAttached;
 
 #ifdef TESTS_UNITAIRES
     //TESTS UNITAIRES
@@ -44,51 +46,45 @@ private:
     void checkActionReplicateOneAttackFromEnemy();
     void checkActionReplicateLastDamageToEnemy();
     void checkActionUniqueAttack_Random();
+    void checkActionAttackOnlyIfEnemyIsSpleeping();
+    void checkActionBlockOneEnemyAttackForOneTurn();
+    void checkActionEnemyCanAttackOnNextTurn_Random();
 
         //GESTION DES DEGATS
     void checkActionMoreDamageByEnergy();
     void checkActionDamageMultipliedByHeadOrTail();
+    void checkActionMoreDamageByEnemyDamage();
+    void checkActionMoreDamageByOwnDamage();
+    void checkActionAttackLessDamageOnHimself();
+    void checkActionDamageOfHalfEnemyLifeLeft();
     void checkActionMoreDamageOrHurtHimSelf();
-
+    void checkActionMoreDamageByEnergyOnEnemy();
 
         //ENERGIES
     void checkActionRemoveOneEnergyAttached();
-
+    void checkActionRemoveOneEnergyOnEnemy();
 
         //SOIN
     void checkActionHealing();
 
-
         //PROTECTION
     void checkActionProtectedAgainstDamage();
+    void checkActionProtectedAgainstDamageRandom();
+    void checkActionCompleteProtectionByPayingOneEnergy();
+    void checkActionNoDamageOnThreshold();
+    void checkActionCompleteProtectionRandom();
 
         //STATUS
     void checkActionChangeEnemyStatus();
     void checkActionChangeEnemyStatusRandom();
     void checkActionEnemyPoisoned();
 
+        //BANC
     void checkActionHurtEveryPokemonOnOwnBench();
+    void checkActionDieAndHurtEveryPokemonOnEachBench();
     void checkActionSwapPokemonBetweenFigthAndBench();
-    void checkActionDestruction();
-    void checkActionMoreDamageByEnemyDamage();
-    void checkActionSuicide();
-    void checkActionHurtHimself_Random();
-    void checkActionCompleteProtectionByPayingOneEnergy();
-    void checkActionRemoveAllEnergiesAttached();
-    void checkActionRemoveOneEnergyOnEnemy();
-    void checkActionHurtHimself();
-    void checkActionAttackIfEnemyIsSleeping();
-    void checkActionFullHealingByPayingOneEnergy();
-    void checkActionAttackLessDamageOnHimself();
-    void checkActionMoreDamageByOwnDamage();
-    void checkActionBlockOneEnemyAttackForOneTurn();
-    void checkActionDamageOfHalfEnemyLifeLeft();
-    void checkActionDamageOnlyIfEnemyIsSpleeping();
-    void checkActionProtectedAgainstDamageRandom();
-    void checkActionChangeEnemyStatusOnHeadOrEnemyIsConfused();
-    void checkActionCanAttack_Random();
-    void checkActionNoDamageOnThreshold();
-    void checkActionEnemyCanAttackOnNextTurn_Random();
+
+
 
     //CREATION DE LA ZONE DE COMBAT
     void createGameManager();

@@ -514,7 +514,6 @@ void CardPokemon::decrementNumberOfTurnAttackStillBlocks()
     {
         for(int indexAttack=0;indexAttack<listAttacks().count();++indexAttack)
         {
-            qDebug() << __PRETTY_FUNCTION__ << indexAttack;
             AttackData data = listAttacks()[indexAttack];
 
             if(data.numberOfTurnAttackStillBlocks > 0)

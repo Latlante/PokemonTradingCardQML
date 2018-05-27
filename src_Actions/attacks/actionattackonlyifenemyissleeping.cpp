@@ -25,8 +25,8 @@ bool ActionAttackOnlyIfEnemyIsSleeping::checkElements()
 
 void ActionAttackOnlyIfEnemyIsSleeping::actionAfterAttack()
 {
-    if(pokemonAttacking() != nullptr)
-        pokemonAttacking()->takeDamage(m_damage);
+    if((pokemonAttacked() != nullptr) && (pokemonAttacked()->status() == CardPokemon::Status_Slept))
+        pokemonAttacked()->takeDamage(m_damage);
 }
 
 /************************************************************
@@ -35,5 +35,5 @@ void ActionAttackOnlyIfEnemyIsSleeping::actionAfterAttack()
 QList<AbstractAction::Enum_ElementsToCheck> ActionAttackOnlyIfEnemyIsSleeping::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
-            << AbstractAction::CheckPokemonAttacking;
+            << AbstractAction::CheckPokemonAttacked;
 }

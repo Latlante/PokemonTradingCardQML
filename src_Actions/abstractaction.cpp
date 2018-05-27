@@ -211,6 +211,7 @@ unsigned short AbstractAction::headOrTail()
 
 #ifdef TESTS_UNITAIRES
     m_listCoins.append(coin);
+    qDebug() << "Coin = " << coin;
 #endif
 
     return coin;
