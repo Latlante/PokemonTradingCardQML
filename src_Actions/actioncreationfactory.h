@@ -8,57 +8,6 @@
 //#define CREATE_ACTION_FROM_ENUM_WITH_ONE_ARG(TYPE)   static TYPE* create##TYPE(QVariant arg) { return new TYPE(arg); }
 //#define CREATE_ACTION_FROM_ENUM_WITH_TWO_ARG(TYPE)   static TYPE* create##TYPE(QVariant arg1, QVariant arg2) { return new TYPE(arg1, arg2); }
 
-class ActionChangeWeaknessOfEnemy;
-class ActionChangeResistanceOfHimself;
-
-class ActionReplicateOneAttackFromEnemy;
-class ActionReplicateLastDamageToEnemy;
-class ActionUniqueAttack_Random;
-class ActionAttackOnlyIfEnemyIsSleeping;
-class ActionBlockOneEnemyAttackForOneTurn;
-class ActionEnemyCanAttackOnNextTurn_Random;
-
-class ActionMoreDamageByEnergy;
-class ActionDamageMultipliedByHeadOrTail;
-class ActionMoreDamageByEnemyDamage;
-class ActionMoreDamageByOwnDamage;
-class ActionAttackLessDamageOnHimself;
-class ActionDamageOfHalfEnemyLifeLeft;
-class ActionHurtHimself;
-class ActionMoreDamageOrHurtHimSelf;
-class ActionMoreDamageByEnergyOnEnemy;
-
-class ActionRemoveEnergyAttached;
-class ActionRemoveOneEnergyOnEnemy;
-
-class ActionHealing;
-
-class ActionProtectedAgainstDamage;
-class ActionProtectedAgainstDamageRandom;
-class ActionCompleteProtectionByPayingOneEnergy;
-class ActionNoDamageOnThreshold;
-class ActionCompleteProtectionRandom;
-
-class ActionChangeEnemyStatus;
-class ActionChangeEnemyStatusRandom;
-class ActionEnemyPoisoned;
-
-class ActionHurtEveryPokemonOnOwnBench;
-class ActionDieAndHurtEveryPokemonOnEachBench;
-class ActionSwapPokemonBetweenFigthAndBench;
-
-class ActionTrainer_InformaticSearch;
-class ActionTrainer_FakeProfessorChen;
-class ActionTrainer_Restored;
-class ActionTrainer_SaveEnergies;
-class ActionTrainer_TotalGuerison;
-class ActionTrainer_PokemonCenter;
-class ActionTrainer_ProfessorChen;
-class ActionTrainer_SuperPotion;
-class ActionTrainer_Leo;
-class ActionTrainer_RemoveEnergy;
-class ActionTrainer_Potion;
-
 class ActionCreationFactory
 {
 public:

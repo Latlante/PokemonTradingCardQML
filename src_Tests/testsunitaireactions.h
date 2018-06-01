@@ -29,6 +29,7 @@ private:
 
     static const unsigned short m_pokAttacked_Life;
     static const unsigned short m_pokAttacked_AttDamage;
+    static const unsigned short m_pokAttacked_Att2Damage;
     static const AbstractAction::Enum_typeOfAction m_pokAttacked_TypeOfAction;
     static const unsigned short m_pokAttacked_ActionDamage;
     static const unsigned short m_pokAttacked_ActionNumberOfCoins;

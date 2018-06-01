@@ -14,7 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG(compilation_test)
 {
-    #DEFINES += TESTS_UNITAIRES
+    DEFINES += TESTS_UNITAIRES
 }
 
 #DEFINES += TRACAGE_PRECIS
@@ -103,7 +103,9 @@ SOURCES += \
     src_Actions/trainers/actiontrainer_saveenergies.cpp \
     src_Actions/trainers/actiontrainer_pokemoncenter.cpp \
     src_Actions/trainers/actiontrainer_removeenergy.cpp \
-    src_Actions/attacks/actioncompleteprotectionrandom.cpp
+    src_Actions/attacks/actioncompleteprotectionrandom.cpp \
+    src_Packets/packetdynamiccustom.cpp \
+    src_Actions/attacks/actionenemydieifyoudieinnextturn.cpp
 
 
 RESOURCES += qml.qrc \
@@ -195,7 +197,9 @@ HEADERS += \
     src_Actions/trainers/actiontrainer_saveenergies.h \
     src_Actions/trainers/actiontrainer_pokemoncenter.h \
     src_Actions/trainers/actiontrainer_removeenergy.h \
-    src_Actions/attacks/actioncompleteprotectionrandom.h
+    src_Actions/attacks/actioncompleteprotectionrandom.h \
+    src_Packets/packetdynamiccustom.h \
+    src_Actions/attacks/actionenemydieifyoudieinnextturn.h
 
 FORMS +=
 

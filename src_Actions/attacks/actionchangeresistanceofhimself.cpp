@@ -21,8 +21,13 @@ bool ActionChangeResistanceOfHimself::checkElements()
 
 void ActionChangeResistanceOfHimself::actionAfterAttack()
 {
-    /*if(pokemonAttacking() != nullptr)
-        pokemonAttacking()->setResistanceElement(m_element);*/
+    if((gameManager() != nullptr) && (pokemonAttacking() != nullptr))
+    {
+        AbstractCard::Enum_element element = gameManager()->displayAllElements(1);
+        pokemonAttacking()->setResistanceElement(element);
+    }
+    else
+        qCritical() << __PRETTY_FUNCTION__ << "Element null";
 }
 
 /************************************************************
@@ -31,5 +36,6 @@ void ActionChangeResistanceOfHimself::actionAfterAttack()
 QList<AbstractAction::Enum_ElementsToCheck> ActionChangeResistanceOfHimself::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckGameManager
             << AbstractAction::CheckPokemonAttacking;
 }

@@ -379,6 +379,21 @@ QList<AbstractCard *> GameManager::displayPacket(AbstractPacket *packet, unsigne
 #endif
 }
 
+AbstractCard::Enum_element GameManager::displayAllElements(unsigned short quantity)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+#ifdef TESTS_UNITAIRES
+    Q_UNUSED(quantity)
+
+    return AbstractCard::Element_Electric;
+#else
+    return m_ctrlPopups.displayAllElements(quantity);
+#endif
+}
+
 QList<AbstractCard *> GameManager::displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity)
 {
 #ifdef TRACAGE_PRECIS
@@ -614,6 +629,12 @@ void GameManager::checkPokemonDead()
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 
+    //Création de la liste pour connaître le nombre de récompense à piocher
+    QHash<Player*, unsigned short> listRewards;
+    foreach (Player* play, m_listPlayers)
+        listRewards.insert(play, 0);
+
+    //Vérification des pokémons morts et mise dans la pile de défausse
     foreach (Player* play, m_listPlayers)
     {
         //fight area
@@ -621,11 +642,20 @@ void GameManager::checkPokemonDead()
         if((pokemonFighter != nullptr) && (pokemonFighter->isDied() == true))
         {
             play->moveCardFromFightToTrash(0);      //On jette le pokemon mort
+            listRewards[enemyOf(play)] = listRewards[play] + 1;
 
-            if(enemyOf(play)->rewards()->countCard() > 0)
+            //On vérifie si le prélévement du destin était activé
+            if (pokemonFighter->isDestinyBond() == true)
             {
-                QList<AbstractCard*> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
-                enemyOf(play)->drawOneReward(listRewards.first());        //Le joueur adverse pioche une récompense
+                CardPokemon* enemyPokemonFighter = enemyOf(play)->fight()->pokemonFighter();
+
+                if(enemyPokemonFighter->isProtectedAgainstEffectForTheNextTurn() == false)
+                {
+                    enemyPokemonFighter->killed();
+                    enemyOf(play)->moveCardFromFightToTrash(0);      //On jette le pokemon mort
+                    listRewards[play] = listRewards[play] + 1;
+                }
+
             }
         }
 
@@ -636,17 +666,16 @@ void GameManager::checkPokemonDead()
             if((pokemonBench != nullptr) && (pokemonBench->isDied() == true))
             {
                 play->moveCardFromBenchToTrash(i);
-
-                if(play->rewards()->countCard() > 0)
-                {
-                    QList<AbstractCard*> listRewards = displaySelectHiddenCard(enemyOf(play)->rewards());
-                    enemyOf(play)->drawOneReward(listRewards.first());        //Le joueur adverse pioche une récompense
-                }
+                listRewards[enemyOf(play)] = listRewards[play] + 1;
 
                 i--;
             }
         }
+    }
 
+    //Si le pokemon de combat est mort, on le remplace par un du banc si possible
+    foreach (Player* play, m_listPlayers)
+    {
         if((play->fight()->pokemonFighter() == nullptr) && (play->bench()->countCard() > 0))
         {
 #ifdef TESTS_UNITAIRES
@@ -659,6 +688,21 @@ void GameManager::checkPokemonDead()
             else
                 qCritical() << __PRETTY_FUNCTION__ << "Card non pokemon sur le banc";
 #endif
+        }
+    }
+
+    //On pioche les récompenses
+    foreach (Player* play, m_listPlayers)
+    {
+        unsigned short numberRewards = listRewards[play];
+
+        if(numberRewards > 0)
+        {
+            QList<AbstractCard*> listCardsRewards = displaySelectHiddenCard(play->rewards(), numberRewards);
+
+            foreach(AbstractCard* abCard, listCardsRewards)
+                play->drawOneReward(abCard);        //Le joueur adverse pioche une récompense
+
         }
     }
 }

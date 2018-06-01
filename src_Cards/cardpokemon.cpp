@@ -39,6 +39,7 @@ CardPokemon::CardPokemon(unsigned short id,
     m_evolutionFrom(evolutionFrom),
     m_costRetreat(costRetreat),
     m_damageOfPoisonPerRound(DAMAGE_POISON),
+    m_destinyBond(false),
     m_lastDamageReceived(0)
 {
 	
@@ -710,6 +711,11 @@ void CardPokemon::takeDamage(unsigned short damage)
     setDamage(currentDamage() + damageRecalculated);
 }
 
+void CardPokemon::killed()
+{
+    setDamage(lifeTotal());
+}
+
 void CardPokemon::restoreLife(unsigned short life)
 {
 #ifdef TRACAGE_PRECIS
@@ -872,6 +878,16 @@ void CardPokemon::setDamagePoisonPerRound(unsigned short damage)
     m_damageOfPoisonPerRound = damage;
 }
 
+bool CardPokemon::isDestinyBond()
+{
+    return m_destinyBond;
+}
+
+void CardPokemon::setDestinyBond(bool state)
+{
+    m_destinyBond = state;
+}
+
 AttackData CardPokemon::lastAttackUsed()
 {
 #ifdef TRACAGE_PRECIS
@@ -952,6 +968,7 @@ CardPokemon& CardPokemon::operator =(const CardPokemon& source)
     m_resistanceCoef = source.m_resistanceCoef;
 
     m_damageOfPoisonPerRound = source.m_damageOfPoisonPerRound;
+    m_destinyBond = source.m_destinyBond;
     m_lastAttackUsed = source.m_lastAttackUsed;
 
 

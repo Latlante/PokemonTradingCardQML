@@ -139,6 +139,7 @@ public:
 	
     Enum_StatusOfAttack tryToAttack(int indexAttack, CardPokemon *enemy);
 	void takeDamage(unsigned short damage);
+    void killed();
     void restoreLife(unsigned short life);
 	bool canAttackFromStatus();
 	bool hasEnoughEnergies(AttackData attack);
@@ -152,6 +153,8 @@ public:
     void applyDamageIfPoisoned();
     unsigned short damagePoisonPerRound();
     void setDamagePoisonPerRound(unsigned short damage);
+    bool isDestinyBond();
+    void setDestinyBond(bool state);
     AttackData lastAttackUsed();
     int lastIndexOfAttackUsed();
     unsigned short lastDamageReceived();
@@ -188,6 +191,7 @@ private:
     unsigned short m_costRetreat;
 
     unsigned short m_damageOfPoisonPerRound;
+    bool m_destinyBond;
     AttackData m_lastAttackUsed;
     unsigned short m_lastDamageReceived;
 	

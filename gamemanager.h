@@ -51,6 +51,7 @@ public:
     Player *gameIsFinished();
 
     QList<AbstractCard *> displayPacket(AbstractPacket *packet, unsigned short quantity = 1, AbstractCard::Enum_typeOfCard typeOfCard = AbstractCard::TypeOfCard_Whatever);
+    AbstractCard::Enum_element displayAllElements(unsigned short quantity = 1);
     QList<AbstractCard *> displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity = 1);
     QList<CardEnergy *> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     int displayAttacks(CardPokemon* card, bool blockRetreat = false);

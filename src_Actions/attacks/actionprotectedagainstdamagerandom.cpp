@@ -11,7 +11,7 @@ ActionProtectedAgainstDamageRandom::ActionProtectedAgainstDamageRandom() :
 ************************************************************/
 AbstractAction::Enum_typeOfAction ActionProtectedAgainstDamageRandom::type()
 {
-    return AbstractAction::Action_ProtectedAgainstDamage;
+    return AbstractAction::Action_ProtectedAgainstDamageRandom;
 }
 
 bool ActionProtectedAgainstDamageRandom::checkElements()

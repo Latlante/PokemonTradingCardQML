@@ -1,5 +1,7 @@
 #include "actionchangeweaknessofenemy.h"
 
+#include "src_Cards/cardenergy.h"
+
 ActionChangeWeaknessOfEnemy::ActionChangeWeaknessOfEnemy() :
     AbstractAction()
 {
@@ -21,8 +23,11 @@ bool ActionChangeWeaknessOfEnemy::checkElements()
 
 void ActionChangeWeaknessOfEnemy::actionAfterAttack()
 {
-    /*if(pokemonAttacked() != nullptr)
-        pokemonAttacked()->setWeaknessElement(m_element);*/
+    if((gameManager() != nullptr) && (pokemonAttacked() != nullptr))
+    {
+        AbstractCard::Enum_element element = gameManager()->displayAllElements(1);
+        pokemonAttacked()->setWeaknessElement(element);
+    }
 }
 
 /************************************************************
@@ -31,5 +36,6 @@ void ActionChangeWeaknessOfEnemy::actionAfterAttack()
 QList<AbstractAction::Enum_ElementsToCheck> ActionChangeWeaknessOfEnemy::elementToCheck()
 {
     return QList<AbstractAction::Enum_ElementsToCheck>()
+            << AbstractAction::CheckGameManager
             << AbstractAction::CheckPokemonAttacked;
 }

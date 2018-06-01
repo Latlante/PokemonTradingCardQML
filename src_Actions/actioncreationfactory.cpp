@@ -4,6 +4,7 @@
 
 #include "src_Actions/attacks/actionchangeweaknessofenemy.h"
 #include "src_Actions/attacks/actionchangeresistanceofhimself.h"
+#include "src_Actions/attacks/actionenemydieifyoudieinnextturn.h"
 
 #include "src_Actions/attacks/actionreplicateoneattackfromenemy.h"
 #include "src_Actions/attacks/actionreplicatelastdamagetoenemy.h"
@@ -75,6 +76,9 @@ AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfA
         break;
     case AbstractAction::Action_ChangeResistanceOfHimself:
         return new ActionChangeResistanceOfHimself();
+        break;
+    case AbstractAction::Action_EnemyDieIfYouDieInNextTurn:
+        return new ActionEnemyDieIfYouDieInNextTurn();
         break;
 
 
