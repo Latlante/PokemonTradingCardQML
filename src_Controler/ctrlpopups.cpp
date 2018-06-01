@@ -7,12 +7,14 @@
 #include <QQmlContext>
 #include <QtQml/qqml.h>
 
+#include "common/database.h"
 #include "src_Cards/cardpokemon.h"
 #include "src_Models/modelpopupselectcardinpacket.h"
 #include "src_Models/modelpopupselectenergyinpokemon.h"
 #include "src_Packets/abstractpacket.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/packetdeck.h"
+#include "src_Packets/packetdynamiccustom.h"
 #include "src_Packets/packethand.h"
 #include "src_Packets/packetrewards.h"
 #include "src_Packets/packettrash.h"
@@ -118,6 +120,19 @@ QList<AbstractCard *> CtrlPopups::displayPacket(AbstractPacket *packet, unsigned
 
     //Renvoi de l'information
     return m_modelSelectCardInPacket->listCardsSelected();
+}
+
+QList<AbstractCard *> CtrlPopups::displayAllElements(unsigned short quantity)
+{
+    Database db;
+    QList<int> listIdEnergiesAvailable = db.listIdAllCardsEnergies();
+    QList<AbstractCard*> listCards;
+    foreach(int id, listIdEnergiesAvailable)
+        listCards.append(db.cardById(id));
+
+    PacketDynamicCustom* packetAllEnergies = new PacketDynamicCustom("all Energies", listCards);
+
+    return displayPacket(packetAllEnergies, quantity);
 }
 
 bool CtrlPopups::selectCardInPacketVisible()

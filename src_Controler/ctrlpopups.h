@@ -59,6 +59,7 @@ public:
     //SELECT CARD IN PACKET
     Q_INVOKABLE ModelPopupSelectCardInPacket* modelSelectCardInPacket();
     QList<AbstractCard *> displayPacket(AbstractPacket* packet, unsigned short quantity = 1, AbstractCard::Enum_typeOfCard typeOfCard = AbstractCard::TypeOfCard_Whatever);
+    QList<AbstractCard *> displayAllElements(unsigned short quantity = 1);
     bool selectCardInPacketVisible();
     void setSelectCardInPacketVisible(bool state);
 
