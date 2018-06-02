@@ -104,9 +104,14 @@ ModelPopupSelectCardInPacket* CtrlPopups::modelSelectCardInPacket()
 
 QList<AbstractCard *> CtrlPopups::displayPacket(AbstractPacket *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
 {
+    //Vérification
+    unsigned short newQuantity = quantity;
+    if(newQuantity > packet->countCard())
+        newQuantity = packet->countCard();
+
     //Initialisation
     m_modelSelectCardInPacket->setTypeOfCardFilter(typeOfCard);
-    m_modelSelectCardInPacket->setNumberOfCardsToSelect(quantity);
+    m_modelSelectCardInPacket->setNumberOfCardsToSelect(newQuantity);
     m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
     setSelectCardInPacketVisible(true);
 
@@ -155,8 +160,13 @@ void CtrlPopups::setSelectCardInPacketVisible(bool state)
 //**************************************
 QList<AbstractCard *> CtrlPopups::displaySelectHiddenCard(PacketRewards* rewards, unsigned short quantity)
 {
+    //Vérification
+    unsigned short newQuantity = quantity;
+    if(newQuantity > packet->countCard())
+        newQuantity = packet->countCard();
+
     //Initialisation
-    m_modelSelectCardInPacket->setNumberOfCardsToSelect(quantity);
+    m_modelSelectCardInPacket->setNumberOfCardsToSelect(newQuantity);
     m_modelSelectCardInPacket->addPacketFromAbstractPacket(rewards);
     setSelectHiddenCardVisible(true);
 
@@ -280,10 +290,15 @@ ModelPopupSelectEnergyInPokemon* CtrlPopups::modelSelectEnergyInPokemon()
 
 QList<CardEnergy*> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon, unsigned short quantity, AbstractCard::Enum_element element)
 {
+    //Vérification
+    unsigned short newQuantity = quantity;
+    if(newQuantity > pokemon->countEnergies())
+        newQuantity = pokemon->countEnergies();
+
     //Initialisation
     m_modelSelectEnergyInPokemon->setElementFilter(element);
     m_modelSelectEnergyInPokemon->addListEnergyFromPokemon(pokemon);
-    m_modelSelectEnergyInPokemon->setNumberOfEnergiesToSelect(quantity);
+    m_modelSelectEnergyInPokemon->setNumberOfEnergiesToSelect(newQuantity);
     setSelectEnergiesInPokemonVisible(true);
 
     //En attente
