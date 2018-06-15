@@ -8,3 +8,4 @@ Makefile.Release
 object_script.CardsGameQML.Debug
 object_script.CardsGameQML.Release
 *.png
+*.ptc

@@ -61,9 +61,6 @@ ActionCreationFactory::ActionCreationFactory()
 
 AbstractAction* ActionCreationFactory::createAction(AbstractAction::Enum_typeOfAction idAction, QVariant arg1, QVariant arg2)
 {
-    bool ok;
-    int argInt1 = 0;
-    int argInt2 = 0;
     AbstractAction* actionToReturn = nullptr;
 
     switch(idAction)

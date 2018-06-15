@@ -15,6 +15,8 @@
 
 #define DAMAGE_MARQUER_VALUE    10
 
+#define MAX_USHORT              0xFFFF
+
 class Utils : public QObject
 {
     Q_OBJECT
