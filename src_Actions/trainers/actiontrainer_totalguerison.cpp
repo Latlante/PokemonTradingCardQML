@@ -20,7 +20,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_TotalGuerison::element
             << AbstractAction::CheckPokemonAttached;
 }
 
-void ActionTrainer_TotalGuerison::actionAfterAttack()
+void ActionTrainer_TotalGuerison::actionBeforeAttack()
 {
     if(pokemonAttached() != nullptr)
     {

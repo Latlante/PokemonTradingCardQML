@@ -24,7 +24,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_InformaticSearch::elem
             << AbstractAction::CheckPlayerAttacking;
 }
 
-void ActionTrainer_InformaticSearch::actionAfterAttack()
+void ActionTrainer_InformaticSearch::actionBeforeAttack()
 {
     if((gameManager() != nullptr) && (playerAttacking() != nullptr))
     {

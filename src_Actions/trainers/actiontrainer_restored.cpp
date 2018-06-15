@@ -23,7 +23,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_Restored::elementToChe
             << AbstractAction::CheckPlayerAttacking;
 }
 
-void ActionTrainer_Restored::actionAfterAttack()
+void ActionTrainer_Restored::actionBeforeAttack()
 {
     if((gameManager() != nullptr) && (playerAttacking() != nullptr))
     {

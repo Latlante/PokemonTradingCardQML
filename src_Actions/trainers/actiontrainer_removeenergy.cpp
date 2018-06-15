@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_RemoveEnergy::elementT
             << AbstractAction::CheckPokemonAttacked;
 }
 
-void ActionTrainer_RemoveEnergy::actionAfterAttack()
+void ActionTrainer_RemoveEnergy::actionBeforeAttack()
 {
     if((gameManager() != nullptr) && (pokemonAttacked() != nullptr))
     {

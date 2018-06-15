@@ -24,7 +24,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_SaveEnergies::elementT
             << AbstractAction::CheckPlayerAttacking;
 }
 
-void ActionTrainer_SaveEnergies::actionAfterAttack()
+void ActionTrainer_SaveEnergies::actionBeforeAttack()
 {
     if((gameManager() != nullptr) && (playerAttacking() != nullptr))
     {

@@ -10,7 +10,7 @@ public:
 
     AbstractAction::Enum_typeOfAction type() override;
     QList<AbstractAction::Enum_ElementsToCheck> elementToCheck() override;
-    void actionAfterAttack() override;
+    void actionBeforeAttack() override;
 };
 
 #endif // ACTIONTRAINER_REMOVEENERGY_H

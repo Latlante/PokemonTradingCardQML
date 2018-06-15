@@ -22,7 +22,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_FakeProfessorChen::ele
             << AbstractAction::CheckPlayerAttacked;
 }
 
-void ActionTrainer_FakeProfessorChen::actionAfterAttack()
+void ActionTrainer_FakeProfessorChen::actionBeforeAttack()
 {
     if(playerAttacked() != nullptr)
     {

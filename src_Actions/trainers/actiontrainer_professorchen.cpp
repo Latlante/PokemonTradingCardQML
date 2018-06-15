@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_ProfessorChen::element
             << AbstractAction::CheckPlayerAttacking;
 }
 
-void ActionTrainer_ProfessorChen::actionAfterAttack()
+void ActionTrainer_ProfessorChen::actionBeforeAttack()
 {
     if(playerAttacking() != nullptr)
     {

@@ -21,7 +21,7 @@ QList<AbstractAction::Enum_ElementsToCheck> ActionTrainer_LittleGirl::elementToC
             << AbstractAction::CheckPlayerAttacking;
 }
 
-void ActionTrainer_LittleGirl::actionAfterAttack()
+void ActionTrainer_LittleGirl::actionBeforeAttack()
 {
     if((gameManager() != nullptr) && (playerAttacking() != nullptr))
     {
