@@ -81,9 +81,9 @@ bool ModelPopupSelectEnergyInPokemon::isMaximumEnergiesSelected()
     return numberOfEnergiesSelected() >= numberOfEnergiesToSelect();
 }
 
-QList<CardEnergy*> ModelPopupSelectEnergyInPokemon::listIndexEnergiesSelected()
+QList<AbstractCard*> ModelPopupSelectEnergyInPokemon::listIndexEnergiesSelected()
 {
-    QList<CardEnergy*> listCards;
+    QList<AbstractCard*> listCards;
 
     for(int i=0;i<m_listEnergies.count();++i)
     {

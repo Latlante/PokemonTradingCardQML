@@ -64,7 +64,7 @@ public:
     void setSelectCardInPacketVisible(bool state);
 
     //SELECT HIDDEN CARD
-    QList<AbstractCard *> displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity);
+    QList<AbstractCard *> displaySelectHiddenCard(PacketRewards *packet, unsigned short quantity);
     bool selectHiddenCardVisible();
     void setSelectHiddenCardVisible(bool state);
 
@@ -81,7 +81,7 @@ public:
 
     //SELECT ENERGY IN POKEMON
     Q_INVOKABLE ModelPopupSelectEnergyInPokemon* modelSelectEnergyInPokemon();
-    QList<CardEnergy *> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
+    QList<AbstractCard *> displayEnergiesForAPokemon(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
     bool selectEnergiesInPokemonVisible();
     void setSelectEnergiesInPokemonVisible(bool state);
 

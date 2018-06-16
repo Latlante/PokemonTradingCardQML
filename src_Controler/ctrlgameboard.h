@@ -11,11 +11,14 @@ class MyModel;
 
 class FactoryMainPageLoader;
 class Player;
+class CtrlAnimation;
+class CtrlPopups;
 class CtrlSelectingCards;
 class ListPlayers;
 class ModelPopupSelectCardInPacket;
 class BenchArea;
 class PacketDeck;
+class PacketRewards;
 
 class CtrlGameBoard : public QObject
 {
@@ -24,7 +27,7 @@ class CtrlGameBoard : public QObject
     Q_PROPERTY(ConstantesQML::StepGame gameStatus READ gameStatus NOTIFY gameStatusChanged)
 
 public:
-    explicit CtrlGameBoard(CtrlSelectingCards& ctrlSelectCards, CtrlPopups& ctrlPopups, QObject *parent = nullptr);
+    explicit CtrlGameBoard(CtrlSelectingCards& ctrlSelectCards, CtrlPopups& ctrlPopups, CtrlAnimation& ctrlAnim, QObject *parent = nullptr);
     ~CtrlGameBoard();
 
     static void declareQML();
@@ -47,6 +50,8 @@ public:
     Q_INVOKABLE void actionAttack(CardPokemon* card);
     Q_INVOKABLE void actionFinishYourTurn();
 
+    Q_INVOKABLE void testAnimation();
+
 
 signals:
     void nextPlayer();
@@ -56,9 +61,21 @@ signals:
 private slots:
     void onListsComplete_CtrlSelectingCards();
 
+    void onDisplayPacketAsked(AbstractPacket *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard);
+    void onDisplayAllElementsAsked(unsigned short quantity);
+    void onDisplaySelectHiddenCardAsked(PacketRewards *packet, unsigned short quantity);
+    void onDisplayEnergiesForAPokemonAsked(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element);
+    void onDisplayAttacksAsked(CardPokemon* card, bool authorizeRetreat);
+    void onDisplayMessageAsked(QString message);
+    void onHeadOrTailAsked();
+
+    void onMovingCardAnimationStart();
+
 private:
     GameManager* m_gameManager;
     FactoryMainPageLoader* m_factoryMainPageLoader;
+    CtrlAnimation& m_ctrlAnim;
+    CtrlPopups& m_ctrlPopups;
     CtrlSelectingCards& m_ctrlSelectingCards;
 
 };

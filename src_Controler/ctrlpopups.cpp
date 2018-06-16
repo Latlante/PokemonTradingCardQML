@@ -158,7 +158,7 @@ void CtrlPopups::setSelectCardInPacketVisible(bool state)
 //**************************************
 //          SELECT HIDDEN CARD
 //**************************************
-QList<AbstractCard *> CtrlPopups::displaySelectHiddenCard(PacketRewards* rewards, unsigned short quantity)
+QList<AbstractCard *> CtrlPopups::displaySelectHiddenCard(PacketRewards* packet, unsigned short quantity)
 {
     //Vérification
     unsigned short newQuantity = quantity;
@@ -167,7 +167,7 @@ QList<AbstractCard *> CtrlPopups::displaySelectHiddenCard(PacketRewards* rewards
 
     //Initialisation
     m_modelSelectCardInPacket->setNumberOfCardsToSelect(newQuantity);
-    m_modelSelectCardInPacket->addPacketFromAbstractPacket(rewards);
+    m_modelSelectCardInPacket->addPacketFromAbstractPacket(packet);
     setSelectHiddenCardVisible(true);
 
     //En attente
@@ -201,6 +201,10 @@ void CtrlPopups::setSelectHiddenCardVisible(bool state)
 //**************************************
 int CtrlPopups::displayAttacks(CardPokemon* card, bool authorizeRetreat)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     //Initialisation
     setPopupSelectingAttacks_IndexAttack(-1);
     setPopupSelectingAttacks_AuthorizeRetreat(authorizeRetreat);
@@ -288,7 +292,7 @@ ModelPopupSelectEnergyInPokemon* CtrlPopups::modelSelectEnergyInPokemon()
     return m_modelSelectEnergyInPokemon;
 }
 
-QList<CardEnergy*> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon, unsigned short quantity, AbstractCard::Enum_element element)
+QList<AbstractCard *> CtrlPopups::displayEnergiesForAPokemon(CardPokemon *pokemon, unsigned short quantity, AbstractCard::Enum_element element)
 {
     //Vérification
     unsigned short newQuantity = quantity;

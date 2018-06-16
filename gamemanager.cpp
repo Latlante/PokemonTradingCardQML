@@ -1,6 +1,7 @@
 #include "gamemanager.h"
 
 #include <QDebug>
+#include <QEventLoop>
 #include "src_Controler/ctrlpopups.h"
 #include "src_Models/modellistenergies.h"
 #include "src_Packets/bencharea.h"
@@ -15,22 +16,19 @@ const int GameManager::m_NUMBER_FIRST_CARDS = 7;
 const int GameManager::m_NUMBER_REWARDS = 6;
 GameManager* GameManager::m_instance = nullptr;
 
-#ifdef TESTS_UNITAIRES
 GameManager::GameManager(QObject *parent) :
     QObject(parent),
+#ifdef TESTS_UNITAIRES
     m_forcedValueHeadOrTail(false),
     m_nextValueHeadOrTail(0),
-#else
-GameManager::GameManager(CtrlPopups &ctrlPopups, QObject *parent) :
-    QObject(parent),
-    m_ctrlPopups(ctrlPopups),
 #endif
 	m_listPlayers(QList<Player*>()),
     m_indexCurrentPlayer(-1),
     m_playerAttacking(nullptr),
     m_playerAttacked(nullptr),
     m_gameStatus(ConstantesQML::StepPreparation),
-	m_gameIsReady(false)
+    m_gameIsReady(false),
+    m_elementFromDisplays(QVariant())
 {
 	
 }
@@ -43,7 +41,6 @@ GameManager::~GameManager()
 /************************************************************
 *****				FONCTIONS STATIQUES					*****
 ************************************************************/
-#ifdef TESTS_UNITAIRES
 GameManager* GameManager::createInstance()
 {
     if(m_instance == NULL)
@@ -53,17 +50,6 @@ GameManager* GameManager::createInstance()
 
     return m_instance;
 }
-#else
-GameManager* GameManager::createInstance(CtrlPopups &ctrlPopups)
-{
-    if(m_instance == NULL)
-    {
-        m_instance = new GameManager(ctrlPopups);
-    }
-
-    return m_instance;
-}
-#endif
 
 void GameManager::deleteInstance()
 {
@@ -149,6 +135,8 @@ void GameManager::initGame()
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
 #endif
+    //emit movingCardAnimationStartAsked();
+
     //Mise en place des récompenses
     foreach(Player *play, m_listPlayers)
     {
@@ -375,7 +363,13 @@ QList<AbstractCard *> GameManager::displayPacket(AbstractPacket *packet, unsigne
 
     return {packet->card(0)};
 #else
-    return m_ctrlPopups.displayPacket(packet, quantity, typeOfCard);
+    emit displayPacketAsked(packet, quantity, typeOfCard);
+
+    QEventLoop loop;
+    connect(this, &GameManager::selectionDisplayFinished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    return m_elementFromDisplays.value<QList<AbstractCard*> >();
 #endif
 }
 
@@ -390,11 +384,27 @@ AbstractCard::Enum_element GameManager::displayAllElements(unsigned short quanti
 
     return AbstractCard::Element_Electric;
 #else
-    return m_ctrlPopups.displayAllElements(quantity);
+    emit displayAllElementsAsked(quantity);
+
+    AbstractCard::Enum_element elementToReturn = AbstractCard::Element_None;
+
+    QList<AbstractCard *> listSelectionCards = m_elementFromDisplays.value<QList<AbstractCard *> >();
+    if(listSelectionCards.count() > 0)
+    {
+        AbstractCard *abCard = listSelectionCards.first();
+
+        if(abCard->type() == AbstractCard::TypeOfCard_Energy)
+        {
+            CardEnergy* energy = static_cast<CardEnergy*>(abCard);
+            elementToReturn = energy->element();
+        }
+    }
+
+    return elementToReturn;
 #endif
 }
 
-QList<AbstractCard *> GameManager::displaySelectHiddenCard(PacketRewards *rewards, unsigned short quantity)
+QList<AbstractCard *> GameManager::displaySelectHiddenCard(PacketRewards *packet, unsigned short quantity)
 {
 #ifdef TRACAGE_PRECIS
     qDebug() << __PRETTY_FUNCTION__;
@@ -405,7 +415,9 @@ QList<AbstractCard *> GameManager::displaySelectHiddenCard(PacketRewards *reward
 
     return {rewards->card(0)};
 #else
-    return m_ctrlPopups.displaySelectHiddenCard(rewards, quantity);
+    emit displaySelectHiddenCardAsked(packet, quantity);
+
+    return m_elementFromDisplays.value<QList<AbstractCard*> >();
 #endif
 
 }
@@ -421,7 +433,20 @@ QList<CardEnergy*> GameManager::displayEnergiesForAPokemon(CardPokemon* pokemon,
     Q_UNUSED(element)
     return {pokemon->modelListOfEnergies()->energy(0)};
 #else
-    return m_ctrlPopups.displayEnergiesForAPokemon(pokemon, quantity, element);
+    emit displayEnergiesForAPokemonAsked(pokemon, quantity, element);
+
+    QList<CardEnergy*> listEnergies;
+    QList<AbstractCard *> listSelectionCards = m_elementFromDisplays.value<QList<AbstractCard *> >();
+
+    foreach(AbstractCard* abCard, listSelectionCards)
+    {
+        if(abCard->type() == AbstractCard::TypeOfCard_Energy)
+        {
+            listEnergies.append(static_cast<CardEnergy*>(abCard));
+        }
+    }
+
+    return listEnergies;
 #endif
 }
 
@@ -442,7 +467,11 @@ int GameManager::displayAttacks(CardPokemon* card, bool blockRetreat)
     if(blockRetreat == false)
         authorizeRetreat = card->canRetreat();
 
-    return m_ctrlPopups.displayAttacks(card, authorizeRetreat);
+    emit displayAttacksAsked(card, authorizeRetreat);
+
+    qDebug() << __PRETTY_FUNCTION__ << m_elementFromDisplays.toInt();
+
+    return m_elementFromDisplays.toInt();
 #endif
 }
 
@@ -455,8 +484,18 @@ void GameManager::displayMessage(QString message)
 #ifdef TESTS_UNITAIRES
     Q_UNUSED(message)
 #else
-    m_ctrlPopups.displayMessage(message);
+    emit displayMessageAsked(message);
 #endif
+}
+
+void GameManager::endOfSelectionDisplay(QVariant element)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__ << element;
+#endif
+
+    m_elementFromDisplays = element;
+    emit selectionDisplayFinished();
 }
 
 #ifdef TESTS_UNITAIRES
@@ -482,8 +521,14 @@ unsigned short GameManager::headOrTail()
 
     unsigned short coin = Utils::headOrTail();
     qDebug() << __PRETTY_FUNCTION__ << "coin=" << coin;
-    m_ctrlPopups.displayHeadOrTail(coin);
-    return coin;
+
+    emit headOrTailAsked();
+
+    QEventLoop loop;
+    connect(this, &GameManager::selectionDisplayFinished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    return m_elementFromDisplays.toInt();
 }
 #endif
 
@@ -681,7 +726,7 @@ void GameManager::checkPokemonDead()
 #ifdef TESTS_UNITAIRES
             play->moveCardFromBenchToFight(0);
 #else
-            QList<AbstractCard*> listPokemonToReplace = m_ctrlPopups.displayPacket(play->bench());
+            QList<AbstractCard*> listPokemonToReplace = displayPacket(play->bench());
 
             if(listPokemonToReplace.first()->type() == AbstractCard::TypeOfCard_Pokemon)
                 play->moveCardFromBenchToFight(static_cast<CardPokemon*>(listPokemonToReplace.first()));

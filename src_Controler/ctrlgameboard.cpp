@@ -8,27 +8,37 @@
 
 #include "player.h"
 #include "src_Cards/cardpokemon.h"
+#include "src_Controler/ctrlanimation.h"
+#include "src_Controler/ctrlpopups.h"
 #include "src_Controler/ctrlselectingcards.h"
 #include "src_Models/factorymainpageloader.h"
 #include "src_Models/listplayers.h"
 #include "src_Models/modelpopupselectcardinpacket.h"
 #include "src_Packets/bencharea.h"
 #include "src_Packets/packetdeck.h"
+#include "src_Packets/packetrewards.h"
 
-CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, CtrlPopups &ctrlPopups, QObject *parent) :
+CtrlGameBoard::CtrlGameBoard(CtrlSelectingCards &ctrlSelectCards, CtrlPopups &ctrlPopups, CtrlAnimation &ctrlAnim, QObject *parent) :
     QObject(parent),
-#ifdef TESTS_UNITAIRES
     m_gameManager(GameManager::createInstance()),
-#else
-    m_gameManager(GameManager::createInstance(ctrlPopups)),
-#endif
     m_factoryMainPageLoader(new FactoryMainPageLoader()),
+    m_ctrlAnim(ctrlAnim),
+    m_ctrlPopups(ctrlPopups),
     m_ctrlSelectingCards(ctrlSelectCards)
 {
     //initGame();
     connect(&m_ctrlSelectingCards, &CtrlSelectingCards::listsComplete, this, &CtrlGameBoard::onListsComplete_CtrlSelectingCards);
     connect(m_gameManager, &GameManager::indexCurrentPlayerChanged, this, &CtrlGameBoard::currentPlayerChanged);
     connect(m_gameManager, &GameManager::gameStatusChanged, this, &CtrlGameBoard::gameStatusChanged);
+
+    connect(m_gameManager, &GameManager::displayAllElementsAsked, this ,&CtrlGameBoard::onDisplayAllElementsAsked);
+    connect(m_gameManager, &GameManager::displayEnergiesForAPokemonAsked, this, &CtrlGameBoard::onDisplayEnergiesForAPokemonAsked);
+    connect(m_gameManager, &GameManager::displayMessageAsked, this, &CtrlGameBoard::onDisplayMessageAsked);
+    connect(m_gameManager, &GameManager::displayPacketAsked, this, &CtrlGameBoard::onDisplayPacketAsked);
+    connect(m_gameManager, &GameManager::displaySelectHiddenCardAsked, this, &CtrlGameBoard::onDisplaySelectHiddenCardAsked);
+    connect(m_gameManager, &GameManager::displayAttacksAsked, this, &CtrlGameBoard::onDisplayAttacksAsked);
+    connect(m_gameManager, &GameManager::headOrTailAsked, this, &CtrlGameBoard::onHeadOrTailAsked);
+    connect(m_gameManager, &GameManager::movingCardAnimationStartAsked, this, &CtrlGameBoard::onMovingCardAnimationStart);
 }
 
 CtrlGameBoard::~CtrlGameBoard()
@@ -135,6 +145,9 @@ void CtrlGameBoard::onClicked_ButtonReadyPreparation()
 
 void CtrlGameBoard::actionAttack(CardPokemon *card)
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
     //Choix de l'attaque
     //Player* playerAttacking = card->owner();
     //Player* playerAttacked = m_gameManager->ennemyOf(playerAttacking);
@@ -186,11 +199,20 @@ void CtrlGameBoard::actionFinishYourTurn()
     m_gameManager->endOfTurn();
 }
 
+void CtrlGameBoard::testAnimation()
+{
+    onMovingCardAnimationStart();
+}
+
 /************************************************************
 *****             FONCTIONS SLOTS PRIVEES				*****
 ************************************************************/
 void CtrlGameBoard::onListsComplete_CtrlSelectingCards()
 {
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
     QMap<QString,QList<AbstractCard*> > listCardsByPlayer = m_ctrlSelectingCards.listCardsByPlayer();
 
     for(int i=0;i<listCardsByPlayer.keys().count();++i)
@@ -205,3 +227,82 @@ void CtrlGameBoard::onListsComplete_CtrlSelectingCards()
 
 }
 
+void CtrlGameBoard::onDisplayPacketAsked(AbstractPacket *packet, unsigned short quantity, AbstractCard::Enum_typeOfCard typeOfCard)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    QList<AbstractCard *> list = m_ctrlPopups.displayPacket(packet, quantity, typeOfCard);
+    m_gameManager->endOfSelectionDisplay(QVariant::fromValue(list));
+}
+
+void CtrlGameBoard::onDisplayAllElementsAsked(unsigned short quantity)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    QList<AbstractCard *> list = m_ctrlPopups.displayAllElements(quantity);
+    m_gameManager->endOfSelectionDisplay(QVariant::fromValue(list));
+}
+
+void CtrlGameBoard::onDisplaySelectHiddenCardAsked(PacketRewards *packet, unsigned short quantity)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    QList<AbstractCard *> list = m_ctrlPopups.displaySelectHiddenCard(packet, quantity);
+    m_gameManager->endOfSelectionDisplay(QVariant::fromValue(list));
+}
+
+void CtrlGameBoard::onDisplayEnergiesForAPokemonAsked(CardPokemon* pokemon, unsigned short quantity, AbstractCard::Enum_element element)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    QList<AbstractCard *> list = m_ctrlPopups.displayEnergiesForAPokemon(pokemon, quantity, element);
+    m_gameManager->endOfSelectionDisplay(QVariant::fromValue(list));
+}
+
+void CtrlGameBoard::onDisplayAttacksAsked(CardPokemon *card, bool authorizeRetreat)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    int attackIndex = m_ctrlPopups.displayAttacks(card, authorizeRetreat);
+    m_gameManager->endOfSelectionDisplay(QVariant::fromValue(attackIndex));
+}
+
+void CtrlGameBoard::onDisplayMessageAsked(QString message)
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    m_ctrlPopups.displayMessage(message);
+    m_gameManager->endOfSelectionDisplay();
+}
+
+void CtrlGameBoard::onHeadOrTailAsked()
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    unsigned short coin = Utils::headOrTail();
+    m_ctrlPopups.displayHeadOrTail(coin);
+    m_gameManager->endOfSelectionDisplay(coin);
+}
+
+void CtrlGameBoard::onMovingCardAnimationStart()
+{
+#ifdef TRACAGE_PRECIS
+    qDebug() << __PRETTY_FUNCTION__;
+#endif
+
+    m_ctrlAnim.startAnimationMovingCard(CtrlAnimation::Location_Deck, CtrlAnimation::Location_Hand);
+}

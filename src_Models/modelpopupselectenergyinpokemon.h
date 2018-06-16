@@ -39,7 +39,7 @@ public:
     unsigned short numberOfEnergiesSelected();
     bool isMaximumEnergiesSelected();
 
-    QList<CardEnergy *> listIndexEnergiesSelected();
+    QList<AbstractCard *> listIndexEnergiesSelected();
 
     virtual QVariant data(const QModelIndex &index, int role) const override;
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
