@@ -110,6 +110,12 @@ Item {
             anchors.fill: parent
             visible: ctrlPopups.headOrTailVisible
         }
+
+        MovingCard {
+            id: movingCard1
+            sourceImage: "back.png"
+            visible: false
+        }
     }
 }
 

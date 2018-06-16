@@ -149,7 +149,8 @@ Item {
                     if(ctrlPopups.onePopupIsDisplayed === false)
                     {
                         //popupSelectHiddenCard1.visible = true
-                        ctrlGameBoard.actionClickOnRewards(player)
+                        //ctrlGameBoard.actionClickOnRewards(player)
+                        ctrlGameBoard.testAnimation();
                         //popupSelectHiddenCard1.visible = false
 
                         mouse.accepted = true
@@ -496,4 +497,5 @@ Item {
             }
         }
     }
+
 }

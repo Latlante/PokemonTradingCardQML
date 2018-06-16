@@ -3,6 +3,7 @@
 #include <QResource>
 #include "common/constantesqml.h"
 #include "src_Models/factorymainpageloader.h"
+#include "src_Controler/ctrlanimation.h"
 #include "src_Controler/ctrlgameboard.h"
 #include "src_Controler/ctrlpopups.h"
 #include "src_Controler/ctrlselectingcards.h"
@@ -73,9 +74,11 @@ int main(int argc, char *argv[])
     Utils::initRandomValues();
 
     QQmlApplicationEngine engine;
+    CtrlAnimation ctrlAnim;
     CtrlSelectingCards ctrlSC;
     CtrlPopups ctrlPopups;
-    CtrlGameBoard ctrlGB(ctrlSC, ctrlPopups);
+    CtrlGameBoard ctrlGB(ctrlSC, ctrlPopups, ctrlAnim);
+    ctrlAnim.install(&engine);
     ctrlGB.install(&engine);
     ctrlPopups.install(&engine);
     ctrlSC.install(&engine);

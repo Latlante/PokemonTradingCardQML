@@ -17,5 +17,6 @@
         <file alias="PopupSelectCardsInPacket.qml">qml/Popups/PopupSelectCardsInPacket.qml</file>
         <file alias="PopupSelectEnergiesInPokemon.qml">qml/Popups/PopupSelectEnergiesInPokemon.qml</file>
         <file alias="PopupSelectHiddenCard.qml">qml/Popups/PopupSelectHiddenCard.qml</file>
+        <file alias="MovingCard.qml">qml/BasicComponents/MovingCard.qml</file>
     </qresource>
 </RCC>

@@ -17,7 +17,7 @@ CONFIG(compilation_test)
     #DEFINES += TESTS_UNITAIRES
 }
 
-#DEFINES += TRACAGE_PRECIS
+DEFINES += TRACAGE_PRECIS
 
 
 Debug:OBJECTS_DIR = debug/obj/
@@ -105,7 +105,8 @@ SOURCES += \
     src_Actions/trainers/actiontrainer_removeenergy.cpp \
     src_Actions/attacks/actioncompleteprotectionrandom.cpp \
     src_Packets/packetdynamiccustom.cpp \
-    src_Actions/attacks/actionenemydieifyoudieinnextturn.cpp
+    src_Actions/attacks/actionenemydieifyoudieinnextturn.cpp \
+    src_Controler/ctrlanimation.cpp
 
 
 RESOURCES += qml.qrc \
@@ -199,7 +200,8 @@ HEADERS += \
     src_Actions/trainers/actiontrainer_removeenergy.h \
     src_Actions/attacks/actioncompleteprotectionrandom.h \
     src_Packets/packetdynamiccustom.h \
-    src_Actions/attacks/actionenemydieifyoudieinnextturn.h
+    src_Actions/attacks/actionenemydieifyoudieinnextturn.h \
+    src_Controler/ctrlanimation.h
 
 FORMS +=
 
